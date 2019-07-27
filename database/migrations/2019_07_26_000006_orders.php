@@ -32,6 +32,9 @@ class Orders extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proposals');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::dropIfExists('orders');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        
     }
 }
