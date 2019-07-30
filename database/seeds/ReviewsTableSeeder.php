@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class RewievsTableSeed extends Seeder
+class ReviewsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,10 +11,10 @@ class RewievsTableSeed extends Seeder
      */
     public function run()
     {
-        DB::table('rewievs')->insert([
+        DB::table('reviews')->insert([
             'text' => 'great job',
             'rating' => '100',
-            'id_customer' => 1,
+            'id_cutomer' => 1,
             'id_worker' => 1,
         ]);
     }
