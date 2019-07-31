@@ -15,7 +15,7 @@
 //     return view('welcome');
 // });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware'=>'web'], function() {
@@ -23,7 +23,7 @@ Route::group(['middleware'=>'web'], function() {
 	Route::get('/', 'IndexController@index');
 	
 });
-Route::group(['prefix'=>'admin', 'middleware'=>'auth' ], function() {
+Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'verified'] ], function() {
 	
 	Route::get('/', 'HomeController@index');
 
