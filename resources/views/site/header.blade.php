@@ -5,7 +5,7 @@
                     <div class="bg-success rounded-circle float-right" style="width: 2rem; height: 2rem">&nbsp;</div>
                 </div>
                 <div class="col-1 mt-1">
-                    <a href="{{ route('home') }} " class="text-white">StudRISE</a>
+                    <a href="" class="text-white">StudRISE</a>
                 </div>
                 <div class="col-7">
                     &nbsp;

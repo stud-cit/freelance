@@ -1,9 +1,9 @@
 @extends('layouts.site')
 
 @section('header')
-	@include('site.header')
+	@include('admin.header')
 @endsection
 
 @section('content')
-	@include('site.content')
+	@include('admin.content')
 @endsection
