@@ -10,73 +10,87 @@
         <div class="col-7">
             <img src="{{ asset('registration.jpg') }}" class="img-fluid">
         </div>
-        <div class="col-5">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+        <div class="col-5 container">
+            <div class="row">
+                <div class="col-12 font-weight-bold text">Реєстрація</div>
+            </div>
+            <div class="row">
+                <div class="col-10 offset-1 font-italic small">Начните сотрудничать</div>
+            </div>
+            <div>
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex flex-row">
+                                <div class="">&nbsp;</div>
+                                    <div class="d-flex flex-column">
+                                            <label for="name" class="col-form-label">Ім'я</label>
+                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror border-0" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                    </div>
+                                <div class="">&nbsp;</div>
+                        </li>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+                        <li class="list-group-item d-flex flex-row">
+                            <div class="">&nbsp;</div>
+                                <div class="d-flex flex-column">
+                                    <label for="name" class="col-form-label">Електронна адреса</label>
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                </div>
+                            <div class="">&nbsp;</div>
+                        </li>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <li class="list-group-item d-flex flex-row">
+                            <div class="">&nbsp;</div>
+                                <div class="d-flex flex-column">
+                                    <label for="name" class="col-form-label">Пароль</label>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror border-0" name="password" required autocomplete="new-password" placeholder="********">
+
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            <div class="">&nbsp;</div>
+                        </li>
+
+                        <li class="list-group-item d-flex flex-row">
+                            <div class="">&nbsp;</div>
+                            <div class="d-flex flex-column">
+                                <label for="name" class="col-form-label">Повторіть пароль</label>
+
+                                <input id="password-confirm" type="password" class="form-control border-0" name="password_confirmation" required autocomplete="new-password" placeholder="********">
                             </div>
+                            <div class="">&nbsp;</div>
+                        </li>
+
+                    </ul>
+                    <div class="form-group row mb-0">
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-primary badge-pill w-100" style="background-color: #640CAB">
+                                Реєстрація
+                            </button>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <div class="col-6">
+                            <a href="{{ route('login') }}" class="btn btn-outline-secondary badge-pill w-100">
+                                Вхід в акаунт
+                            </a>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
