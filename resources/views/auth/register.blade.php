@@ -105,14 +105,29 @@
                         </li>
 
                     </ul>
-                    <div class="form-group row mb-0">
-                        <div class="col-6">
+
+                    <div class="row mt-4">
+                        <div class="col-4 offset-1 custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="rememberme">
+                            <label for="rememberme" class="custom-control-label">Remember me</label>
+                        </div>
+                        <div class="col-4 offset-3">
+                            @if (Route::has('password.request'))
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    Forget password?
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row mt-5">
+                        <div class="col-5">
                             <button type="submit" class="btn btn-primary badge-pill w-100" style="background-color: #640CAB">
                                 Реєстрація
                             </button>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-5">
                             <a href="{{ route('login') }}" class="btn btn-outline-secondary badge-pill w-100">
                                 Вхід в акаунт
                             </a>
