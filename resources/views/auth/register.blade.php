@@ -84,7 +84,11 @@
                             <label for="rememberme" class="custom-control-label">Remember me</label>
                         </div>
                         <div class="col-4 offset-3">
-                            <a href="#">Forget password?</a>
+                            @if (Route::has('password.request'))
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    Forget password?
+                                </a>
+                            @endif
                         </div>
                     </div>
 
