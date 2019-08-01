@@ -6,8 +6,8 @@
 <title>freelance</title>
 
 <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
-<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+<!--<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">-->
+<!--<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">-->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
 
 
@@ -77,8 +77,8 @@
 	@yield('content')
 
 
-<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('app.js') }}"></script>
+<!--<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>-->
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 
 </body>
