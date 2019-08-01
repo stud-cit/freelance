@@ -107,11 +107,11 @@
                     </ul>
 
                     <div class="row mt-4">
-                        <div class="col-4 offset-1 custom-control custom-checkbox">
+                        <div class="col-lg-4 col-12 offset-1 custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="rememberme">
                             <label for="rememberme" class="custom-control-label">Remember me</label>
                         </div>
-                        <div class="col-4 offset-3">
+                        <div class="col-lg-4 col-12 offset-lg-3">
                             @if (Route::has('password.request'))
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forget password?
@@ -121,13 +121,13 @@
                     </div>
 
                     <div class="form-group row mt-5">
-                        <div class="col-5">
-                            <button type="submit" class="btn btn-primary badge-pill w-100" style="background-color: #640CAB">
+                        <div class="col-lg-5 col-12">
+                            <button type="submit" class="btn text-white badge-pill w-100" style="background-color: #640CAB">
                                 Реєстрація
                             </button>
                         </div>
 
-                        <div class="col-5">
+                        <div class="col-lg-5 col-12">
                             <a href="{{ route('login') }}" class="btn btn-outline-secondary badge-pill w-100">
                                 Вхід в акаунт
                             </a>
