@@ -37,6 +37,34 @@
 
                         <li class="list-group-item d-flex flex-row">
                             <div class="">&nbsp;</div>
+                            <div class="d-flex flex-column">
+                                <label for="surname" class="col-form-label">Прізвище</label>
+                                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror border-0" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus placeholder="Прізвище">
+                                @error('surname')
+                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                @enderror
+                            </div>
+                            <div class="">&nbsp;</div>
+                        </li>
+
+                        <li class="list-group-item d-flex flex-row">
+                            <div class="">&nbsp;</div>
+                            <div class="d-flex flex-column">
+                                <label for="id_role" class="col-form-label">Роль</label>
+                                <input id="id_role" type="text" class="form-control @error('id_role') is-invalid @enderror border-0" name="id_role" value="{{ old('id_role') }}" required autocomplete="role" autofocus placeholder="Роль">
+                                @error('id_role')
+                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                @enderror
+                            </div>
+                            <div class="">&nbsp;</div>
+                        </li>
+
+                        <li class="list-group-item d-flex flex-row">
+                            <div class="">&nbsp;</div>
                                 <div class="d-flex flex-column">
                                     <label for="name" class="col-form-label">Електронна адреса</label>
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
