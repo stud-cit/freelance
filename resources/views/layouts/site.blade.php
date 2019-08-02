@@ -76,6 +76,11 @@
 
 	@yield('content')
 
+<!--Footer_section-->
+<footer id="footer_wrapper">
+    @yield('footer')
+</footer>
+<!--Footer_section-->
 
 <!--<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>-->
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
