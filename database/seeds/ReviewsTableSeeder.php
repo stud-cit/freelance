@@ -14,7 +14,7 @@ class ReviewsTableSeeder extends Seeder
         DB::table('reviews')->insert([
             'text' => 'great job',
             'rating' => '100',
-            'id_cutomer' => 1,
+            'id_customer' => 1,
             'id_worker' => 1,
         ]);
     }

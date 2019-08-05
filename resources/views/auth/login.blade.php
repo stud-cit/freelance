@@ -80,12 +80,12 @@
                         <div class="row mt-4">
                             <div class="col-lg-4 col-12 offset-1 custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="rememberme">
-                                <label for="rememberme" class="custom-control-label">Remember me</label>
+                                <label for="rememberme" class="custom-control-label">Запам'ятати</label>
                             </div>
                             <div class="col-lg-4 col-12 offset-lg-3">
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        Forget password?
+                                        Забули пароль?
                                     </a>
                                 @endif
                             </div>

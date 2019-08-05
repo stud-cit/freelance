@@ -15,7 +15,7 @@
                 <div class="col-12 font-weight-bold text">Реєстрація</div>
             </div>
             <div class="row">
-                <div class="col-10 offset-1 font-italic small">Начните сотрудничать</div>
+                <div class="col-10 offset-1 font-italic small">Почніть співпрацювати</div>
             </div>
             <div>
                 <form method="POST" action="{{ route('register') }}">
@@ -53,7 +53,10 @@
                             <div class="">&nbsp;</div>
                             <div class="d-flex flex-column">
                                 <label for="id_role" class="col-form-label">Роль</label>
-                                <input id="id_role" type="text" class="form-control @error('id_role') is-invalid @enderror border-0" name="id_role" value="{{ old('id_role') }}" required autocomplete="role" autofocus placeholder="Роль">
+                                <select id="id_role" class="form-control @error('id_role') is-invalid @enderror border-0" name="id_role">
+                                    <option selected>Виконавець</option>
+                                    <option>Замовник</option>
+                                </select>
                                 @error('id_role')
                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -105,20 +108,6 @@
                         </li>
 
                     </ul>
-
-                    <div class="row mt-4">
-                        <div class="col-lg-4 col-12 offset-1 custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="rememberme">
-                            <label for="rememberme" class="custom-control-label">Remember me</label>
-                        </div>
-                        <div class="col-lg-4 col-12 offset-lg-3">
-                            @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forget password?
-                                </a>
-                            @endif
-                        </div>
-                    </div>
 
                     <div class="form-group row mt-5">
                         <div class="col-lg-5 col-12">
