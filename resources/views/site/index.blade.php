@@ -7,3 +7,7 @@
 @section('content')
 	@include('site.content')
 @endsection
+
+@section('footer')
+    @include('site.footer')
+@endsection

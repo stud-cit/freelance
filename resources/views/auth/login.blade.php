@@ -16,7 +16,7 @@
                     <div class="col-10 offset-1 font-italic small">Почніть співробітництво</div>
                 </div>
                 <div>
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <ul class="list-group">
                             <!--
