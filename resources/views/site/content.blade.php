@@ -1,5 +1,5 @@
 @extends('layouts.site')
-
+site test
 @section('content')
 @endsection
 <!--

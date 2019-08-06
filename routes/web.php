@@ -11,21 +11,11 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Auth::routes(['verify' => true]);
 
-// Route::get('/home', 'HomeController@index')->name('home');
-Route::group(['middleware'=>'web'], function() {
-	
-	Route::get('/', 'IndexController@index');
-	
-});
-Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'verified'] ], function() {
-	
-	Route::get('/', 'HomeController@index');
+Route::get('/orders', 'OrdersController@index');
+Route::get('/orders/{id}', 'OrdersController@order')->middleware(\App\Http\Middleware\LoginCheck::Class);
 
-	
-});
+Route::get('/', 'HomeController@index');
+
+Route::get('/admin', 'AdminController@index')->middleware(\App\Http\Middleware\AdminCheck::class);
