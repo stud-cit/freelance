@@ -17,13 +17,14 @@ class Orders extends Migration
             $table->bigIncrements('id_order');
             $table->string('title', 200);
             $table->longText('description');
-            $table->integer('price');
+            $table->string('price', 20);
             $table->string('time', 20);
             $table->string('status', 45);
             $table->bigInteger('id_customer')->unsigned();
             $table->foreign('id_customer')->references('id')->on('users');
             $table->bigInteger('id_worker')->unsigned()->nullable();
             $table->foreign('id_worker')->references('id')->on('users');
+            $table->date('created_at');
         });
     }
 
