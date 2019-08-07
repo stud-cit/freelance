@@ -55,12 +55,12 @@
         <div class="col-3 offset-1">
 
             <div class="card text-center px-0 mb-4">
-                <div class="card-header text-white font-weight-bold rounded-top" style="background-color: #0076de">Фільтр</div>
+                <div class="card-header text-white font-weight-bold rounded-top bg-blue">Фільтр</div>
                 <div class="card-body">
-                    <input type="text">
+                    <input type="text" class="form-control">
                     <div class="form-group row mt-4">
                         <div class="col-lg-6 col-12">
-                            <button type="submit" class="btn text-white badge-pill w-100" style="background-color: #0076de">
+                            <button type="submit" class="btn text-white badge-pill w-100">
                                 Пошук
                             </button>
                         </div>
