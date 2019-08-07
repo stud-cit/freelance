@@ -18,6 +18,11 @@ class OrdersController extends Controller
     public function order($id)
     {
         $id_customer = DB::table('orders')->where('id_order', $id)->get('id_customer')->first();
+
+        if (!$id_customer) {
+            abort(404);
+        }
+
         $order = DB::table('orders')->where('id_order', $id)->get(['title', 'description', 'price', 'time', 'status', 'created_at'])->first();
         $customer = DB::table('users')->where('id', $id_customer->id_customer)->get(['name', 'surname', 'patronymic', 'phone_number', 'avatar', 'about_me', 'email'])->first();
         $proposals = DB::table('proposals')
