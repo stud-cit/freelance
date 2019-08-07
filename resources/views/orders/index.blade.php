@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="container mt-5">
+<div class="container mt-5" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-8">
             <div class="container">
@@ -35,17 +35,17 @@
                     </div>
                 </div>
             </div>
-            <div id="orders" class="container">
+            <div class="container orders">
                 @foreach($data as $orders)
                 <div class="row mb-3 mt-2">
-                    <div class="col-10 shadow bg-white rounded" style="">
-                        <div id="title">{{$orders->title}}</div>
-                        <div id="description">{{$orders->description}}</div>
-                        <div id="created_at" class="text-right" style="font-size: 8px">{{$orders->created_at}}</div>
+                    <div class="col-10 shadow bg-white rounded work-order" style="" v-on:click="redirect({{$orders->id_order}})">
+                        <div class="title">{{$orders->title}}</div>
+                        <div class="description">{{$orders->description}}</div>
+                        <div class="text-right created_at" style="font-size: 8px">{{$orders->created_at}}</div>
                     </div>
                     <div class="col rounded-right bg-green text-white">
-                        <div id="price" class="text-center font-weight-bold" style="font-size: 20px">{{$orders->price}}</div>
-                        <div id="time" class="text-right font-italic" style="font-size: 10px">{{$orders->time}}</div>
+                        <div class="text-center font-weight-bold price" style="font-size: 20px">{{$orders->price}}</div>
+                        <div class="text-right font-italic time" style="font-size: 10px">{{$orders->time}}</div>
                     </div>
                 </div>
                 @endforeach
@@ -77,8 +77,8 @@
                 <div class="card-body">
                     @foreach($workers as $users)
                     <!--<img src="" alt=""> for avatar -->
-                    <div id="name">{{$users->name}} {{$users->surname}}</div>
-                    <div id="about_me">{{$users->about_me}}</div>
+                    <div class="name">{{$users->name}} {{$users->surname}}</div>
+                    <div class="about_me">{{$users->about_me}}</div>
                     @endforeach
                 </div>
             </div>
