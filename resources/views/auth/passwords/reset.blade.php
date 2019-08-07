@@ -1,4 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.site')
+
+@section('header')
+    @include('site.header')
+@endsection
 
 @section('content')
 <div class="container">
