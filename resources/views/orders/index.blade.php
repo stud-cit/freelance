@@ -43,7 +43,7 @@
                         <div id="description">{{$orders->description}}</div>
                         <div id="created_at" class="text-right" style="font-size: 8px">{{$orders->created_at}}</div>
                     </div>
-                    <div class="col rounded-right" style="background-color: #00B060; color: #ffffff">
+                    <div class="col rounded-right bg-green text-white">
                         <div id="price" class="text-center font-weight-bold" style="font-size: 20px">{{$orders->price}}</div>
                         <div id="time" class="text-right font-italic" style="font-size: 10px">{{$orders->time}}</div>
                     </div>
@@ -60,7 +60,7 @@
                     <input type="text" class="form-control">
                     <div class="form-group row mt-4">
                         <div class="col-lg-6 col-12">
-                            <button type="submit" class="btn text-white badge-pill w-100">
+                            <button type="submit" class="btn text-white badge-pill w-100 bg-blue">
                                 Пошук
                             </button>
                         </div>
