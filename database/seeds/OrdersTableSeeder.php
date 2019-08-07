@@ -18,7 +18,7 @@ class OrdersTableSeeder extends Seeder
             'time' => '123 hours',
             'status' => 'complete',
             'id_customer' => 1,
-            'id_worker' => 1,
+            'id_worker' => null,
         ]);
     }
 }

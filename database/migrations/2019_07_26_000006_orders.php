@@ -22,7 +22,7 @@ class Orders extends Migration
             $table->string('status', 45);
             $table->bigInteger('id_customer')->unsigned();
             $table->foreign('id_customer')->references('id')->on('users');
-            $table->bigInteger('id_worker')->unsigned();
+            $table->bigInteger('id_worker')->unsigned()->nullable();
             $table->foreign('id_worker')->references('id')->on('users');
         });
     }
