@@ -5,7 +5,7 @@
                     <div class="bg-success rounded-circle float-right" style="width: 2rem; height: 2rem">&nbsp;</div>
                 </div>
                 <div class="col-1 mt-1">
-                    <a href="" class="text-white">StudRISE</a>
+                    <a href="/" class="text-white">StudRISE</a>
                 </div>
                 @if(strpos(url()->current(), 'register') === false && !Auth::check())
                 <div class="col-1 offset-7 mt-1 small">
@@ -18,7 +18,7 @@
                 <div class="col-1">
                     <a href="{{ route('login') }}" class="badge-pill bg-light py-1 px-3 text-dark small">Вхід</a>
                 </div>
-                @else
+                @elseif(strpos(url()->current(), 'login') === false)
                 <div class="col-1">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="badge-pill bg-light py-1 px-3 text-dark small">
                         Вихід
@@ -27,6 +27,8 @@
                         {{ csrf_field() }}
                     </form>
                 </div>
+                @else
+                <div class="col-1"></div>
                 @endif
                 <div class="col-1 mt-1">
                     UA
