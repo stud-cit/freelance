@@ -13,3 +13,6 @@
 .bg-green {
     background-color: #00B060
 }
+.pointer {
+    cursor: pointer;
+}

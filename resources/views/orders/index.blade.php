@@ -35,11 +35,11 @@
                     </div>
                 </div>
             </div>
-            <div class="container orders">
+            <div class="container orders pointer">
                 @foreach($data as $orders)
                 <div class="row mb-3 mt-2">
                     <div class="col-10 shadow bg-white rounded work-order" style="" v-on:click="redirect({{$orders->id_order}})">
-                        <div class="title">{{$orders->title}}</div>
+                        <div class="title font-weight-bold">{{$orders->title}}</div>
                         <div class="description">{{$orders->description}}</div>
                         <div class="text-right created_at" style="font-size: 8px">{{$orders->created_at}}</div>
                     </div>
@@ -77,7 +77,7 @@
                 <div class="card-body">
                     @foreach($workers as $users)
                     <!--<img src="" alt=""> for avatar -->
-                    <div class="name">{{$users->name}} {{$users->surname}}</div>
+                    <div class="name surmane">{{$users->name}} {{$users->surname}}</div>
                     <div class="about_me">{{$users->about_me}}</div>
                     @endforeach
                 </div>
