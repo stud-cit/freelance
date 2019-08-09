@@ -10,7 +10,12 @@ class OrdersController extends Controller
     public function index()
     {
         $data = DB::table('orders')->get()->toArray();
-        $workers = DB::table('users')->where('id_role', 3)->get(['name', 'surname', 'patronymic', 'phone_number', 'avatar', 'about_me', 'email'])->toArray();
+
+        $workers = DB::table('users')
+            ->join('users_info', 'users.id', '=', 'users_info.id_user')
+            ->where('id_role', 3)
+            ->get(['name', 'surname', 'patronymic', 'avatar', 'about_me'])
+            ->toArray();
 
         return view('orders.index', compact('data'), compact('workers'));
     }
@@ -24,11 +29,18 @@ class OrdersController extends Controller
         }
 
         $order = DB::table('orders')->where('id_order', $id)->get(['title', 'description', 'price', 'time', 'status', 'created_at'])->first();
-        $customer = DB::table('users')->where('id', $id_customer->id_customer)->get(['name', 'surname', 'patronymic', 'phone_number', 'avatar', 'about_me', 'email'])->first();
+
+        $customer = DB::table('users')
+            ->join('users_info', 'users.id', '=', 'users_info.id_user')
+            ->where('id', $id_customer->id_customer)
+            ->get(['name', 'surname', 'patronymic', 'phone_number', 'email', 'viber', 'skype', 'avatar', 'about_me'])
+            ->first();
+
         $proposals = DB::table('proposals')
             ->join('users', 'proposals.id_worker', '=', 'users.id')
+            ->join('users_info', 'users.id', '=', 'users_info.id_user')
             ->where('id_order', $id)
-            ->get(['text', 'price', 'time', 'name', 'surname', 'patronymic', 'phone_number', 'avatar', 'about_me', 'email', 'proposals.created_at'])
+            ->get(['text', 'price', 'time', 'name', 'surname', 'patronymic', 'avatar', 'proposals.created_at'])
             ->toArray();
 
         $data = [
