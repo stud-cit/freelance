@@ -6,6 +6,9 @@
 
 @section('content')
 
+    @php($order = $data['order'])
+    @php($customer = $data['customer'])
+    @php($proposals = $data['proposals'])
 <div class="container">
     <div class="row">
         <div class="col-9">
@@ -91,7 +94,7 @@
 </div>
 
 
-    
+
 @endsection
 
 @section('footer')
