@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             PortfoliosTableSeed::class,
             ReviewsTableSeeder::class,
             ProposalsTableSeeder::class,
+            UsersInfoSeeder::class,
         ]);
     }
 }
