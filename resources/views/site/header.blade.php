@@ -9,13 +9,13 @@
                 </div>
                 @if(Auth::check())
                     <div class="col-1 offset-5 mt-1 small">
-                        <a href="/" class="text-white">Проекти</a>
+                        <a href="/orders" class="text-white">Проекти</a>
                     </div>
                     <div class="col-1 mt-1 small">
-                        <a href="/" class="text-white">Замовники</a>
+                        <a href="/customers" class="text-white">Замовники</a>
                     </div>
                     <div class="col-1 mt-1 small">
-                        <a href="/" class="text-white">Виконавці</a>
+                        <a href="/workers" class="text-white">Виконавці</a>
                     </div>
                     <div class="col-1">
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="badge-pill border border-light py-1 px-3 text-white small">
