@@ -8,16 +8,16 @@
                     <a href="/" class="text-white">StudRISE</a>
                 </div>
                 @if(Auth::check())
-                    <div class="col-1 offset-5 mt-1 small">
+                    <div class="col-lg-1 col-2 offset-lg-5 offset-1 mt-1 small">
                         <a href="/" class="text-white">Проекти</a>
                     </div>
-                    <div class="col-1 mt-1 small">
+                    <div class="col-lg-1 col-2 mt-1 small">
                         <a href="/" class="text-white">Замовники</a>
                     </div>
-                    <div class="col-1 mt-1 small">
+                    <div class="col-lg-1 col-2 mt-1 small">
                         <a href="/" class="text-white">Виконавці</a>
                     </div>
-                    <div class="col-1">
+                    <div class="col-lg-1 col-2">
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="badge-pill border border-light py-1 px-3 text-white small">
                             Вихід
                         </a>
