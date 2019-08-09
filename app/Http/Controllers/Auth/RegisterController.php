@@ -69,8 +69,6 @@ class RegisterController extends Controller
         $id_role = DB::table('roles')->where('role_name', $data['id_role'])->get('id_role')->first();
 
         $user = User::create([
-            'name' => $data['name'],
-            'surname' => $data['surname'],
             'id_role' => $id_role->id_role,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -78,6 +76,8 @@ class RegisterController extends Controller
 
         $values = [
             'id_user' => $user['id'],
+            'name' => $data['name'],
+            'surname' => $data['surname'],
             'patronymic' => null,
             'birthday_date' => null,
             'phone_number' => null,

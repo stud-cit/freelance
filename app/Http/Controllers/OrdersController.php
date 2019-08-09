@@ -11,11 +11,15 @@ class OrdersController extends Controller
     {
         $data = DB::table('orders')->get()->toArray();
 
-        $workers = DB::table('users')
-            ->join('users_info', 'users.id', '=', 'users_info.id_user')
-            ->where('id_role', 3)
-            ->get(['name', 'surname', 'patronymic', 'avatar', 'about_me'])
-            ->toArray();
+        $ids = DB::table('users')->where('id_role', 3)->get('id')->toArray();
+
+        $array = [];
+
+        foreach ($ids as $one) {
+            array_push($array, $one->id);
+        }
+
+        $workers = DB::table('users_info')->whereIn('id_user', $array)->get()->toArray();
 
         return view('orders.index', compact('data'), compact('workers'));
     }
@@ -37,8 +41,7 @@ class OrdersController extends Controller
             ->first();
 
         $proposals = DB::table('proposals')
-            ->join('users', 'proposals.id_worker', '=', 'users.id')
-            ->join('users_info', 'users.id', '=', 'users_info.id_user')
+            ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
             ->where('id_order', $id)
             ->get(['text', 'price', 'time', 'name', 'surname', 'patronymic', 'avatar', 'proposals.created_at'])
             ->toArray();

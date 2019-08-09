@@ -13,6 +13,8 @@ class UsersInfoSeeder extends Seeder
     {
         DB::table('users_info')->insert([
             'id_user' => 1,
+            'name' => 'admin',
+            'surname' => 'admin',
             'patronymic' => 'admin',
             'birthday_date' => '2019-07-03',
             'phone_number' => '777777',
