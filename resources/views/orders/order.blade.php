@@ -12,82 +12,88 @@
 <div class="container">
     <div class="row">
         <div class="col-9">
-            <a href="/orders" class="btn">Пошук</a>
+            <a href="/orders" class="btn font-weight-bold font-size-18">Пошук</a>
         </div>
-        <div class="col-9 text-white rounded" style="background-color: #0076de">
+        <div class="col-9 text-white c_rounded bg-blue">
             <div class="container">
                 <div class="row  mt-4">
-                    <div class="col-3 offset-1 font-weight-bold">Shop</div>
-                    <div class="col-1 offset-5">Ціна:</div>
-                    <div class="col-1 font-weight-bold">132</div>
+                    <div class="col-3 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
+                    <div class="col-1 offset-5 font-size-10">Ціна:</div>
+                    <div class="col-1 font-weight-bold font-size-18">{{$order->price}}</div>
                 </div>
             </div>
-            <div class="tags">#full #blah</div>
-            <div class="description mt-4">
-                some text
-            </div>
-            <div class="mt-4">Дата створення: </div>
+            <div class="tags font-italic font-size-10">#full #blah</div>
+            <div class="description mt-4  font-size-10">{{$order->description}}</div>
+            <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             <div class="col-3 offset-8  mb-4">
-                <button type="submit" class="btn badge-pill w-100 text-white" style="background-color: #000367">
+                <button type="submit" class="btn badge-pill w-100 text-white bg-deep-blue">
                     Видвинути пропозицію
                 </button>
             </div>
         </div>
-        <div class="col-3 text-white text-center rounded-right mt-4 mb-2" style="background-color: #000367">
+        <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
             <div>
                 <!--<img src="" alt=""> for avatar -->
             </div>
             <div class="container text-left">
                 <div class="row">
-                    <div class="col-11 offset-1 name surname font-weight-bold">Doot qweqwrq</div>
-                    <div class="col-11 offset-1">comp order</div>
-                    <div class="col-11 offset-1">E-mail: </div>
-                    <div class="col-11 offset-1">Phone number: </div>
+                    <div class="col-11 offset-1 name surname font-weight-bold">{{$customer->name}} {{$customer->surname}}</div>
+                    <div class="col-11 offset-1 font-size-10">comp order</div>
+                    <div class="col-11 offset-1 font-size-10">E-mail: {{$customer->email}}</div>
+                    <div class="col-11 offset-1 font-size-10">Phone number: {{$customer->phone_number}}</div>
                 </div>
             </div>
         </div>
-        <div class="col-8 mt-4">
-            <div>Сворення власної пропозиції</div>
-            <div class="shadow">
-                <div class="offset-1 mt-4">
-                    <label for="">Ціна</label>
-                    <input type="text">
-                </div>
-                <div class="row">
-                    <div class="col-3 offset-6">
-                        <button type="submit" class="btn badge-pill w-100 text-white mb-2" style="background-color: #000367">
-                            Відправити
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button type="submit" class="btn badge-pill w-100 text-white" style="background-color: #000367">
-                            Відмінити
-                        </button>
-                    </div>
-                </div>
-            </div>
 
-        </div>
+        <div class="col-8 font-weight-bold mt-4 px-0 font-size-18">Видвинути пропозицію</div>
+
+        <form class="col-8 mt-2 shadow-lg c_rounded">
+            <div class="form-group row mt-2">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Ціна:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Час:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="comment_textarea" class="col-sm-2 col-form-label">Коментар:</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <button type="submit" class="col-2 offset-8 text-white btn bg-deep-blue mt-2 px-0">Підтвердити</button>
+                <button type="submit" class="col-2 btn mt-2 px-0">Скинути</button>
+            </div>
+        </form>
+
         <div class="card col-3 offset-1 px-0">
-            <div class="card-header text-left">Схожі заяви</div>
+            <div class="card-header text-left font-weight-bold font-size-18">Схожі заяви</div>
         </div>
         <div class="col-8 mt-4">
-            <div>Пропозиції виконавців</div>
+            <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
             <div class="container proposals">
+                @foreach($proposals as $comment)
                 <div class="row mb-3 mt-2">
                     <div class="col-1">
                         <!--<img src="" alt=""> for avatar -->
                     </div>
-                    <div class="col-9 shadow bg-white rounded work-order" style="">
-                        <div class="name surname font-weight-bold">Doot qwrqrw</div>
-                        <div class="comment">Some text</div>
-                        <div class="text-right created_at" style="font-size: 8px">20.11.2019</div>
+                    <div class="col-9 shadow bg-white work-order" style="">
+                        <div class="name surname font-weight-bold mt-2">{{$comment->name}} {{$comment->surname}}</div>
+                        <div class="comment">{{$comment->text}}</div>
+                        <div class="text-right created_at font-size-10">{{$comment->created_at}}</div>
                     </div>
-                    <div class="col rounded-right bg-green text-white">
-                        <div class="text-center font-weight-bold price" style="font-size: 20px">400</div>
-                        <div class="text-right font-italic time" style="font-size: 10px">3 days</div>
+                    <div class="col c_rounded-right bg-green text-white mt-3">
+                        <div class="text-center font-weight-bold font-size-18 price">{{$comment->price}}</div>
+                        <div class="text-right font-italic time font-size-10">{{$comment->time}}</div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
