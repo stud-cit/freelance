@@ -61,7 +61,7 @@ class OrdersController extends Controller
     {
         $values = [
             'text' => $req->text,
-            'price' => $req->price,
+            'price' => $req->price.' '.$req->currency,
             'time' => $req->time,
             'id_order' => $req->id,
             'id_worker' => Auth::user()->id,
