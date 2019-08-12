@@ -49,12 +49,13 @@
             <div id="prop">
                 <label class="font-size-18">Видвинути пропозицію</label>
                 <form class="col mt-2 shadow-lg c_rounded" method="POST" action="{{ route('add_proposal', $order->id_order) }}">
+                    @csrf
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label mt-2">Ціна:</label>
                         <div class="col-sm-3 mt-2">
                             <input type="number" class="form-control" name="price" required>
                         </div>
-                        <select class="col-sm-1 mt-2 px-0 form-control">
+                        <select class="col-sm-1 mt-2 px-0 form-control" name="currency">
                             <option>грн.</option>
                             <option>$</option>
                         </select>
@@ -73,7 +74,7 @@
                     </div>
                     <div class="form-group row">
                         <button type="submit" class="col-2 offset-8 text-white btn bg-deep-blue  mb-2 px-0">Підтвердити</button>
-                        <button type="submit" class="col-2 btn  mb-2 px-0">Скинути</button>
+                        <button type="reset" class="col-2 btn  mb-2 px-0">Скинути</button>
                     </div>
                 </form>
             </div>
