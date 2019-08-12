@@ -41,7 +41,7 @@ const redirect = new Vue({
 });
 
 const show_prop = new Vue({
-    el: '#butt',
+    el: '#propose-toggle',
     methods: {
         show: function () {
             var style = document.getElementById('prop').style.display;

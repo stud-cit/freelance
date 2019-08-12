@@ -15,21 +15,19 @@
             <a href="/orders" class="btn font-weight-bold font-size-18">&#10094; Пошук</a>
         </div>
         <div class="col-9 text-white c_rounded bg-blue">
-            <div class="container">
-                <div class="row  mt-4">
+                <div class="row mt-4">
                     <div class="col-3 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
                     <div class="col-1 offset-5 font-size-10 mt-2">Ціна:</div>
                     <div class="col-1 font-weight-bold font-size-18">{{$order->price}}</div>
                 </div>
+            <div class="offset-1">
+                <div class="tags font-italic font-size-10">#full #blah</div>
+                <div class="description mt-4  font-size-10">{{$order->description}}</div>
+                <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
-            <div class="tags font-italic font-size-10">#full #blah</div>
-            <div class="description mt-4  font-size-10">{{$order->description}}</div>
-            <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
-            <div class="col-3 offset-8 mb-4">
-                <button type="submit" id="butt" class="text-white btn bg-deep-blue px-0" v-on:click="show()">
-                    Видвинути пропозицію
-                </button>
-            </div>
+            <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mb-4" v-on:click="show()">
+                Видвинути пропозицію
+            </button>
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
             <div>
@@ -73,8 +71,8 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn bg-deep-blue  mb-2 px-0">Підтвердити</button>
-                        <button type="reset" class="col-lg-2 col-3 offset-lg-0 offset-5 btn  mb-2 px-0">Скинути</button>
+                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue  mb-2 px-0">Підтвердити</button>
+                        <button type="reset" class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0">Скинути</button>
                     </div>
                 </form>
             </div>
