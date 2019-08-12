@@ -45,8 +45,8 @@
             </div>
         </div>
 
-        <div class="col-8 font-weight-bold mt-4 px-0">
-            <div id="prop">
+        <div class="col-8 mt-4 px-0">
+            <div id="prop" class="font-weight-bold">
                 <label class="font-size-18">Видвинути пропозицію</label>
                 <form class="col mt-2 shadow-lg c_rounded" method="POST" action="{{ route('add_proposal', $order->id_order) }}">
                     <div class="form-group row">
@@ -72,13 +72,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <button type="submit" class="col-2 offset-8 text-white btn bg-deep-blue  mb-2 px-0">Підтвердити</button>
-                        <button type="submit" class="col-2 btn  mb-2 px-0">Скинути</button>
+                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn bg-deep-blue  mb-2 px-0">Підтвердити</button>
+                        <button type="submit" class="col-lg-2 col-3 offset-lg-0 offset-5 btn  mb-2 px-0">Скинути</button>
                     </div>
                 </form>
             </div>
 
-            <div class="col ">
+            <div class="col">
                 <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
                 <div class="container proposals">
                     @foreach($proposals as $comment)
@@ -100,8 +100,11 @@
                 </div>
             </div>
         </div>
-        <div class="card col-3 offset-1 px-0">
-            <div class="card-header text-left font-weight-bold font-size-18">Схожі заяви</div>
+        <div class="col-3 offset-1 px-0 mt-4">
+            <div class="card">
+                <div class="card-header text-left font-weight-bold font-size-18">Схожі заяви</div>
+                <div class="card-body"> dooot </div>
+            </div>
         </div>
     </div>
 </div>
