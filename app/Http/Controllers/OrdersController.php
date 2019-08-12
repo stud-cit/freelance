@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class OrdersController extends Controller
 {
@@ -32,7 +34,7 @@ class OrdersController extends Controller
             abort(404);
         }
 
-        $order = DB::table('orders')->where('id_order', $id)->get(['title', 'description', 'price', 'time', 'status', 'created_at'])->first();
+        $order = DB::table('orders')->where('id_order', $id)->get(['id_order', 'title', 'description', 'price', 'time', 'status', 'created_at'])->first();
 
         $customer = DB::table('users')
             ->join('users_info', 'users.id', '=', 'users_info.id_user')
@@ -55,4 +57,19 @@ class OrdersController extends Controller
         return view('orders.order', compact('data'));
     }
 
+    public function add_proposal(Request $req)
+    {
+        $values = [
+            'text' => $req->text,
+            'price' => $req->price,
+            'time' => $req->time,
+            'id_order' => $req->id,
+            'id_worker' => Auth::user()->id,
+            'created_at' => Carbon::now(),
+        ];
+
+        DB::table('proposals')->insert($values);
+
+        return back();
+    }
 }

@@ -12,13 +12,13 @@
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-9">
-            <a href="/orders" class="btn font-weight-bold font-size-18">Пошук</a>
+            <a href="/orders" class="btn font-weight-bold font-size-18">&#10094; Пошук</a>
         </div>
         <div class="col-9 text-white c_rounded bg-blue">
             <div class="container">
                 <div class="row  mt-4">
                     <div class="col-3 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
-                    <div class="col-1 offset-5 font-size-10">Ціна:</div>
+                    <div class="col-1 offset-5 font-size-10 mt-2">Ціна:</div>
                     <div class="col-1 font-weight-bold font-size-18">{{$order->price}}</div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
             <div class="description mt-4  font-size-10">{{$order->description}}</div>
             <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             <div class="col-3 offset-8 mb-4">
-                <button type="submit" id="butt" class="btn badge-pill w-100 text-white bg-deep-blue" v-on:click="show()">
+                <button type="submit" id="butt" class="text-white btn bg-deep-blue px-0" v-on:click="show()">
                     Видвинути пропозицію
                 </button>
             </div>
@@ -48,11 +48,11 @@
         <div class="col-8 font-weight-bold mt-4 px-0">
             <div id="prop">
                 <label class="font-size-18">Видвинути пропозицію</label>
-                <form class="col mt-2 shadow-lg c_rounded">
+                <form class="col mt-2 shadow-lg c_rounded" method="POST" action="{{ route('add_proposal', $order->id_order) }}">
                     <div class="form-group row">
-                        <label for="staticEmail" class="col-sm-2 col-form-label mt-2">Ціна:</label>
+                        <label class="col-sm-2 col-form-label mt-2">Ціна:</label>
                         <div class="col-sm-3 mt-2">
-                            <input type="text" class="form-control">
+                            <input type="number" class="form-control" name="price" required>
                         </div>
                         <select class="col-sm-1 mt-2 px-0 form-control">
                             <option>грн.</option>
@@ -60,15 +60,15 @@
                         </select>
                     </div>
                     <div class="form-group row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label">Час:</label>
+                        <label class="col-sm-2 col-form-label">Час:</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="time" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="comment_textarea" class="col-sm-2 col-form-label">Коментар:</label>
+                        <label class="col-sm-2 col-form-label">Коментар:</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" name="text" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -100,7 +100,6 @@
                 </div>
             </div>
         </div>
-
         <div class="card col-3 offset-1 px-0">
             <div class="card-header text-left font-weight-bold font-size-18">Схожі заяви</div>
         </div>
