@@ -39,3 +39,19 @@ const redirect = new Vue({
        }
     }
 });
+
+const show_prop = new Vue({
+    el: '#butt',
+    methods: {
+        show: function () {
+            var style = document.getElementById('prop').style.display;
+
+            if(style == 'none') {
+                document.getElementById('prop').style.display = 'block';
+            }
+            else {
+                document.getElementById('prop').style.display = 'none';
+            }
+        }
+    }
+});

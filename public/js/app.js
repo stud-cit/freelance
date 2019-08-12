@@ -49226,6 +49226,20 @@ var redirect = new Vue({
     }
   }
 });
+var show_prop = new Vue({
+  el: '#butt',
+  methods: {
+    show: function show() {
+      var style = document.getElementById('prop').style.display;
+
+      if (style == 'none') {
+        document.getElementById('prop').style.display = 'block';
+      } else {
+        document.getElementById('prop').style.display = 'none';
+      }
+    }
+  }
+});
 
 /***/ }),
 
