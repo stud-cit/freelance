@@ -47,28 +47,29 @@
 
         <div class="col-8 font-weight-bold mt-4 px-0 font-size-18">Видвинути пропозицію</div>
 
-        <form class="col-8 mt-2 shadow-lg c_rounded">
+        <form class="col-8 mt-2 shadow-lg c_rounded" method="POST" action="{{ route('add_proposal', $order->id_order) }}">
+            @csrf
             <div class="form-group row mt-2">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Ціна:</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control">
+                    <input type="number" class="form-control" name="price" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputPassword" class="col-sm-2 col-form-label">Час:</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="time" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="comment_textarea" class="col-sm-2 col-form-label">Коментар:</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="3"></textarea>
+                    <textarea class="form-control" rows="3" name="text" required></textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <button type="submit" class="col-2 offset-8 text-white btn bg-deep-blue mt-2 px-0">Підтвердити</button>
-                <button type="submit" class="col-2 btn mt-2 px-0">Скинути</button>
+                <button type="reset" class="col-2 btn mt-2 px-0">Скинути</button>
             </div>
         </form>
 
