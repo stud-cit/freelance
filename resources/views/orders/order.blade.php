@@ -44,8 +44,8 @@
         </div>
 
         <div class="col-8 mt-4 px-0">
-            <div id="prop" class="font-weight-bold">
-                <label class="font-size-18">Видвинути пропозицію</label>
+            <div id="prop">
+                <label class="font-size-18 font-weight-bold">Видвинути пропозицію</label>
                 <form class="col mt-2 shadow-lg c_rounded" method="POST" action="{{ route('add_proposal', $order->id_order) }}">
                     @csrf
                     <div class="form-group row">
@@ -63,6 +63,10 @@
                         <div class="col-sm-3">
                             <input type="text" class="form-control" name="time" required>
                         </div>
+                        <select class="col-sm-1 px-0 form-control" name="">
+                            <option>днів</option>
+                            <option>год.</option>
+                        </select>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Коментар:</label>
