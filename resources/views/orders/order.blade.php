@@ -61,10 +61,10 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Час:</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" name="time" required>
+                            <input type="number" class="form-control" name="time" required>
                         </div>
-                        <select class="col-sm-1 px-0 form-control" name="">
-                            <option>днів</option>
+                        <select class="col-sm-1 px-0 form-control" name="type">
+                            <option>дні</option>
                             <option>год.</option>
                         </select>
                     </div>

@@ -59,10 +59,26 @@ class OrdersController extends Controller
 
     public function add_proposal(Request $req)
     {
+        $type = $req->type;
+        $time = $req->time;
+
+        if($type == 'дні') {
+            switch ($req->time) {
+                case $time == 1 :
+                    $time = $time . ' день';
+                    break;
+                case $time > 1 && $time < 5 :
+                    $time = $time . ' дні';
+                    break;
+                default :
+                    $time = $time . ' днів';
+            }
+        }
+
         $values = [
             'text' => $req->text,
             'price' => $req->price.' '.$req->currency,
-            'time' => $req->time,
+            'time' => $time,
             'id_order' => $req->id,
             'id_worker' => Auth::user()->id,
             'created_at' => Carbon::now(),
