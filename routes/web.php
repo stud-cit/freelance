@@ -13,11 +13,11 @@
 
 Auth::routes(['verify' => true]);
 
-Route::get('/orders', 'OrdersController@index');
+Route::get('/orders', 'OrdersController@index')->name('orders');
 Route::get('/orders/{id}', 'OrdersController@order')->middleware(\App\Http\Middleware\LoginCheck::Class);
 
-Route::get('/customers', 'UsersController@customers');
-Route::get('/workers', 'UsersController@workers');
+Route::get('/customers', 'UsersController@customers')->name('customers');
+Route::get('/workers', 'UsersController@workers')->name('workers');
 
 Route::get('/', 'HomeController@index');
 
