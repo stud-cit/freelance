@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -25,5 +26,12 @@ class UsersController extends Controller
             ->get(['name', 'surname', 'patronymic', 'phone_number', 'avatar', 'about_me', 'email', 'skype', 'viber']);
 
         return view('users.workers', compact('data'));
+    }
+
+    public function profile()
+    {
+        $data = DB::table('users_info')->where('id_user', Auth::user()->id)->get()->first();
+
+        return view('users.profile', compact('data'));
     }
 }
