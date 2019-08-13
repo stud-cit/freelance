@@ -10,6 +10,16 @@
     @php($customer = $data['customer'])
     @php($proposals = $data['proposals'])
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+    <div class="flash-message">
+        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            @if(Session::has('alert-' . $msg))
+
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
+        @endforeach
+    </div>
+
     <div class="row">
         <div class="col-9">
             <a href="/orders" class="btn font-weight-bold font-size-18">&#10094; Пошук</a>

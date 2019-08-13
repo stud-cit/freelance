@@ -34,4 +34,22 @@ class UsersController extends Controller
 
         return view('users.profile', compact('data'));
     }
+
+    public function save_info(Request $req)
+    {
+        $values = [
+            'name' => $req->name,
+            'surname' => $req->surname,
+            'patronymic' => $req->patronymic,
+            'birthday_date' => $req->birthday,
+            'phone_number' => $req->phone,
+            'viber' => $req->viber,
+            'skype' => $req->skype,
+            'about_me' => $req->about_me,
+        ];
+
+        DB::table('users_info')->where('id_user', Auth::user()->id)->update($values);
+
+        return back();
+    }
 }

@@ -86,6 +86,8 @@ class OrdersController extends Controller
 
         DB::table('proposals')->insert($values);
 
+        $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
+
         return back();
     }
 }
