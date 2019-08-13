@@ -50,6 +50,8 @@ class UsersController extends Controller
 
         DB::table('users_info')->where('id_user', Auth::user()->id)->update($values);
 
+        $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
+
         return back();
     }
 }
