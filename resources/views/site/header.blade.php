@@ -17,13 +17,20 @@
                     <div class="col-lg-1 col-2 mt-1 small">
                         <a href="{{ route('workers') }}" class="text-white">Виконавці</a>
                     </div>
-                    <div class="col-lg-1 col-2">
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="badge-pill border border-light py-1 px-3 text-white small">
-                            Вихід
+                    <div class="dropdown show col-lg-1 col-2">
+                        <a class="dropdown-toggle badge-pill border border-light py-1 px-3 text-white small" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            P
                         </a>
-                        <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{{ route('profile') }}">Профіль</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                                Вихід
+                            </a>
+                            <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </div>
                     </div>
                 @else
                     @if(strpos(url()->current(), 'register') === false && !Auth::check())
