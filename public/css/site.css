@@ -46,10 +46,14 @@
     margin: 0 auto;
     width: 60px;
     height: 60px;
+    min-width: 70px; !important;
 }
 .circle {
     border-radius: 50%;
 }
 .square {
     border-radius: 0;
+}
+.min-width {
+    min-width: 70px;
 }
