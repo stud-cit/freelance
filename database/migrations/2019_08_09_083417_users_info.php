@@ -23,7 +23,7 @@ class UsersInfo extends Migration
             $table->string('phone_number', 45)->nullable();
             $table->string('viber', 45)->nullable();
             $table->string('skype', 45)->nullable();
-            $table->string('avatar', 255)->nullable();
+            $table->string('avatar', 255);
             $table->text('about_me')->nullable();
         });
     }

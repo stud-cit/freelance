@@ -59,6 +59,14 @@ class OrdersController extends Controller
 
     public function add_proposal(Request $req)
     {
+        if (is_null($req->time) || is_null($req->price) || is_null($req->text) ||
+            ($req->type != 'дні' && $req->type != 'год.') ||
+            ($req->currency != '$' && $req->currency != 'грн.')) {
+
+            $req->session()->flash('alert-danger', 'Заповніть поля!');
+            return back();
+        }
+
         $type = $req->type;
         $time = $req->time;
 

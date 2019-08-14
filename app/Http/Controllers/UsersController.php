@@ -40,6 +40,11 @@ class UsersController extends Controller
     public function save_info(Request $req)
     {
         if ($req->has('form2')) {
+            if (is_null($req->name) || is_null($req->surname)) {
+                $req->session()->flash('alert-danger', 'Поля з ім\'ям та прізвищем є обовязковими!');
+
+                return back();
+            }
 
             $values = [
                 'name' => $req->name,
@@ -56,14 +61,20 @@ class UsersController extends Controller
 
             $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
         }
-        else {
+        else if($req->has('form1')) {
+            if (is_null($req->avatar)) {
+                $req->session()->flash('alert-danger', 'Виберіть новий аватар!');
+
+                return back();
+            }
+
             $prev_path = DB::table('users_info')->where('id_user', Auth::user()->id)->get(['avatar'])->first();
 
             $avatar = $req->avatar;
             $count = count(glob('img/' . "*")) + 1;
             $path = $count . '.' . $avatar->getClientOriginalExtension();
 
-            if ($prev_path != '/img/1.png') {
+            if ($prev_path->avatar != '/img/1.png') {
                 $prev_path = explode('/', $prev_path->avatar);
                 $path = $prev_path[2];
             }
