@@ -8,18 +8,45 @@
 
 <div class="container">
     <div class="row">
-        <form class="col-6">
+        <div class="flash-message col-6">
+            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                @if(Session::has('alert-' . $msg))
+
+                    <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                @endif
+            @endforeach
+        </div>
+    </div>
+    <div class="row">
+        <form class="col-6" method="POST" action="{{ route('save_info') }}" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+                <label>Аватар:</label>
+                <div>
+                    <input type="file" class="form-control" name="avatar" accept="image/*" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <button type="submit" class="col text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form1">Підтвердити</button>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <form class="col-6" method="POST" action="{{ route('save_info') }}">
+            @csrf
             <label>Профіль користувача</label>
+
             <div class="form-group">
                 <label>Імя:</label>
                 <div>
-                    <input type="text" class="form-control" name="name" value="{{$data->name}}">
+                    <input type="text" class="form-control" name="name" value="{{$data->name}}" required>
                 </div>
             </div>
             <div class="form-group">
                 <label>Прізвище:</label>
                 <div>
-                    <input type="text" class="form-control" name="surname" value="{{$data->surname}}">
+                    <input type="text" class="form-control" name="surname" value="{{$data->surname}}" required>
                 </div>
             </div>
             <div class="form-group">
@@ -37,13 +64,13 @@
             <div class="form-group">
                 <label>Номер телефону:</label>
                 <div>
-                    <input type="number" class="form-control" name="phone_number" value="{{$data->phone_number}}">
+                    <input type="text" class="form-control" name="phone_number" value="{{$data->phone_number}}">
                 </div>
             </div>
             <div class="form-group">
                 <label>Viber:</label>
                 <div>
-                    <input type="number" class="form-control" name="viber" value="{{$data->viber}}">
+                    <input type="text" class="form-control" name="viber" value="{{$data->viber}}">
                 </div>
             </div>
             <div class="form-group">
@@ -59,8 +86,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <button type="submit" class="col text-white btn badge-pill bg-deep-blue  mb-2 px-0">Підтвердити</button>
-                <button type="reset" class="col btn badge-pill mb-2 px-0">Скинути</button>
+                <button type="submit" class="col text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form2">Підтвердити</button>
             </div>
         </form>
     </div>

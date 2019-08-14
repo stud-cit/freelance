@@ -22,7 +22,7 @@
 
     <div class="row">
         <div class="col-9">
-            <a href= {{ route('orders') }} class="btn font-weight-bold font-size-18">&#10094; Пошук</a>
+            <a href= "{{ route('orders') }}" class="btn font-weight-bold font-size-18">&#10094; Пошук</a>
         </div>
         <div class="col-9 text-white c_rounded bg-blue">
                 <div class="row mt-4">

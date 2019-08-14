@@ -83,7 +83,7 @@ class RegisterController extends Controller
             'phone_number' => null,
             'viber' => null,
             'skype' => null,
-            'avatar' => null,
+            'avatar' => '/img/1.png',
             'about_me' => null,
         ];
 
