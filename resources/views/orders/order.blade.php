@@ -24,7 +24,7 @@
                 </div>
             <div class="offset-1">
                 <div class="tags font-italic font-size-10">#full #blah</div>
-                <div class="description mt-4  font-size-10">{{$order->description}}</div>
+                <div class="mt-4 font-size-10">{{$order->description}}</div>
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
             <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mb-4" v-on:click="show()">
@@ -32,8 +32,8 @@
             </button>
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
-            <div>
-                <!--<img src="" alt=""> for avatar -->
+            <div class="mt-2">
+                <img src="{{$customer->avatar}}" class="c_avatar circle">
             </div>
             <div class="container text-left">
                 <div class="row">
@@ -41,12 +41,14 @@
                     <div class="col-11 offset-1 font-size-10">comp order</div>
                     <div class="col-11 offset-1 font-size-10">E-mail: {{$customer->email}}</div>
                     <div class="col-11 offset-1 font-size-10">Phone number: {{$customer->phone_number}}</div>
+                    <div class="col-11 offset-1 font-size-10">Viber: {{$customer->viber}}</div>
+                    <div class="col-11 offset-1 font-size-10">Skype: {{$customer->skype}}</div>
                 </div>
             </div>
         </div>
 
         <div class="col-8 mt-4 px-0">
-            <div id="prop">
+            <div id="prop" style="display: none;">
                 <label class="font-size-18 font-weight-bold">Видвинути пропозицію</label>
                 <form class="col mt-2 shadow-lg c_rounded" method="POST" action="{{ route('add_proposal', $order->id_order) }}">
                     @csrf
@@ -88,8 +90,8 @@
                 <div class="container proposals">
                     @foreach($proposals as $comment)
                         <div class="row mb-3 mt-2">
-                            <div class="col-1">
-                                <!--<img src="" alt=""> for avatar -->
+                            <div class="col-1 px-0">
+                                <img src="{{$comment->avatar}}" class="w_avatar square">
                             </div>
                             <div class="col-9 shadow bg-white work-order" style="">
                                 <div class="name surname font-weight-bold mt-2">{{$comment->name}} {{$comment->surname}}</div>

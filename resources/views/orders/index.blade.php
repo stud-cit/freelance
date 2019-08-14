@@ -53,7 +53,6 @@
         </div>
 
         <div class="col-3 offset-1">
-
             <div class="card text-center px-0 mb-4">
                 <div class="card-header text-white font-weight-bold font-size-18 c_rounded-top bg-blue">Фільтр</div>
                 <div class="card-body">
@@ -72,23 +71,16 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-4">
-                <div class="card-header font-weight-bold font-size-18">Топ виконавців</div>
-                <div class="card-body">
+            <div class="mb-4">
+                <div class="font-weight-bold font-size-18 px-0">Топ виконавців</div>
+                <div class="px-0">
                     @foreach($workers as $users)
-                    <!--<img src="" alt=""> for avatar -->
-                    <div class="name surmane font-weight-bold">{{$users->name}} {{$users->surname}}</div>
-                    <div class="about_me font-italic font-size-10">{{$users->about_me}}</div>
+                    <img src="{{$users->avatar}}" class="w_avatar circle">
+                    <label class="name surmane font-weight-bold">{{$users->name}} {{$users->surname}}</label>
                     @endforeach
                 </div>
             </div>
-
         </div>
-
-
-
-
-
     </div>
 </div>
 
