@@ -90,7 +90,7 @@
                 <div class="container proposals">
                     @foreach($proposals as $comment)
                         <div class="row mb-3 mt-2">
-                            <div class="col-1 px-0">
+                            <div class="col-1 px-0 min-width">
                                 <img src="{{$comment->avatar}}" class="w_avatar square">
                             </div>
                             <div class="col-9 shadow bg-white work-order" style="">
