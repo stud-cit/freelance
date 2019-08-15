@@ -68,20 +68,10 @@ class UsersController extends Controller
                 return back();
             }
 
-            $prev_path = DB::table('users_info')->where('id_user', Auth::user()->id)->get(['avatar'])->first();
-
             $avatar = $req->avatar;
-            $count = count(glob('img/' . "*")) + 1;
-            $path = $count . '.' . $avatar->getClientOriginalExtension();
-
-            if ($prev_path->avatar != '/img/1.png') {
-                $prev_path = explode('/', $prev_path->avatar);
-                $path = $prev_path[2];
-            }
+            $path = Auth::user()->id . '.' . $avatar->getClientOriginalExtension();
 
             Storage::disk('public')->put($path, File::get($req->file('avatar')));
-
-            DB::table('users_info')->where('id_user', Auth::user()->id)->update(['avatar' => '/img/' . $path]);
 
             $req->session()->flash('alert-success', 'Аватар користувача успішно оновлено!');
         }

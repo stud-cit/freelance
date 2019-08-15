@@ -20,7 +20,6 @@ class UsersInfoSeeder extends Seeder
             'phone_number' => '777777',
             'viber' => '123456789',
             'skype' => '@admin',
-            'avatar' => '/img/1.png',
             'about_me' => 'very good man',
         ]);
     }

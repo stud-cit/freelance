@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use DB;
 
@@ -74,6 +75,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
+        Storage::disk('public')->copy('1.png', $user['id'] . '.png');
+
         $values = [
             'id_user' => $user['id'],
             'name' => $data['name'],
@@ -83,7 +86,6 @@ class RegisterController extends Controller
             'phone_number' => null,
             'viber' => null,
             'skype' => null,
-            'avatar' => '/img/1.png',
             'about_me' => null,
         ];
 
