@@ -22,8 +22,9 @@
             @csrf
             <div class="form-group">
                 <label>Аватар:</label>
-                <div>
-                    <input type="file" class="form-control" name="avatar" accept="image/*" required>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="avatar" id="avatar-input" lang="ua" accept="image/*" required>
+                    <label class="custom-file-label" for="avatar-input" id="avatar-input-label" data-browse="Обрати">Виберіть файл</label>
                 </div>
             </div>
 
