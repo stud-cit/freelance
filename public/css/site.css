@@ -36,17 +36,9 @@
     border-top-right-radius: 0.50rem;
     border-top-left-radius: 0.50rem;
 }
-.c_avatar {
-    vertical-align: middle;
-    width: 100px;
-    height: 100px;
-}
-.w_avatar {
+.avatar {
     vertical-align: middle;
     margin: 0 auto;
-    width: 60px;
-    height: 60px;
-    min-width: 70px; !important;
 }
 .circle {
     border-radius: 50%;
@@ -54,6 +46,23 @@
 .square {
     border-radius: 0;
 }
-.min-width {
-    min-width: 70px;
+.min-width-70 {
+    min-width: 70px !important;
+}
+
+.square-1rem {
+    height: 1rem;
+    width: 1rem;
+}
+.square-2rem {
+    height: 2rem;
+    width: 2rem;
+}
+.square-60 {
+    width: 60px;
+    height: 60px;
+}
+.square-100 {
+    width: 100px;
+    height: 100px;
 }

@@ -33,7 +33,7 @@
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
             <div class="mt-2">
-                <img src="{{$customer->avatar}}" class="c_avatar circle">
+                <img src="{{$customer->avatar}}" class="square-100 avatar circle">
             </div>
             <div class="container text-left">
                 <div class="row">
@@ -90,8 +90,8 @@
                 <div class="container proposals">
                     @foreach($proposals as $comment)
                         <div class="row mb-3 mt-2">
-                            <div class="col-1 px-0 min-width">
-                                <img src="{{$comment->avatar}}" class="w_avatar square">
+                            <div class="col-1 px-0 min-width-70">
+                                <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
                             </div>
                             <div class="col-9 shadow bg-white work-order" style="">
                                 <div class="name surname font-weight-bold mt-2">{{$comment->name}} {{$comment->surname}}</div>

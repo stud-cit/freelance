@@ -75,7 +75,7 @@
                 <div class="font-weight-bold font-size-18 px-0">Топ виконавців</div>
                 <div class="px-0">
                     @foreach($workers as $users)
-                    <img src="{{$users->avatar}}" class="w_avatar circle">
+                    <img src="{{$users->avatar}}" class="square-60 avatar circle">
                     <label class="name surmane font-weight-bold">{{$users->name}} {{$users->surname}}</label>
                     @endforeach
                 </div>
