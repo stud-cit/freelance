@@ -75,7 +75,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        Storage::disk('public')->copy('1.png', $user['id'] . '.png');
+        Storage::disk('public')->copy('0.png', $user['id'] . '.png');
 
         $values = [
             'id_user' => $user['id'],

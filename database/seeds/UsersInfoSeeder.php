@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class UsersInfoSeeder extends Seeder
 {
@@ -22,5 +23,7 @@ class UsersInfoSeeder extends Seeder
             'skype' => '@admin',
             'about_me' => 'very good man',
         ]);
+
+        Storage::disk('public')->copy('0.png', '1.png');
     }
 }

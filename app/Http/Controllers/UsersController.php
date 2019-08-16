@@ -79,6 +79,14 @@ class UsersController extends Controller
 
             $path = Auth::user()->id . '.' . $extension;
 
+            if ($extension = 'png') {
+                $del_path = Auth::user()->id . '.jpg';
+            }
+            else {
+                $del_path = Auth::user()->id . '.png';
+            }
+
+            Storage::disk('public')->delete($del_path);
             Storage::disk('public')->put($path, File::get($req->file('avatar')));
 
             $req->session()->flash('alert-success', 'Аватар користувача успішно оновлено!');
