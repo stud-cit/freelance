@@ -19,7 +19,7 @@
                     </div>
                     <div class="dropdown show col-lg-1 col-2">
                         <button class="dropdown-toggle btn badge-pill border border-light py-1 px-3 text-white small" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="/img/2.png" title="title" alt="img" class="w_avatar" style="width: 1rem; height: 1rem">
+                            <img src="{{Auth::user()->getAvatarPath()}}" title="title" alt="img" class="w_avatar" style="width: 1rem; height: 1rem">
                         </button>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use DB;
 use Auth;
 
@@ -23,6 +24,15 @@ class OrdersController extends Controller
 
         $workers = DB::table('users_info')->whereIn('id_user', $array)->get()->toArray();
 
+        foreach ($workers as $worker) {
+            if (Storage::disk('public')->has($worker->id_user . '.png')) {
+                $worker->avatar = '/img/' . $worker->id_user . '.png';
+            }
+            else {
+                $worker->avatar = '/img/' . $worker->id_user . '.jpg';
+            }
+        }
+
         return view('orders.index', compact('data'), compact('workers'));
     }
 
@@ -39,14 +49,30 @@ class OrdersController extends Controller
         $customer = DB::table('users')
             ->join('users_info', 'users.id', '=', 'users_info.id_user')
             ->where('id', $id_customer->id_customer)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'email', 'viber', 'skype', 'avatar', 'about_me'])
+            ->get()
             ->first();
+
+        if (Storage::disk('public')->has($customer->id_user . '.png')) {
+            $customer->avatar = '/img/' . $customer->id_user . '.png';
+        }
+        else {
+            $customer->avatar = '/img/' . $customer->id_user . '.jpg';
+        }
 
         $proposals = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
             ->where('id_order', $id)
-            ->get(['text', 'price', 'time', 'name', 'surname', 'patronymic', 'avatar', 'proposals.created_at'])
+            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
             ->toArray();
+
+        foreach ($proposals as $one) {
+            if (Storage::disk('public')->has($one->id_user . '.png')) {
+                $one->avatar = '/img/' . $one->id_user . '.png';
+            }
+            else {
+                $one->avatar = '/img/' . $one->id_user . '.jpg';
+            }
+        }
 
         $data = [
             'order' => $order,

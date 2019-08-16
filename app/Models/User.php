@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use DB;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -44,5 +45,16 @@ class User extends Authenticatable implements MustVerifyEmail
         $user = DB::table('users')->where('id', $id)->get('id_role')->first();
 
         return $user->id_role == 1;
+    }
+
+    function getAvatarPath() {
+        $id = Auth::id();
+
+        if (Storage::disk('public')->has($id . '.png')) {
+            return '/img/' . $id . '.png';
+        }
+        else {
+            return '/img/' . $id . '.jpg';
+        }
     }
 }

@@ -15,7 +15,7 @@ class UsersController extends Controller
         $data = DB::table('users')
             ->join('users_info', 'users.id', '=', 'users_info.id_user')
             ->where('id_role', 2)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'avatar', 'about_me', 'email', 'skype', 'viber']);
+            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber']);
 
         return view('users.customers', compact('data'));
     }
@@ -25,7 +25,7 @@ class UsersController extends Controller
         $data = DB::table('users')
             ->join('users_info', 'users.id', '=', 'users_info.id_user')
             ->where('id_role', 3)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'avatar', 'about_me', 'email', 'skype', 'viber']);
+            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber']);
 
         return view('users.workers', compact('data'));
     }
@@ -69,7 +69,15 @@ class UsersController extends Controller
             }
 
             $avatar = $req->avatar;
-            $path = Auth::user()->id . '.' . $avatar->getClientOriginalExtension();
+            $extension = $avatar->getClientOriginalExtension();
+
+            if ($extension != 'png' && $extension != 'jpg') {
+                $req->session()->flash('alert-danger', 'Аватар має бути у форматі png або jpg!');
+
+                return back();
+            }
+
+            $path = Auth::user()->id . '.' . $extension;
 
             Storage::disk('public')->put($path, File::get($req->file('avatar')));
 
