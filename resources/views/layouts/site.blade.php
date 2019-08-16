@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="h-100">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, maximum-scale=1">
@@ -66,7 +66,7 @@
     </style>-->
 
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 <!--Header_section-->
 <header id="header_wrapper">
 	@yield('header')
@@ -78,7 +78,7 @@
 	@yield('content')
 
 <!--Footer_section-->
-<footer id="footer_wrapper">
+<footer id="footer_wrapper" class="mt-auto">
     @yield('footer')
 </footer>
 <!--Footer_section-->
