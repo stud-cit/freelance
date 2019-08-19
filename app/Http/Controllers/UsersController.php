@@ -35,7 +35,7 @@ class UsersController extends Controller
         $data = DB::table('users_info')
             ->join('users', 'users.id', '=', 'users_info.id_user')
             ->where('id_user', Auth::user()->id)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role'])
+            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role', 'created_at'])
             ->first();
 
         return view('users.profile', compact('data'));
@@ -110,7 +110,7 @@ class UsersController extends Controller
         $data = DB::table('users_info')
             ->join('users', 'users.id', '=', 'users_info.id_user')
             ->where('id_user', $id)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role'])
+            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role', 'created_at'])
             ->first();
 
         return view('users.user', compact('data'));
