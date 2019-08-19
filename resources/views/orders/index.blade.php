@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="container mt-5" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-8">
             <div class="container">
@@ -37,8 +37,8 @@
             </div>
             <div class="container orders">
                 @foreach($data as $orders)
-                <div class="row mb-3 mt-2">
-                    <div class="col-10 shadow bg-white work-order pointer" style="" v-on:click="redirect({{$orders->id_order}})">
+                <div class="d-flex flex-row mb-3 mt-2">
+                    <div class="col-10 shadow bg-white work-order pointer" v-on:click="redirect({{$orders->id_order}})">
                         <div class="title font-weight-bold mt-2">{{$orders->title}}</div>
                         <div class="description">{{$orders->description}}</div>
                         <div class="text-right created_at font-size-10">{{$orders->created_at}}</div>

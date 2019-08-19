@@ -1,5 +1,5 @@
 @section('header')
-    <div class="container-fluid bg-blue">
+    <div class="container-fluid bg-blue mb-5">
         <div class="row py-2 text-white text-center">
                 <div class="col-1">
                     <div class="bg-success rounded-circle float-right logo-circle">&nbsp;</div>
