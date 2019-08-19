@@ -89,7 +89,7 @@
                 <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
                 <div class="container proposals">
                     @foreach($proposals as $comment)
-                        <div class="row mb-3 mt-2">
+                        <div class="d-flex flex-row mb-3 mt-2">
                             <div class="col-1 px-0 min-width-70">
                                 <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
                             </div>
