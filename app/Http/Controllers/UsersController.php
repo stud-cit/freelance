@@ -38,6 +38,9 @@ class UsersController extends Controller
             ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role', 'created_at'])
             ->first();
 
+        $created_at = explode(' ', $data->created_at);
+        $data->created_at = $created_at[0];
+
         return view('users.profile', compact('data'));
     }
 
@@ -112,6 +115,9 @@ class UsersController extends Controller
             ->where('id_user', $id)
             ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role', 'created_at'])
             ->first();
+
+        $created_at = explode(' ', $data->created_at);
+        $data->created_at = $created_at[0];
 
         return view('users.user', compact('data'));
     }
