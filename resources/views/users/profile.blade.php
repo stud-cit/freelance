@@ -21,11 +21,11 @@
                             <div class="col-11 name surname font-weight-bold font-size-18">{{$data->name}} {{$data->surname}}</div>
                             <div class="col-11 font-size-10 ">comp order: 7</div>
                             <div class="col-11 font-weight-bold font-size-10">Контактна інформація</div>
-                            <div class="col-11 font-size-10">E-mail: </div>
+                            <div class="col-11 font-size-10">E-mail: {{$data->email}}</div>
                             <div class="col-11 font-size-10">Phone number: {{$data->phone_number}}</div>
                             <div class="col-11 font-size-10">Viber: {{$data->viber}}</div>
                             <div class="col-11 font-size-10">Skype: {{$data->skype}}</div>
-                            <div class="col-11 font-weight-bold font-size-10">Дата реєстрації: </div>
+                            <div class="col-11 font-weight-bold font-size-10">Дата реєстрації: {{$data->created_at}}</div>
                         </div>
                     </div>
                 </div>
