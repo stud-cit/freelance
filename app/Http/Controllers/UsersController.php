@@ -32,7 +32,11 @@ class UsersController extends Controller
 
     public function profile()
     {
-        $data = DB::table('users_info')->where('id_user', Auth::user()->id)->get()->first();
+        $data = DB::table('users_info')
+            ->join('users', 'users.id', '=', 'users_info.id_user')
+            ->where('id_user', Auth::user()->id)
+            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role'])
+            ->first();
 
         return view('users.profile', compact('data'));
     }
@@ -93,5 +97,22 @@ class UsersController extends Controller
         }
 
         return back();
+    }
+
+    public function user($id)
+    {
+        $id_user = DB::table('users')->where('id', $id)->get('id')->first();
+
+        if (!$id_user) {
+            abort(404);
+        }
+
+        $data = DB::table('users_info')
+            ->join('users', 'users.id', '=', 'users_info.id_user')
+            ->where('id_user', $id)
+            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role'])
+            ->first();
+
+        return view('users.user', compact('data'));
     }
 }

@@ -12,6 +12,7 @@ Route::get('/customers', 'UsersController@customers')->name('customers');
 Route::get('/workers', 'UsersController@workers')->name('workers');
 Route::get('/profile', 'UsersController@profile')->middleware('logged.in')->name('profile');
 Route::post('/profile', 'UsersController@save_info')->name('save_info');
+Route::get('/profile/{id}', 'UsersController@user')->name('user');
 
 Route::get('/', 'HomeController@index');
 
