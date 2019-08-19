@@ -24,6 +24,14 @@ class UsersInfoSeeder extends Seeder
             'about_me' => 'very good man',
         ]);
 
+        $files = glob('public/img/*');
+
+        foreach ($files as $file) {
+            if (is_file($file) && $file != "public/img/0.png") {
+                unlink($file);
+            }
+        }
+
         Storage::disk('public')->copy('0.png', '1.png');
     }
 }
