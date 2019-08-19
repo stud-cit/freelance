@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container mt-5">
+<div class="container">
     <div class="row">
         <div class="col-7">
             <img src="{{ asset('registration.jpg') }}" class="img-fluid">

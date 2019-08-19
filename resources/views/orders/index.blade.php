@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="container mt-5" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-8">
             <div class="container">

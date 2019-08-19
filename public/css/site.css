@@ -66,3 +66,9 @@
     width: 100px;
     height: 100px;
 }
+#profile-bar .nav-link {
+    color: #3F3D56;
+}
+#profile-bar .nav-link.active {
+    color: #0076de;
+}
