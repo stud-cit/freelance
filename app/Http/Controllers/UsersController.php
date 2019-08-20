@@ -37,7 +37,7 @@ class UsersController extends Controller
 
     public function save_info(Request $req)
     {
-        if ($req->has('form2')) {
+        if ($req->has('form_info')) {
             if (is_null($req->name) || is_null($req->surname)) {
                 $req->session()->flash('alert-danger', 'Поля з ім\'ям та прізвищем є обовязковими!');
 
@@ -49,17 +49,29 @@ class UsersController extends Controller
                 'surname' => $req->surname,
                 'patronymic' => $req->patronymic,
                 'birthday_date' => $req->birthday_date,
-                'phone_number' => $req->phone_number,
-                'viber' => $req->viber,
-                'skype' => $req->skype,
-                'about_me' => $req->about_me,
+                'country' => $req->country,
+                'city' => $req->city
             ];
 
             DB::table('users_info')->where('id_user', Auth::user()->id)->update($values);
 
             $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
         }
-        else if($req->has('form1')) {
+        else if($req->has('form_contacts')) {
+            $values = [
+                'phone_number' => $req->phone_number,
+                'viber' => $req->viber,
+                'skype' => $req->skype
+            ];
+
+            DB::table('users_info')->where('id_user', Auth::user()->id)->update($values);
+
+            $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
+        }
+        else if($req->has('form_password')) {
+
+        }
+        else if($req->has('form_avatar')) {
             if (is_null($req->avatar)) {
                 $req->session()->flash('alert-danger', 'Виберіть новий аватар!');
 

@@ -39,7 +39,8 @@
             </div>
             <div class="tab-pane fade" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <label class="col font-size-18">Налаштування безпеки</label>
-                <form action="" class="row">
+                <form method="POST" action="{{route('save_info')}}" class="row">
+                    @csrf
                     <div class="col-9">
                         <div class="form-group row">
                             <label class="col-5 col-form-label mt-2">Старий пароль:</label>
@@ -60,7 +61,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                            <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_password">Підтвердити</button>
                         </div>
                     </div>
                 </form>
@@ -76,9 +77,10 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active row" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
-                        <label class="col font-size-18 mt-2">Параметри</label>
+                        <label class="col font-size-18 mt-2 ">Параметри</label>
                         <hr class="my-0 border-dark">
-                        <form action="" class="col-6 offset-1">
+                        <form method="POST" action="{{route('save_info')}}" class="col-6 offset-1">
+                            @csrf
                             <div class="form-group row">
                                 <label class="col-5 col-form-label mt-2">Прізвище:</label>
                                 <div class="col-6 mt-2">
@@ -116,13 +118,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_info">Підтвердити</button>
                             </div>
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-
-                        <form action="" class="col-6 offset-1">
+                        <form method="POST" action="{{route('save_info')}}" class="col-6 offset-1">
+                            @csrf
                             <label class="col font-size-18 mt-2 px-0">Контакти</label>
                             <div class="form-group row">
                                 <label class="col-5 col-form-label mt-2">Номер телефону:</label>
@@ -161,12 +163,13 @@
                                 </div>
                             </div>-->
                             <div class="form-group row">
-                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_contacts">Підтвердити</button>
                             </div>
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">
-                        <form action="" class="col offset-1">
+                        <form method="POST" action="{{route('save_info')}}" class="col">
+                            @csrf
                             <label class="col font-size-18 mt-2 px-0">Спеціалізація</label>
                             <select class="col custom-select mb-2" name="custom-select">
                                 <option selected>&#8213;</option>
@@ -192,14 +195,14 @@
                                 </label>
                             </div>
                             <div class="form-group row">
-                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_skills">Підтвердити</button>
                             </div>
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                         <label class="col font-size-18 mt-2">Додаткова інформація</label>
-                        <form action="" class="col">
-
+                        <form method="POST" action="{{route('save_info')}}" class="col">
+                            @csrf
                         </form>
                     </div>
                 </div>
