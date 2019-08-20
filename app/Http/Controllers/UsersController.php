@@ -58,7 +58,7 @@ class UsersController extends Controller
 
                 $path = Auth::user()->id . '.' . $extension;
 
-                if ($extension = 'png') {
+                if ($extension == 'png') {
                     $del_path = Auth::user()->id . '.jpg';
                 } else {
                     $del_path = Auth::user()->id . '.png';
