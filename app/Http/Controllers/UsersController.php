@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Models\User;
@@ -92,7 +93,9 @@ class UsersController extends Controller
             $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
         }
         else if($req->has('form_password')) {
+            Auth::user()->update(['password' => HASH::make($req->new_password)]);
 
+            $req->session()->flash('alert-success', 'Пароль успішно змінено!');
         }
 
         return back();

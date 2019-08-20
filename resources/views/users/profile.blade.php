@@ -51,12 +51,6 @@
                     @csrf
                     <div class="col-9">
                         <div class="form-group row">
-                            <label class="col-5 col-form-label mt-2">Старий пароль:</label>
-                            <div class="col-6 mt-2">
-                                <input type="password" class="form-control" name="old_password" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-5 col-form-label mt-2">Новий пароль:</label>
                             <div class="col-6 mt-2">
                                 <input type="password" class="form-control" name="new_password" required>
