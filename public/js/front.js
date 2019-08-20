@@ -114,6 +114,15 @@ $("document").ready(function () {
       $('#prop').hide();
     }
   });
+  $('.pass_change').on('submit', function (e) {
+    var pass = $("input[name = 'new_password']"),
+        new_pass = $("input[name = 'new_password_confirmation']");
+
+    if (pass.val() !== new_pass.val()) {
+      e.preventDefault();
+      new_pass.addClass('is-invalid');
+    }
+  });
 });
 
 /***/ }),

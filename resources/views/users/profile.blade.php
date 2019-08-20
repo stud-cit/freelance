@@ -47,7 +47,7 @@
             </div>
             <div class="tab-pane fade" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <label class="col font-size-18">Налаштування безпеки</label>
-                <form method="POST" action="{{route('save_info')}}" class="row" onsubmit="event.preventDefault(); var pass=$('input[name=\'new_password\']'), new_pass=$('input[name=\'new_password_confirmation\']');  if(pass.val() != new_pass.val()) { new_pass.addClass('is-invalid');return false; } else { new_pass.removeClass('is-invalid'); submit(); return true; }">
+                <form method="POST" action="{{route('save_info')}}" class="row pass_change">
                     @csrf
                     <div class="col-9">
                         <div class="form-group row">
