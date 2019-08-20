@@ -24,6 +24,8 @@ class UsersInfo extends Migration
             $table->string('viber', 45)->nullable();
             $table->string('skype', 45)->nullable();
             $table->text('about_me')->nullable();
+            $table->text('country')->nullable();
+            $table->text('city')->nullable();
         });
     }
 

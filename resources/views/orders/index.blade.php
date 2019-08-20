@@ -38,7 +38,7 @@
             <div class="container orders">
                 @foreach($data as $orders)
                 <div class="d-flex flex-row mb-3 mt-2">
-                    <div class="col-10 shadow bg-white work-order pointer" v-on:click="redirect({{$orders->id_order}})">
+                    <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
                         <div class="title font-weight-bold mt-2">{{$orders->title}}</div>
                         <div class="description">{{$orders->description}}</div>
                         <div class="text-right created_at font-size-10">{{$orders->created_at}}</div>

@@ -22,6 +22,8 @@ class UsersInfoSeeder extends Seeder
             'viber' => '123456789',
             'skype' => '@admin',
             'about_me' => 'very good man',
+            'country' => 'Ukraine',
+            'city' => 'Sumy'
         ]);
 
         $files = glob('public/img/*');

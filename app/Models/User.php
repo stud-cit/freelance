@@ -57,4 +57,11 @@ class User extends Authenticatable implements MustVerifyEmail
             return '/img/' . $id . '.jpg';
         }
     }
+
+    static function getUsersInfo($where, $what) {
+        return  DB::table('users_info')
+            ->join('users', 'users.id', '=', 'users_info.id_user')
+            ->where($where, $what)
+            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role', 'created_at', 'country', 'city']);
+    }
 }

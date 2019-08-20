@@ -87,6 +87,8 @@ class RegisterController extends Controller
             'viber' => null,
             'skype' => null,
             'about_me' => null,
+            'country' => null,
+            'city' => null
         ];
 
         DB::table('users_info')->insert($values);

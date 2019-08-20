@@ -7,36 +7,27 @@ use DB;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\Models\User;
 
 class UsersController extends Controller
 {
     public function customers()
     {
-        $data = DB::table('users')
-            ->join('users_info', 'users.id', '=', 'users_info.id_user')
-            ->where('id_role', 2)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber']);
+        $data = User::getUsersInfo('id_role', 2);
 
         return view('users.customers', compact('data'));
     }
 
     public function workers()
     {
-        $data = DB::table('users')
-            ->join('users_info', 'users.id', '=', 'users_info.id_user')
-            ->where('id_role', 3)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber']);
+        $data = User::getUsersInfo('id_role', 3);
 
         return view('users.workers', compact('data'));
     }
 
     public function profile()
     {
-        $data = DB::table('users_info')
-            ->join('users', 'users.id', '=', 'users_info.id_user')
-            ->where('id_user', Auth::user()->id)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role', 'created_at'])
-            ->first();
+        $data = User::getUsersInfo('id_user', Auth::user()->id)->first();
 
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
@@ -110,11 +101,7 @@ class UsersController extends Controller
             abort(404);
         }
 
-        $data = DB::table('users_info')
-            ->join('users', 'users.id', '=', 'users_info.id_user')
-            ->where('id_user', $id)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role', 'created_at'])
-            ->first();
+        $data = User::getUsersInfo('id_user',  Auth::user()->id)->first();
 
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];

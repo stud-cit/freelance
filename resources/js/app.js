@@ -26,32 +26,3 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-const app = new Vue({
-    el: '#app',
-});
-
-const redirect = new Vue({
-   el: '.work-order',
-    methods: {
-       redirect: function (id) {
-           window.location.href = "orders/" + id;
-       }
-    }
-});
-
-const show_prop = new Vue({
-    el: '#propose-toggle',
-    methods: {
-        show: function () {
-            var style = document.getElementById('prop').style.display;
-
-            if(style == 'none') {
-                document.getElementById('prop').style.display = 'block';
-            }
-            else {
-                document.getElementById('prop').style.display = 'none';
-            }
-        }
-    }
-});

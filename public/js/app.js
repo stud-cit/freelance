@@ -49215,32 +49215,6 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
-  el: '#app'
-});
-var redirect = new Vue({
-  el: '.work-order',
-  methods: {
-    redirect: function redirect(id) {
-      window.location.href = "orders/" + id;
-    }
-  }
-});
-var show_prop = new Vue({
-  el: '#propose-toggle',
-  methods: {
-    show: function show() {
-      var style = document.getElementById('prop').style.display;
-
-      if (style == 'none') {
-        document.getElementById('prop').style.display = 'block';
-      } else {
-        document.getElementById('prop').style.display = 'none';
-      }
-    }
-  }
-});
-
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

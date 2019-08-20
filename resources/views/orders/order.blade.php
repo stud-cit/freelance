@@ -27,7 +27,7 @@
                 <div class="mt-4 font-size-10">{{$order->description}}</div>
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
-            <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mb-4" v-on:click="show()">
+            <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mb-4">
                 Видвинути пропозицію
             </button>
         </div>
@@ -93,7 +93,7 @@
                             <div class="col-1 px-0 min-width-70">
                                 <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
                             </div>
-                            <div class="col-9 shadow bg-white work-order" style="">
+                            <div class="col-9 shadow bg-white to-profile pointer" data-id="{{$comment->id_user}}">
                                 <div class="name surname font-weight-bold mt-2">{{$comment->name}} {{$comment->surname}}</div>
                                 <div class="comment">{{$comment->text}}</div>
                                 <div class="text-right created_at font-size-10">{{$comment->created_at}}</div>
