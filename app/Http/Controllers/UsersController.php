@@ -44,6 +44,29 @@ class UsersController extends Controller
                 return back();
             }
 
+            if (!is_null($req->avatar)) {
+
+                $avatar = $req->avatar;
+                $extension = $avatar->getClientOriginalExtension();
+
+                if ($extension != 'png' && $extension != 'jpg') {
+                    $req->session()->flash('alert-danger', 'Аватар має бути у форматі png або jpg!');
+
+                    return back();
+                }
+
+                $path = Auth::user()->id . '.' . $extension;
+
+                if ($extension = 'png') {
+                    $del_path = Auth::user()->id . '.jpg';
+                } else {
+                    $del_path = Auth::user()->id . '.png';
+                }
+
+                Storage::disk('public')->delete($del_path);
+                Storage::disk('public')->put($path, File::get($req->file('avatar')));
+            }
+
             $values = [
                 'name' => $req->name,
                 'surname' => $req->surname,
@@ -70,36 +93,6 @@ class UsersController extends Controller
         }
         else if($req->has('form_password')) {
 
-        }
-        else if($req->has('form_avatar')) {
-            if (is_null($req->avatar)) {
-                $req->session()->flash('alert-danger', 'Виберіть новий аватар!');
-
-                return back();
-            }
-
-            $avatar = $req->avatar;
-            $extension = $avatar->getClientOriginalExtension();
-
-            if ($extension != 'png' && $extension != 'jpg') {
-                $req->session()->flash('alert-danger', 'Аватар має бути у форматі png або jpg!');
-
-                return back();
-            }
-
-            $path = Auth::user()->id . '.' . $extension;
-
-            if ($extension = 'png') {
-                $del_path = Auth::user()->id . '.jpg';
-            }
-            else {
-                $del_path = Auth::user()->id . '.png';
-            }
-
-            Storage::disk('public')->delete($del_path);
-            Storage::disk('public')->put($path, File::get($req->file('avatar')));
-
-            $req->session()->flash('alert-success', 'Аватар користувача успішно оновлено!');
         }
 
         return back();
