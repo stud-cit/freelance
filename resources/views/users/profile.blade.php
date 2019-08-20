@@ -50,10 +50,131 @@
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">Dooot 1</div>
-                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Dooot 2</div>
-                    <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">Dooot 3</div>
-                    <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">Dooot 3</div>
+                    <div class="tab-pane fade show active row" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
+                        <label class="col font-size-18 mt-2 ">Параметри</label>
+                        <form action="" class="col-6 offset-1">
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Прізвище:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="surname" value="{{$data->surname}}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Ім'я:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="name" value="{{$data->name}}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">По батькові:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="patronymic" value="{{$data->patronymic}}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Дата народження:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Країна:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="country" value="{{$data->country}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Місто:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="city" value="{{$data->city}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <label class="col font-size-18 mt-2 px-0">Контакти</label>
+                        <form action="" class="col-6 offset-1">
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Номер телефону:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="phone_number" value="{{$data->phone_number}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Viber:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="viber" value="{{$data->viber}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Skype:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="skype" value="{{$data->skype}}">
+                                </div>
+                            </div>
+                            <!--<div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Facebook:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="facebook" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Telegram:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="telegram" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label mt-2">Instagram:</label>
+                                <div class="col-6 mt-2">
+                                    <input type="text" class="form-control" name="instagram" value="">
+                                </div>
+                            </div>-->
+                            <div class="form-group row">
+                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">
+                        <label class="col font-size-18 mt-2 px-0">Спеціалізація</label>
+                        <form action="" class="col">
+                            <select class="col custom-select mb-2" name="custom-select">
+                                <option selected>&#8213;</option>
+                                <option value="1">1</option>
+                                <option value="1">1</option>
+                            </select>
+                            <select class="col custom-select mb-2" name="custom-select">
+                                <option selected>&#8213;</option>
+                                <option value="1">1</option>
+                                <option value="1">1</option>
+                            </select>
+                            <label class="col font-size-18 mt-2 px-0">Навички та вміння</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    C++
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                                <label class="form-check-label" for="defaultCheck2">
+                                    C#
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                        <label class="col font-size-18 mt-2">Додаткова інформація</label>
+                        <form action="" class="col">
+
+                        </form>
+                    </div>
                 </div>
             </div>
 
