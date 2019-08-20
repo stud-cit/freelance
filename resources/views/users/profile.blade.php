@@ -10,6 +10,14 @@
 
 <div class="container">
     <div class="row">
+        <div class="flash-message fixed-bottom text-center">
+            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                @if(Session::has('alert-' . $msg))
+
+                    <p class="alert alert-{{ $msg }} alert-dismissible"> {{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                @endif
+            @endforeach
+        </div>
         <div class="col-9 tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <div class="row">
