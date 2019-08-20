@@ -79,8 +79,15 @@
                     <div class="tab-pane fade show active row" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
                         <label class="col font-size-18 mt-2 ">Параметри</label>
                         <hr class="my-0 border-dark">
-                        <form method="POST" action="{{route('save_info')}}" class="col-6 offset-1">
+                        <form method="POST" action="{{ route('save_info') }}" class="col-6 offset-1">
                             @csrf
+                            <div class="form-group row">
+                                <label>Аватар:</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="avatar" id="avatar-input" lang="ua" accept="image/*" required>
+                                    <label class="custom-file-label" for="avatar-input" id="avatar-input-label" data-browse="Обрати">Виберіть файл</label>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-5 col-form-label mt-2">Прізвище:</label>
                                 <div class="col-6 mt-2">
