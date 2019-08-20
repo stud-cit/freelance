@@ -76,7 +76,8 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active row" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
-                        <label class="col font-size-18 mt-2 ">Параметри</label>
+                        <label class="col font-size-18 mt-2">Параметри</label>
+                        <hr class="my-0 border-dark">
                         <form action="" class="col-6 offset-1">
                             <div class="form-group row">
                                 <label class="col-5 col-form-label mt-2">Прізвище:</label>
@@ -120,8 +121,9 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <label class="col font-size-18 mt-2 px-0">Контакти</label>
+
                         <form action="" class="col-6 offset-1">
+                            <label class="col font-size-18 mt-2 px-0">Контакти</label>
                             <div class="form-group row">
                                 <label class="col-5 col-form-label mt-2">Номер телефону:</label>
                                 <div class="col-6 mt-2">
@@ -164,8 +166,8 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">
-                        <label class="col font-size-18 mt-2 px-0">Спеціалізація</label>
-                        <form action="" class="col">
+                        <form action="" class="col offset-1">
+                            <label class="col font-size-18 mt-2 px-0">Спеціалізація</label>
                             <select class="col custom-select mb-2" name="custom-select">
                                 <option selected>&#8213;</option>
                                 <option value="1">1</option>
@@ -209,13 +211,20 @@
                 <div class="card-header text-white font-weight-bold font-size-18 c_rounded-top bg-blue">Моя сторінка</div>
                 <div class="card-body">
                     <div class="nav flex-column" id="profile-bar" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-edit" role="tab" aria-selected="false">Редагування даних</a>
-                        <hr style="border-color: black">
-                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-portfolio" role="tab" aria-controls="v-pills-profile" aria-selected="false">Портфоліо</a>
-                        <hr>
-                        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-auth" role="tab" aria-controls="v-pills-messages" aria-selected="false">Налаштування безпеки</a>
-                        <hr>
-                        <a class="nav-link active" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
+                        <ul class="list-group list-group-flush mw-100">
+                            <li class="list-group-item py-0">
+                                <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-edit" role="tab" aria-selected="false">Редагування даних</a>
+                            </li>
+                            <li class="list-group-item py-0">
+                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-portfolio" role="tab" aria-controls="v-pills-profile" aria-selected="false">Портфоліо</a>
+                            </li>
+                            <li class="list-group-item py-0">
+                                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-auth" role="tab" aria-controls="v-pills-messages" aria-selected="false">Налаштування безпеки</a>
+                            </li>
+                            <li class="list-group-item py-0">
+                                <a class="nav-link active" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
