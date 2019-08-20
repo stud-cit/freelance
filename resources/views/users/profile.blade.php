@@ -20,7 +20,7 @@
         </div>
         <div class="col-9 tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <div class="row">
+                <div class="d-flex flex-row">
                     <div class="col-5">
                         <img src="{{Auth::user()->getAvatarPath()}}">
                     </div>
@@ -105,13 +105,13 @@
                             <div class="form-group row">
                                 <label class="col-5 col-form-label mt-2">По батькові:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="patronymic" value="{{$data->patronymic}}" required>
+                                    <input type="text" class="form-control" name="patronymic" value="{{$data->patronymic}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-5 col-form-label mt-2">Дата народження:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}" required>
+                                    <input type="date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}">
                                 </div>
                             </div>
                             <div class="form-group row">
