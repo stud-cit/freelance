@@ -38,7 +38,32 @@
                 Оно точно нам надо?
             </div>
             <div class="tab-pane fade" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                Doooot
+                <label class="col font-size-18">Налаштування безпеки</label>
+                <form action="" class="row">
+                    <div class="col-9">
+                        <div class="form-group row">
+                            <label class="col-5 col-form-label mt-2">Старий пароль:</label>
+                            <div class="col-6 mt-2">
+                                <input type="password" class="form-control" name="old_password" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-5 col-form-label mt-2">Новий пароль:</label>
+                            <div class="col-6 mt-2">
+                                <input type="password" class="form-control" name="new_password" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-5 col-form-label mt-2">Повторіть новий пароль:</label>
+                            <div class="col-6 mt-2">
+                                <input type="password" class="form-control" name="new_password_confirmation" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="tab-pane fade" id="v-pills-edit" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <nav>
