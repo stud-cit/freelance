@@ -20,7 +20,7 @@
         </div>
         <div class="col-9 tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <div class="row">
+                <div class="d-flex flex-row">
                     <div class="col-5">
                         <img src="{{Auth::user()->getAvatarPath()}}">
                     </div>
@@ -50,12 +50,6 @@
                 <form method="POST" action="{{route('save_info')}}" class="row" onsubmit="event.preventDefault(); var pass=$('input[name=\'new_password\']'), new_pass=$('input[name=\'new_password_confirmation\']');  if(pass.val() != new_pass.val()) { new_pass.addClass('is-invalid');return false; } else { new_pass.removeClass('is-invalid'); submit(); return true; }">
                     @csrf
                     <div class="col-9">
-                        <div class="form-group row">
-                            <label class="col-5 col-form-label mt-2">Старий пароль:</label>
-                            <div class="col-6 mt-2">
-                                <input type="password" class="form-control" name="old_password" required>
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label class="col-5 col-form-label mt-2">Новий пароль:</label>
                             <div class="col-6 mt-2">
@@ -114,13 +108,13 @@
                             <div class="form-group row">
                                 <label class="col-5 col-form-label mt-2">По батькові:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="patronymic" value="{{$data->patronymic}}" required>
+                                    <input type="text" class="form-control" name="patronymic" value="{{$data->patronymic}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-5 col-form-label mt-2">Дата народження:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}" required>
+                                    <input type="date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}">
                                 </div>
                             </div>
                             <div class="form-group row">
