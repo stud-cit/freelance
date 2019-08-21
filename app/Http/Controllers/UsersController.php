@@ -109,7 +109,7 @@ class UsersController extends Controller
             abort(404);
         }
 
-        $data = User::getUsersInfo('id_user',  Auth::user()->id)->first();
+        $data = User::getUsersInfo('id_user', $id)->first();
 
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
