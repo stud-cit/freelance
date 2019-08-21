@@ -61,7 +61,6 @@
                             <div class="col-6 mt-2">
                                 <input type="password" class="form-control" name="new_password_confirmation" required>
                                 <div class="invalid-feedback">
-                                    Паролі не співпадають
                                 </div>
                             </div>
                         </div>

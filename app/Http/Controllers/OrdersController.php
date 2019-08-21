@@ -124,4 +124,8 @@ class OrdersController extends Controller
 
         return back();
     }
+
+    public function add_order() {
+        return view('orders.add_order');
+    }
 }
