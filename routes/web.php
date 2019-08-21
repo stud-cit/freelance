@@ -2,12 +2,11 @@
 
 Auth::routes(['verify' => true]);
 
-
-
 Route::get('/orders', 'OrdersController@index')->name('orders');
 Route::get('/orders/{id}', 'OrdersController@order')->middleware('logged.in');
 Route::post('/orders/{id}', 'OrdersController@add_proposal')->name('add_proposal');
-Route::get('/add_order', 'OrdersController@add_order')/*->middleware()*/;
+Route::get('/add_order', 'OrdersController@add_order')/*->middleware('is.customer')*/->name('add_order');
+Route::post('/add_order', 'OrdersController@save_order')->name('save_order');
 
 Route::get('/customers', 'UsersController@customers')->name('customers');
 Route::get('/workers', 'UsersController@workers')->name('workers');

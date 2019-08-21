@@ -125,7 +125,15 @@ class OrdersController extends Controller
         return back();
     }
 
-    public function add_order() {
+    public function add_order()
+    {
         return view('orders.add_order');
+    }
+
+    public function save_order(Request $req)
+    {
+
+
+        return redirect('/orders');
     }
 }
