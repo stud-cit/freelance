@@ -12,7 +12,7 @@ class OrdersController extends Controller
 {
     public function index()
     {
-        $data = DB::table('orders')->get()->toArray();
+        $data = DB::table('orders')->where('status', 'new')->get()->toArray();
 
         $ids = DB::table('users')->where('id_role', 3)->get('id')->toArray();
 
@@ -38,17 +38,11 @@ class OrdersController extends Controller
 
     public function order($id)
     {
-        $id_customer = DB::table('orders')->where('id_order', $id)->get('id_customer')->first();
-
-        if (!$id_customer) {
-            abort(404);
-        }
-
-        $order = DB::table('orders')->where('id_order', $id)->get(['id_order', 'title', 'description', 'price', 'time', 'status', 'created_at'])->first();
+        $order = DB::table('orders')->where('id_order', $id)->get(['id_order', 'title', 'description', 'price', 'time', 'status', 'created_at', 'id_customer'])->first();
 
         $customer = DB::table('users')
             ->join('users_info', 'users.id', '=', 'users_info.id_user')
-            ->where('id', $id_customer->id_customer)
+            ->where('id', $order->id_customer)
             ->get()
             ->first();
 
@@ -85,7 +79,7 @@ class OrdersController extends Controller
 
     public function add_proposal(Request $req)
     {
-        if (is_null($req->time) || is_null($req->price) || is_null($req->text) ||
+        if (is_null($req->text) ||
             ($req->type != 'дні' && $req->type != 'год.') ||
             ($req->currency != '$' && $req->currency != 'грн.')) {
 
@@ -95,8 +89,9 @@ class OrdersController extends Controller
 
         $type = $req->type;
         $time = $req->time;
+        $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
 
-        if($type == 'дні') {
+        if($type == 'дні' && !is_null($time)) {
             switch ($req->time) {
                 case $time == 1 :
                     $time = $time . ' день';
@@ -111,7 +106,7 @@ class OrdersController extends Controller
 
         $values = [
             'text' => $req->text,
-            'price' => $req->price.' '.$req->currency,
+            'price' => $price,
             'time' => $time,
             'id_order' => $req->id,
             'id_worker' => Auth::user()->id,
@@ -132,8 +127,48 @@ class OrdersController extends Controller
 
     public function save_order(Request $req)
     {
+        if (is_null($req->description) || is_null($req->title) ||
+            ($req->type != 'дні' && $req->type != 'год.') ||
+            ($req->currency != '$' && $req->currency != 'грн.')) {
 
+            $req->session()->flash('alert-danger', 'Заповніть поля!');
+            return back();
+        }
 
-        return redirect('/orders');
+        $type = $req->type;
+        $time = $req->time;
+        $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
+
+        if($type == 'дні' && !is_null($time)) {
+            switch ($req->time) {
+                case $time == 1 :
+                    $time = $time . ' день';
+                    break;
+                case $time > 1 && $time < 5 :
+                    $time = $time . ' дні';
+                    break;
+                default :
+                    $time = $time . ' днів';
+            }
+        }
+
+        $values = [
+            'title' => $req->title,
+            'description' => $req->description,
+            'price' => $price,
+            'time' => $time,
+            'status' => 'new',
+            'id_customer' => Auth::user()->id,
+            'id_worker' => null,
+            'created_at' => Carbon::now(),
+        ];
+
+        DB::table('orders')->insert($values);
+
+        $id = DB::table('orders')->where('id_customer', Auth::user()->id)->orderBy('id_order', 'desc')->get(['id_order'])->first();
+
+        $req->session()->flash('alert-success', 'Замовлення успішно додано!');
+
+        return redirect('/orders/' . $id->id_order);
     }
 }

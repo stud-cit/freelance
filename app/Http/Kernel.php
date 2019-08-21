@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'is.admin' => \App\Http\Middleware\AdminCheck::class,
         'is.customer' => \App\Http\Middleware\isCustomer::class,
         'logged.in' => \App\Http\Middleware\LoginCheck::class,
+        'new.order' => \App\Http\Middleware\newOrder::class,
     ];
 
     /**

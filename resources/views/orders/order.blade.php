@@ -27,9 +27,11 @@
                 <div class="mt-4 font-size-10">{{$order->description}}</div>
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
+            @if(Auth::user()->isWorker())
             <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mb-4">
                 Видвинути пропозицію
             </button>
+            @endif
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
             <div class="mt-2">
@@ -46,8 +48,8 @@
                 </div>
             </div>
         </div>
-
         <div class="col-8 mt-4 px-0">
+            @if(Auth::user()->isWorker())
             <div id="prop" style="display: none;">
                 <label class="font-size-18 font-weight-bold">Видвинути пропозицію</label>
                 <form class="col mt-2 shadow-lg c_rounded" method="POST" action="{{ route('add_proposal', $order->id_order) }}">
@@ -55,7 +57,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label mt-2">Ціна:</label>
                         <div class="col-sm-3 mt-2">
-                            <input type="number" class="form-control" name="price" required>
+                            <input type="number" class="form-control" name="price">
                         </div>
                         <select class="col-sm-1 mt-2 px-0 form-control" name="currency">
                             <option>грн.</option>
@@ -65,7 +67,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Час:</label>
                         <div class="col-sm-3">
-                            <input type="number" class="form-control" name="time" required>
+                            <input type="number" class="form-control" name="time">
                         </div>
                         <select class="col-sm-1 px-0 form-control" name="type">
                             <option>дні</option>
@@ -84,7 +86,7 @@
                     </div>
                 </form>
             </div>
-
+            @endif
             <div class="col">
                 <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
                 <div class="container proposals">
@@ -116,14 +118,14 @@
     </div>
 </div>
 
-    <div class="flash-message fixed-bottom text-center">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if(Session::has('alert-' . $msg))
+<div class="flash-message fixed-bottom text-center">
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+        @if(Session::has('alert-' . $msg))
 
-                <p class="alert alert-{{ $msg }} alert-dismissible"> {{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-            @endif
-        @endforeach
-    </div>
+            <p class="alert alert-{{ $msg }} alert-dismissible"> {{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+        @endif
+    @endforeach
+</div>
 
 
 @endsection

@@ -17,8 +17,8 @@ class Orders extends Migration
             $table->bigIncrements('id_order');
             $table->string('title', 200);
             $table->longText('description');
-            $table->string('price', 20);
-            $table->string('time', 20);
+            $table->string('price', 20)->nullable();
+            $table->string('time', 20)->nullable();
             $table->string('status', 45);
             $table->bigInteger('id_customer')->unsigned();
             $table->foreign('id_customer')->references('id')->on('users');
@@ -38,6 +38,6 @@ class Orders extends Migration
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('orders');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
-        
+
     }
 }

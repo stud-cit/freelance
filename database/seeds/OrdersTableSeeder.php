@@ -15,9 +15,9 @@ class OrdersTableSeeder extends Seeder
         DB::table('orders')->insert([
             'title' => 'Shop',
             'description' => 'default stuff shop',
-            'price' => '1$',
-            'time' => '123 hours',
-            'status' => 'complete',
+            'price' => '1 $',
+            'time' => '123 год.',
+            'status' => 'new',
             'id_customer' => 1,
             'id_worker' => null,
             'created_at' => Carbon::now(),

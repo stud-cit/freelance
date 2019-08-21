@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Auth;
+use DB;
 
-class isCustomer
+class newOrder
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,13 @@ class isCustomer
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
-            return redirect('/');
+        $order = DB::table('orders')->where('id_order', $request->id)->get(['status'])->first();
+
+        if(is_null($order)) {
+            abort(404);
         }
 
-        if (!$request->user()->isCustomer()) {
+        if($order->status != 'new' && !$request->user()->isAdmin()) {
             return redirect('/orders');
         }
 
