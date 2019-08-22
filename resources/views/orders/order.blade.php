@@ -29,7 +29,7 @@
                 <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
                     Видвинути пропозицію
                 </button>
-            @elseif(Auth::user()->id)
+            @elseif(Auth::user()->id == $order->id_customer)
                 <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
                     Обрати виконавця
                 </button>
@@ -88,7 +88,7 @@
                     </div>
                 </form>
             </div>
-            @elseif(Auth::user()->id)
+            @elseif(Auth::user()->id == $order->id_customer)
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Виконавці</p>
                 <form method="POST" action="" class="col shadow-lg c_rounded">

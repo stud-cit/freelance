@@ -37,14 +37,14 @@ class OrdersController extends Controller
 
     public function order($id)
     {
-        $order = DB::table('orders')->where('id_order', $id)->get(['id_order', 'title', 'description', 'price', 'time', 'status', 'created_at', 'id_customer'])->first();
+        $order = DB::table('orders')->where('id_order', $id)->get()->first();
         $customer = User::getUsersInfo('id', $order->id_customer)->first();
 
-        if (Storage::disk('public')->has($customer->id . '.png')) {
-            $customer->avatar = '/img/' . $customer->id . '.png';
+        if (Storage::disk('public')->has($order->id_customer . '.png')) {
+            $customer->avatar = '/img/' . $order->id_customer . '.png';
         }
         else {
-            $customer->avatar = '/img/' . $customer->id . '.jpg';
+            $customer->avatar = '/img/' . $order->id_customer . '.jpg';
         }
 
         $proposals = DB::table('proposals')
