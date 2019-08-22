@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="col-9 rounded shadow-lg mt-3">
-                    <label class="font-weight-bold font-size-18">Додаткова інформація</label>
+                    <p class="font-weight-bold font-size-18">Додаткова інформація</p>
                     <div class="font-size-10">{{$data->about_me}}</div>
                 </div>
             </div>
@@ -46,20 +46,20 @@
                 Оно точно нам надо?
             </div>
             <div class="tab-pane fade" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                <label class="col font-size-18">Налаштування безпеки</label>
+                <p class="col font-size-18">Налаштування безпеки</p>
                 <form method="POST" action="{{route('save_info')}}" class="row pass_change">
                     @csrf
                     <div class="col-9">
                         <div class="form-group row">
-                            <label class="col-5 col-form-label mt-2">Новий пароль:</label>
+                            <label for="new_password" class="col-5 col-form-label mt-2">Новий пароль:</label>
                             <div class="col-6 mt-2">
-                                <input type="password" class="form-control" name="new_password" required>
+                                <input type="password" id="new_password" class="form-control" name="new_password" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-5 col-form-label mt-2">Повторіть новий пароль:</label>
+                            <label for="new_password_confirmation" class="col-5 col-form-label mt-2">Повторіть новий пароль:</label>
                             <div class="col-6 mt-2">
-                                <input type="password" class="form-control" name="new_password_confirmation" required>
+                                <input type="password" id="new_password_confirmation" class="form-control" name="new_password_confirmation" required>
                                 <div class="invalid-feedback">
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active row" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
-                        <label class="col font-size-18 mt-2 ">Параметри</label>
+                        <p class="col font-size-18 mt-2 ">Параметри</p>
                         <hr class="my-0 border-dark">
                         <form method="POST" action="{{ route('save_info') }}" class="col-6 offset-1" enctype="multipart/form-data">
                             @csrf
@@ -93,39 +93,39 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Прізвище:</label>
+                                <label for="surname" class="col-5 col-form-label mt-2">Прізвище:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="surname" value="{{$data->surname}}" required>
+                                    <input type="text" id="surname" class="form-control" name="surname" value="{{$data->surname}}" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Ім'я:</label>
+                                <label for="name" class="col-5 col-form-label mt-2">Ім'я:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="name" value="{{$data->name}}" required>
+                                    <input type="text" id="name" class="form-control" name="name" value="{{$data->name}}" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">По батькові:</label>
+                                <label for="patronymic" class="col-5 col-form-label mt-2">По батькові:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="patronymic" value="{{$data->patronymic}}">
+                                    <input type="text" id="patronymic" class="form-control" name="patronymic" value="{{$data->patronymic}}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Дата народження:</label>
+                                <label for="birthday_date" class="col-5 col-form-label mt-2">Дата народження:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}">
+                                    <input type="date" id="birthday_date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Країна:</label>
+                                <label for="country" class="col-5 col-form-label mt-2">Країна:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="country" value="{{$data->country}}">
+                                    <input type="text" id="country" class="form-control" name="country" value="{{$data->country}}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Місто:</label>
+                                <label for="city" class="col-5 col-form-label mt-2">Місто:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="city" value="{{$data->city}}">
+                                    <input type="text" id="city" class="form-control" name="city" value="{{$data->city}}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -136,23 +136,23 @@
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <form method="POST" action="{{route('save_info')}}" class="col-6 offset-1">
                             @csrf
-                            <label class="col font-size-18 mt-2 px-0">Контакти</label>
+                            <p class="col font-size-18 mt-2 px-0">Контакти</p>
                             <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Номер телефону:</label>
+                                <label for="phone_number" class="col-5 col-form-label mt-2">Номер телефону:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="phone_number" value="{{$data->phone_number}}">
+                                    <input type="text" id="phone_number" class="form-control" name="phone_number" value="{{$data->phone_number}}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Viber:</label>
+                                <label for="viber" class="col-5 col-form-label mt-2">Viber:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="viber" value="{{$data->viber}}">
+                                    <input type="text" id="viber" class="form-control" name="viber" value="{{$data->viber}}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Skype:</label>
+                                <label for="skype" class="col-5 col-form-label mt-2">Skype:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="skype" value="{{$data->skype}}">
+                                    <input type="text" id="skype" class="form-control" name="skype" value="{{$data->skype}}">
                                 </div>
                             </div>
                             <!--<div class="form-group row">
@@ -181,7 +181,7 @@
                     <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">
                         <form method="POST" action="{{route('save_info')}}" class="col">
                             @csrf
-                            <label class="col font-size-18 mt-2 px-0">Спеціалізація</label>
+                            <p class="col font-size-18 mt-2 px-0">Спеціалізація</p>
                             <select class="col custom-select mb-2" name="custom-select">
                                 <option selected>&#8213;</option>
                                 <option value="1">1</option>
@@ -192,15 +192,15 @@
                                 <option value="1">1</option>
                                 <option value="1">1</option>
                             </select>
-                            <label class="col font-size-18 mt-2 px-0">Навички та вміння</label>
+                            <p class="col font-size-18 mt-2 px-0">Навички та вміння</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <input class="form-check-input" type="checkbox" name="skills" value="" id="defaultCheck1">
                                 <label class="form-check-label" for="defaultCheck1">
                                     C++
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                                <input class="form-check-input" type="checkbox" name="skills" value="" id="defaultCheck2">
                                 <label class="form-check-label" for="defaultCheck2">
                                     C#
                                 </label>

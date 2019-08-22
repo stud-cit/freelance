@@ -58,6 +58,10 @@
     height: 2rem;
     width: 2rem;
 }
+.square-30 {
+    width: 30px;
+    height: 30px;
+}
 .square-60 {
     width: 60px;
     height: 60px;

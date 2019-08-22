@@ -19,13 +19,13 @@
                                     <span class="col-form-label">фільтрувати за:</span>
                                 </div>
                                 <div>
-                                    <select name="ondate" class="form-control border-0">
+                                    <select name="on_date" class="form-control border-0">
                                         <option value="" selected disabled>датою</option>
                                         <option value="1">1</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <select name="ondate" class="form-control border-0">
+                                    <select name="on_price" class="form-control border-0">
                                         <option value="" selected disabled>оплатою</option>
                                         <option value="1">1</option>
                                     </select>
@@ -39,13 +39,13 @@
                 @foreach($data as $orders)
                 <div class="d-flex flex-row mb-3 mt-2">
                     <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
-                        <div class="title font-weight-bold mt-2">{{$orders->title}}</div>
-                        <div class="description">{{$orders->description}}</div>
-                        <div class="text-right created_at font-size-10">{{$orders->created_at}}</div>
+                        <div class=" font-weight-bold mt-2">{{$orders->title}}</div>
+                        <div class="">{{$orders->description}}</div>
+                        <div class="text-right font-size-10">{{$orders->created_at}}</div>
                     </div>
                     <div class="col c_rounded-right mt-3 bg-green text-white">
-                        <div class="text-center font-weight-bold  font-size-18 price">{{$orders->price}}</div>
-                        <div class="text-right font-italic font-size-10 time">{{$orders->time}}</div>
+                        <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
+                        <div class="text-right font-italic font-size-10 mt-2">{{$orders->time}}</div>
                     </div>
                 </div>
                 @endforeach
@@ -64,7 +64,7 @@
                             </button>
                         </div>
                         <div class="col-lg-6 col-12">
-                            <button type="submit" class="btn btn-outline-secondary badge-pill w-100">
+                            <button type="reset" class="btn btn-outline-secondary badge-pill w-100">
                                 Скинути
                             </button>
                         </div>
