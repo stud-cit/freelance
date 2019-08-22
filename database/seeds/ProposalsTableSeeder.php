@@ -17,7 +17,7 @@ class ProposalsTableSeeder extends Seeder
             'price' => '1 грн.',
             'time' => '1 day',
             'id_order' => 1,
-            'id_worker' => 1,
+            'id_worker' => 3,
             'created_at' => Carbon::now(),
         ]);
     }

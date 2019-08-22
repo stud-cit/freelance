@@ -36,4 +36,14 @@ $("document").ready(function(){
             new_pass.addClass('is-invalid');
         }
     });
+
+    $('input[name = "select_worker"]').on('change', function () {
+        $('input[name = "selected_worker"]').val($(this).attr('data-id'));
+    });
+
+    $('.select_worker').on('submit', function (e) {
+        if ($('input[name = "select_worker"]:checked').length === 0) {
+            e.preventDefault();
+        }
+    });
 });

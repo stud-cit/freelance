@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue  mb-2 px-0">Підтвердити</button>
+                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_proposals">Підтвердити</button>
                         <button type="reset" class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0">Скинути</button>
                     </div>
                 </form>
@@ -91,19 +91,23 @@
             @elseif(Auth::user()->id == $order->id_customer)
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Виконавці</p>
-                <form method="POST" action="" class="col shadow-lg c_rounded">
+                <form method="POST" action="{{route('add_proposal', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
+                    @csrf
                     <div class="row">
+                        <input type="text" name="selected_worker" style="display: none">
                         @foreach($proposals as $accept)
                             <div class="form-check mb-2 col-5 offset-1">
-                                <input class="form-check-input mt-2" name="1" type="radio" id="id-{{ $accept->id_user }}">
-                                <img src="{{$accept->avatar}}" class="square-30 avatar circle" id="">
-                                <label for="id-{{ $accept->id_user }}" class="form-check-label">{{$accept->name}} {{$accept->surname}}</label>
+                                <label>
+                                    <input class="form-check-input mt-2" type="radio" name="select_worker" data-id="{{$accept->id_user}}">
+                                    <img src="{{$accept->avatar}}" class="square-30 avatar circle">
+                                    <span>{{$accept->name}} {{$accept->surname}}</span>
+                                </label>
                             </div>
                         @endforeach
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue  mb-2 px-0">Підтвердити</button>
+                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_select">Підтвердити</button>
                     </div>
                 </form>
             </div>

@@ -18,7 +18,7 @@ class OrdersTableSeeder extends Seeder
             'price' => '1 $',
             'time' => '123 год.',
             'status' => 'new',
-            'id_customer' => 1,
+            'id_customer' => 2,
             'id_worker' => null,
             'created_at' => Carbon::now(),
         ]);

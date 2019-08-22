@@ -73,43 +73,48 @@ class OrdersController extends Controller
 
     public function add_proposal(Request $req)
     {
-        if (is_null($req->text) ||
-            ($req->type != 'дні' && $req->type != 'год.') ||
-            ($req->currency != '$' && $req->currency != 'грн.')) {
+        if ($req->has('form_proposals')) {
+            if (is_null($req->text) ||
+                ($req->type != 'дні' && $req->type != 'год.') ||
+                ($req->currency != '$' && $req->currency != 'грн.')) {
 
-            $req->session()->flash('alert-danger', 'Заповніть поля!');
-            return back();
-        }
-
-        $type = $req->type;
-        $time = $req->time;
-        $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
-
-        if($type == 'дні' && !is_null($time)) {
-            switch ($req->time) {
-                case $time == 1 :
-                    $time = $time . ' день';
-                    break;
-                case $time > 1 && $time < 5 :
-                    $time = $time . ' дні';
-                    break;
-                default :
-                    $time = $time . ' днів';
+                $req->session()->flash('alert-danger', 'Заповніть поля!');
+                return back();
             }
+
+            $type = $req->type;
+            $time = $req->time;
+            $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
+
+            if ($type == 'дні' && !is_null($time)) {
+                switch ($req->time) {
+                    case $time == 1 :
+                        $time = $time . ' день';
+                        break;
+                    case $time > 1 && $time < 5 :
+                        $time = $time . ' дні';
+                        break;
+                    default :
+                        $time = $time . ' днів';
+                }
+            }
+
+            $values = [
+                'text' => $req->text,
+                'price' => $price,
+                'time' => $time,
+                'id_order' => $req->id,
+                'id_worker' => Auth::user()->id,
+                'created_at' => Carbon::now(),
+            ];
+
+            DB::table('proposals')->insert($values);
+
+            $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
         }
-
-        $values = [
-            'text' => $req->text,
-            'price' => $price,
-            'time' => $time,
-            'id_order' => $req->id,
-            'id_worker' => Auth::user()->id,
-            'created_at' => Carbon::now(),
-        ];
-
-        DB::table('proposals')->insert($values);
-
-        $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
+        else if ($req->has('form_select')) {
+            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
+        }
 
         return back();
     }
