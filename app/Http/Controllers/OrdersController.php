@@ -7,15 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use DB;
 use Auth;
+use App\Models\User;
 
 class OrdersController extends Controller
 {
     public function index()
     {
         $data = DB::table('orders')->where('status', 'new')->get()->toArray();
-
         $ids = DB::table('users')->where('id_role', 3)->get('id')->toArray();
-
         $array = [];
 
         foreach ($ids as $one) {
@@ -39,18 +38,13 @@ class OrdersController extends Controller
     public function order($id)
     {
         $order = DB::table('orders')->where('id_order', $id)->get(['id_order', 'title', 'description', 'price', 'time', 'status', 'created_at', 'id_customer'])->first();
+        $customer = User::getUsersInfo('id', $order->id_customer)->first();
 
-        $customer = DB::table('users')
-            ->join('users_info', 'users.id', '=', 'users_info.id_user')
-            ->where('id', $order->id_customer)
-            ->get()
-            ->first();
-
-        if (Storage::disk('public')->has($customer->id_user . '.png')) {
-            $customer->avatar = '/img/' . $customer->id_user . '.png';
+        if (Storage::disk('public')->has($customer->id . '.png')) {
+            $customer->avatar = '/img/' . $customer->id . '.png';
         }
         else {
-            $customer->avatar = '/img/' . $customer->id_user . '.jpg';
+            $customer->avatar = '/img/' . $customer->id . '.jpg';
         }
 
         $proposals = DB::table('proposals')
