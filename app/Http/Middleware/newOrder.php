@@ -23,7 +23,10 @@ class newOrder
             abort(404);
         }
 
-        if($order->status != 'new' && !$request->user()->isAdmin() && $order->id_customer != Auth::user()->id && $order->id_worker != Auth::user()->id) {
+        if(($order->status != 'new' && !$request->user()->isAdmin()
+            && $order->id_customer != Auth::user()->id
+            && $order->id_worker != Auth::user()->id)
+            || $order->status == 'complete') {
             return redirect('/orders');
         }
 

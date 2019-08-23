@@ -53,6 +53,22 @@ class OrdersController extends Controller
             ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
             ->toArray();
 
+        $my_proposal = DB::table('proposals')
+            ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
+            ->where([['id_order', $id], ['id_worker', Auth::user()->id]])
+            ->get(['text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
+            ->first();
+
+        if (!is_null($my_proposal)) {
+            $temp = explode(' ', $my_proposal->price);
+            $my_proposal->price = $temp[0];
+            $my_proposal->currency = $temp[1];
+
+            $temp = explode(' ', $my_proposal->time);
+            $my_proposal->time = $temp[0];
+            $my_proposal->type = $temp[1];
+        }
+
         foreach ($proposals as $one) {
             if (Storage::disk('public')->has($one->id_user . '.png')) {
                 $one->avatar = '/img/' . $one->id_user . '.png';
@@ -66,6 +82,7 @@ class OrdersController extends Controller
             'order' => $order,
             'customer' => $customer,
             'proposals' => $proposals,
+            'my_proposal' => $my_proposal,
         ];
 
         return view('orders.order', compact('data'));
@@ -108,9 +125,16 @@ class OrdersController extends Controller
                 'created_at' => Carbon::now(),
             ];
 
-            DB::table('proposals')->insert($values);
+            $check = DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->get('id_proposal')->first();
 
-            $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
+            if (is_null($check)) {
+                DB::table('proposals')->insert($values);
+                $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
+            }
+            else {
+                DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->update($values);
+                $req->session()->flash('alert-success', 'Пропозицію успішно змінено!');
+            }
         }
         else if ($req->has('form_select')) {
             DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);

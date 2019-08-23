@@ -9,6 +9,7 @@
     @php($order = $data['order'])
     @php($customer = $data['customer'])
     @php($proposals = $data['proposals'])
+    @php($my_proposal = $data['my_proposal'])
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-9">
@@ -25,14 +26,19 @@
                 <div class="mt-4 font-size-10">{{$order->description}}</div>
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
-            @if(Auth::user()->isWorker())
+            @if(Auth::user()->isWorker() && $order->status == 'new')
                 <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
-                    Видвинути пропозицію
+                    {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
-            @elseif(Auth::user()->id == $order->id_customer)
+            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
                 <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
                     Обрати виконавця
                 </button>
+            @else
+                {{--Кнопки отмены и окончания заказа--}}
+
+
+
             @endif
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
@@ -51,35 +57,35 @@
             </div>
         </div>
         <div class="col-8 mt-4 px-0">
-            @if(Auth::user()->isWorker())
+            @if(Auth::user()->isWorker()  && $order->status == 'new')
             <div id="prop" style="display: none;">
-                <p class="font-size-18 font-weight-bold">Видвинути пропозицію</p>
+                <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
                 <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2 shadow-lg c_rounded">
                     @csrf
                     <div class="form-group row">
                         <label for="price" class="col-sm-2 col-form-label mt-2">Ціна:</label>
                         <div class="col-sm-3 mt-2">
-                            <input type="number" id="price" class="form-control" name="price">
+                            <input type="number" id="price" class="form-control" name="price" value="{{!is_null($my_proposal) ? $my_proposal->price : ''}}">
                         </div>
                         <select class="col-sm-1 mt-2 px-0 form-control" name="currency">
-                            <option>грн.</option>
-                            <option>$</option>
+                            <option {{!is_null($my_proposal) ? ($my_proposal->currency == 'грн.' ? 'selected' : '') : ''}}>грн.</option>
+                            <option {{!is_null($my_proposal) ? ($my_proposal->currency == '$' ? 'selected' : '') : ''}}>$</option>
                         </select>
                     </div>
                     <div class="form-group row">
                         <label for="time" class="col-sm-2 col-form-label">Час:</label>
                         <div class="col-sm-3">
-                            <input type="number" id="time" class="form-control" name="time">
+                            <input type="number" id="time" class="form-control" name="time" value="{{!is_null($my_proposal) ? $my_proposal->time : ''}}">
                         </div>
                         <select class="col-sm-1 px-0 form-control" name="type">
-                            <option>дні</option>
-                            <option>год.</option>
+                            <option {{!is_null($my_proposal) ? ($my_proposal->type != 'год.' ? 'selected' : '') : ''}}>дні</option>
+                            <option {{!is_null($my_proposal) ? ($my_proposal->type == 'год.' ? 'selected' : '') : ''}}>год.</option>
                         </select>
                     </div>
                     <div class="form-group row">
                         <label for="comment" class="col-sm-2 col-form-label">Коментар:</label>
                         <div class="col-sm-10">
-                            <textarea id="comment" class="form-control" rows="3" name="text" required></textarea>
+                            <textarea id="comment" class="form-control" rows="3" name="text" required>{{!is_null($my_proposal) ? $my_proposal->text : ''}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -88,7 +94,7 @@
                     </div>
                 </form>
             </div>
-            @elseif(Auth::user()->id == $order->id_customer)
+            @elseif(Auth::user()->id == $order->id_customer  && $order->status == 'new')
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Виконавці</p>
                 <form method="POST" action="{{route('add_proposal', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
@@ -111,6 +117,13 @@
                     </div>
                 </form>
             </div>
+            @else
+                {{--Форма для оставления отзыва--}}
+
+
+
+
+
             @endif
             <div class="col">
                 <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
