@@ -132,6 +132,9 @@ $("document").ready(function () {
       e.preventDefault();
     }
   });
+  $('#rating').on('input', function () {
+    $('#rating_val').text($(this).val());
+  });
 });
 
 /***/ }),

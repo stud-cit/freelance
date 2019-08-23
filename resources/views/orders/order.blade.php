@@ -35,10 +35,12 @@
                     Обрати виконавця
                 </button>
             @else
-                {{--Кнопки отмены и окончания заказа--}}
-
-
-
+                <button type="submit" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
+                    Замовлення виконано
+                </button>
+                <button class="btn btn-danger badge-pill text-white px-0 col-3 mt-4">
+                    Відміна замовлення
+                </button>
             @endif
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
@@ -90,13 +92,7 @@
                     </div>
                     <div class="form-group row">
                         <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_proposals">Підтвердити</button>
-
-
-
-
-
-                        {{--Поменять на кнопку удаления proposal--}}
-                        <button type="reset" class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0">Скинути</button>
+                        <button class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0">Видалити</button>
                     </div>
                 </form>
             </div>
@@ -124,12 +120,30 @@
                 </form>
             </div>
             @else
-                {{--Форма для оставления отзыва--}}
-
-
-
-
-
+            <div id="prop" style="display: none;">
+                <p class="font-size-18 font-weight-bold">Залишити відгук</p>
+                <form action="POST" class="col shadow-lg c_rounded select_worker">
+                    @csrf
+                    <div class="form-group row">
+                        <p class="col-2 mt-3">Оцінка:</p>
+                        <div class="col-3 mt-3 rating">
+                            <input type="range" id="rating" min="1" max="5" step="0.5" value="5">
+                        </div>
+                        <div class="mt-3">
+                            <span id="rating_val">5</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="comment" class="col-1 col-form-label">Коментар:</label>
+                        <div class="col offset-1">
+                            <textarea id="comment" class="form-control" rows="3" name="text" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_proposals">Підтвердити</button>
+                    </div>
+                </form>
+            </div>
             @endif
             <div class="col">
                 <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
