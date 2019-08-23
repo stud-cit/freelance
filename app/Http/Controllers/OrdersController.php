@@ -47,16 +47,10 @@ class OrdersController extends Controller
             $customer->avatar = '/img/' . $order->id_customer . '.jpg';
         }
 
-        $proposals = DB::table('proposals')
-            ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
-            ->where('id_order', $id)
-            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
-            ->toArray();
-
         $my_proposal = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
             ->where([['id_order', $id], ['id_worker', Auth::user()->id]])
-            ->get(['text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
+            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
             ->first();
 
         if (!is_null($my_proposal)) {
@@ -67,6 +61,21 @@ class OrdersController extends Controller
             $temp = explode(' ', $my_proposal->time);
             $my_proposal->time = $temp[0];
             $my_proposal->type = $temp[1];
+        }
+
+        if ($order->status == 'new') {
+            $proposals = DB::table('proposals')
+                ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
+                ->where('id_order', $id)
+                ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
+                ->toArray();
+        }
+        else {
+            $proposals = DB::table('proposals')
+                ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
+                ->where([['id_order', $id], ['id_worker', $order->id_worker]])
+                ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
+                ->toArray();
         }
 
         foreach ($proposals as $one) {

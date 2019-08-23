@@ -90,6 +90,12 @@
                     </div>
                     <div class="form-group row">
                         <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_proposals">Підтвердити</button>
+
+
+
+
+
+                        {{--Поменять на кнопку удаления proposal--}}
                         <button type="reset" class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0">Скинути</button>
                     </div>
                 </form>
