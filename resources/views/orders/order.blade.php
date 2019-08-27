@@ -38,9 +38,12 @@
                 <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
                     Замовлення виконано
                 </button>
-                <button class="btn btn-danger badge-pill text-white px-0 col-3 mt-4">
-                    Відміна замовлення
-                </button>
+                <form action="">
+                    @csrf
+                    <button class="btn btn-danger badge-pill text-white px-0 col-3 mt-4">
+                        Відміна замовлення
+                    </button>
+                </form>
             @endif
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">

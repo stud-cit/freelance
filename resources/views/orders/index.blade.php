@@ -6,6 +6,8 @@
 
 @section('content')
 
+
+
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-8">
@@ -35,6 +37,14 @@
                     </div>
                 </div>
             </div>
+            @if(Auth::user()->idRow == 2)
+                <div class="container new-order">
+                    <div class="d-flex flex-row mb-3 mt-2">
+                        <div class="col-8">Створити власний проект</div>
+                        <div class="col-1 circle">&#43;</div>
+                    </div>
+                </div>
+            @endif
             <div class="container orders">
                 @foreach($data as $orders)
                 <div class="d-flex flex-row mb-3 mt-2">
