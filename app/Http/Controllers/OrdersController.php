@@ -100,58 +100,57 @@ class OrdersController extends Controller
     public function add_proposal(Request $req)
     {
         if ($req->has('form_proposals')) {
-            if (!$req->delete_check) {
-                if (is_null($req->text) ||
-                    ($req->type != 'дні' && $req->type != 'год.') ||
-                    ($req->currency != '$' && $req->currency != 'грн.')) {
+            if (is_null($req->text) ||
+                ($req->type != 'дні' && $req->type != 'год.') ||
+                ($req->currency != '$' && $req->currency != 'грн.')) {
 
-                    $req->session()->flash('alert-danger', 'Заповніть поля!');
-                    return back();
+                $req->session()->flash('alert-danger', 'Заповніть поля!');
+                return back();
+            }
+
+            $type = $req->type;
+            $time = $req->time;
+            $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
+
+            if ($type == 'дні' && !is_null($time)) {
+                switch ($req->time) {
+                    case $time == 1 :
+                        $time = $time . ' день';
+                        break;
+                    case $time > 1 && $time < 5 :
+                        $time = $time . ' дні';
+                        break;
+                    default :
+                        $time = $time . ' днів';
                 }
+            }
 
-                $type = $req->type;
-                $time = $req->time;
-                $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
+            $values = [
+                'text' => $req->text,
+                'price' => $price,
+                'time' => $time,
+                'id_order' => $req->id,
+                'id_worker' => Auth::user()->id,
+                'created_at' => Carbon::now(),
+            ];
 
-                if ($type == 'дні' && !is_null($time)) {
-                    switch ($req->time) {
-                        case $time == 1 :
-                            $time = $time . ' день';
-                            break;
-                        case $time > 1 && $time < 5 :
-                            $time = $time . ' дні';
-                            break;
-                        default :
-                            $time = $time . ' днів';
-                    }
-                }
+            $check = DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->get('id_proposal')->first();
 
-                $values = [
-                    'text' => $req->text,
-                    'price' => $price,
-                    'time' => $time,
-                    'id_order' => $req->id,
-                    'id_worker' => Auth::user()->id,
-                    'created_at' => Carbon::now(),
-                ];
+            if (is_null($check)) {
+                DB::table('proposals')->insert($values);
 
-                $check = DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->get('id_proposal')->first();
-
-                if (is_null($check)) {
-                    DB::table('proposals')->insert($values);
-
-                    $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
-                } else {
-                    DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->update($values);
-
-                    $req->session()->flash('alert-success', 'Пропозицію успішно змінено!');
-                }
+                $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
             }
             else {
-                DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->delete();
+                DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->update($values);
 
-                $req->session()->flash('alert-success', 'Пропозицію успішно видалено!');
+                $req->session()->flash('alert-success', 'Пропозицію успішно змінено!');
             }
+        }
+        else if ($req->has('delete_proposal')) {
+            DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->delete();
+
+            $req->session()->flash('alert-success', 'Пропозицію успішно видалено!');
         }
         else if ($req->has('form_select')) {
             DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
@@ -159,28 +158,32 @@ class OrdersController extends Controller
             $req->session()->flash('alert-success', 'Виконавця успішно вибрано!');
         }
         else if ($req->has('leave_review')) {
-            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'completed']);
+            if (!is_null($req->text)) {
+                $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
 
-            $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
+                $values = [
+                    'text' => $req->text,
+                    'rating' => $req->rating,
+                    'id_customer' => Auth::user()->id,
+                    'id_worker' => $worker->id_worker,
+                    'created_at' => Carbon::now(),
+                ];
 
-            $values = [
-                'text' => $req->text,
-                'rating' => $req->rating,
-                'id_customer' => Auth::user()->id,
-                'id_worker' => $worker->id_worker,
-                'created_at' => Carbon::now(),
-            ];
+                DB::table('reviews')->insert($values);
+            }
 
-            DB::table('reviews')->insert($values);
+            if ($req->cancel_check == 1) {
+                DB::table('orders')->where('id_order', $req->id)->update(['status' => 'completed']);
 
-            $req->session()->flash('alert-success', 'Замовлення успішно завершено!');
+                $req->session()->flash('alert-success', 'Замовлення успішно завершено!');
 
-            return redirect('/orders');
-        }
-        else if ($req->has('cancel')) {
-            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
+                return redirect('/orders');
+            }
+            else {
+                DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
 
-            $req->session()->flash('alert-success', 'Виконавця успішно видалено!');
+                $req->session()->flash('alert-success', 'Виконавця успішно видалено!');
+            }
         }
 
         return back();
