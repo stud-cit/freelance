@@ -42,7 +42,7 @@
             @endif
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
-            <div class="mt-2">
+            <div class="mt-2 to-profile pointer" data-id="{{$order->id_customer}}">
                 <img src="{{$customer->avatar}}" class="square-100 avatar circle">
             </div>
             <div class="container text-left">
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="col-8 mt-4 px-0">
-            @if(Auth::user()->isWorker()  && $order->status == 'new')
+            @if(Auth::user()->isWorker() && $order->status == 'new')
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
                 <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2 shadow-lg c_rounded">
@@ -100,7 +100,7 @@
                     </div>
                 </form>
             </div>
-            @elseif(Auth::user()->id == $order->id_customer  && $order->status == 'new')
+            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Виконавці</p>
                 <form method="POST" action="{{route('add_proposal', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
@@ -136,7 +136,7 @@
                 <div class="container proposals">
                     @foreach($proposals as $comment)
                         <div class="d-flex flex-row mb-3 mt-2">
-                            <div class="col-1 px-0 min-width-70">
+                            <div class="col-1 px-0 min-width-70 to-profile pointer" data-id="{{$comment->id_user}}">
                                 <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
                             </div>
                             <div class="col-9 shadow bg-white to-profile pointer" data-id="{{$comment->id_user}}">
