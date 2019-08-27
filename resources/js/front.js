@@ -26,6 +26,27 @@ $("document").ready(function(){
         }
     });
 
+    $('#new_order-toggle').on('click', function () {
+        let style = $('#new-order').css('display');
+
+        if(style == 'none') {
+            $('#new-order').show();
+        }
+        else {
+            $('#new-order').hide();
+        }
+    });
+    $('#reset_order-toggle').on('click', function () {
+        let style = $('#reset-order').css('display');
+
+        if(style == 'none') {
+            $('#reset-order').show();
+        }
+        else {
+            $('#reset-order').hide();
+        }
+    });
+
     $('.pass_change').on('submit', function (e) {
         let pass = $("input[name = 'new_password']"),
             new_pass = $("input[name = 'new_password_confirmation']");

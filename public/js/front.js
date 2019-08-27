@@ -114,6 +114,24 @@ $("document").ready(function () {
       $('#prop').hide();
     }
   });
+  $('#new_order-toggle').on('click', function () {
+    var style = $('#new-order').css('display');
+
+    if (style == 'none') {
+      $('#new-order').show();
+    } else {
+      $('#new-order').hide();
+    }
+  });
+  $('#reset_order-toggle').on('click', function () {
+    var style = $('#reset-order').css('display');
+
+    if (style == 'none') {
+      $('#reset-order').show();
+    } else {
+      $('#reset-order').hide();
+    }
+  });
   $('.pass_change').on('submit', function (e) {
     var pass = $("input[name = 'new_password']"),
         new_pass = $("input[name = 'new_password_confirmation']");

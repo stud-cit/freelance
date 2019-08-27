@@ -35,15 +35,17 @@
                     Обрати виконавця
                 </button>
             @else
-                <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
-                    Замовлення виконано
-                </button>
-                <form action="">
-                    @csrf
-                    <button class="btn btn-danger badge-pill text-white px-0 col-3 mt-4">
-                        Відміна замовлення
+                <div class="row mt-4">
+                    <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5">
+                        Замовлення виконано
                     </button>
-                </form>
+                    <form action="" class="col-4">
+                        @csrf
+                        <button  class="btn btn-danger badge-pill text-white">
+                            Відміна замовлення
+                        </button>
+                    </form>
+                </div>
             @endif
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
@@ -124,6 +126,30 @@
             </div>
             @else
             <div id="prop" style="display: none;">
+                <p class="font-size-18 font-weight-bold">Залишити відгук</p>
+                <form method="POST" action="" class="col shadow-lg c_rounded select_worker">
+                    @csrf
+                    <div class="form-group row">
+                        <p class="col-2 mt-3">Оцінка:</p>
+                        <div class="col-3 mt-3 rating">
+                            <input type="range" id="rating" min="1" max="5" step="0.5" value="5">
+                        </div>
+                        <div class="mt-3">
+                            <span id="rating_val">5</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="comment" class="col-1 col-form-label">Коментар:</label>
+                        <div class="col offset-1">
+                            <textarea id="comment" class="form-control" rows="3" name="text" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_proposals">Підтвердити</button>
+                    </div>
+                </form>
+            </div>
+            <div id="reset-order" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Залишити відгук</p>
                 <form method="POST" action="" class="col shadow-lg c_rounded select_worker">
                     @csrf

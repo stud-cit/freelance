@@ -37,14 +37,67 @@
                     </div>
                 </div>
             </div>
-            @if(Auth::user()->idRow == 2)
-                <div class="container new-order">
-                    <div class="d-flex flex-row mb-3 mt-2">
-                        <div class="col-8">Створити власний проект</div>
-                        <div class="col-1 circle">&#43;</div>
+            @if(Auth::user()->id_role == 2)
+                <div class="container">
+                    <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle">
+                        <div class="col-11 pt-3 shadow-lg" style="height: 60px; margin-right: ">Створити власний проект</div>
+                        <div class="col-1 circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60">&#43;</div>
                     </div>
                 </div>
             @endif
+            <div class="container" id="new-order" style="display: none;">
+                <div class="d-flex flex-row">
+                    <form class="col" method="POST" action="{{route('save_order')}}">
+                        @csrf
+                        <div class="form-group row">
+                            <label for="title" class="col-2 col-form-label mt-2">Назва:</label>
+                            <div class="col-5 mt-2">
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="type" class="col-2 col-form-label mt-2">Тема:</label>
+                            <div class="col-5 mt-2">
+                                <select name="type" id="type" class="form-control">
+                                    <option value="1">-</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-2 col-form-label">Ціна:</label>
+                            <div class="col-5 mt-2">
+                                <input type="number" id="price" class="form-control" name="price">
+                            </div>
+                            <select class="col-2 mt-2 px-0 form-control" name="currency">
+                                <option>грн.</option>
+                                <option>$</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="time" class="col-2 col-form-label">Час:</label>
+                            <div class="col-5">
+                                <input type="number" id="time" class="form-control" name="time">
+                            </div>
+                            <select class="col-2 px-0 form-control" name="type">
+                                <option>дні</option>
+                                <option>год.</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="description" class="col-2 col-form-label mt-2">Інормація:</label>
+                            <div class="col-5 mt-2">
+                                <textarea name="description" id="description" cols="60" rows="3" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <button type="submit" class="col-2 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                            <button type="reset" class="col-2 btn badge-pill mb-2 px-0">Видалити</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="container orders">
                 @foreach($data as $orders)
                 <div class="d-flex flex-row mb-3 mt-2">

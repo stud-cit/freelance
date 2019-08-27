@@ -49,6 +49,9 @@
 .min-width-70 {
     min-width: 70px !important;
 }
+.min-width-60 {
+    min-width: 60px; !important;
+}
 
 .square-1rem {
     height: 1rem;
