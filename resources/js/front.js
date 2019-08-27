@@ -15,7 +15,7 @@ $("document").ready(function(){
         window.location.href = '/orders/' + $(this).attr('data-id');
     });
 
-    $('#propose-toggle').on('click', function () {
+    $('.propose-toggle').on('click', function () {
         let style = $('#prop').css('display');
 
         if(style == 'none') {
@@ -46,6 +46,15 @@ $("document").ready(function(){
             $('#reset-order').hide();
         }
     });
+
+    $('.disable-comment').on('change', function () {
+        if (!$('.reviews-rating,.reviews-comment').attr('disabled')) {
+            $('.reviews-rating,.reviews-comment').attr('disabled', true);
+        }
+        else {
+            $('.reviews-rating,.reviews-comment').attr('disabled', false);
+        }
+    })
 
     $('.pass_change').on('submit', function (e) {
         let pass = $("input[name = 'new_password']"),

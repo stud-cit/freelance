@@ -31,14 +31,14 @@
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
             @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
-                <button id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
+                <button id="propose-toggle" class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
                     Обрати виконавця
                 </button>
             @elseif($order->status != 'completed')
-                <button id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
+                <button id="" class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
                     Замовлення виконано
                 </button>
-                <button type="submit" id="reset_order-toggle" class="btn btn-danger badge-pill text-white px-0 col-3 mt-4" name="cancel">
+                <button type="submit" id="" class="propose-toggle btn btn-danger badge-pill text-white px-0 col-3 mt-4" name="cancel">
                     Змінити виконавця
                 </button>
             @endif
@@ -126,18 +126,24 @@
                 <form method="POST" action="{{ route('order', $order->id_order) }}" class="col shadow-lg c_rounded">
                     @csrf
                     <div class="form-group row">
-                        <p class="col-2 mt-3">Оцінка:</p>
-                        <div class="col-3 mt-3 rating">
-                            <input type="range" id="rating" name="rating" min="1" max="5" step="0.5" value="5">
+                        <p class="col-2 mt-3">Без відгуку:</p>
+                        <div class="col-3 mt-3">
+                            <input type="checkbox" id="" class="form-check-input disable-comment">
                         </div>
-                        <div class="mt-3">
-                            <span id="rating_val">5</span>
+                    </div>
+                    <div class="form-group row">
+                        <p class="col-2">Оцінка:</p>
+                        <div class="col-3 rating">
+                            <input type="range" id="rating" class="reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                        </div>
+                        <div class="">
+                            <span id="rating_val">3</span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="comment" class="col-1 col-form-label">Коментар:</label>
                         <div class="col offset-1">
-                            <textarea id="comment" class="form-control" rows="3" name="text" required></textarea>
+                            <textarea id="comment" class="form-control reviews-comment" rows="3" name="text" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -145,30 +151,7 @@
                     </div>
                 </form>
             </div>
-            <div id="reset-order" style="display: none;">
-                <p class="font-size-18 font-weight-bold">Залишити відгук</p>
-                <form method="POST" action="{{ route('order', $order->id_order) }}" class="col shadow-lg c_rounded select_worker">
-                    @csrf
-                    <!--<div class="form-group row">
-                        <p class="col-2 mt-3">Оцінка:</p>
-                        <div class="col-3 mt-3 rating">
-                            <input type="range" id="rating" min="1" max="5" step="0.5" value="5">
-                        </div>
-                        <div class="mt-3">
-                            <span id="rating_val">5</span>
-                        </div>
-                    </div>-->
-                    <div class="form-group row">
-                        <label for="comment" class="col-1 col-form-label">Коментар:</label>
-                        <div class="col offset-1">
-                            <textarea id="comment" class="form-control" rows="3" name="text" required></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_proposals">Підтвердити</button>
-                    </div>
-                </form>
-            </div>
+
             @endif
             <div class="col">
                 <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
