@@ -30,6 +30,9 @@ class UsersController extends Controller
     {
         $data = User::getUsersInfo('id_user', Auth::user()->id)->first();
 
+        $created_at = explode(' ', $data->created_at);
+        $data->created_at = $created_at[0];
+
         return view('users.profile', compact('data'));
     }
 
@@ -107,6 +110,9 @@ class UsersController extends Controller
         }
 
         $data = User::getUsersInfo('id_user', $id)->first();
+
+        $created_at = explode(' ', $data->created_at);
+        $data->created_at = $created_at[0];
 
         return view('users.user', compact('data'));
     }

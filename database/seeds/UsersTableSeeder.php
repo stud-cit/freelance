@@ -17,6 +17,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => bcrypt('admin'),
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
 	    ]);
 
         DB::table('users')->insert([
@@ -24,6 +25,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'customer@gmail.com',
             'password' => bcrypt('customer'),
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         DB::table('users')->insert([
@@ -31,6 +33,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'worker@gmail.com',
             'password' => bcrypt('worker'),
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

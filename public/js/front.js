@@ -105,13 +105,38 @@ $("document").ready(function () {
   $(".work-order").on('click', function () {
     window.location.href = '/orders/' + $(this).attr('data-id');
   });
-  $('#propose-toggle').on('click', function () {
+  $('.propose-toggle').on('click', function () {
     var style = $('#prop').css('display');
 
     if (style == 'none') {
       $('#prop').show();
     } else {
       $('#prop').hide();
+    }
+  });
+  $('#new_order-toggle').on('click', function () {
+    var style = $('#new-order').css('display');
+
+    if (style == 'none') {
+      $('#new-order').show();
+    } else {
+      $('#new-order').hide();
+    }
+  });
+  $('#reset_order-toggle').on('click', function () {
+    var style = $('#reset-order').css('display');
+
+    if (style == 'none') {
+      $('#reset-order').show();
+    } else {
+      $('#reset-order').hide();
+    }
+  });
+  $('.disable-comment').on('change', function () {
+    if (!$('.reviews-rating,.reviews-comment').attr('disabled')) {
+      $('.reviews-rating,.reviews-comment').attr('disabled', true);
+    } else {
+      $('.reviews-rating,.reviews-comment').attr('disabled', false);
     }
   });
   $('.pass_change').on('submit', function (e) {
@@ -123,6 +148,20 @@ $("document").ready(function () {
       $('.invalid-feedback').text(pass.val().length < 8 ? 'Довжина паролю має бути хоча б 8 символів' : 'Паролі не співпадають');
       new_pass.addClass('is-invalid');
     }
+  });
+  $('input[name = "select_worker"]').on('change', function () {
+    $('input[name = "selected_worker"]').val($(this).attr('data-id'));
+  });
+  $('.select_worker').on('submit', function (e) {
+    if ($('input[name = "select_worker"]:checked').length === 0) {
+      e.preventDefault();
+    }
+  });
+  $('#rating').on('input', function () {
+    $('#rating_val').text($(this).val());
+  });
+  $('button[name="delete_proposal"]').on('click', function () {
+    $('input[name="delete_check"]').val('1');
   });
 });
 

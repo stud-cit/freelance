@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use DB;
+use Auth;
 
 class newOrder
 {
@@ -16,13 +17,16 @@ class newOrder
      */
     public function handle($request, Closure $next)
     {
-        $order = DB::table('orders')->where('id_order', $request->id)->get(['status'])->first();
+        $order = DB::table('orders')->where('id_order', $request->id)->get(['status', 'id_customer', 'id_worker'])->first();
 
         if(is_null($order)) {
             abort(404);
         }
 
-        if($order->status != 'new' && !$request->user()->isAdmin()) {
+        if(($order->status != 'new' && !$request->user()->isAdmin()
+            && $order->id_customer != Auth::user()->id
+            && $order->id_worker != Auth::user()->id)
+            || $order->status == 'complete') {
             return redirect('/orders');
         }
 
