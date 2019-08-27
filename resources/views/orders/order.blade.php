@@ -35,7 +35,7 @@
                     Обрати виконавця
                 </button>
             @else
-                <button type="submit" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
+                <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
                     Замовлення виконано
                 </button>
                 <button class="btn btn-danger badge-pill text-white px-0 col-3 mt-4">
@@ -122,7 +122,7 @@
             @else
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Залишити відгук</p>
-                <form action="POST" class="col shadow-lg c_rounded select_worker">
+                <form method="POST" action="" class="col shadow-lg c_rounded select_worker">
                     @csrf
                     <div class="form-group row">
                         <p class="col-2 mt-3">Оцінка:</p>
