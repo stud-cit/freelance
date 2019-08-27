@@ -34,7 +34,7 @@
                 <button id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
                     Обрати виконавця
                 </button>
-            @else
+            @elseif($order->status != 'completed')
                 <button id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
                     Замовлення виконано
                 </button>
@@ -123,7 +123,7 @@
                     </div>
                 </form>
             </div>
-            @else
+            @elseif($order->status != 'completed')
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Залишити відгук</p>
                 <form method="POST" action="{{ route('order', $order->id_order) }}" class="col shadow-lg c_rounded">
