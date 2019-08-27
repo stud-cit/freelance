@@ -38,9 +38,9 @@
                 </div>
             </div>
             @if(Auth::user()->id_role == 2)
-                <div class="container">
+                <div class="container pointer">
                     <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle">
-                        <div class="col-11 pt-3 shadow-lg" style="height: 60px; margin-right: ">Створити власний проект</div>
+                        <div class="col-11 pt-3 shadow-lg" style="height: 60px">Створити власний проект</div>
                         <div class="col-1 circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60">&#43;</div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                 <div class="d-flex flex-row mb-3 mt-2">
                     <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
                         <div class=" font-weight-bold mt-2">{{$orders->title}}</div>
-                        <div class="">{{$orders->description}}</div>
+                        <div>{{$orders->description}}</div>
                         <div class="text-right font-size-10">{{$orders->created_at}}</div>
                     </div>
                     <div class="col c_rounded-right mt-3 bg-green text-white">
