@@ -21,6 +21,7 @@ class Reviews extends Migration
             $table->foreign('id_customer')->references('id')->on('users');
             $table->bigInteger('id_worker')->unsigned();
             $table->foreign('id_worker')->references('id')->on('users');
+            $table->date('created_at');
         });
     }
 

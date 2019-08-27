@@ -153,6 +153,9 @@ $("document").ready(function () {
   $('#rating').on('input', function () {
     $('#rating_val').text($(this).val());
   });
+  $('button[name="delete_proposal"]').on('click', function () {
+    $('input[name="delete_check"]').val('1');
+  });
 });
 
 /***/ }),

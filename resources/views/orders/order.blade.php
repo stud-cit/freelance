@@ -27,29 +27,24 @@
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
             @if(Auth::user()->isWorker() && $order->status == 'new')
-                <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
+                <button id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
             @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
-                <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
+                <button id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
                     Обрати виконавця
                 </button>
-            @else
-                <div class="row mt-4">
-                    <button type="submit" id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5">
-                        Замовлення виконано
-                    </button>
-                    <form action="" class="col-4">
-                        @csrf
-                        <button  class="btn btn-danger badge-pill text-white">
-                            Відміна замовлення
-                        </button>
-                    </form>
-                </div>
+            @elseif($order->status != 'completed')
+                <button id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
+                    Замовлення виконано
+                </button>
+                <button type="submit" id="reset_order-toggle" class="btn btn-danger badge-pill text-white px-0 col-3 mt-4" name="cancel">
+                    Змінити виконавця
+                </button>
             @endif
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
-            <div class="mt-2">
+            <div class="mt-2 to-profile pointer" data-id="{{$order->id_customer}}">
                 <img src="{{$customer->avatar}}" class="square-100 avatar circle">
             </div>
             <div class="container text-left">
@@ -64,10 +59,10 @@
             </div>
         </div>
         <div class="col-8 mt-4 px-0">
-            @if(Auth::user()->isWorker()  && $order->status == 'new')
+            @if(Auth::user()->isWorker() && $order->status == 'new')
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
-                <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2 shadow-lg c_rounded">
+                <form method="POST" action="{{ route('order', $order->id_order) }}" class="col mt-2 shadow-lg c_rounded">
                     @csrf
                     <div class="form-group row">
                         <label for="price" class="col-sm-2 col-form-label mt-2">Ціна:</label>
@@ -96,15 +91,16 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_proposals">Підтвердити</button>
-                        <button class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0">Видалити</button>
+                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_proposals">Підтвердити</button>
+                        <button type="submit" class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0" name="delete_proposal">Видалити</button>
                     </div>
+                    <input type="text" style="display: none" disabled name="delete_check" value="0">
                 </form>
             </div>
-            @elseif(Auth::user()->id == $order->id_customer  && $order->status == 'new')
+            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Виконавці</p>
-                <form method="POST" action="{{route('add_proposal', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
+                <form method="POST" action="{{route('order', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
                     @csrf
                     <div class="row">
                         <input type="text" name="selected_worker" style="display: none">
@@ -120,19 +116,19 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_select">Підтвердити</button>
+                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_select">Підтвердити</button>
                     </div>
                 </form>
             </div>
-            @else
+            @elseif($order->status != 'completed')
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Залишити відгук</p>
-                <form method="POST" action="" class="col shadow-lg c_rounded select_worker">
+                <form method="POST" action="{{ route('order', $order->id_order) }}" class="col shadow-lg c_rounded">
                     @csrf
                     <div class="form-group row">
                         <p class="col-2 mt-3">Оцінка:</p>
                         <div class="col-3 mt-3 rating">
-                            <input type="range" id="rating" min="1" max="5" step="0.5" value="5">
+                            <input type="range" id="rating" name="rating" min="1" max="5" step="0.5" value="5">
                         </div>
                         <div class="mt-3">
                             <span id="rating_val">5</span>
@@ -145,15 +141,15 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue  mb-2 px-0" name="form_proposals">Підтвердити</button>
+                        <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
                     </div>
                 </form>
             </div>
             <div id="reset-order" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Залишити відгук</p>
-                <form method="POST" action="" class="col shadow-lg c_rounded select_worker">
+                <form method="POST" action="{{ route('order', $order->id_order) }}" class="col shadow-lg c_rounded select_worker">
                     @csrf
-                    <div class="form-group row">
+                    <!--<div class="form-group row">
                         <p class="col-2 mt-3">Оцінка:</p>
                         <div class="col-3 mt-3 rating">
                             <input type="range" id="rating" min="1" max="5" step="0.5" value="5">
@@ -161,7 +157,7 @@
                         <div class="mt-3">
                             <span id="rating_val">5</span>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group row">
                         <label for="comment" class="col-1 col-form-label">Коментар:</label>
                         <div class="col offset-1">
@@ -179,7 +175,7 @@
                 <div class="container proposals">
                     @foreach($proposals as $comment)
                         <div class="d-flex flex-row mb-3 mt-2">
-                            <div class="col-1 px-0 min-width-70">
+                            <div class="col-1 px-0 min-width-70 to-profile pointer" data-id="{{$comment->id_user}}">
                                 <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
                             </div>
                             <div class="col-9 shadow bg-white to-profile pointer" data-id="{{$comment->id_user}}">

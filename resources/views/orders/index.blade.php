@@ -139,8 +139,8 @@
                 <div class="px-0">
                     @foreach($workers as $users)
                     <div class="mt-2">
-                        <img src="{{$users->avatar}}" class="square-60 avatar circle">
-                        <label class="name surmane font-weight-bold">{{$users->name}} {{$users->surname}}</label>
+                        <img src="{{$users->avatar}}" class="square-60 avatar circle to-profile pointer" data-id="{{$users->id_user}}">
+                        <label class="name surmane font-weight-bold to-profile pointer" data-id="{{$users->id_user}}">{{$users->name}} {{$users->surname}}</label>
                     </div>
                     @endforeach
                 </div>

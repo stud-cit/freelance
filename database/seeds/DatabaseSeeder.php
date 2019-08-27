@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             CategoriesTableSeed::class,
             OrdersTableSeeder::class,
             PortfoliosTableSeed::class,
-            ReviewsTableSeeder::class,
             ProposalsTableSeeder::class,
             UsersInfoSeeder::class,
         ]);
