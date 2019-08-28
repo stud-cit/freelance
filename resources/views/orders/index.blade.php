@@ -24,8 +24,8 @@
                                     <span class="col-form-label">Фільтрувати за:</span>
                                 </div>
                                 <div>
-                                    <button name={{strpos($sort, 'id_order') !== false ? $sort : "id_order-asc"}}>Датою</button>
-                                    <button name={{strpos($sort, 'price') !== false ? $sort : "price-asc"}}>Ціною</button>
+                                    <button name={{strpos($sort, 'id_order') !== false ? $sort : "id_order-asc"}} class="btn">Датою {{ strpos($sort, 'id_order') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</button>
+                                    <button name={{strpos($sort, 'price') !== false ? $sort : "price-asc"}} class="btn">Ціною {{ strpos($sort, 'price') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</button>
                                 </div>
                             </div>
                         </form>
@@ -35,8 +35,10 @@
             @if(Auth::user()->id_role == 2)
                 <div class="container pointer">
                     <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle">
-                        <div class="col-11 pt-3 shadow-lg" style="height: 60px">Створити власний проект</div>
-                        <div class="col-1 circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60">&#43;</div>
+                        <div class="col-11 pt-3 shadow-lg" style="height: 60px; position: relative;">Створити власний проект</div>
+                        <div class="col-1">
+                            <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60" style="font-size: 36px; position: absolute; left: -15px;" onclick="$(this).text($('#new-order').css('display') == 'none' ? '-' : '+')">&#43;</div>
+                        </div>
                     </div>
                 </div>
             @endif

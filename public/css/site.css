@@ -73,9 +73,27 @@
     width: 100px;
     height: 100px;
 }
+.square-330 {
+    width: 330px;
+    height: 330px;
+}
 #profile-bar .nav-link {
     color: #3F3D56;
 }
 #profile-bar .nav-link.active {
     color: #0076de;
 }
+
+ul.tick {
+    list-style: none;
+}
+ul.tick li:before {
+    margin-right: 5px;
+    content: "";
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    background-image: url("/tick.png");
+    background-size: 100%;
+}
+
