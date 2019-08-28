@@ -73,6 +73,10 @@
     width: 100px;
     height: 100px;
 }
+.square-330 {
+    width: 330px;
+    height: 330px;
+}
 #profile-bar .nav-link {
     color: #3F3D56;
 }

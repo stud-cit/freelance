@@ -40,8 +40,10 @@
             @if(Auth::user()->id_role == 2)
                 <div class="container pointer">
                     <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle">
-                        <div class="col-11 pt-3 shadow-lg" style="height: 60px">Створити власний проект</div>
-                        <div class="col-1 circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60">&#43;</div>
+                        <div class="col-11 pt-3 shadow-lg" style="height: 60px; position: relative;">Створити власний проект</div>
+                        <div class="col-1">
+                            <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60" style="font-size: 36px; position: absolute; left: -15px;">&#43;</div>
+                        </div>
                     </div>
                 </div>
             @endif
