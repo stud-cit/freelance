@@ -6,7 +6,9 @@
 
 @section('content')
 
-
+@php($data = $info['data'])
+@php($workers = $info['workers'])
+@php($sort = $info['sort'])
 
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
@@ -15,22 +17,15 @@
                 <div class="row">
                     <div class="col-3 font-weight-bold text-left font-size-18">Всі проекти</div>
                     <div class="col-7 offset-2">
-                        <form action="">
+                        <form method="POST" action="{{route('save_order')}}" id="sort_form">
+                            @csrf
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="col-form-label">фільтрувати за:</span>
+                                    <span class="col-form-label">Фільтрувати за:</span>
                                 </div>
                                 <div>
-                                    <select name="on_date" class="form-control border-0">
-                                        <option value="" selected disabled>датою</option>
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <select name="on_price" class="form-control border-0">
-                                        <option value="" selected disabled>оплатою</option>
-                                        <option value="1">1</option>
-                                    </select>
+                                    <button name={{strpos($sort, 'id_order') !== false ? $sort : "id_order-asc"}} class="btn">Датою {{ strpos($sort, 'id_order') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</button>
+                                    <button name={{strpos($sort, 'price') !== false ? $sort : "price-asc"}} class="btn">Ціною {{ strpos($sort, 'price') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</button>
                                 </div>
                             </div>
                         </form>
@@ -94,7 +89,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <button type="submit" class="col-2 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0">Підтвердити</button>
+                            <button type="submit" class="col-2 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="add_order">Підтвердити</button>
                             <button type="reset" class="col-2 btn badge-pill mb-2 px-0">Видалити</button>
                         </div>
                     </form>
@@ -102,17 +97,17 @@
             </div>
             <div class="container orders">
                 @foreach($data as $orders)
-                <div class="d-flex flex-row mb-3 mt-2">
-                    <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
-                        <div class=" font-weight-bold mt-2">{{$orders->title}}</div>
-                        <div>{{$orders->description}}</div>
-                        <div class="text-right font-size-10">{{$orders->created_at}}</div>
+                    <div class="d-flex flex-row mb-3 mt-2">
+                        <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
+                            <div class=" font-weight-bold mt-2">{{$orders->title}}</div>
+                            <div>{{$orders->description}}</div>
+                            <div class="text-right font-size-10">{{$orders->created_at}}</div>
+                        </div>
+                        <div class="col c_rounded-right mt-3 bg-green text-white">
+                            <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
+                            <div class="text-right font-italic font-size-10 mt-2">{{$orders->time}}</div>
+                        </div>
                     </div>
-                    <div class="col c_rounded-right mt-3 bg-green text-white">
-                        <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
-                        <div class="text-right font-italic font-size-10 mt-2">{{$orders->time}}</div>
-                    </div>
-                </div>
                 @endforeach
             </div>
         </div>
