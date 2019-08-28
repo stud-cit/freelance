@@ -170,6 +170,9 @@ $("document").ready(function () {
   $('button[name="ok_worker"]').on('click', function () {
     $('input[name="cancel_check"]').val('1');
   });
+  $('#sort_form > button').on('click', function () {
+    $('#sort_form').submit();
+  });
 });
 
 /***/ }),
