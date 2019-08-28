@@ -54,6 +54,7 @@ class OrdersController extends Controller
             $data = DB::table('orders')->where('status', 'new')->orderBy($sort[0], $sort[1])->get()->toArray();
 
             if ($sort[0] == 'price') {
+                $this->currency_update();
                 usort($data, array($this, "cmp"));
 
                 if ($sort[1] == 'desc') {
@@ -250,7 +251,6 @@ class OrdersController extends Controller
         if (!$req->has('add_order')) {
             $test = end($req->request);
             $array = array_keys($test);
-            $this->currency_update();
 
             return $this->index(end($array));
         }
