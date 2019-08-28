@@ -11,22 +11,39 @@ use App\Models\User;
 
 class OrdersController extends Controller
 {
+    private $eq;
+
+    function currency_update() {
+        $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
+        if ($response_json = file_get_contents($req_url)) {
+            $response_object = json_decode($response_json);
+
+            $fp = fopen('currency.json', 'w');
+            fwrite($fp, $response_json);
+            fclose($fp);
+
+            $this->eq = $response_object->rates->UAH;
+        }
+        else {
+            $fp = file_get_contents('currency.json');
+            $response_object = json_decode($fp, true);
+            $this->eq = $response_object['rates']['UAH'];
+        }
+    }
+
     function cmp($a, $b)
     {
-        $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
-        $response_json = file_get_contents($req_url);
-        $response_object = json_decode($response_json);
-
         $val_a = explode(' ', $a->price);
         $val_b = explode(' ', $b->price);
-        $first_price = !is_null($a->price) ? $val_a[0] * ($val_a[1] == '$' ? $response_object->rates->UAH : 1) : 0;
-        $second_price = !is_null($b->price) ? $val_b[0] * ($val_b[1] == '$' ? $response_object->rates->UAH : 1) : 0;
+        $first_price = !is_null($a->price) ? $val_a[0] * ($val_a[1] == '$' ? $this->eq : 1) : 0;
+        $second_price = !is_null($b->price) ? $val_b[0] * ($val_b[1] == '$' ? $this->eq : 1) : 0;
 
         return $first_price > $second_price;
     }
 
     public function index($sort = null)
     {
+
         if (is_null($sort)) {
             $data = DB::table('orders')->where('status', 'new')->orderBy('created_at', 'desc')->get()->toArray();
 
@@ -233,6 +250,7 @@ class OrdersController extends Controller
         if (!$req->has('add_order')) {
             $test = end($req->request);
             $array = array_keys($test);
+            $this->currency_update();
 
             return $this->index(end($array));
         }
