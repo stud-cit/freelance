@@ -94,8 +94,7 @@
 /***/ (function(module, exports) {
 
 $("document").ready(function () {
-  $(".alert").delay(3000).slideUp(); //$("#avatar-input-label").text($("#avatar-input").val());
-
+  $(".alert").delay(3000).slideUp();
   $("#avatar-input").on("change", function () {
     $("#avatar-input-label").text($(this).val().split("\\").pop());
   });
@@ -133,10 +132,12 @@ $("document").ready(function () {
     }
   });
   $('.disable-comment').on('change', function () {
-    if (!$('.reviews-rating,.reviews-comment').attr('disabled')) {
-      $('.reviews-rating,.reviews-comment').attr('disabled', true);
+    if (!$('.reviews-rating,.reviews-comment').prop('disabled')) {
+      $('.reviews-rating,.reviews-comment').prop('disabled', true);
+      $('.reviews-rating,.reviews-comment').prop('required', false);
     } else {
-      $('.reviews-rating,.reviews-comment').attr('disabled', false);
+      $('.reviews-rating,.reviews-comment').prop('disabled', false);
+      $('.reviews-rating,.reviews-comment').prop('required', true);
     }
   });
   $('.pass_change').on('submit', function (e) {
@@ -161,7 +162,13 @@ $("document").ready(function () {
     $('#rating_val').text($(this).val());
   });
   $('button[name="delete_proposal"]').on('click', function () {
-    $('input[name="delete_check"]').val('1');
+    $('button[name="form_proposals"]').submit();
+  });
+  $('button[name="cancel_worker"]').on('click', function () {
+    $('input[name="cancel_check"]').val('2');
+  });
+  $('button[name="ok_worker"]').on('click', function () {
+    $('input[name="cancel_check"]').val('1');
   });
 });
 

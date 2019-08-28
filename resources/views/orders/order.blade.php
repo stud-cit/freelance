@@ -27,18 +27,18 @@
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
             @if(Auth::user()->isWorker() && $order->status == 'new')
-                <button id="propose-toggle" class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
+                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 propose-toggle">
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
-            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
-                <button id="propose-toggle" class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4">
+            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new' && $proposals != [])
+                <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 propose-toggle">
                     Обрати виконавця
                 </button>
-            @elseif($order->status != 'completed')
-                <button id="" class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4">
+            @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
+                <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" name="ok_worker">
                     Замовлення виконано
                 </button>
-                <button type="submit" id="" class="propose-toggle btn btn-danger badge-pill text-white px-0 col-3 mt-4" name="cancel">
+                <button class="propose-toggle btn btn-danger badge-pill text-white px-0 col-3 mt-4" name="cancel_worker">
                     Змінити виконавця
                 </button>
             @endif
@@ -92,12 +92,11 @@
                     </div>
                     <div class="form-group row">
                         <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_proposals">Підтвердити</button>
-                        <button type="submit" class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0" name="delete_proposal">Видалити</button>
+                        <button class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0" name="delete_proposal">Видалити</button>
                     </div>
-                    <input type="text" style="display: none" disabled name="delete_check" value="0">
                 </form>
             </div>
-            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
+            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new'  && $proposals != [])
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Виконавці</p>
                 <form method="POST" action="{{route('order', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
@@ -120,11 +119,12 @@
                     </div>
                 </form>
             </div>
-            @elseif($order->status != 'completed')
+            @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
             <div id="prop" style="display: none;">
                 <p class="font-size-18 font-weight-bold">Залишити відгук</p>
                 <form method="POST" action="{{ route('order', $order->id_order) }}" class="col shadow-lg c_rounded">
                     @csrf
+                    <input name="cancel_check" style="display: none">
                     <div class="form-group row">
                         <p class="col-2 mt-3">Без відгуку:</p>
                         <div class="col-3 mt-3">
