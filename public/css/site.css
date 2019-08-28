@@ -79,3 +79,15 @@
 #profile-bar .nav-link.active {
     color: #0076de;
 }
+
+ul.tick {
+    list-style: none;
+}
+li:before {
+    background-image: url("/tick.png");
+    height: 10px;
+    width: 10px;
+    content: "";
+    display: inline-block;
+}
+
