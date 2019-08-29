@@ -24,6 +24,7 @@
                                     <span class="col-form-label">Фільтрувати за:</span>
                                 </div>
                                 <div>
+                                    <input style="display: none" name="prev_filter">
                                     <button name={{strpos($sort, 'id_order') !== false ? $sort : "id_order-asc"}} class="btn">Датою {{ strpos($sort, 'id_order') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</button>
                                     <button name={{strpos($sort, 'price') !== false ? $sort : "price-asc"}} class="btn">Ціною {{ strpos($sort, 'price') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</button>
                                 </div>
@@ -97,9 +98,9 @@
             </div>
             <div class="container orders">
                 @foreach($data as $orders)
-                    <div class="d-flex flex-row mb-3 mt-2">
+                    <div class="flex-row mb-3 mt-2 d-none">
                         <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
-                            <div class=" font-weight-bold mt-2">{{$orders->title}}</div>
+                            <div class="font-weight-bold mt-2 order-title">{{$orders->title}}</div>
                             <div>{{$orders->description}}</div>
                             <div class="text-right font-size-10">{{$orders->created_at}}</div>
                         </div>
@@ -114,21 +115,9 @@
 
         <div class="col-3 offset-1">
             <div class="card text-center px-0 mb-4">
-                <div class="card-header text-white font-weight-bold font-size-18 c_rounded-top bg-blue">Фільтр</div>
+                <div class="card-header text-white font-weight-bold font-size-18 c_rounded-top bg-blue">Пошук</div>
                 <div class="card-body">
-                    <input type="text" class="form-control">
-                    <div class="form-group row mt-4">
-                        <div class="col-lg-6 col-12">
-                            <button type="submit" class="btn text-white badge-pill w-100 bg-violet">
-                                Пошук
-                            </button>
-                        </div>
-                        <div class="col-lg-6 col-12">
-                            <button type="reset" class="btn btn-outline-secondary badge-pill w-100">
-                                Скинути
-                            </button>
-                        </div>
-                    </div>
+                    <input type="text" class="form-control" id="filter" value={{$info['filter']}}>
                 </div>
             </div>
             <div class="mb-4">

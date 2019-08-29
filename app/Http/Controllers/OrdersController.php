@@ -41,7 +41,7 @@ class OrdersController extends Controller
         return $first_price > $second_price;
     }
 
-    public function index($sort = null)
+    public function index($sort = null, $filter = null)
     {
 
         if (is_null($sort)) {
@@ -87,6 +87,7 @@ class OrdersController extends Controller
             'data' => $data,
             'workers' => $workers,
             'sort' => $sort,
+            'filter' => $filter,
         ];
 
         return view('orders.index', compact('info'));
@@ -252,7 +253,7 @@ class OrdersController extends Controller
             $test = end($req->request);
             $array = array_keys($test);
 
-            return $this->index(end($array));
+            return $this->index(end($array), $req->prev_filter);
         }
         else {
             if (is_null($req->description) || is_null($req->title) ||
