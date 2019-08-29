@@ -232,6 +232,33 @@
                     </div>
                 </div>
             </div>
+            <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
+               <p>Активні замовлення</p>
+                <div class="row">
+                    <div class="col-4 shadow-lg">
+                        <div class="font-weight-bold">Test</div>
+                        <div class="font-size-10">Дата створення: 20.18.2019</div>
+                    </div>
+                    <div class="col-1 px-0">
+                        <button class="btn btn-danger">&#215;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-proposals" role="tabpanel" aria-labelledby="v-pills-proposals-tab">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Про мене</a>
+                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-contact" aria-selected="false">Контакти</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active row" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+
+                    </div>
+                    <div class="tab-pane fade show active row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
+                    </div>
+                </div>
+            </div>
 
         </div>
         <div class="col-3">
@@ -241,6 +268,9 @@
                     <div class="nav flex-column" id="profile-bar" role="tablist" aria-orientation="vertical">
                         <ul class="list-group list-group-flush mw-100">
                             <li class="list-group-item py-0">
+                                <a class="nav-link active" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
+                            </li>
+                            <li class="list-group-item py-0">
                                 <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-edit" role="tab" aria-selected="false">Редагування даних</a>
                             </li>
                             <li class="list-group-item py-0">
@@ -249,9 +279,15 @@
                             <li class="list-group-item py-0">
                                 <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-auth" role="tab" aria-controls="v-pills-messages" aria-selected="false">Налаштування безпеки</a>
                             </li>
+                            @if(Auth::user()->id_role == 2)
                             <li class="list-group-item py-0">
-                                <a class="nav-link active" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
+                                <a class="nav-link" id="v-pills-orders-tab" data-toggle="pill" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Мої замовлення</a>
                             </li>
+                            @elseif(Auth::user()->id_role == 3)
+                            <li class="list-group-item py-0">
+                                <a class="nav-link" id="v-pills-proposals-tab" data-toggle="pill" href="#v-pills-proposals" role="tab" aria-controls="v-pills-proposals" aria-selected="false">Мої пропозиції</a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
