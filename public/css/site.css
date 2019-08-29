@@ -96,4 +96,13 @@ ul.tick li:before {
     background-image: url("/tick.png");
     background-size: 100%;
 }
+.order_div {
+    height: 60px;
+    position: relative;
+}
+.order_circle {
+    font-size: 36px;
+    position: absolute;
+    left: -15px;
+}
 

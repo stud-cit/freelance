@@ -25,7 +25,7 @@
                         <img src="{{Auth::user()->getAvatarPath()}}" class="square square-330 avatar">
                     </div>
                     <div class="col-7 px-0">
-                        <div class="row text-white bg-deep-blue pt-4 pb-5" style="height: 330px">
+                        <div class="row text-white bg-deep-blue pt-4 pb-5 h-100">
                             <div class="col-11 name surname font-weight-bold font-size-18">{{$data->name}} {{$data->surname}}</div>
                             <div class="col-11 font-size-10 ">comp order: 7</div>
                             <div class="col-11 font-weight-bold font-size-10">Контактна інформація</div>
@@ -47,7 +47,7 @@
                     <div class="bg-blue text-white rounded pt-2 pb-2">
                         <div class="row offset-1">Test</div>
                         <div class="font-size-10 offset-1 mt-2">Some text about project</div>
-                        <hr class="col-10 offset-1 border-white">
+                        <hr class="col-10 offset-1 border-white mb-0">
                         <div class="row font-size-10 mt-2 mb-2">
                             <div class="col-2 offset-1">Admin admin</div>
                             <div class="col-1 offset-7">20.11.12</div>

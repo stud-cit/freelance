@@ -67,7 +67,7 @@
                     <div class="form-group row">
                         <label for="price" class="col-sm-2 col-form-label mt-2">Ціна:</label>
                         <div class="col-sm-3 mt-2">
-                            <input type="number" id="price" class="form-control" name="price" value="{{!is_null($my_proposal) ? $my_proposal->price : ''}}">
+                            <input type="number" id="price" class="form-control" min="0" name="price" value="{{!is_null($my_proposal) ? $my_proposal->price : ''}}">
                         </div>
                         <select class="col-sm-1 mt-2 px-0 form-control" name="currency">
                             <option {{!is_null($my_proposal) ? ($my_proposal->currency == 'грн.' ? 'selected' : '') : ''}}>грн.</option>
@@ -77,7 +77,7 @@
                     <div class="form-group row">
                         <label for="time" class="col-sm-2 col-form-label">Час:</label>
                         <div class="col-sm-3">
-                            <input type="number" id="time" class="form-control" name="time" value="{{!is_null($my_proposal) ? $my_proposal->time : ''}}">
+                            <input type="number" id="time" class="form-control" min="0" name="time" value="{{!is_null($my_proposal) ? $my_proposal->time : ''}}">
                         </div>
                         <select class="col-sm-1 px-0 form-control" name="type">
                             <option {{!is_null($my_proposal) ? ($my_proposal->type != 'год.' ? 'selected' : '') : ''}}>дні</option>

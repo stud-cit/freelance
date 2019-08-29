@@ -35,9 +35,9 @@
             @if(Auth::user()->id_role == 2)
                 <div class="container pointer">
                     <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle">
-                        <div class="col-11 pt-3 shadow-lg" style="height: 60px; position: relative;">Створити власний проект</div>
+                        <div class="col-11 pt-3 shadow-lg order_div">Створити власний проект</div>
                         <div class="col-1">
-                            <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60" style="font-size: 36px; position: absolute; left: -15px;" onclick="$(this).text($('#new-order').css('display') == 'none' ? '-' : '+')">&#43;</div>
+                            <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60 order_circle" onclick="$(this).text($('#new-order').css('display') == 'none' ? '-' : '+')">&#43;</div>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                         <div class="form-group row">
                             <label for="price" class="col-2 col-form-label">Ціна:</label>
                             <div class="col-5 mt-2">
-                                <input type="number" id="price" class="form-control" name="price">
+                                <input type="number" id="price" class="form-control" min="0" name="price">
                             </div>
                             <select class="col-2 mt-2 px-0 form-control" name="currency">
                                 <option>грн.</option>
@@ -75,7 +75,7 @@
                         <div class="form-group row">
                             <label for="time" class="col-2 col-form-label">Час:</label>
                             <div class="col-5">
-                                <input type="number" id="time" class="form-control" name="time">
+                                <input type="number" id="time" class="form-control" min="0" name="time">
                             </div>
                             <select class="col-2 px-0 form-control" name="type">
                                 <option>дні</option>
