@@ -176,7 +176,7 @@ $("document").ready(function () {
 
   if (window.location.href.indexOf('/orders') >= 0 && window.location.href.indexOf('/orders/') < 0) {
     var test = function test() {
-      if ($('input[name="prev_filter"]').val().length !== $('#filter').val().length) {
+      if ($('input[name="prev_filter"]').val().length !== $('#filter').val().length || !$('input[name="prev_filter"]').val().length) {
         $('input[name="prev_filter"]').val($('#filter').val());
         $('.order-title').each(function () {
           if ($(this).text().toLowerCase().indexOf($('#filter').val().toLowerCase()) < 0) {

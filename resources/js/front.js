@@ -98,7 +98,7 @@ $("document").ready(function() {
         $('#filter').on('keyup keydown', test);
 
         function test() {
-            if ($('input[name="prev_filter"]').val().length !== $('#filter').val().length) {
+            if ($('input[name="prev_filter"]').val().length !== $('#filter').val().length || !$('input[name="prev_filter"]').val().length) {
                 $('input[name="prev_filter"]').val($('#filter').val());
 
                 $('.order-title').each(function () {
