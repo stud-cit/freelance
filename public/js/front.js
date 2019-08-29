@@ -173,6 +173,26 @@ $("document").ready(function () {
   $('#sort_form > button').on('click', function () {
     $('#sort_form').submit();
   });
+
+  if (window.location.href.indexOf('/orders') >= 0 && window.location.href.indexOf('/orders/') < 0) {
+    var test = function test() {
+      if ($('input[name="prev_filter"]').val().length !== $('#filter').val().length || !$('input[name="prev_filter"]').val().length) {
+        $('input[name="prev_filter"]').val($('#filter').val());
+        $('.order-title').each(function () {
+          if ($(this).text().toLowerCase().indexOf($('#filter').val().toLowerCase()) < 0) {
+            $(this).closest('.flex-row').hide();
+            $(this).closest('.flex-row').removeClass('d-flex');
+          } else {
+            $(this).closest('.flex-row').show();
+            $(this).closest('.flex-row').addClass('d-flex');
+          }
+        });
+      }
+    };
+
+    test();
+    $('#filter').on('keyup keydown', test);
+  }
 });
 
 /***/ }),

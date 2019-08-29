@@ -1,7 +1,7 @@
-$("document").ready(function(){
+$("document").ready(function() {
     $(".alert").delay(3000).slideUp();
 
-    $("#avatar-input").on("change", function() {
+    $("#avatar-input").on("change", function () {
         $("#avatar-input-label").text($(this).val().split("\\").pop());
     });
 
@@ -16,10 +16,9 @@ $("document").ready(function(){
     $('.propose-toggle').on('click', function () {
         let style = $('#prop').css('display');
 
-        if(style == 'none') {
+        if (style == 'none') {
             $('#prop').show();
-        }
-        else {
+        } else {
             $('#prop').hide();
         }
     });
@@ -27,20 +26,18 @@ $("document").ready(function(){
     $('#new_order-toggle').on('click', function () {
         let style = $('#new-order').css('display');
 
-        if(style == 'none') {
+        if (style == 'none') {
             $('#new-order').show();
-        }
-        else {
+        } else {
             $('#new-order').hide();
         }
     });
     $('#reset_order-toggle').on('click', function () {
         let style = $('#reset-order').css('display');
 
-        if(style == 'none') {
+        if (style == 'none') {
             $('#reset-order').show();
-        }
-        else {
+        } else {
             $('#reset-order').hide();
         }
     });
@@ -49,8 +46,7 @@ $("document").ready(function(){
         if (!$('.reviews-rating,.reviews-comment').prop('disabled')) {
             $('.reviews-rating,.reviews-comment').prop('disabled', true);
             $('.reviews-rating,.reviews-comment').prop('required', false);
-        }
-        else {
+        } else {
             $('.reviews-rating,.reviews-comment').prop('disabled', false);
             $('.reviews-rating,.reviews-comment').prop('required', true);
         }
@@ -96,4 +92,25 @@ $("document").ready(function(){
     $('#sort_form > button').on('click', function () {
         $('#sort_form').submit();
     });
+
+    if (window.location.href.indexOf('/orders') >= 0 && window.location.href.indexOf('/orders/') < 0) {
+        test();
+        $('#filter').on('keyup keydown', test);
+
+        function test() {
+            if ($('input[name="prev_filter"]').val().length !== $('#filter').val().length || !$('input[name="prev_filter"]').val().length) {
+                $('input[name="prev_filter"]').val($('#filter').val());
+
+                $('.order-title').each(function () {
+                    if ($(this).text().toLowerCase().indexOf($('#filter').val().toLowerCase()) < 0) {
+                        $(this).closest('.flex-row').hide();
+                        $(this).closest('.flex-row').removeClass('d-flex');
+                    } else {
+                        $(this).closest('.flex-row').show();
+                        $(this).closest('.flex-row').addClass('d-flex');
+                    }
+                });
+            }
+        }
+    }
 });
