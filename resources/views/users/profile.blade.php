@@ -28,22 +28,25 @@
                         <div class="row text-white bg-deep-blue pt-4 pb-5 h-100">
                             <div class="col-11 name surname font-weight-bold font-size-18">{{$data->name}} {{$data->surname}}</div>
                             <div class="col-11 font-size-10 ">comp order: 7</div>
-                            <div class="col-11 font-weight-bold font-size-10">Контактна інформація</div>
-                            <div class="col-11 font-size-10">E-mail: {{$data->email}}</div>
-                            <div class="col-11 font-size-10">Phone number: {{$data->phone_number}}</div>
-                            <div class="col-11 font-size-10">Viber: {{$data->viber}}</div>
-                            <div class="col-11 font-size-10">Skype: {{$data->skype}}</div>
+                            <div class="col-11 font-weight-bold">Контактна інформація:</div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6 font-size-10">E-mail: {{$data->email}}</div>
+                                    <div class="col-5 font-size-10">Phone number: {{$data->phone_number}}</div>
+                                    <div class="col-6 font-size-10">Viber: {{$data->viber}}</div>
+                                    <div class="col-5 font-size-10">Skype: {{$data->skype}}</div>
+                                </div>
+                            </div>
                             <div class="col-11 font-weight-bold font-size-10">Дата реєстрації: {{$data->created_at}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="col rounded shadow-lg mt-3">
                     <p class="font-weight-bold font-size-18">Додаткова інформація</p>
-                    <div class="font-size-10">{{$data->about_me}}</div>
+                    <div class="font-size-10 pb-2">{{$data->about_me}}</div>
                 </div>
                 <div class="col shadow-lg mt-3">
                     <p class="font-weight-bold font-size-18">Відгуки</p>
-
                     <div class="bg-blue text-white rounded pt-2 pb-2">
                         <div class="row offset-1">Test</div>
                         <div class="font-size-10 offset-1 mt-2">Some text about project</div>
@@ -53,7 +56,6 @@
                             <div class="col-1 offset-7">20.11.12</div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="tab-pane fade" id="v-pills-portfolio" role="tabpanel" aria-labelledby="v-pills-profile-tab">
@@ -247,8 +249,8 @@
             <div class="tab-pane fade" id="v-pills-proposals" role="tabpanel" aria-labelledby="v-pills-proposals-tab">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Про мене</a>
-                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-contact" aria-selected="false">Контакти</a>
+                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Всі пропозиції</a>
+                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проекти</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
@@ -256,6 +258,7 @@
 
                     </div>
                     <div class="tab-pane fade show active row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
+
                     </div>
                 </div>
             </div>

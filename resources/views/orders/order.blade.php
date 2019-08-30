@@ -104,7 +104,7 @@
                     <div class="row">
                         <input type="text" name="selected_worker" style="display: none">
                         @foreach($proposals as $accept)
-                            <div class="form-check mb-2 col-5 offset-1">
+                            <div class="form-check mb-2 pt-3 col-5 offset-1">
                                 <label>
                                     <input class="form-check-input mt-2" type="radio" name="select_worker" data-id="{{$accept->id_user}}">
                                     <img src="{{$accept->avatar}}" class="square-30 avatar circle">
@@ -113,7 +113,6 @@
                             </div>
                         @endforeach
                     </div>
-
                     <div class="form-group">
                         <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_select">Підтвердити</button>
                     </div>
