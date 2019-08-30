@@ -148,7 +148,7 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <form method="POST" action="{{route('save_info')}}" class="col-6 offset-1">
+                        <form method="POST" action="{{route('save_info')}}" class="col-6">
                             @csrf
                             <p class="col font-size-18 mt-2 px-0">Контакти</p>
                             <div class="form-group row">
