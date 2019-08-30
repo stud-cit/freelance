@@ -26,8 +26,8 @@
                                 </div>
                                 <div>
                                     <input style="display: none" name="prev_filter">
-                                    <button name={{strpos($sort, 'id_order') !== false ? $sort : "id_order-asc"}} class="btn">Датою {{ strpos($sort, 'id_order') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</button>
-                                    <button name={{strpos($sort, 'price') !== false ? $sort : "price-asc"}} class="btn">Ціною {{ strpos($sort, 'price') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</button>
+                                    <button name={{strpos($sort, 'id_order') !== false ? $sort : "id_order-asc"}} class="btn">Датою <span class="badge badge-primary badge-pill">{{ strpos($sort, 'id_order') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</span></button>
+                                    <button name={{strpos($sort, 'price') !== false ? $sort : "price-asc"}} class="btn">Ціною <span class="badge badge-primary badge-pill">{{ strpos($sort, 'price') !== false ? (strpos($sort, 'asc') !== false ? "^" : "v") : "" }}</span></button>
                                 </div>
                             </div>
                         </form>
