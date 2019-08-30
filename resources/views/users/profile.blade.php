@@ -43,19 +43,26 @@
                 </div>
                 <div class="col rounded shadow-lg mt-3">
                     <p class="font-weight-bold font-size-18">Додаткова інформація</p>
-                    <div class="font-size-10 pb-2">{{$data->about_me}}</div>
+                    <div class="pb-2">{{$data->about_me}}</div>
                 </div>
                 <div class="col shadow-lg mt-3">
                     <p class="font-weight-bold font-size-18">Відгуки</p>
-                    <div class="bg-blue text-white rounded pt-2 pb-2">
-                        <div class="row offset-1">Test</div>
-                        <div class="font-size-10 offset-1 mt-2">Some text about project</div>
-                        <hr class="col-10 offset-1 border-white mb-0">
-                        <div class="row font-size-10 mt-2 mb-2">
-                            <div class="col-2 offset-1">Admin admin</div>
-                            <div class="col-1 offset-7">20.11.12</div>
+                    @foreach($reviews as $mark)
+                        <div class="d-flex flex-row">
+                            <div class="col-1 px-0 min-width-70">
+                                <img src="{{$mark->avatar}}" class="square-60 circle avatar">
+                            </div>
+                            <div class="col bg-blue text-white rounded pt-2 pb-2 mb-2">
+                                <div class=" mt-2">{{$mark->text}}</div>
+                                <hr class="col border-white mb-0">
+                                <div class="row font-size-10 mt-2 mb-2">
+                                    <div class="col-3">{{$mark->name}} {{$mark->surname}}</div>
+                                    <div class="col-2 offset-1">Оцінка: {{$mark->rating}}/5</div>
+                                    <div class="col-2 offset-4">{{$mark->created_at}}</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="tab-pane fade" id="v-pills-portfolio" role="tabpanel" aria-labelledby="v-pills-profile-tab">

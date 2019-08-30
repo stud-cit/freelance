@@ -60,8 +60,9 @@
                             <div class="col-5 mt-2">
                                 <select name="type" id="type" class="form-control">
                                     <option value="1" disabled selected>(Виберіть тему замовлення)</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    @foreach($categories as $select)
+                                    <option value="{{$select->id_category}}">{{$select->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
