@@ -39,6 +39,15 @@ class UsersController extends Controller
             ->get()
             ->toArray();
 
+        foreach ($reviews as $review) {
+            if (Storage::disk('public')->has($review->id_user . '.png')) {
+                $review->avatar = '/img/' . $review->id_user . '.png';
+            }
+            else {
+                $review->avatar = '/img/' . $review->id_user . '.jpg';
+            }
+        }
+
         return view('users.profile', compact('data'), compact('reviews'));
     }
 
@@ -125,6 +134,15 @@ class UsersController extends Controller
             ->where('id_to', $id)
             ->get()
             ->toArray();
+
+        foreach ($reviews as $review) {
+            if (Storage::disk('public')->has($review->id_user . '.png')) {
+                $review->avatar = '/img/' . $review->id_user . '.png';
+            }
+            else {
+                $review->avatar = '/img/' . $review->id_user . '.jpg';
+            }
+        }
 
         return view('users.user', compact('data'), compact('reviews'));
     }
