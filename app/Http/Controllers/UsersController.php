@@ -114,6 +114,8 @@ class UsersController extends Controller
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
 
-        return view('users.user', compact('data'));
+        $reviews = DB::table('reviews')->where('id_to', $id)->get()->toArray();
+
+        return view('users.user', compact('data'), compact('reviews'));
     }
 }

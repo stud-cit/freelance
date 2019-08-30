@@ -17,10 +17,10 @@ class Reviews extends Migration
             $table->bigIncrements('id_review');
             $table->longText('text');
             $table->float('rating');
-            $table->bigInteger('id_customer')->unsigned();
-            $table->foreign('id_customer')->references('id')->on('users');
-            $table->bigInteger('id_worker')->unsigned();
-            $table->foreign('id_worker')->references('id')->on('users');
+            $table->bigInteger('id_from')->unsigned();
+            $table->foreign('id_from')->references('id')->on('users');
+            $table->bigInteger('id_to')->unsigned();
+            $table->foreign('id_to')->references('id')->on('users');
             $table->date('created_at');
         });
     }
