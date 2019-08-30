@@ -33,7 +33,9 @@ class UsersController extends Controller
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
 
-        return view('users.profile', compact('data'));
+        $reviews = DB::table('reviews')->where('id_to', Auth::user()->id)->get()->toArray();
+
+        return view('users.profile', compact('data'), compact('reviews'));
     }
 
     public function save_info(Request $req)
