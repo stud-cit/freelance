@@ -66,6 +66,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <div class="col-7" id="themes_block"></div>
+                        </div>
+                        <div class="form-group row">
                             <label for="price" class="col-2 col-form-label">Ціна:</label>
                             <div class="col-5 mt-2">
                                 <input type="number" id="price" class="form-control" min="0" name="price">

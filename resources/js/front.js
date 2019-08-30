@@ -113,4 +113,16 @@ $("document").ready(function() {
             }
         }
     }
+
+    $("#type").on("change", function() {
+        let item = $(this).children("option:selected");
+        $(this).val(1);
+        item.hide();
+        $("#themes_block").append("<span class='badge badge-pill badge-primary' class='theme_badge' id='"+item.val()+"'>"+item.text()+" <span class='theme_remove pointer'>&times;</span></span>");
+    });
+    $("#themes_block").on("click", ".theme_remove", function () {
+        let item = $("#themes_block").find($(this).parent());
+        $("#type").find("option[value='"+item.attr("id")+"']").show();
+        item.remove();
+    });
 });
