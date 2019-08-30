@@ -64,6 +64,11 @@
                                     <option value="{{$select->id_category}}">{{$select->name}}</option>
                                     @endforeach
                                 </select>
+                                <div style="display: none">
+                                @foreach($categories as $select)
+                                    <input type="checkbox" value="{{$select->id_category}}" name="categories">
+                                @endforeach
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
