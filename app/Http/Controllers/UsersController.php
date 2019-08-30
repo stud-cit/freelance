@@ -33,7 +33,20 @@ class UsersController extends Controller
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
 
-        $reviews = DB::table('reviews')->where('id_to', Auth::user()->id)->get()->toArray();
+        $reviews = DB::table('reviews')
+            ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')
+            ->where('id_to', Auth::user()->id)
+            ->get()
+            ->toArray();
+
+        foreach ($reviews as $review) {
+            if (Storage::disk('public')->has($review->id_user . '.png')) {
+                $review->avatar = '/img/' . $review->id_user . '.png';
+            }
+            else {
+                $review->avatar = '/img/' . $review->id_user . '.jpg';
+            }
+        }
 
         return view('users.profile', compact('data'), compact('reviews'));
     }
@@ -116,7 +129,20 @@ class UsersController extends Controller
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
 
-        $reviews = DB::table('reviews')->where('id_to', $id)->get()->toArray();
+        $reviews = DB::table('reviews')
+            ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')
+            ->where('id_to', $id)
+            ->get()
+            ->toArray();
+
+        foreach ($reviews as $review) {
+            if (Storage::disk('public')->has($review->id_user . '.png')) {
+                $review->avatar = '/img/' . $review->id_user . '.png';
+            }
+            else {
+                $review->avatar = '/img/' . $review->id_user . '.jpg';
+            }
+        }
 
         return view('users.user', compact('data'), compact('reviews'));
     }
