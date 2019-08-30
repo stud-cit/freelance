@@ -33,7 +33,8 @@
                     </div>
                 </div>
             </div>
-            @if(Auth::user()->id_role == 2)
+            @if(is_null(Auth::user()))
+            @elseif(Auth::user()->id_role == 2)
                 <div class="container pointer">
                     <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle">
                         <div class="col-11 pt-3 shadow-lg order_div">Створити власний проект</div>
@@ -57,7 +58,7 @@
                             <label for="type" class="col-2 col-form-label mt-2">Тема:</label>
                             <div class="col-5 mt-2">
                                 <select name="type" id="type" class="form-control">
-                                    <option value="1">-</option>
+                                    <option value="1" disabled selected>(Виберіть тему замовлення)</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                 </select>

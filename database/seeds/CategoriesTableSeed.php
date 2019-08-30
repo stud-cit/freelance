@@ -11,8 +11,22 @@ class CategoriesTableSeed extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert([
-            'name' => 'online-shop',
-        ]);
+        $values = [
+            ['name' => 'C#'],
+            ['name' => 'C/C++'],
+            ['name' => 'Flash/Flex'],
+            ['name' => 'Java'],
+            ['name' => 'Javascript'],
+            ['name' => '.NET'],
+            ['name' => 'Node.js'],
+            ['name' => 'PHP'],
+            ['name' => 'Python'],
+            ['name' => 'Ruby'],
+            ['name' => 'Swift'],
+            ['name' => 'Базы данных'],
+            ['name' => 'Тестирование и QA'],
+        ];
+
+        DB::table('categories')->insert($values);
     }
 }
