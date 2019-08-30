@@ -9,6 +9,7 @@
 @php($data = $info['data'])
 @php($workers = $info['workers'])
 @php($sort = $info['sort'])
+@php($categories = $info['categories'])
 
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">

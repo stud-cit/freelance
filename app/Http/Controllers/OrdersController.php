@@ -43,7 +43,6 @@ class OrdersController extends Controller
 
     public function index($sort = null, $filter = null)
     {
-
         if (is_null($sort)) {
             $data = DB::table('orders')->where('status', 'new')->orderBy('created_at', 'desc')->get()->toArray();
 
@@ -83,11 +82,14 @@ class OrdersController extends Controller
             }
         }
 
+        $categories = DB::table('categories')->get()->toArray();
+
         $info = [
             'data' => $data,
             'workers' => $workers,
             'sort' => $sort,
             'filter' => $filter,
+            'categories' =>$categories,
         ];
 
         return view('orders.index', compact('info'));
@@ -222,8 +224,8 @@ class OrdersController extends Controller
                 $values = [
                     'text' => $req->text,
                     'rating' => $req->rating,
-                    'id_customer' => Auth::user()->id,
-                    'id_worker' => $worker->id_worker,
+                    'id_from' => Auth::user()->id,
+                    'id_to' => $worker->id_worker,
                     'created_at' => Carbon::now(),
                 ];
 
