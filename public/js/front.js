@@ -195,15 +195,17 @@ $("document").ready(function () {
   }
 
   $("#type").on("change", function () {
-    var item = $(this).children("option:selected");
-    $('input[value="' + item.val() + '"]').prop('checked', true);
+    var item = $(this).children("option:selected"),
+        input = $('input[name="categories"]');
+    input.val(input.val() + item.val() + '|');
     $(this).val(1);
     item.hide();
     $("#themes_block").append("<span class='badge badge-pill badge-primary m-1 p-1' class='theme_badge' id='" + item.val() + "'>" + item.text() + " <span class='theme_remove pointer'>&times;</span></span>");
   });
   $("#themes_block").on("click", ".theme_remove", function () {
-    var item = $("#themes_block").find($(this).parent());
-    $('input[value="' + item.attr('id') + '"]').prop('checked', false);
+    var item = $("#themes_block").find($(this).parent()),
+        input = $('input[name="categories"]');
+    input.val(input.val().replace(item.attr('id') + '|', ''));
     $("#type").find("option[value='" + item.attr("id") + "']").show();
     item.remove();
   });

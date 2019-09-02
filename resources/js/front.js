@@ -115,9 +115,10 @@ $("document").ready(function() {
     }
 
     $("#type").on("change", function() {
-        let item = $(this).children("option:selected");
+        let item = $(this).children("option:selected"),
+            input = $('input[name="categories"]');
 
-        $('input[value="' + item.val() + '"]').prop('checked', true);
+        input.val(input.val() + item.val() + '|');
 
         $(this).val(1);
         item.hide();
@@ -126,9 +127,10 @@ $("document").ready(function() {
     });
 
     $("#themes_block").on("click", ".theme_remove", function () {
-        let item = $("#themes_block").find($(this).parent());
+        let item = $("#themes_block").find($(this).parent()),
+            input = $('input[name="categories"]');
 
-        $('input[value="' + item.attr('id') + '"]').prop('checked', false);
+        input.val(input.val().replace(item.attr('id') + '|', ''));
 
         $("#type").find("option[value='"+item.attr("id")+"']").show();
 
