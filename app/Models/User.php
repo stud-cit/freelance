@@ -73,9 +73,19 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     static function getUsersInfo($where, $what) {
-        return  DB::table('users_info')
+        $info = DB::table('users_info')
             ->join('users', 'users.id', '=', 'users_info.id_user')
             ->where($where, $what)
-            ->get(['name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role', 'created_at', 'country', 'city']);
+            ->get(['id_user', 'name', 'surname', 'patronymic', 'phone_number', 'about_me', 'email', 'skype', 'viber', 'birthday_date', 'id_role', 'created_at', 'country', 'city']);
+
+        foreach ($info as $one) {
+            if (Storage::disk('public')->has($one->id_user . '.png')) {
+                $one->avatar = '/img/' . $one->id_user . '.png';
+            } else {
+                $one->avatar = '/img/' . $one->id_user . '.jpg';
+            }
+        }
+
+        return $info;
     }
 }
