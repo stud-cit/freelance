@@ -58,7 +58,7 @@
                         <div class="form-group row">
                             <label for="type" class="col-2 col-form-label mt-2">Тема:</label>
                             <div class="col-5 mt-2">
-                                <select name="type" id="type" class="form-control">
+                                <select id="type" class="form-control">
                                     <option value="1" disabled selected>(Виберіть тему замовлення)</option>
                                     @foreach($categories as $select)
                                     <option value="{{$select->id_category}}">{{$select->name}}</option>

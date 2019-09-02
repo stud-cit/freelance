@@ -48,7 +48,15 @@ class UsersController extends Controller
             }
         }
 
-        return view('users.profile', compact('data'), compact('reviews'));
+        $categories = DB::table('categories')->get()->toArray();
+
+        $info = [
+            'data' => $data,
+            'reviews' => $reviews,
+            'categories' => $categories,
+        ];
+
+        return view('users.profile', compact('info'));
     }
 
     public function save_info(Request $req)
