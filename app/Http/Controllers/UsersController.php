@@ -50,10 +50,18 @@ class UsersController extends Controller
 
         $categories = DB::table('categories')->get()->toArray();
 
+        $temp = DB::table('user_has_skills')->where('id', Auth::user()->id)->get()->toArray();
+        $skills = '';
+
+        foreach ($temp as $one) {
+            $skills .= $one->id_category . '|';
+        }
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
             'categories' => $categories,
+            'skills' => $skills,
         ];
 
         return view('users.profile', compact('info'));
@@ -119,6 +127,14 @@ class UsersController extends Controller
             Auth::user()->update(['password' => HASH::make($req->new_password)]);
 
             $req->session()->flash('alert-success', 'Пароль успішно змінено!');
+        }
+        else if($req->has('form_skills')) {
+            $categories = explode('|', $req->categories);
+            array_pop($categories);
+
+            foreach ($categories as $one) {
+                DB::table('user_has_skills')->insert(['id_category' => $one, 'id' => Auth::user()->id]);
+            }
         }
 
         return back();

@@ -9,7 +9,7 @@
 @php($data = $info['data'])
 @php($reviews = $info['reviews'])
 @php($categories = $info['categories'])
-
+@php($skills = $info['skills'])
 
 <div class="container">
     <div class="row">
@@ -216,16 +216,14 @@
                                     @endforeach
                                 </select>
                                 <div style="display: none">
-                                    @foreach($categories as $select)
-                                        <input type="checkbox" value="{{$select->id_category}}" name="categories">
-                                    @endforeach
+                                    <input type="text" name="categories" value="{{$skills}}">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-7" id="themes_block"></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <button type="submit" class="col-3 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_contacts">Підтвердити</button>
+                                <button type="submit" class="col-3 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_skills">Підтвердити</button>
                             </div>
                         </form>
                     </div>
