@@ -100,13 +100,6 @@ class OrdersController extends Controller
         $order = DB::table('orders')->where('id_order', $id)->get()->first();
         $customer = User::getUsersInfo('id', $order->id_customer)->first();
 
-        if (Storage::disk('public')->has($order->id_customer . '.png')) {
-            $customer->avatar = '/img/' . $order->id_customer . '.png';
-        }
-        else {
-            $customer->avatar = '/img/' . $order->id_customer . '.jpg';
-        }
-
         $my_proposal = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
             ->where([['id_order', $id], ['id_worker', Auth::user()->id]])
