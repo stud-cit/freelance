@@ -210,7 +210,7 @@
                             <p class="col font-size-18 mt-2 px-0">Навички та вміння</p>
                             <div class="col-9 mt-2">
                                 <select name="type" id="type" class="form-control">
-                                    <option value="1" disabled selected>(Оберіть навички)</option>
+                                    <option value="0" disabled selected>(Оберіть навички)</option>
                                     @foreach($categories as $select)
                                         <option value="{{$select->id_category}}">{{$select->name}}</option>
                                     @endforeach
