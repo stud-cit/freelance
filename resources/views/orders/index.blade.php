@@ -65,9 +65,7 @@
                                     @endforeach
                                 </select>
                                 <div style="display: none">
-                                @foreach($categories as $select)
-                                    <input type="checkbox" value="{{$select->id_category}}" name="categories">
-                                @endforeach
+                                    <input type="text" name="categories">
                                 </div>
                             </div>
                         </div>

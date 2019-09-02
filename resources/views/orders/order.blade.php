@@ -6,10 +6,12 @@
 
 @section('content')
 
-    @php($order = $data['order'])
-    @php($customer = $data['customer'])
-    @php($proposals = $data['proposals'])
-    @php($my_proposal = $data['my_proposal'])
+@php($order = $data['order'])
+@php($customer = $data['customer'])
+@php($proposals = $data['proposals'])
+@php($my_proposal = $data['my_proposal'])
+@php($categories = $data['categories'])
+
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-9">

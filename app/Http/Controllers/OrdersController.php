@@ -147,11 +147,18 @@ class OrdersController extends Controller
             }
         }
 
+        $categories = DB::table('categories_has_orders')
+            ->join('categories', 'categories_has_orders.id_category', '=', 'categories.id_category')
+            ->where('id_order', $id)
+            ->get()
+            ->toArray();
+
         $data = [
             'order' => $order,
             'customer' => $customer,
             'proposals' => $proposals,
             'my_proposal' => $my_proposal,
+            'categories' => $categories,
         ];
 
         return view('orders.order', compact('data'));
@@ -297,6 +304,13 @@ class OrdersController extends Controller
             DB::table('orders')->insert($values);
 
             $id = DB::table('orders')->where('id_customer', Auth::user()->id)->orderBy('id_order', 'desc')->get(['id_order'])->first();
+
+            $categories = explode('|', $req->categories);
+            array_pop($categories);
+
+            foreach ($categories as $one) {
+                DB::table('categories_has_orders')->insert(['id_category' => $one, 'id_order' => $id->id_order]);
+            }
 
             $req->session()->flash('alert-success', 'Замовлення успішно додано!');
 
