@@ -24,7 +24,9 @@
                     <div class="col-2 font-weight-bold font-size-18">{{$order->price}}</div>
                 </div>
             <div class="offset-1">
-                <div class="tags font-italic font-size-10">#full #blah</div>
+                @foreach($categories as $tags)
+                    <span class="tags font-italic font-size-10">{{$tags->name}}</span>
+                @endforeach
                 <div class="mt-4 font-size-10">{{$order->description}}</div>
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
@@ -167,7 +169,7 @@
                                 <div class="">{{$comment->text}}</div>
                                 <div class="text-right font-size-10">{{$comment->created_at}}</div>
                             </div>
-                            <div class="col c_rounded-right bg-green text-white mt-3">
+                            <div class="col c_rounded-right bg-green text-white mt-3" style="height: 54px; !important;">
                                 <div class="text-center font-weight-bold mt-1">{{$comment->price}}</div>
                                 <div class="text-right font-italic font-size-10 mt-2">{{$comment->time}}</div>
                             </div>
