@@ -129,6 +129,8 @@ class UsersController extends Controller
             $req->session()->flash('alert-success', 'Пароль успішно змінено!');
         }
         else if($req->has('form_skills')) {
+            DB::table('user_has_skills')->where('id', Auth::user()->id)->delete();
+
             $categories = explode('|', $req->categories);
             array_pop($categories);
 
