@@ -7,7 +7,7 @@
 @section('content')
 
 @php($data = $info['data'])
-@php($workers = $info['reviews'])
+@php($reviews = $info['reviews'])
 @php($categories = $info['categories'])
 
 
@@ -207,32 +207,25 @@
                     <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">
                         <form method="POST" action="{{route('save_info')}}" class="col">
                             @csrf
-                            <p class="col font-size-18 mt-2 px-0">Спеціалізація</p>
-                            <select class="col custom-select mb-2" name="custom-select">
-                                <option selected>&#8213;</option>
-                                <option value="1">1</option>
-                                <option value="1">1</option>
-                            </select>
-                            <select class="col custom-select mb-2" name="custom-select">
-                                <option selected>&#8213;</option>
-                                <option value="1">1</option>
-                                <option value="1">1</option>
-                            </select>
                             <p class="col font-size-18 mt-2 px-0">Навички та вміння</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="skills" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    C++
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="skills" value="" id="defaultCheck2">
-                                <label class="form-check-label" for="defaultCheck2">
-                                    C#
-                                </label>
+                            <div class="col-9 mt-2">
+                                <select name="type" id="type" class="form-control">
+                                    <option value="1" disabled selected>(Оберіть навички)</option>
+                                    @foreach($categories as $select)
+                                        <option value="{{$select->id_category}}">{{$select->name}}</option>
+                                    @endforeach
+                                </select>
+                                <div style="display: none">
+                                    @foreach($categories as $select)
+                                        <input type="checkbox" value="{{$select->id_category}}" name="categories">
+                                    @endforeach
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-7" id="themes_block"></div>
+                                </div>
                             </div>
                             <div class="form-group row">
-                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_skills">Підтвердити</button>
+                                <button type="submit" class="col-3 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_contacts">Підтвердити</button>
                             </div>
                         </form>
                     </div>
