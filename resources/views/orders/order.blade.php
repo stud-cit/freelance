@@ -169,7 +169,7 @@
                                 <div class="">{{$comment->text}}</div>
                                 <div class="text-right font-size-10">{{$comment->created_at}}</div>
                             </div>
-                            <div class="col c_rounded-right bg-green text-white mt-3" style="height: 54px; !important;">
+                            <div class="col c_rounded-right bg-green text-white mt-3 align-self-end" style="height: 54px; !important;">
                                 <div class="text-center font-weight-bold mt-1">{{$comment->price}}</div>
                                 <div class="text-right font-italic font-size-10 mt-2">{{$comment->time}}</div>
                             </div>
