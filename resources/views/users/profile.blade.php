@@ -10,7 +10,9 @@
 @php($reviews = $info['reviews'])
 @php($categories = $info['categories'])
 @php($skills = $info['skills'])
+@php($orders = $info['orders'])
 @php($proposals = $info['proposals'])
+
 
 <div class="container">
     <div class="row">

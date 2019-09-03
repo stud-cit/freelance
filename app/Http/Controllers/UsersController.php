@@ -57,9 +57,11 @@ class UsersController extends Controller
             $skills .= $one->id_category . '|';
         }
 
+        $orders = DB::table('orders')->where('id_customer', Auth::user()->id)->get()->toArray();
+
         $proposals = DB::table('proposals')
             ->join('orders', 'orders.id_order', '=', 'proposals.id_order')
-            ->where('id_worker', Auth::user()->id)
+            ->where('proposals.id_worker', Auth::user()->id)
             ->get()
             ->toArray();
 
@@ -69,6 +71,7 @@ class UsersController extends Controller
             'categories' => $categories,
             'skills' => $skills,
             'proposals' => $proposals,
+            'orders' => $orders,
         ];
 
         return view('users.profile', compact('info'));
