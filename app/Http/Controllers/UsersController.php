@@ -59,7 +59,7 @@ class UsersController extends Controller
 
         $proposals = DB::table('proposals')
             ->join('orders', 'orders.id_order', '=', 'proposals.id_order')
-            ->where('id_worker', Auth::user()->id)
+            ->where('proposals.id_worker', Auth::user()->id)
             ->get()
             ->toArray();
 
