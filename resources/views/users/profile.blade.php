@@ -239,14 +239,57 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
-               <p>Активні замовлення</p>
-                <div class="row">
-                    <div class="col-4 shadow-lg">
-                        <div class="font-weight-bold">Test</div>
-                        <div class="font-size-10">Дата створення: 20.18.2019</div>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Залишені пропозиції</a>
+                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проекти</a>
+                        <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проекти</a>
                     </div>
-                    <div class="col-1 px-0">
-                        <button class="btn btn-danger">&#215;</button>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active row" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+                        @foreach($orders as $all)
+                            @if($all->status == 'new')
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-11 mt-4 shadow-lg">
+                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
+                                            <div class="offset-1">{{$all->description}}</div>
+                                            <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="tab-pane fade row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
+                        @foreach($orders as $active)
+                            @if($active->status == 'in progress')
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-11 mt-4 shadow-lg">
+                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
+                                            <div class="offset-1">{{$active->description}}</div>
+                                            <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="tab-pane fade row" id="nav-complete" role="tabpanel" aria-labelledby="nav-complete-tab">
+                        @foreach($orders as $complete)
+                            @if($complete->status == 'complete')
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-11 mt-4 shadow-lg">
+                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$complete->title}}</div>
+                                            <div class="offset-1 mb-1">{{$active->description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -335,64 +378,6 @@
                             </div>
                         </div>
                         @endif
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Залишені пропозиції</a>
-                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проекти</a>
-                        <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проекти</a>
-                    </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active row" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
-                        @foreach($orders as $all)
-                            @if($all->status == 'new')
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
-                                            <div class="offset-1">{{$all->decription}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                    <div class="tab-pane fade row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
-                        @foreach($proposals as $active)
-                            @if($active->status == 'in progress')
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
-                                            <div class="offset-1">{{$active->description}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                    <div class="tab-pane fade row" id="nav-complete" role="tabpanel" aria-labelledby="nav-complete-tab">
-                        @foreach($proposals as $complete)
-                            @if($complete->status == 'complete')
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
-                                            <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
-                                            <div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
                         @endforeach
                     </div>
                 </div>
