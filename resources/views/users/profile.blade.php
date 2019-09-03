@@ -10,6 +10,7 @@
 @php($reviews = $info['reviews'])
 @php($categories = $info['categories'])
 @php($skills = $info['skills'])
+@php($proposals = $info['proposals'])
 
 <div class="container">
     <div class="row">
@@ -257,41 +258,48 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active row" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-11 mt-4 shadow-lg">
-                                    <div class="offset-1 font-weight-bold font-size-18 mt-1">Title</div>
-                                    <div class="offset-1 font-italic font-size-10 mb-2">tags</div>
-                                    <div class="offset-1">Some text</div>
-                                    <div class="col offset-9 font-size-10">Дата створення: 2000-20-20</div>
+                        @foreach($proposals as $all)
+                            @if($all->status == 'new')
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-11 mt-4 shadow-lg">
+                                        <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
+                                        <div class="offset-1">{{$all->text}}</div>
+                                        <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            @endif
+                        @endforeach
                     </div>
                     <div class="tab-pane fade row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-11 mt-4 shadow-lg">
-                                    <div class="offset-1 font-weight-bold font-size-18 mt-1">Title</div>
-                                    <div class="offset-1 font-italic font-size-10 mb-2">tags</div>
-                                    <div class="offset-1">Some text</div>
-                                    <div class="col offset-9 font-size-10">Дата створення: 2000-20-20</div>
+                        @foreach($proposals as $active)
+                            @if($active->status == 'in progress')
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-11 mt-4 shadow-lg">
+                                        <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
+                                        <div class="offset-1">{{$active->text}}</div>
+                                        <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            @endif
+                        @endforeach
                     </div>
                     <div class="tab-pane fade row" id="nav-complete" role="tabpanel" aria-labelledby="nav-complete-tab">
+                        @foreach($proposals as $complete)
+                        @if($complete->status == 'complete')
                         <div class="container">
                             <div class="row">
                                 <div class="col-11 mt-4 shadow-lg">
-                                    <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">Title</div>
-                                    <div class="offset-1 font-size-10 mb-2">Замовник: Doot Doot</div>
+                                    <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
                                     <div>
                                         <div class="row">
-                                            <button type="submit" class="propose-toggle col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_skills">Залишити коментар</button>
+                                            <button class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити коментар</button>
                                         </div>
                                     </div>
-                                    <div id="prop" style="display: none;">
+                                    <div id="id-{{$complete->id_proposal}}" class="collapse">
                                         <form method="POST" action="" class="col shadow-lg c_rounded">
                                             @csrf
                                             <input name="cancel_check" style="display: none">
@@ -324,6 +332,66 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Залишені пропозиції</a>
+                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проекти</a>
+                        <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проекти</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active row" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+                        @foreach($orders as $all)
+                            @if($all->status == 'new')
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-11 mt-4 shadow-lg">
+                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
+                                            <div class="offset-1">{{$all->decription}}</div>
+                                            <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="tab-pane fade row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
+                        @foreach($proposals as $active)
+                            @if($active->status == 'in progress')
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-11 mt-4 shadow-lg">
+                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
+                                            <div class="offset-1">{{$active->description}}</div>
+                                            <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="tab-pane fade row" id="nav-complete" role="tabpanel" aria-labelledby="nav-complete-tab">
+                        @foreach($proposals as $complete)
+                            @if($complete->status == 'complete')
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-11 mt-4 shadow-lg">
+                                            <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
+                                            <div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
