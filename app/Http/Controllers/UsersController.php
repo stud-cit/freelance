@@ -57,11 +57,18 @@ class UsersController extends Controller
             $skills .= $one->id_category . '|';
         }
 
+        $proposals = DB::table('proposals')
+            ->join('orders', 'orders.id_order', '=', 'proposals.id_order')
+            ->where('id_worker', Auth::user()->id)
+            ->get()
+            ->toArray();
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
             'categories' => $categories,
             'skills' => $skills,
+            'proposals' => $proposals,
         ];
 
         return view('users.profile', compact('info'));
