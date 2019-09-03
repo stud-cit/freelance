@@ -250,16 +250,80 @@
             <div class="tab-pane fade" id="v-pills-proposals" role="tabpanel" aria-labelledby="v-pills-proposals-tab">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Всі пропозиції</a>
+                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Залишені пропозиції</a>
                         <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проекти</a>
+                        <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проекти</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active row" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
-
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-11 mt-4 shadow-lg">
+                                    <div class="offset-1 font-weight-bold font-size-18 mt-1">Title</div>
+                                    <div class="offset-1 font-italic font-size-10 mb-2">tags</div>
+                                    <div class="offset-1">Some text</div>
+                                    <div class="col offset-9 font-size-10">Дата створення: 2000-20-20</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tab-pane fade show active row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
-
+                    <div class="tab-pane fade row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-11 mt-4 shadow-lg">
+                                    <div class="offset-1 font-weight-bold font-size-18 mt-1">Title</div>
+                                    <div class="offset-1 font-italic font-size-10 mb-2">tags</div>
+                                    <div class="offset-1">Some text</div>
+                                    <div class="col offset-9 font-size-10">Дата створення: 2000-20-20</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade row" id="nav-complete" role="tabpanel" aria-labelledby="nav-complete-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-11 mt-4 shadow-lg">
+                                    <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">Title</div>
+                                    <div class="offset-1 font-size-10 mb-2">Замовник: Doot Doot</div>
+                                    <div>
+                                        <div class="row">
+                                            <button type="submit" class="propose-toggle col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_skills">Залишити коментар</button>
+                                        </div>
+                                    </div>
+                                    <div id="prop" style="display: none;">
+                                        <form method="POST" action="" class="col shadow-lg c_rounded">
+                                            @csrf
+                                            <input name="cancel_check" style="display: none">
+                                            <div class="form-group row">
+                                                <p class="col-2 mt-3">Без відгуку:</p>
+                                                <div class="col-3 mt-3">
+                                                    <input type="checkbox" id="" class="form-check-input disable-comment">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <p class="col-2">Оцінка:</p>
+                                                <div class="col-3 rating">
+                                                    <input type="range" id="rating" class="reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                                                </div>
+                                                <div class="">
+                                                    <span id="rating_val">3</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="comment" class="col-1 col-form-label">Коментар:</label>
+                                                <div class="col offset-1">
+                                                    <textarea id="comment" class="form-control reviews-comment" rows="3" name="text" required></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
