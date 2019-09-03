@@ -184,6 +184,9 @@ class OrdersController extends Controller
                         $time = $time . ' днів';
                 }
             }
+            else {
+                $time = $time . ' ' . $type;
+            }
 
             $values = [
                 'text' => $req->text,
