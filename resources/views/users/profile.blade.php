@@ -252,7 +252,7 @@
                             @if($all->status == 'new')
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
+                                        <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
                                             <div class="offset-1">{{$all->description}}</div>
                                             <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
@@ -267,7 +267,7 @@
                             @if($active->status == 'in progress')
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
+                                        <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
                                             <div class="offset-1">{{$active->description}}</div>
                                             <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
@@ -282,7 +282,7 @@
                             @if($complete->status == 'complete')
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
+                                        <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$complete->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$complete->title}}</div>
                                             <div class="offset-1 mb-1">{{$active->description}}</div>
                                         </div>
@@ -307,7 +307,7 @@
                             @if($all->status == 'new')
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-11 mt-4 shadow-lg">
+                                    <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                         <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
                                         <div class="offset-1">{{$all->text}}</div>
                                         <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
@@ -322,7 +322,7 @@
                             @if($active->status == 'in progress')
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-11 mt-4 shadow-lg">
+                                    <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                         <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
                                         <div class="offset-1">{{$active->text}}</div>
                                         <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
