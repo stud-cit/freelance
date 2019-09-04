@@ -113,15 +113,15 @@ $("document").ready(function () {
       $('#prop').hide();
     }
   });
-  $('#new_order-toggle').on('click', function () {
-    var style = $('#new-order').css('display');
+  /*$('#new_order-toggle').on('click', function () {
+      let style = $('#new-order').css('display');
+       if (style == 'none') {
+          $('#new-order').show();
+      } else {
+          $('#new-order').hide();
+      }
+  });*/
 
-    if (style == 'none') {
-      $('#new-order').show();
-    } else {
-      $('#new-order').hide();
-    }
-  });
   $('#reset_order-toggle').on('click', function () {
     var style = $('#reset-order').css('display');
 
