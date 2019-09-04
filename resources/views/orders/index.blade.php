@@ -40,7 +40,7 @@
                     <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle">
                         <div class="col-11 pt-3 shadow-lg order_div">Створити власний проект</div>
                         <div class="col-1">
-                            <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60 order_circle"  data-toggle="collapse" data-target="#new-order" aria-expanded="true" onclick="$(this).text($('#new-order').css('display') == 'none' ? '-' : '+')">&#43;</div>
+                            <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60 order_circle"  data-toggle="collapse" data-target="#new-order" aria-expanded="true" onclick="$(this).css('transition', 'transform 0.1s linear').css('transform', $('#new-order').css('display') == 'none' ? 'rotate(360deg)' : 'rotate(0deg)');$(this).text($('#new-order').css('display') == 'none' ? '-' : '+')">&#43;</div>
                         </div>
                     </div>
                 </div>
