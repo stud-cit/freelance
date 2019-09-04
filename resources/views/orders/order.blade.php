@@ -101,27 +101,30 @@
                     </form>
                 </div>
             @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new'  && $proposals != [])
-                <div id="prop" style="display: none;">
-                    <p class="font-size-18 font-weight-bold">Виконавці</p>
-                    <form method="POST" action="{{route('order', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
-                        @csrf
-                        <div class="row">
-                            <input type="text" name="selected_worker" style="display: none">
-                            @foreach($proposals as $accept)
-                                <div class="form-check mb-2 pt-3 col-5 offset-1">
-                                    <label>
-                                        <input class="form-check-input mt-2" type="radio" name="select_worker" data-id="{{$accept->id_user}}">
-                                        <img src="{{$accept->avatar}}" class="square-30 avatar circle">
-                                        <span>{{$accept->name}} {{$accept->surname}}</span>
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_select">Підтвердити</button>
-                        </div>
-                    </form>
-                </div>
+            <!--
+            proposal select for customers prev vers
+            <div id="prop" style="display: none;">
+                <p class="font-size-18 font-weight-bold">Виконавці</p>
+                <form method="POST" action="{{route('order', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
+                    @csrf
+                    <div class="row">
+                        <input type="text" name="selected_worker" style="display: none">
+                        @foreach($proposals as $accept)
+                            <div class="form-check mb-2 pt-3 col-5 offset-1">
+                                <label>
+                                    <input class="form-check-input mt-2" type="radio" name="select_worker" data-id="{{$accept->id_user}}">
+                                    <img src="{{$accept->avatar}}" class="square-30 avatar circle">
+                                    <span>{{$accept->name}} {{$accept->surname}}</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_select">Підтвердити</button>
+                    </div>
+                </form>
+            </div>-->
+
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
                 <div id="prop" style="display: none;">
                     <p class="font-size-18 font-weight-bold">Залишити відгук</p>
@@ -159,14 +162,23 @@
                 <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
                 <div class="container proposals">
                     @foreach($proposals as $comment)
-                        <div class="d-flex flex-row mb-3 mt-2">
-                            <div class="col-1 px-0 min-width-70 to-profile pointer" data-id="{{$comment->id_user}}">
+                        <div class="d-flex flex-row mb-3 mt-2 pointer">
+                            <div class="col-1 px-0 min-width-70 to-profile" data-id="{{$comment->id_user}}">
                                 <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
                             </div>
-                            <div class="col-9 shadow bg-white to-profile pointer" data-id="{{$comment->id_user}}">
-                                <div class="font-weight-bold mt-2">{{$comment->name}} {{$comment->surname}}</div>
-                                <div class="">{{$comment->text}}</div>
-                                <div class="text-right font-size-10">{{$comment->created_at}}</div>
+                            <div class="col-9 shadow bg-white" data-id="{{$comment->id_user}}">
+                                <div class="flex-row" @if(Auth::user()->isCustomer()) data-toggle="collapse" data-target="#w-id-{{ $comment->id_user }}" aria-expanded="true"@endif>
+                                    <div class="font-weight-bold mt-2"><span class="to-profile" data-id="{{$comment->id_user}}">{{$comment->name}} {{$comment->surname}}</span></div>
+                                    <div class="">{{$comment->text}}</div>
+                                    <div class="text-right font-size-10">{{$comment->created_at}}</div>
+                                </div>
+                                @if(Auth::user()->isCustomer())
+                                <div>
+                                    <div class="collapse" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
+                                        <button type="submit" class="col-lg-3 col-6 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_select">Підтвердити</button>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                             <div class="col c_rounded-right bg-green text-white mt-3 align-self-end" style="height: 54px; !important;">
                                 <div class="text-center font-weight-bold mt-1">{{$comment->price}}</div>

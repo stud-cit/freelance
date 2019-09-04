@@ -40,12 +40,12 @@
                     <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle">
                         <div class="col-11 pt-3 shadow-lg order_div">Створити власний проект</div>
                         <div class="col-1">
-                            <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60 order_circle" onclick="$(this).text($('#new-order').css('display') == 'none' ? '-' : '+')">&#43;</div>
+                            <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60 order_circle"  data-toggle="collapse" data-target="#new-order" aria-expanded="true" onclick="$(this).text($('#new-order').css('display') == 'none' ? '-' : '+')">&#43;</div>
                         </div>
                     </div>
                 </div>
             @endif
-            <div class="container" id="new-order" style="display: none;">
+            <div class="container collapse" id="new-order">
                 <div class="d-flex flex-row">
                     <form class="col" method="POST" action="{{route('save_order')}}">
                         @csrf
@@ -94,8 +94,8 @@
                         </div>
                         <div class="form-group row">
                             <label for="description" class="col-2 col-form-label mt-2">Інормація:</label>
-                            <div class="col-5 mt-2">
-                                <textarea name="description" id="description" cols="60" rows="3" required></textarea>
+                            <div class="col-8 mt-2">
+                                <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -113,9 +113,9 @@
                             <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
                             <div class="text-right font-size-10">{{$orders->created_at}}</div>
                         </div>
-                        <div class="col c_rounded-right mt-3 bg-green text-white">
+                        <div class="col c_rounded-right mt-3 bg-green text-white px-0">
                             <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
-                            <div class="text-right font-italic font-size-10 mt-2">{{$orders->time}}</div>
+                            <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
                         </div>
                     </div>
                 @endforeach

@@ -23,7 +23,7 @@ $("document").ready(function() {
         }
     });
 
-    $('#new_order-toggle').on('click', function () {
+    /*$('#new_order-toggle').on('click', function () {
         let style = $('#new-order').css('display');
 
         if (style == 'none') {
@@ -31,7 +31,7 @@ $("document").ready(function() {
         } else {
             $('#new-order').hide();
         }
-    });
+    });*/
     $('#reset_order-toggle').on('click', function () {
         let style = $('#reset-order').css('display');
 
