@@ -136,4 +136,8 @@ $("document").ready(function() {
 
         item.remove();
     });
+
+    $('.add-review').on('click', function () {
+       $(this).hide();
+    });
 });

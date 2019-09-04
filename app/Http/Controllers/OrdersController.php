@@ -229,6 +229,7 @@ class OrdersController extends Controller
                     'rating' => $req->rating,
                     'id_from' => Auth::user()->id,
                     'id_to' => $worker->id_worker,
+                    'id_order' => $req->id,
                     'created_at' => Carbon::now(),
                 ];
 
