@@ -61,7 +61,7 @@
                                 <select id="type" class="form-control">
                                     <option value="1" disabled selected>(Виберіть тему замовлення)</option>
                                     @foreach($categories as $select)
-                                    <option value="{{$select->id_category}}">{{$select->name}}</option>
+                                        <option value="{{$select->id_category}}">{{$select->name}}</option>
                                     @endforeach
                                 </select>
                                 <div style="display: none">
@@ -133,10 +133,10 @@
                 <div class="font-weight-bold font-size-18 px-0">Топ виконавців</div>
                 <div class="px-0">
                     @foreach($workers as $users)
-                    <div class="mt-2">
-                        <img src="{{$users->avatar}}" class="square-60 avatar circle to-profile pointer" data-id="{{$users->id_user}}">
-                        <label class="name surmane font-weight-bold to-profile pointer" data-id="{{$users->id_user}}">{{$users->name}} {{$users->surname}}</label>
-                    </div>
+                        <div class="mt-2">
+                            <img src="{{$users->avatar}}" class="square-60 avatar circle to-profile pointer" data-id="{{$users->id_user}}">
+                            <label class="name surmane font-weight-bold to-profile pointer" data-id="{{$users->id_user}}">{{$users->name}} {{$users->surname}}</label>
+                        </div>
                     @endforeach
                 </div>
             </div>

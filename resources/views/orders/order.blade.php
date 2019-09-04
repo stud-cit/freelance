@@ -64,42 +64,42 @@
         </div>
         <div class="col-8 mt-4 px-0">
             @if(Auth::user()->isWorker() && $order->status == 'new')
-            <div id="prop" style="display: none;">
-                <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
-                <form method="POST" action="{{ route('order', $order->id_order) }}" class="col mt-2 shadow-lg c_rounded">
-                    @csrf
-                    <div class="form-group row">
-                        <label for="price" class="col-sm-2 col-form-label mt-2">Ціна:</label>
-                        <div class="col-sm-3 mt-2">
-                            <input type="number" id="price" class="form-control" min="0" name="price" value="{{!is_null($my_proposal) ? $my_proposal->price : ''}}">
+                <div id="prop" style="display: none;">
+                    <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
+                    <form method="POST" action="{{ route('order', $order->id_order) }}" class="col mt-2 shadow-lg c_rounded">
+                        @csrf
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-2 col-form-label mt-2">Ціна:</label>
+                            <div class="col-sm-3 mt-2">
+                                <input type="number" id="price" class="form-control" min="0" name="price" value="{{!is_null($my_proposal) ? $my_proposal->price : ''}}">
+                            </div>
+                            <select class="col-sm-1 mt-2 px-0 form-control" name="currency">
+                                <option {{!is_null($my_proposal) ? ($my_proposal->currency == 'грн.' ? 'selected' : '') : ''}}>грн.</option>
+                                <option {{!is_null($my_proposal) ? ($my_proposal->currency == '$' ? 'selected' : '') : ''}}>$</option>
+                            </select>
                         </div>
-                        <select class="col-sm-1 mt-2 px-0 form-control" name="currency">
-                            <option {{!is_null($my_proposal) ? ($my_proposal->currency == 'грн.' ? 'selected' : '') : ''}}>грн.</option>
-                            <option {{!is_null($my_proposal) ? ($my_proposal->currency == '$' ? 'selected' : '') : ''}}>$</option>
-                        </select>
-                    </div>
-                    <div class="form-group row">
-                        <label for="time" class="col-sm-2 col-form-label">Час:</label>
-                        <div class="col-sm-3">
-                            <input type="number" id="time" class="form-control" min="0" name="time" value="{{!is_null($my_proposal) ? $my_proposal->time : ''}}">
+                        <div class="form-group row">
+                            <label for="time" class="col-sm-2 col-form-label">Час:</label>
+                            <div class="col-sm-3">
+                                <input type="number" id="time" class="form-control" min="0" name="time" value="{{!is_null($my_proposal) ? $my_proposal->time : ''}}">
+                            </div>
+                            <select class="col-sm-1 px-0 form-control" name="type">
+                                <option {{!is_null($my_proposal) ? ($my_proposal->type != 'год.' ? 'selected' : '') : ''}}>дні</option>
+                                <option {{!is_null($my_proposal) ? ($my_proposal->type == 'год.' ? 'selected' : '') : ''}}>год.</option>
+                            </select>
                         </div>
-                        <select class="col-sm-1 px-0 form-control" name="type">
-                            <option {{!is_null($my_proposal) ? ($my_proposal->type != 'год.' ? 'selected' : '') : ''}}>дні</option>
-                            <option {{!is_null($my_proposal) ? ($my_proposal->type == 'год.' ? 'selected' : '') : ''}}>год.</option>
-                        </select>
-                    </div>
-                    <div class="form-group row">
-                        <label for="comment" class="col-sm-2 col-form-label">Коментар:</label>
-                        <div class="col-sm-10">
-                            <textarea id="comment" class="form-control" rows="3" name="text" required>{{!is_null($my_proposal) ? $my_proposal->text : ''}}</textarea>
+                        <div class="form-group row">
+                            <label for="comment" class="col-sm-2 col-form-label">Коментар:</label>
+                            <div class="col-sm-10">
+                                <textarea id="comment" class="form-control" rows="3" name="text" required>{{!is_null($my_proposal) ? $my_proposal->text : ''}}</textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_proposals">Підтвердити</button>
-                        <button class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0" name="delete_proposal">Видалити</button>
-                    </div>
-                </form>
-            </div>
+                        <div class="form-group row">
+                            <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_proposals">Підтвердити</button>
+                            <button class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0" name="delete_proposal">Видалити</button>
+                        </div>
+                    </form>
+                </div>
             @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new'  && $proposals != [])
             <!--
             proposal select for customers prev vers
@@ -124,39 +124,39 @@
                     </div>
                 </form>
             </div>-->
-            @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
-            <div id="prop" style="display: none;">
-                <p class="font-size-18 font-weight-bold">Залишити відгук</p>
-                <form method="POST" action="{{ route('order', $order->id_order) }}" class="col shadow-lg c_rounded">
-                    @csrf
-                    <input name="cancel_check" style="display: none">
-                    <div class="form-group row">
-                        <p class="col-2 mt-3">Без відгуку:</p>
-                        <div class="col-3 mt-3">
-                            <input type="checkbox" id="" class="form-check-input disable-comment">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <p class="col-2">Оцінка:</p>
-                        <div class="col-3 rating">
-                            <input type="range" id="rating" class="reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
-                        </div>
-                        <div class="">
-                            <span id="rating_val">3</span>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="comment" class="col-1 col-form-label">Коментар:</label>
-                        <div class="col offset-1">
-                            <textarea id="comment" class="form-control reviews-comment" rows="3" name="text" required></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
-                    </div>
-                </form>
-            </div>
 
+            @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
+                <div id="prop" style="display: none;">
+                    <p class="font-size-18 font-weight-bold">Залишити відгук</p>
+                    <form method="POST" action="{{ route('order', $order->id_order) }}" class="col shadow-lg c_rounded">
+                        @csrf
+                        <input name="cancel_check" style="display: none">
+                        <div class="form-group row">
+                            <p class="col-2 mt-3">Без відгуку:</p>
+                            <div class="col-3 mt-3">
+                                <input type="checkbox" id="" class="form-check-input disable-comment">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <p class="col-2">Оцінка:</p>
+                            <div class="col-3 rating">
+                                <input type="range" id="rating" class="reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                            </div>
+                            <div class="">
+                                <span id="rating_val">3</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="comment" class="col-1 col-form-label">Коментар:</label>
+                            <div class="col offset-1">
+                                <textarea id="comment" class="form-control reviews-comment" rows="3" name="text" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
+                        </div>
+                    </form>
+                </div>
             @endif
             <div class="col">
                 <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
@@ -201,7 +201,6 @@
 <div class="flash-message fixed-bottom text-center">
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
         @if(Session::has('alert-' . $msg))
-
             <p class="alert alert-{{ $msg }} alert-dismissible"> {{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
         @endif
     @endforeach
