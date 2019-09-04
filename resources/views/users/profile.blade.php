@@ -301,7 +301,7 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$complete->id_order}}">
+                                        <div class="col-11 mt-4 shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$complete->title}}</div>
                                             <div class="offset-1 mb-1">{{$complete->description}}</div>
                                         </div>

@@ -119,7 +119,7 @@ $("document").ready(function () {
   /*
   $('#new_order-toggle').on('click', function () {
       let style = $('#new-order').css('display');
-       if (style == 'none') {
+        if (style == 'none') {
           $('#new-order').show();
       } else {
           $('#new-order').hide();
