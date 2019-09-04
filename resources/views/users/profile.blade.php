@@ -51,25 +51,25 @@
                     <p class="font-weight-bold font-size-18">Додаткова інформація</p>
                     <div class="pb-2">{{$data->about_me}}</div>
                 </div>
+                @foreach($reviews as $mark)
                 <div class="col shadow-lg mt-3">
                     <p class="font-weight-bold font-size-18">Відгуки</p>
-                    @foreach($reviews as $mark)
-                        <div class="d-flex flex-row">
-                            <div class="col-1 px-0 min-width-70">
-                                <img src="{{$mark->avatar}}" class="square-60 circle avatar">
-                            </div>
-                            <div class="col bg-blue text-white rounded pt-2 pb-2 mb-2">
-                                <div class=" mt-2">{{$mark->text}}</div>
-                                <hr class="col border-white mb-0">
-                                <div class="row font-size-10 mt-2 mb-2">
-                                    <div class="col-3">{{$mark->name}} {{$mark->surname}}</div>
-                                    <div class="col-2 offset-1">Оцінка: {{$mark->rating}}/5</div>
-                                    <div class="col-2 offset-4">{{$mark->created_at}}</div>
-                                </div>
+                    <div class="d-flex flex-row">
+                        <div class="col-1 px-0 min-width-70">
+                            <img src="{{$mark->avatar}}" class="square-60 circle avatar">
+                        </div>
+                        <div class="col bg-blue text-white rounded pt-2 pb-2 mb-2">
+                            <div class=" mt-2">{{$mark->text}}</div>
+                            <hr class="col border-white mb-0">
+                            <div class="row font-size-10 mt-2 mb-2">
+                                <div class="col-3">{{$mark->name}} {{$mark->surname}}</div>
+                                <div class="col-2 offset-1">Оцінка: {{$mark->rating}}/5</div>
+                                <div class="col-2 offset-4">{{$mark->created_at}}</div>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
+                @endforeach
             </div>
             <div class="tab-pane fade" id="v-pills-portfolio" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 Оно точно нам надо?
@@ -241,53 +241,71 @@
             <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Залишені пропозиції</a>
-                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проекти</a>
-                        <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проекти</a>
+                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all-c" role="tab" aria-controls="nav-all" aria-selected="true">Залишені замовлення</a>
+                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active-c" role="tab" aria-controls="nav-active" aria-selected="false">Активні проекти</a>
+                        <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete-c" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проекти</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active row" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+                    <div class="tab-pane fade show active row" id="nav-all-c" role="tabpanel" aria-labelledby="nav-all-tab">
                         @foreach($orders as $all)
                             @if($all->status == 'new')
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
-                                            <div class="offset-1">{{$all->description}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
-                                        </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-11 mt-4 shadow-lg">
+                                        <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
+                                        <div class="offset-1">{{$all->description}}</div>
+                                        <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
                                     </div>
                                 </div>
+                            </div>
+                            @elseif(($active->status == 'new') == null)
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних замовленнь</div>
+                                </div>
+                            </div>
                             @endif
                         @endforeach
                     </div>
-                    <div class="tab-pane fade row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
+                    <div class="tab-pane fade row" id="nav-active-c" role="tabpanel" aria-labelledby="nav-active-tab">
                         @foreach($orders as $active)
                             @if($active->status == 'in progress')
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
-                                            <div class="offset-1">{{$active->description}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
-                                        </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-11 mt-4 shadow-lg">
+                                        <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
+                                        <div class="offset-1">{{$active->description}}</div>
+                                        <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
                                     </div>
                                 </div>
+                            </div>
+                            @elseif(($active->status == 'new') == null)
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних проектів</div>
+                                </div>
+                            </div>
                             @endif
                         @endforeach
                     </div>
-                    <div class="tab-pane fade row" id="nav-complete" role="tabpanel" aria-labelledby="nav-complete-tab">
+                    <div class="tab-pane fade row" id="nav-complete-c" role="tabpanel" aria-labelledby="nav-complete-tab">
                         @foreach($orders as $complete)
                             @if($complete->status == 'complete')
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$complete->title}}</div>
-                                            <div class="offset-1 mb-1">{{$active->description}}</div>
-                                        </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-11 mt-4 shadow-lg">
+                                        <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$complete->title}}</div>
+                                        <div class="offset-1 mb-1">{{$complete->description}}</div>
                                     </div>
                                 </div>
+                            </div>
+                            @elseif(($active->status == 'new') == null)
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних проектів</div>
+                                </div>
+                            </div>
                             @endif
                         @endforeach
                     </div>
@@ -296,13 +314,20 @@
             <div class="tab-pane fade" id="v-pills-proposals" role="tabpanel" aria-labelledby="v-pills-proposals-tab">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Залишені пропозиції</a>
-                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проекти</a>
-                        <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проекти</a>
+                        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all-w" role="tab" aria-controls="nav-all" aria-selected="true">Залишені пропозиції</a>
+                        <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active-w" role="tab" aria-controls="nav-active" aria-selected="false">Активні проекти</a>
+                        <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete-w" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проекти</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active row" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+                    <div class="tab-pane fade show active row" id="nav-all-w" role="tabpanel" aria-labelledby="nav-all-tab">
+                        @if(!count($proposals))
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних пропозицій</div>
+                                </div>
+                            </div>
+                        @else
                         @foreach($proposals as $all)
                             @if($all->status == 'new')
                             <div class="container">
@@ -314,10 +339,19 @@
                                     </div>
                                 </div>
                             </div>
+
                             @endif
                         @endforeach
+                        @endif
                     </div>
-                    <div class="tab-pane fade row" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
+                    <div class="tab-pane fade row" id="nav-active-w" role="tabpanel" aria-labelledby="nav-active-tab">
+                        @if(!count($proposals))
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних пропозицій</div>
+                                </div>
+                            </div>
+                        @else
                         @foreach($proposals as $active)
                             @if($active->status == 'in progress')
                             <div class="container">
@@ -331,58 +365,64 @@
                             </div>
                             @endif
                         @endforeach
+                        @endif
                     </div>
-                    <div class="tab-pane fade row" id="nav-complete" role="tabpanel" aria-labelledby="nav-complete-tab">
+                    <div class="tab-pane fade row" id="nav-complete-w" role="tabpanel" aria-labelledby="nav-complete-tab">
                         @foreach($proposals as $complete)
-                        @if($complete->status == 'complete')
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-11 mt-4 shadow-lg">
-                                    <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
-                                    <div>
-                                        <div class="row">
-                                            <button class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити коментар</button>
+                            @if($complete->status == 'complete')
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-11 mt-4 shadow-lg">
+                                        <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
+                                        <div>
+                                            <div class="row">
+                                                <button class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити коментар</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="id-{{$complete->id_proposal}}" class="collapse">
-                                        <form method="POST" action="" class="col shadow-lg c_rounded">
-                                            @csrf
-                                            <input name="cancel_check" style="display: none">
-                                            <div class="form-group row">
-                                                <p class="col-2 mt-3">Без відгуку:</p>
-                                                <div class="col-3 mt-3">
-                                                    <input type="checkbox" id="" class="form-check-input disable-comment">
+                                        <div id="id-{{$complete->id_proposal}}" class="collapse">
+                                            <form method="POST" action="" class="col shadow-lg c_rounded">
+                                                @csrf
+                                                <input name="cancel_check" style="display: none">
+                                                <div class="form-group row">
+                                                    <p class="col-2 mt-3">Без відгуку:</p>
+                                                    <div class="col-3 mt-3">
+                                                        <input type="checkbox" id="" class="form-check-input disable-comment">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <p class="col-2">Оцінка:</p>
-                                                <div class="col-3 rating">
-                                                    <input type="range" id="rating" class="reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                                                <div class="form-group row">
+                                                    <p class="col-2">Оцінка:</p>
+                                                    <div class="col-3 rating">
+                                                        <input type="range" id="rating" class="reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                                                    </div>
+                                                    <div class="">
+                                                        <span id="rating_val">3</span>
+                                                    </div>
                                                 </div>
-                                                <div class="">
-                                                    <span id="rating_val">3</span>
+                                                <div class="form-group row">
+                                                    <label for="comment" class="col-1 col-form-label">Коментар:</label>
+                                                    <div class="col offset-1">
+                                                        <textarea id="comment" class="form-control reviews-comment" rows="3" name="text" required></textarea>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="comment" class="col-1 col-form-label">Коментар:</label>
-                                                <div class="col offset-1">
-                                                    <textarea id="comment" class="form-control reviews-comment" rows="3" name="text" required></textarea>
+                                                <div class="form-group row">
+                                                    <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        @endif
+                            @elseif(($complete->status == 'new') == null)
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних проектів</div>
+                                </div>
+                            </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="col-3">
             <div class="card text-center px-0 mb-4">
