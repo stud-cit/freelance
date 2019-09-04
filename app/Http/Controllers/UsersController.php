@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -59,11 +60,18 @@ class UsersController extends Controller
 
         $orders = DB::table('orders')->where('id_customer', Auth::user()->id)->get()->toArray();
 
-        $proposals = DB::table('proposals')
-            ->join('orders', 'orders.id_order', '=', 'proposals.id_order')
+        $proposals = DB::table('orders')
+            ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
+            ->join('users_info', 'users_info.id_user', '=', 'orders.id_customer')
             ->where('proposals.id_worker', Auth::user()->id)
             ->get()
             ->toArray();
+
+        foreach ($proposals as $one) {
+            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::user()->id]])->get()->first();
+
+            $one->review = is_null($review) ? 1 : 0;
+        }
 
         $info = [
             'data' => $data,
@@ -122,7 +130,7 @@ class UsersController extends Controller
 
             $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
         }
-        else if($req->has('form_contacts')) {
+        else if ($req->has('form_contacts')) {
             $values = [
                 'phone_number' => $req->phone_number,
                 'viber' => $req->viber,
@@ -133,12 +141,12 @@ class UsersController extends Controller
 
             $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
         }
-        else if($req->has('form_password')) {
+        else if ($req->has('form_password')) {
             Auth::user()->update(['password' => HASH::make($req->new_password)]);
 
             $req->session()->flash('alert-success', 'Пароль успішно змінено!');
         }
-        else if($req->has('form_skills')) {
+        else if ($req->has('form_skills')) {
             DB::table('user_has_skills')->where('id', Auth::user()->id)->delete();
 
             $categories = explode('|', $req->categories);
@@ -147,6 +155,22 @@ class UsersController extends Controller
             foreach ($categories as $one) {
                 DB::table('user_has_skills')->insert(['id_category' => $one, 'id' => Auth::user()->id]);
             }
+        }
+        else if ($req->has('leave_review')) {
+            $customer = DB::table('orders')->where('id_order', $req->id_order)->get('id_customer')->first();
+
+            $values = [
+                'text' => $req->text,
+                'rating' => $req->rating,
+                'id_from' => Auth::user()->id,
+                'id_to' => $customer->id_customer,
+                'id_order' => $req->id_order,
+                'created_at' => Carbon::now(),
+            ];
+
+            DB::table('reviews')->insert($values);
+
+            $req->session()->flash('alert-success', 'Відгук успішно залишено!');
         }
 
         return back();

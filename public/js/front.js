@@ -209,6 +209,9 @@ $("document").ready(function () {
     $("#type").find("option[value='" + item.attr("id") + "']").show();
     item.remove();
   });
+  $('.add-review').on('click', function () {
+    $(this).hide();
+  });
 });
 
 /***/ }),

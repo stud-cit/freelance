@@ -385,21 +385,16 @@
                                     <div class="row">
                                         <div class="col-11 mt-4 shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
-                                            <div>
-                                                <div class="row">
-                                                    <button class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити коментар</button>
-                                                </div>
-                                            </div>
-                                            <div id="id-{{$complete->id_proposal}}" class="collapse">
-                                                <form method="POST" action="" class="col shadow-lg c_rounded">
-                                                    @csrf
-                                                    <input name="cancel_check" style="display: none">
-                                                    <div class="form-group row">
-                                                        <p class="col-2 mt-3">Без відгуку:</p>
-                                                        <div class="col-3 mt-3">
-                                                            <input type="checkbox" id="" class="form-check-input disable-comment">
-                                                        </div>
+                                            @if($complete->review)
+                                                <div>
+                                                    <div class="row">
+                                                        <button class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0 add-review" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити коментар</button>
                                                     </div>
+                                                </div>
+                                            <div id="id-{{$complete->id_proposal}}" class="collapse">
+                                                <form method="POST" action="" class="col c_rounded">
+                                                    @csrf
+                                                    <input name="id_order" value="{{$complete->id_order}}" style="display: none">
                                                     <div class="form-group row">
                                                         <p class="col-2">Оцінка:</p>
                                                         <div class="col-3 rating">
@@ -420,6 +415,7 @@
                                                     </div>
                                                 </form>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
