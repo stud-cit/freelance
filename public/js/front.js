@@ -113,7 +113,11 @@ $("document").ready(function () {
       $('#prop').hide();
     }
   });
-  /*$('#new_order-toggle').on('click', function () {
+  $('#new_order-toggle').on('click', function () {
+    $(this).find('.order_circle').css('transition', 'transform 0.1s linear').css('transform', $('#new-order').css('display') == 'none' ? 'rotate(360deg)' : 'rotate(0deg)').text($('#new-order').css('display') == 'none' ? '-' : '+');
+  });
+  /*
+  $('#new_order-toggle').on('click', function () {
       let style = $('#new-order').css('display');
        if (style == 'none') {
           $('#new-order').show();
