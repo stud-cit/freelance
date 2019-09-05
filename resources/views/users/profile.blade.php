@@ -109,11 +109,9 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active row" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
-                        <p class="col font-size-18 mt-2 ">Параметри</p>
-                        <hr class="my-0 border-dark">
                         <form method="POST" action="{{ route('save_info') }}" class="col-6 offset-1" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group row">
+                            <div class="form-group row mt-4">
                                 <label>Аватар:</label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="avatar" id="avatar-input" lang="ua" accept="image/*">
@@ -164,8 +162,7 @@
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <form method="POST" action="{{route('save_info')}}" class="col-6">
                             @csrf
-                            <p class="col font-size-18 mt-2 px-0">Контакти</p>
-                            <div class="form-group row">
+                            <div class="form-group row mt-4">
                                 <label for="phone_number" class="col-5 col-form-label mt-2">Номер телефону:</label>
                                 <div class="col-6 mt-2">
                                     <input type="text" id="phone_number" class="form-control" name="phone_number" value="{{$data->phone_number}}">
@@ -209,8 +206,7 @@
                     <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">
                         <form method="POST" action="{{route('save_info')}}" class="col">
                             @csrf
-                            <p class="col font-size-18 mt-2 px-0">Навички та вміння</p>
-                            <div class="col-9 mt-2">
+                            <div class="col-9 mt-4">
                                 <select name="type" id="type" class="form-control">
                                     <option value="0" disabled selected>(Оберіть навички)</option>
                                     @foreach($categories as $select)
@@ -230,9 +226,16 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                        <label class="col font-size-18 mt-2">Додаткова інформація</label>
                         <form method="POST" action="{{route('save_info')}}" class="col">
                             @csrf
+                            <div class="row">
+                                <div class="col-10 mt-4">
+                                    <textarea class="form-control" id="about_me" rows="6"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <button type="submit" class="col-3 offset-7 text-white btn badge-pill bg-deep-blue mt-2 px-0" name="">Підтвердити</button>
+                            </div>
                         </form>
                     </div>
                 </div>
