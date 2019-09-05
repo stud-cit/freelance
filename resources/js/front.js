@@ -124,7 +124,7 @@ $("document").ready(function() {
 
         input.val(input.val() + item.val() + '|');
 
-        $(this).val(1);
+        $(this).val(0);
         item.hide();
 
         $("#themes_block").append("<span class='badge badge-pill badge-primary m-1 p-1' class='theme_badge' id='"+item.val()+"'>"+item.text()+" <span class='theme_remove pointer'>&times;</span></span>");
@@ -140,6 +140,18 @@ $("document").ready(function() {
 
         item.remove();
     });
+
+    if (window.location.href.indexOf('/profile') >= 0) {
+        var input = $('input[name="categories"]'),
+            str = input.val().split("|");
+        input.val("");
+
+        for (var i = 0; i < str.length - 1; i++) {
+            $("#type").val(str[i]).trigger("change");
+        }
+
+        $("#type").val(0);
+    }
 
     $('.add-review').on('click', function () {
        $(this).hide();
