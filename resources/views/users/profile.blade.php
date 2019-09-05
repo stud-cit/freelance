@@ -391,30 +391,30 @@
                                                         <button class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0 add-review" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити коментар</button>
                                                     </div>
                                                 </div>
-                                            <div id="id-{{$complete->id_proposal}}" class="collapse">
-                                                <form method="POST" action="" class="col c_rounded">
-                                                    @csrf
-                                                    <input name="id_order" value="{{$complete->id_order}}" style="display: none">
-                                                    <div class="form-group row">
-                                                        <p class="col-2">Оцінка:</p>
-                                                        <div class="col-3 rating">
-                                                            <input type="range" id="rating" class="reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                                                <div id="id-{{$complete->id_proposal}}" class="collapse">
+                                                    <form method="POST" action="" class="col c_rounded">
+                                                        @csrf
+                                                        <input name="id_order" value="{{$complete->id_order}}" style="display: none">
+                                                        <div class="form-group row">
+                                                            <p class="col-2">Оцінка:</p>
+                                                            <div class="col-3 rating">
+                                                                <input type="range" id="rating" class="reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                                                            </div>
+                                                            <div class="">
+                                                                <span id="rating_val">3</span>
+                                                            </div>
                                                         </div>
-                                                        <div class="">
-                                                            <span id="rating_val">3</span>
+                                                        <div class="form-group row">
+                                                            <label for="comment" class="col-1 col-form-label">Коментар:</label>
+                                                            <div class="col offset-1">
+                                                                <textarea id="comment" class="form-control reviews-comment" rows="3" name="text" required></textarea>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="comment" class="col-1 col-form-label">Коментар:</label>
-                                                        <div class="col offset-1">
-                                                            <textarea id="comment" class="form-control reviews-comment" rows="3" name="text" required></textarea>
+                                                        <div class="form-group row">
+                                                            <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                                    </form>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
@@ -451,13 +451,13 @@
                                 <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-auth" role="tab" aria-controls="v-pills-messages" aria-selected="false">Налаштування безпеки</a>
                             </li>
                             @if(Auth::user()->id_role == 2)
-                            <li class="list-group-item py-0">
-                                <a class="nav-link" id="v-pills-orders-tab" data-toggle="pill" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Мої замовлення</a>
-                            </li>
+                                <li class="list-group-item py-0">
+                                    <a class="nav-link" id="v-pills-orders-tab" data-toggle="pill" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Мої замовлення</a>
+                                </li>
                             @elseif(Auth::user()->id_role == 3)
-                            <li class="list-group-item py-0">
-                                <a class="nav-link" id="v-pills-proposals-tab" data-toggle="pill" href="#v-pills-proposals" role="tab" aria-controls="v-pills-proposals" aria-selected="false">Мої пропозиції</a>
-                            </li>
+                                <li class="list-group-item py-0">
+                                    <a class="nav-link" id="v-pills-proposals-tab" data-toggle="pill" href="#v-pills-proposals" role="tab" aria-controls="v-pills-proposals" aria-selected="false">Мої пропозиції</a>
+                                </li>
                             @endif
                         </ul>
                     </div>
