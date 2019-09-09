@@ -72,6 +72,9 @@
             </div>
             <div class="tab-pane fade" id="v-pills-portfolio" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 {{--Portfolio--}}
+
+
+
             </div>
             <div class="tab-pane fade" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <p class="col font-size-18">Налаштування безпеки</p>

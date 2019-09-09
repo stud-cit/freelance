@@ -172,12 +172,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-3 offset-1 px-0 mt-4">
-            <div class="card">
-                <div class="card-header text-left font-weight-bold font-size-18">Схожі заяви</div>
-                <div class="card-body"> dooot </div>
-            </div>
-        </div>
+{{--        <div class="col-3 offset-1 px-0 mt-4">--}}
+{{--            <div class="card">--}}
+{{--                <div class="card-header text-left font-weight-bold font-size-18">Схожі заяви</div>--}}
+{{--                <div class="card-body"> dooot </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
 </div>
 
