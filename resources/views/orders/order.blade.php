@@ -34,9 +34,9 @@
                 <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 propose-toggle">
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
-            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new' && $proposals != [])
+            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
                 <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 propose-toggle">
-                    Обрати виконавця
+                    !!
                 </button>
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
                 <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" name="ok_worker">
@@ -100,30 +100,13 @@
                         </div>
                     </form>
                 </div>
-            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new'  && $proposals != [])
-            <!--
-            proposal select for customers prev vers
-            <div id="prop" style="display: none;">
-                <p class="font-size-18 font-weight-bold">Виконавці</p>
+            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
+            <div style="display: none;">
                 <form method="POST" action="{{route('order', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
                     @csrf
-                    <div class="row">
-                        <input type="text" name="selected_worker" style="display: none">
-                        @foreach($proposals as $accept)
-                            <div class="form-check mb-2 pt-3 col-5 offset-1">
-                                <label>
-                                    <input class="form-check-input mt-2" type="radio" name="select_worker" data-id="{{$accept->id_user}}">
-                                    <img src="{{$accept->avatar}}" class="square-30 avatar circle">
-                                    <span>{{$accept->name}} {{$accept->surname}}</span>
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_select">Підтвердити</button>
-                    </div>
+                    <input type="text" name="selected_worker" style="display: none">
                 </form>
-            </div>-->
+            </div>
 
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
                 <div id="prop" style="display: none;">
@@ -172,12 +155,12 @@
                                     <div class="">{{$comment->text}}</div>
                                     <div class="text-right font-size-10">{{$comment->created_at}}</div>
                                 </div>
-                                @if(Auth::user()->isCustomer())
-                                <div>
-                                    <div class="collapse" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
-                                        <button type="submit" class="col-lg-3 col-6 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_select">Підтвердити</button>
+                                @if(Auth::user()->id == $order->id_customer && $order->status == 'new')
+                                    <div>
+                                        <div class="collapse" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
+                                            <button type="submit" class="col-lg-3 col-6 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_select" data-id="{{$comment->id_user}}">Підтвердити</button>
+                                        </div>
                                     </div>
-                                </div>
                                 @endif
                             </div>
                             <div class="col c_rounded-right bg-green text-white mt-3 align-self-end" style="height: 54px; !important;">

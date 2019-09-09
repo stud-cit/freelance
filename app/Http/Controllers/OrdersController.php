@@ -13,7 +13,8 @@ class OrdersController extends Controller
 {
     private $eq;
 
-    function currency_update() {
+    function currency_update()
+    {
         $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
         if ($response_json = file_get_contents($req_url)) {
             $response_object = json_decode($response_json);
@@ -64,6 +65,14 @@ class OrdersController extends Controller
             $sort = $sort[0] . '-' . ($sort[1] == 'asc' ? 'desc' : 'asc');
         }
 
+        foreach ($data as $one) {
+            $one->categories = DB::table('categories_has_orders')
+                ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
+                ->where('id_order', $one->id_order)
+                ->get()
+                ->toArray();
+        }
+
         $ids = DB::table('users')->where('id_role', 3)->get('id')->toArray();
         $array = [];
 
@@ -82,14 +91,17 @@ class OrdersController extends Controller
             }
         }
 
-        $categories = DB::table('categories')->get()->toArray();
+        $categories = DB::table('categories')->orderBy('name')->get()->toArray();
+
+        foreach ($categories as $one) {
+            $one->count = DB::table('categories_has_orders')->where('id_category', $one->id_category)->count();
+        }
 
         $info = [
             'data' => $data,
-            'workers' => $workers,
             'sort' => $sort,
             'filter' => $filter,
-            'categories' =>$categories,
+            'categories' => $categories,
         ];
 
         return view('orders.index', compact('info'));
@@ -215,7 +227,7 @@ class OrdersController extends Controller
 
             $req->session()->flash('alert-success', 'Пропозицію успішно видалено!');
         }
-        else if ($req->has('form_select')) {
+        else if ($req->has('selected_worker')) {
             DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
 
             $req->session()->flash('alert-success', 'Виконавця успішно вибрано!');

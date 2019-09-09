@@ -7,7 +7,6 @@
 @section('content')
 
 @php($data = $info['data'])
-@php($workers = $info['workers'])
 @php($sort = $info['sort'])
 @php($categories = $info['categories'])
 
@@ -109,11 +108,16 @@
                 @foreach($data as $orders)
                     <div class="flex-row mb-3 mt-2 d-none">
                         <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
-                            <div class=" font-weight-bold mt-2 order-title">{{$orders->title}}</div>
+                            <div class="font-weight-bold mt-2 order-title">{{$orders->title}}</div>
+                            <div class="tag-list">
+                                @foreach($orders->categories as $tags)
+                                    <span class="tags font-italic font-size-10">{{$tags->name}}</span>
+                                @endforeach
+                            </div>
                             <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
                             <div class="text-right font-size-10">{{$orders->created_at}}</div>
                         </div>
-                        <div class="col c_rounded-right mt-3 bg-green text-white px-0">
+                        <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px; !important;">
                             <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
                             <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
                         </div>
@@ -135,7 +139,7 @@
                     @foreach($categories as $tags)
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item py-0">
-                                <a class="" href="">{{$tags->name}}</a>
+                                <a class="categories_tag" href="">{{$tags->name}} ({{$tags->count}})</a>
                             </li>
                         </ul>
                     @endforeach

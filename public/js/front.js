@@ -116,16 +116,6 @@ $("document").ready(function () {
   $('#new_order-toggle').on('click', function () {
     $(this).find('.order_circle').css('transition', 'transform 0.1s linear').css('transform', $('#new-order').css('display') == 'none' ? 'rotate(360deg)' : 'rotate(0deg)').text($('#new-order').css('display') == 'none' ? '-' : '+');
   });
-  /*
-  $('#new_order-toggle').on('click', function () {
-      let style = $('#new-order').css('display');
-       if (style == 'none') {
-          $('#new-order').show();
-      } else {
-          $('#new-order').hide();
-      }
-  });*/
-
   $('#reset_order-toggle').on('click', function () {
     var style = $('#reset-order').css('display');
 
@@ -152,14 +142,6 @@ $("document").ready(function () {
       e.preventDefault();
       $('.invalid-feedback').text(pass.val().length < 8 ? 'Довжина паролю має бути хоча б 8 символів' : 'Паролі не співпадають');
       new_pass.addClass('is-invalid');
-    }
-  });
-  $('input[name = "select_worker"]').on('change', function () {
-    $('input[name = "selected_worker"]').val($(this).attr('data-id'));
-  });
-  $('.select_worker').on('submit', function (e) {
-    if ($('input[name = "select_worker"]:checked').length === 0) {
-      e.preventDefault();
     }
   });
   $('#rating').on('input', function () {
@@ -214,7 +196,7 @@ $("document").ready(function () {
     item.remove();
   });
 
-  if (window.location.href.indexOf('/profile') >= 0) {
+  if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0) {
     var input = $('input[name="categories"]'),
         str = input.val().split("|");
     input.val("");
@@ -228,6 +210,23 @@ $("document").ready(function () {
 
   $('.add-review').on('click', function () {
     $(this).hide();
+  });
+  $('.categories_tag').on('click', function (e) {
+    e.preventDefault();
+    var tag = $(this).text().substr(0, $(this).text().length - 4);
+    $('.tag-list').each(function () {
+      if ($(this).html().indexOf(tag) < 0) {
+        $(this).closest('.flex-row').hide();
+        $(this).closest('.flex-row').removeClass('d-flex');
+      } else {
+        $(this).closest('.flex-row').show();
+        $(this).closest('.flex-row').addClass('d-flex');
+      }
+    });
+  });
+  $('button[name="form_select"]').on('click', function () {
+    $('input[name="selected_worker"]').val($(this).attr('data-id'));
+    $('.select_worker').submit();
   });
 });
 
