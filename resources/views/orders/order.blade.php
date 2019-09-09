@@ -35,9 +35,13 @@
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
             @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
-                <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 propose-toggle">
+                <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
                     !!
                 </button>
+                <button class="propose-toggle btn badge-pill text-white bg-danger px-0 col-3 mt-4">
+                    .!.
+                </button>
+
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
                 <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" name="ok_worker">
                     Замовлення виконано
@@ -139,6 +143,68 @@
                             <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
                         </div>
                     </form>
+                </div>
+            @endif
+            @if(Auth::user()->id == $order->id_customer && $order->status == 'new')
+                <div class="container collapse" id="edit-order">
+                    <div class="d-flex flex-row">
+                        <form class="col" method="POST" action="{{route('save_order')}}">
+                            @csrf
+                            <div class="form-group row">
+                                <label for="title" class="col-2 col-form-label mt-2">Назва:</label>
+                                <div class="col-5 mt-2">
+                                    <input type="text" class="form-control" id="title" name="title" value="{{ $order->title }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="type" class="col-2 col-form-label mt-2">Тема:</label>
+                                <div class="col-5 mt-2">
+                                    <select id="type" class="form-control">
+                                        <option value="1" disabled selected>(Виберіть тему замовлення)</option>
+                                        @foreach($categories as $select)
+                                            <option value="{{$select->id_category}}">{{$select->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div style="display: none">
+                                        <input type="text" name="categories">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-7" id="themes_block"></div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="price" class="col-2 col-form-label">Ціна:</label>
+                                <div class="col-5 mt-2">
+                                    <input type="number" id="price" class="form-control" min="0" name="price" value="{{ explode(" " , $order->price)[0] }}">
+                                </div>
+                                <select class="col-2 mt-2 px-0 form-control" name="currency">
+                                    <option {{ explode(" ", $order->price)[1] == "грн." ? "selected" : ""}}>грн.</option>
+                                    <option {{ explode(" ", $order->price)[1] == "$" ? "selected" : ""}}>$</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="time" class="col-2 col-form-label">Час:</label>
+                                <div class="col-5">
+                                    <input type="number" id="time" class="form-control" min="0" name="time" value="{{ explode(" ", $order->time)[0] }}">
+                                </div>
+                                <select class="col-2 px-0 form-control" name="type">
+                                    <option {{ explode(" ", $order->price)[1] == "дні" ? "selected" : ""}}>дні</option>
+                                    <option {{ explode(" ", $order->price)[1] == "год." ? "selected" : ""}}>год.</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="description" class="col-2 col-form-label mt-2">Інормація:</label>
+                                <div class="col-8 mt-2">
+                                    <textarea class="form-control" name="description" id="description" rows="3" required>{{ $order->description }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <button type="submit" class="col-2 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="edit_order">Підтвердити</button>
+                                <button type="reset" class="col-2 btn badge-pill mb-2 px-0">Видалити</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             @endif
             <div class="col">
