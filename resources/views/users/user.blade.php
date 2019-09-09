@@ -43,8 +43,8 @@
                 <div class="font-size-10">{{$data->about_me}}</div>
             </div>
             <div class="col shadow-lg mt-3">
-                <p class="font-weight-bold font-size-18">Відгуки</p>
                 @foreach($reviews as $mark)
+                    <p class="font-weight-bold font-size-18">Відгуки</p>
                     <div class="d-flex flex-row">
                         <div class="col-1 px-0 min-width-70">
                             <img src="{{$mark->avatar}}" class="square-60 circle avatar">
