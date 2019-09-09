@@ -129,14 +129,15 @@
                     <input type="text" class="form-control" id="filter" value={{$info['filter']}}>
                 </div>
             </div>
-            <div class="mb-4">
-                <div class="font-weight-bold font-size-18 px-0">Топ виконавців</div>
-                <div class="px-0">
-                    @foreach($workers as $users)
-                        <div class="mt-2">
-                            <img src="{{$users->avatar}}" class="square-60 avatar circle to-profile pointer" data-id="{{$users->id_user}}">
-                            <label class="name surmane font-weight-bold to-profile pointer" data-id="{{$users->id_user}}">{{$users->name}} {{$users->surname}}</label>
-                        </div>
+            <div class="card px-0">
+                <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue">Всі категорії</div>
+                <div class="card-body">
+                    @foreach($categories as $tags)
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item py-0">
+                                <a class="" href="">{{$tags->name}}</a>
+                            </li>
+                        </ul>
                     @endforeach
                 </div>
             </div>
