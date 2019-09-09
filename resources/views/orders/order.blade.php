@@ -35,10 +35,10 @@
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
             @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
-                <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
+                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
                     !!
                 </button>
-                <button class="propose-toggle btn badge-pill text-white bg-danger px-0 col-3 mt-4">
+                <button class="btn badge-pill text-white bg-danger px-0 col-3 mt-4">
                     .!.
                 </button>
 
