@@ -93,7 +93,7 @@
 
                         <div class="form-group row mt-5">
                             <div class="col-lg-5 col-12">
-                                <button type="submit" class="btn text-white badge-pill w-100" style="background-color: #640CAB">
+                                <button type="submit" class="btn text-white badge-pill w-100 bg-violet">
                                     Вхід
                                 </button>
                             </div>

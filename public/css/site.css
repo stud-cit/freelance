@@ -3,19 +3,30 @@
 }
 
 .bg-violet {
-    background-color: #640CAB
+    background-color: #640CAB;
 }
-
+a.bg-violet:hover, button.bg-violet:hover {
+    background-color: #480082;
+}
 .bg-blue {
-    background-color: #0076de
+    background-color: #0076de;
 }
-
+a.bg-blue:hover, button.bg-blue:hover {
+    background-color: #0056e1;
+}
 .bg-green {
-    background-color: #00B060
+    background-color: #00B060;
+}
+a.bg-green:hover, button.bg-green:hover {
+    background-color: #00A444;
 }
 .bg-deep-blue {
     background-color: #000367;
 }
+a.bg-deep-blue:hover, button.bg-deep-blue:hover {
+    background-color: #000049;
+}
+
 .pointer {
     cursor: pointer;
 }
