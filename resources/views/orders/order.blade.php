@@ -35,18 +35,22 @@
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
             @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
-                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
-                    !!
-                </button>
-                <button class="btn badge-pill text-white bg-danger px-0 col-3 mt-4">
-                    .!.
-                </button>
-
+                <div class="row">
+                    <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
+                        Змінити замовлення
+                    </button>
+                    <form method="POST" action="{{ route('delete_order', $order->id_order) }}" class="col-3">
+                        @csrf
+                        <button class="btn badge-pill text-white bg-danger px-0 mt-4 w-100">
+                            Видалити замовлення
+                        </button>
+                    </form>
+                </div>
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
                 <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" name="ok_worker">
                     Замовлення виконано
                 </button>
-                <button class="propose-toggle btn btn-danger badge-pill text-white px-0 col-3 mt-4" name="cancel_worker">
+                <button type="submit" class="propose-toggle btn btn-danger badge-pill text-white px-0 col-3 mt-4" name="cancel_worker">
                     Змінити виконавця
                 </button>
             @endif
@@ -104,18 +108,10 @@
                         </div>
                     </form>
                 </div>
-            @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
-            <div style="display: none;">
-                <form method="POST" action="{{route('order', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
-                    @csrf
-                    <input type="text" name="selected_worker" style="display: none">
-                </form>
-            </div>
-
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
                 <div id="prop" style="display: none;">
                     <p class="font-size-18 font-weight-bold">Залишити відгук</p>
-                    <form method="POST" action="{{ route('order', $order->id_order) }}" class="col shadow-lg c_rounded">
+                    <form method="POST" action="{{ route('add_review', $order->id_order) }}" class="col shadow-lg c_rounded">
                         @csrf
                         <input name="cancel_check" style="display: none">
                         <div class="form-group row">
@@ -148,7 +144,7 @@
             @if(Auth::user()->id == $order->id_customer && $order->status == 'new')
                 <div class="container collapse" id="edit-order">
                     <div class="d-flex flex-row">
-                        <form class="col" method="POST" action="{{route('save_order')}}">
+                        <form class="col" method="POST" action="{{route('edit_order', $order->id_order)}}">
                             @csrf
                             <div class="form-group row">
                                 <label for="title" class="col-2 col-form-label mt-2">Назва:</label>
@@ -179,8 +175,8 @@
                                     <input type="number" id="price" class="form-control" min="0" name="price" value="{{ explode(" " , $order->price)[0] }}">
                                 </div>
                                 <select class="col-2 mt-2 px-0 form-control" name="currency">
-                                    <option {{ explode(" ", $order->price)[1] == "грн." ? "selected" : ""}}>грн.</option>
-                                    <option {{ explode(" ", $order->price)[1] == "$" ? "selected" : ""}}>$</option>
+                                    <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "грн." ? "selected" : ""}}>грн.</option>
+                                    <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "$" ? "selected" : ""}}>$</option>
                                 </select>
                             </div>
                             <div class="form-group row">
@@ -189,8 +185,8 @@
                                     <input type="number" id="time" class="form-control" min="0" name="time" value="{{ explode(" ", $order->time)[0] }}">
                                 </div>
                                 <select class="col-2 px-0 form-control" name="type">
-                                    <option {{ explode(" ", $order->price)[1] == "дні" ? "selected" : ""}}>дні</option>
-                                    <option {{ explode(" ", $order->price)[1] == "год." ? "selected" : ""}}>год.</option>
+                                    <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "дні" ? "selected" : ""}}>дні</option>
+                                    <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "год." ? "selected" : ""}}>год.</option>
                                 </select>
                             </div>
                             <div class="form-group row">
@@ -222,16 +218,17 @@
                                     <div class="text-right font-size-10">{{$comment->created_at}}</div>
                                 </div>
                                 @if(Auth::user()->id == $order->id_customer && $order->status == 'new')
-                                    <div>
+                                    <form method="POST" action="{{route('select_worker', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
+                                        @csrf
                                         <div class="collapse" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
-                                            <button type="submit" class="col-lg-3 col-6 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_select" data-id="{{$comment->id_user}}">Підтвердити</button>
+                                            <button type="submit" class="col-lg-3 col-6 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="selected_worker" value="{{$comment->id_user}}">Підтвердити</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 @endif
                             </div>
                             <div class="col c_rounded-right bg-green text-white mt-3 align-self-end" style="height: 54px; !important;">
-                                <div class="text-center font-weight-bold mt-1">{{$comment->price}}</div>
-                                <div class="text-right font-italic font-size-10 mt-2">{{$comment->time}}</div>
+                                <div class="text-center font-weight-bold mt-1">{{$comment->price}}&nbsp;</div>
+                                <div class="text-right font-italic font-size-10 mt-2">{{$comment->time}}&nbsp;</div>
                             </div>
                         </div>
                     @endforeach

@@ -160,7 +160,7 @@ $("document").ready(function () {
     $('#sort_form').submit();
   });
 
-  if (window.location.href.indexOf('/orders') >= 0 && window.location.href.indexOf('/orders/') < 0) {
+  if (window.location.href.indexOf('/orders') >= 0) {
     var test = function test() {
       if ($('input[name="prev_filter"]').val().length !== $('#filter').val().length || !$('input[name="prev_filter"]').val().length) {
         $('input[name="prev_filter"]').val($('#filter').val());
@@ -196,7 +196,7 @@ $("document").ready(function () {
     item.remove();
   });
 
-  if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0) {
+  if (window.location.href.indexOf('/profile') >= 0) {
     var input = $('input[name="categories"]'),
         str = input.val().split("|");
     input.val("");
@@ -223,10 +223,6 @@ $("document").ready(function () {
         $(this).closest('.flex-row').addClass('d-flex');
       }
     });
-  });
-  $('button[name="form_select"]').on('click', function () {
-    $('input[name="selected_worker"]').val($(this).attr('data-id'));
-    $('.select_worker').submit();
   });
 });
 

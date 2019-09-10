@@ -119,13 +119,24 @@ class OrdersController extends Controller
             ->first();
 
         if (!is_null($my_proposal)) {
-            $temp = explode(' ', $my_proposal->price);
-            $my_proposal->price = $temp[0];
-            $my_proposal->currency = $temp[1];
 
-            $temp = explode(' ', $my_proposal->time);
-            $my_proposal->time = $temp[0];
-            $my_proposal->type = $temp[1];
+            if (!is_null($my_proposal->price)) {
+                $temp = explode(' ', $my_proposal->price);
+                $my_proposal->price = $temp[0];
+                $my_proposal->currency = $temp[1];
+            }
+            else {
+                $my_proposal->currency = '';
+            }
+
+            if (!is_null($my_proposal->time)) {
+                $temp = explode(' ', $my_proposal->time);
+                $my_proposal->time = $temp[0];
+                $my_proposal->type = $temp[1];
+            }
+            else {
+                $my_proposal->type = '';
+            }
         }
 
         if ($order->status == 'new') {
@@ -169,17 +180,51 @@ class OrdersController extends Controller
         return view('orders.order', compact('data'));
     }
 
+    public function select_worker(Request $req)
+    {
+        DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
+
+        $req->session()->flash('alert-success', 'Виконавця успішно вибрано!');
+
+        return back();
+    }
+
+    public function add_review(Request $req)
+    {
+        if (!is_null($req->text)) {
+            $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
+
+            $values = [
+                'text' => $req->text,
+                'rating' => $req->rating,
+                'id_from' => Auth::user()->id,
+                'id_to' => $worker->id_worker,
+                'id_order' => $req->id,
+                'created_at' => Carbon::now(),
+            ];
+
+            DB::table('reviews')->insert($values);
+        }
+
+        if ($req->cancel_check == 1) {
+            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'complete']);
+
+            $req->session()->flash('alert-success', 'Замовлення успішно завершено!');
+
+            return redirect('/orders');
+        }
+        else {
+            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
+
+            $req->session()->flash('alert-success', 'Виконавця успішно видалено!');
+        }
+
+        return back();
+    }
+
     public function add_proposal(Request $req)
     {
         if ($req->has('form_proposals')) {
-            if (is_null($req->text) ||
-                ($req->type != 'дні' && $req->type != 'год.') ||
-                ($req->currency != '$' && $req->currency != 'грн.')) {
-
-                $req->session()->flash('alert-danger', 'Заповніть поля!');
-                return back();
-            }
-
             $type = $req->type;
             $time = $req->time;
             $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
@@ -196,7 +241,7 @@ class OrdersController extends Controller
                         $time = $time . ' днів';
                 }
             }
-            else {
+            else if(!is_null($time)) {
                 $time = $time . ' ' . $type;
             }
 
@@ -227,103 +272,104 @@ class OrdersController extends Controller
 
             $req->session()->flash('alert-success', 'Пропозицію успішно видалено!');
         }
-        else if ($req->has('selected_worker')) {
-            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
-
-            $req->session()->flash('alert-success', 'Виконавця успішно вибрано!');
-        }
-        else if ($req->has('leave_review')) {
-            if (!is_null($req->text)) {
-                $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
-
-                $values = [
-                    'text' => $req->text,
-                    'rating' => $req->rating,
-                    'id_from' => Auth::user()->id,
-                    'id_to' => $worker->id_worker,
-                    'id_order' => $req->id,
-                    'created_at' => Carbon::now(),
-                ];
-
-                DB::table('reviews')->insert($values);
-            }
-
-            if ($req->cancel_check == 1) {
-                DB::table('orders')->where('id_order', $req->id)->update(['status' => 'complete']);
-
-                $req->session()->flash('alert-success', 'Замовлення успішно завершено!');
-
-                return redirect('/orders');
-            }
-            else {
-                DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
-
-                $req->session()->flash('alert-success', 'Виконавця успішно видалено!');
-            }
-        }
 
         return back();
     }
 
+    public function delete_order(Request $req)
+    {
+        DB::table('categories_has_orders')->where('id_order', $req->id)->delete();
+        DB::table('orders')->where('id_order', $req->id)->delete();
+
+        $req->session()->flash('alert-success', 'Замовлення успішно видалено!');
+
+        return redirect('/orders');
+    }
+
+    public function edit_order(Request $req)
+    {
+        $type = $req->type;
+        $time = $req->time;
+        $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
+
+        if ($type == 'дні' && !is_null($time)) {
+            switch ($req->time) {
+                case $time == 1 :
+                    $time = $time . ' день';
+                    break;
+                case $time > 1 && $time < 5 :
+                    $time = $time . ' дні';
+                    break;
+                default :
+                    $time = $time . ' днів';
+            }
+        }
+
+        $values = [
+            'title' => $req->title,
+            'description' => $req->description,
+            'price' => $price,
+            'time' => $time,
+        ];
+
+        DB::table('orders')->where('id_order', $req->id)->update($values);
+
+        $req->session()->flash('alert-success', 'Замовлення успішно змінено!');
+
+        return back();
+    }
+
+    public function sort_order(Request $req)
+    {
+        $temp = end($req->request);
+        $array = array_keys($temp);
+
+        return $this->index(end($array), $req->prev_filter);
+    }
+
     public function save_order(Request $req)
     {
-        if (!$req->has('add_order')) {
-            $test = end($req->request);
-            $array = array_keys($test);
+        $type = $req->type;
+        $time = $req->time;
+        $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
 
-            return $this->index(end($array), $req->prev_filter);
+        if ($type == 'дні' && !is_null($time)) {
+            switch ($req->time) {
+                case $time == 1 :
+                    $time = $time . ' день';
+                    break;
+                case $time > 1 && $time < 5 :
+                    $time = $time . ' дні';
+                    break;
+                default :
+                    $time = $time . ' днів';
+            }
         }
-        else {
-            if (is_null($req->description) || is_null($req->title) ||
-                ($req->type != 'дні' && $req->type != 'год.') ||
-                ($req->currency != '$' && $req->currency != 'грн.')) {
 
-                $req->session()->flash('alert-danger', 'Заповніть поля!');
-                return back();
-            }
+        $values = [
+            'title' => $req->title,
+            'description' => $req->description,
+            'price' => $price,
+            'time' => $time,
+            'status' => 'new',
+            'id_customer' => Auth::user()->id,
+            'id_worker' => null,
+            'created_at' => Carbon::now(),
+        ];
 
-            $type = $req->type;
-            $time = $req->time;
-            $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
+        DB::table('orders')->insert($values);
 
-            if ($type == 'дні' && !is_null($time)) {
-                switch ($req->time) {
-                    case $time == 1 :
-                        $time = $time . ' день';
-                        break;
-                    case $time > 1 && $time < 5 :
-                        $time = $time . ' дні';
-                        break;
-                    default :
-                        $time = $time . ' днів';
-                }
-            }
+        $id = DB::table('orders')->where('id_customer', Auth::user()->id)->orderBy('id_order', 'desc')->get(['id_order'])->first();
 
-            $values = [
-                'title' => $req->title,
-                'description' => $req->description,
-                'price' => $price,
-                'time' => $time,
-                'status' => 'new',
-                'id_customer' => Auth::user()->id,
-                'id_worker' => null,
-                'created_at' => Carbon::now(),
-            ];
+        $categories = explode('|', $req->categories);
+        array_pop($categories);
 
-            DB::table('orders')->insert($values);
-
-            $id = DB::table('orders')->where('id_customer', Auth::user()->id)->orderBy('id_order', 'desc')->get(['id_order'])->first();
-
-            $categories = explode('|', $req->categories);
-            array_pop($categories);
-
-            foreach ($categories as $one) {
-                DB::table('categories_has_orders')->insert(['id_category' => $one, 'id_order' => $id->id_order]);
-            }
-
-            $req->session()->flash('alert-success', 'Замовлення успішно додано!');
-
-            return redirect('/orders/' . $id->id_order);
+        foreach ($categories as $one) {
+            DB::table('categories_has_orders')->insert(['id_category' => $one, 'id_order' => $id->id_order]);
         }
+
+        $req->session()->flash('alert-success', 'Замовлення успішно додано!');
+
+        return redirect('/orders/' . $id->id_order);
     }
 }

@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-3 font-weight-bold text-left font-size-18">Всі проекти</div>
                     <div class="col-7 offset-2">
-                        <form method="POST" action="{{route('save_order')}}" id="sort_form">
+                        <form method="POST" action="{{route('sort_order')}}" id="sort_form">
                             @csrf
                             <div class="input-group">
                                 <div class="input-group-prepend">

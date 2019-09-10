@@ -78,7 +78,7 @@ $("document").ready(function() {
         $('#sort_form').submit();
     });
 
-    if (window.location.href.indexOf('/orders') >= 0 && window.location.href.indexOf('/orders/') < 0) {
+    if (window.location.href.indexOf('/orders') >= 0) {
         test();
         $('#filter').on('keyup keydown', test);
 
@@ -122,7 +122,7 @@ $("document").ready(function() {
         item.remove();
     });
 
-    if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0) {
+    if (window.location.href.indexOf('/profile') >= 0) {
         let input = $('input[name="categories"]'),
             str = input.val().split("|");
 
@@ -153,11 +153,5 @@ $("document").ready(function() {
                 $(this).closest('.flex-row').addClass('d-flex');
             }
         });
-    });
-
-    $('button[name="form_select"]').on('click', function () {
-       $('input[name="selected_worker"]').val($(this).attr('data-id'));
-
-       $('.select_worker').submit();
     });
 });

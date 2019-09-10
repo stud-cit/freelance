@@ -78,7 +78,7 @@
             </div>
             <div class="tab-pane fade" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <p class="col font-size-18">Налаштування безпеки</p>
-                <form method="POST" action="{{route('save_info')}}" class="row pass_change">
+                <form method="POST" action="{{route('change_pass')}}" class="row pass_change">
                     @csrf
                     <div class="col-9">
                         <div class="form-group row">
@@ -163,7 +163,7 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <form method="POST" action="{{route('save_info')}}" class="col-6">
+                        <form method="POST" action="{{route('save_contacts')}}" class="col-6">
                             @csrf
                             <div class="form-group row mt-4">
                                 <label for="phone_number" class="col-5 col-form-label mt-2">Номер телефону:</label>
@@ -207,7 +207,7 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">
-                        <form method="POST" action="{{route('save_info')}}" class="col">
+                        <form method="POST" action="{{route('save_skills')}}" class="col">
                             @csrf
                             <div class="col-9 mt-4">
                                 <select name="type" id="type" class="form-control">
@@ -229,11 +229,11 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                        <form method="POST" action="{{route('save_info')}}" class="col">
+                        <form method="POST" action="{{route('save_about_me')}}" class="col">
                             @csrf
                             <div class="row">
                                 <div class="col-10 mt-4">
-                                    <textarea class="form-control" id="about_me" rows="6"></textarea>
+                                    <textarea class="form-control" name="about_me" rows="6"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -271,7 +271,7 @@
                         @if(!$i)
                             <div class="container">
                                 <div class="row">
-                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних замовленнь</div>
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає нових замовленнь</div>
                                 </div>
                             </div>
                         @endif
@@ -318,7 +318,7 @@
                         @if(!$i)
                             <div class="container">
                                 <div class="row">
-                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних замовленнь</div>
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає виконаних замовленнь</div>
                                 </div>
                             </div>
                         @endif
@@ -353,7 +353,7 @@
                         @if(!$i)
                             <div class="container">
                                 <div class="row">
-                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних замовленнь</div>
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає залишених пропозицій</div>
                                 </div>
                             </div>
                         @endif
@@ -377,7 +377,7 @@
                         @if(!$i)
                             <div class="container">
                                 <div class="row">
-                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних замовленнь</div>
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних проектів</div>
                                 </div>
                             </div>
                         @endif
@@ -398,7 +398,7 @@
                                                     </div>
                                                 </div>
                                                 <div id="id-{{$complete->id_proposal}}" class="collapse">
-                                                    <form method="POST" action="" class="col c_rounded">
+                                                    <form method="POST" action="{{route('save_review')}}" class="col c_rounded">
                                                         @csrf
                                                         <input name="id_order" value="{{$complete->id_order}}" style="display: none">
                                                         <div class="form-group row">
@@ -430,7 +430,7 @@
                         @if(!$i)
                             <div class="container">
                                 <div class="row">
-                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних замовленнь</div>
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає завершених проектів</div>
                                 </div>
                             </div>
                         @endif
@@ -450,9 +450,9 @@
                             <li class="list-group-item py-0">
                                 <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-edit" role="tab" aria-selected="false">Редагування даних</a>
                             </li>
-                            <li class="list-group-item py-0">
-                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-portfolio" role="tab" aria-controls="v-pills-profile" aria-selected="false">Портфоліо</a>
-                            </li>
+{{--                            <li class="list-group-item py-0">--}}
+{{--                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-portfolio" role="tab" aria-controls="v-pills-profile" aria-selected="false">Портфоліо</a>--}}
+{{--                            </li>--}}
                             <li class="list-group-item py-0">
                                 <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-auth" role="tab" aria-controls="v-pills-messages" aria-selected="false">Налаштування безпеки</a>
                             </li>
