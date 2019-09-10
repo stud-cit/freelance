@@ -32,7 +32,11 @@
                     <div class="col-7 px-0">
                         <div class="row text-white bg-deep-blue pt-4 pb-5 h-100">
                             <div class="col-11 name surname font-weight-bold font-size-18">{{$data->name}} {{$data->surname}}</div>
-                            <div class="col-11 font-size-10 ">comp order: 7</div>
+                            <div class="col-11 font-size-10">
+                                @foreach($data->categories as $tags)
+                                    <span class="tags font-italic">{{$tags->name}}</span>
+                                @endforeach
+                            </div>
                             <div class="col-11 font-weight-bold">Контактна інформація:</div>
                             <div class="container">
                                 <div class="row">
@@ -233,7 +237,7 @@
                             @csrf
                             <div class="row">
                                 <div class="col-10 mt-4">
-                                    <textarea class="form-control" name="about_me" rows="6"></textarea>
+                                    <textarea class="form-control" name="about_me" rows="6">{{$data->about_me}}</textarea>
                                 </div>
                             </div>
                             <div class="form-group row">

@@ -23,6 +23,10 @@
                     <div class="col-1 offset-5 font-size-10 mt-2">Ціна:</div>
                     <div class="col-2 font-weight-bold font-size-18">{{$order->price}}</div>
                 </div>
+            <div class="row">
+                <div class="col-1 offset-9 font-size-10 mt-2">Час:</div>
+                <div class="col-2 font-weight-bold font-size-18">{{$order->time}}</div>
+            </div>
             <div class="offset-1">
                 @foreach($categories as $tags)
                     <span class="tags font-italic font-size-10">{{$tags->name}}</span>
@@ -31,26 +35,26 @@
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
             @if(Auth::user()->isWorker() && $order->status == 'new')
-                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 propose-toggle">
+                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 mb-2 propose-toggle">
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
             @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
                 <div class="row">
-                    <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
+                    <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4 mb-2" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
                         Змінити замовлення
                     </button>
                     <form method="POST" action="{{ route('delete_order', $order->id_order) }}" class="col-3">
                         @csrf
-                        <button class="btn badge-pill text-white bg-danger px-0 mt-4 w-100">
+                        <button class="btn badge-pill text-white bg-danger px-0 mt-4 mb-2 w-100">
                             Видалити замовлення
                         </button>
                     </form>
                 </div>
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
-                <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4" name="ok_worker">
+                <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4 mb-2" name="ok_worker">
                     Замовлення виконано
                 </button>
-                <button type="submit" class="propose-toggle btn btn-danger badge-pill text-white px-0 col-3 mt-4" name="cancel_worker">
+                <button type="submit" class="propose-toggle btn btn-danger badge-pill text-white px-0 col-3 mt-4 mb-2" name="cancel_worker">
                     Змінити виконавця
                 </button>
             @endif
@@ -62,7 +66,6 @@
             <div class="container text-left">
                 <div class="row mb-2">
                     <div class="col-11 offset-1 font-weight-bold">{{$customer->name}} {{$customer->surname}}</div>
-                    <div class="col-11 offset-1 font-size-10">comp order</div>
                     <div class="col-11 offset-1 font-size-10">E-mail: {{$customer->email}}</div>
                     <div class="col-11 offset-1 font-size-10">Phone number: {{$customer->phone_number}}</div>
                     <div class="col-11 offset-1 font-size-10">Viber: {{$customer->viber}}</div>
@@ -204,9 +207,9 @@
                 </div>
             @endif
             <div class="col">
-                <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
                 <div class="container proposals">
                     @foreach($proposals as $comment)
+                        <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
                         <div class="d-flex flex-row mb-3 mt-2 pointer">
                             <div class="col-1 px-0 min-width-70 to-profile" data-id="{{$comment->id_user}}">
                                 <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
