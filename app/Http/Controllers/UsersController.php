@@ -45,6 +45,12 @@ class UsersController extends Controller
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
 
+        $data->categories = DB::table('user_has_skills')
+            ->join('categories', 'categories.id_category', '=', 'user_has_skills.id_category')
+            ->where('id', $data->id_user)
+            ->get('name')
+            ->toArray();
+
         $reviews = DB::table('reviews')
             ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')
             ->where('id_to', Auth::user()->id)
@@ -217,6 +223,12 @@ class UsersController extends Controller
 
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
+
+        $data->categories = DB::table('user_has_skills')
+            ->join('categories', 'categories.id_category', '=', 'user_has_skills.id_category')
+            ->where('id', $data->id_user)
+            ->get('name')
+            ->toArray();
 
         $reviews = DB::table('reviews')
             ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')

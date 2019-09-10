@@ -9,10 +9,10 @@
                 </div>
                 @if(Auth::check())
                     <div class="col-lg-1 col-2 offset-lg-5 offset-1 mt-1 small">
-                        <a href="{{ route('orders') }}" class="text-white">Проекти</a>
+{{--                        <a href="{{ route('customers') }}" class="text-white">Замовники</a>--}}
                     </div>
                     <div class="col-lg-1 col-2 mt-1 small">
-                        <a href="{{ route('customers') }}" class="text-white">Замовники</a>
+                        <a href="{{ route('orders') }}" class="text-white">Проекти</a>
                     </div>
                     <div class="col-lg-1 col-2 mt-1 small">
                         <a href="{{ route('workers') }}" class="text-white">Виконавці</a>
@@ -58,7 +58,7 @@
                     @endif
                 @endif
                 <div class="col-1 mt-1">
-                    UA
+{{--                    UA--}}
                 </div>
         </div>
     </div>
