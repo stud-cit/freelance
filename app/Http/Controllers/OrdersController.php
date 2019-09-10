@@ -169,12 +169,19 @@ class OrdersController extends Controller
             ->get()
             ->toArray();
 
+        $string = '';
+
+        foreach ($categories as $one) {
+            $string .= $one->id_category . '|';
+        }
+
         $data = [
             'order' => $order,
             'customer' => $customer,
             'proposals' => $proposals,
             'my_proposal' => $my_proposal,
             'categories' => $categories,
+            'string' => $string,
         ];
 
         return view('orders.order', compact('data'));

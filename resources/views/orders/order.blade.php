@@ -165,7 +165,7 @@
                                         @endforeach
                                     </select>
                                     <div style="display: none">
-                                        <input type="text" name="categories">
+                                        <input type="text" name="categories" value="{{$data['string']}}">
                                     </div>
                                 </div>
                             </div>
