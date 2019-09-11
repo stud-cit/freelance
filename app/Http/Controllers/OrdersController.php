@@ -159,6 +159,8 @@ class OrdersController extends Controller
             ->get()
             ->toArray();
 
+        $themes = DB::table('categories')->get()->toArray();
+
         $string = '';
 
         foreach ($categories as $one) {
@@ -172,6 +174,7 @@ class OrdersController extends Controller
             'my_proposal' => $my_proposal,
             'categories' => $categories,
             'string' => $string,
+            'themes' => $themes
         ];
 
         return view('orders.order', compact('data'));

@@ -11,6 +11,7 @@
 @php($proposals = $data['proposals'])
 @php($my_proposal = $data['my_proposal'])
 @php($categories = $data['categories'])
+@php($themes = $data['themes'])
 
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
@@ -160,7 +161,7 @@
                                 <div class="col-5 mt-2">
                                     <select name="type" id="type" class="form-control">
                                         <option value="0" disabled selected>(Виберіть тему замовлення)</option>
-                                        @foreach($categories as $select)
+                                        @foreach($themes as $select)
                                             <option value="{{$select->id_category}}">{{$select->name}}</option>
                                         @endforeach
                                     </select>
@@ -168,7 +169,7 @@
                                         <input type="text" name="categories" value="{{$data['string']}}">
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-7" id="themes_block"></div>
+                                        <div class="" id="themes_block"></div>
                                     </div>
                                 </div>
                             </div>
