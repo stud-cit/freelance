@@ -241,7 +241,7 @@
                         </div>
                     @endforeach
                     @elseif(count($proposals) == 0)
-                    <div class="font-weight-bold font-size-18">Немає залишених пропозицій</div>
+                    <div class="font-weight-bold font-size-18 mb-4">Немає залишених пропозицій</div>
                     @endif
                 </div>
             </div>
