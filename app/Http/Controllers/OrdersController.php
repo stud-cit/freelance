@@ -368,6 +368,15 @@ class OrdersController extends Controller
 
         DB::table('orders')->where('id_order', $req->id)->update($values);
 
+        $categories = explode('|', $req->categories);
+        array_pop($categories);
+
+        DB::table('categories_has_orders')->where('id_order', $req->id)->delete();
+
+        foreach ($categories as $one) {
+            DB::table('categories_has_orders')->insert(['id_category' => $one, 'id_order' => $req->id]);
+        }
+
         $req->session()->flash('alert-success', 'Замовлення успішно змінено!');
 
         return back();
