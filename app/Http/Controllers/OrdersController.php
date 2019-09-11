@@ -42,28 +42,9 @@ class OrdersController extends Controller
         return $first_price > $second_price;
     }
 
-    public function index($sort = null, $filter = null)
+    public function index()
     {
-        if (is_null($sort)) {
-            $data = DB::table('orders')->where('status', 'new')->orderBy('created_at', 'desc')->get()->toArray();
-
-            $sort = 'id_order-desc';
-        }
-        else {
-            $sort = explode('-', $sort);
-            $data = DB::table('orders')->where('status', 'new')->orderBy($sort[0], $sort[1])->get()->toArray();
-
-            if ($sort[0] == 'price') {
-                $this->currency_update();
-                usort($data, array($this, "cmp"));
-
-                if ($sort[1] == 'desc') {
-                    $data = array_reverse($data);
-                }
-            }
-
-            $sort = $sort[0] . '-' . ($sort[1] == 'asc' ? 'desc' : 'asc');
-        }
+        $data = DB::table('orders')->where('status', 'new')->orderBy('id_order', 'desc')->get()->toArray();
 
         foreach ($data as $one) {
             $one->categories = DB::table('categories_has_orders')
@@ -97,14 +78,23 @@ class OrdersController extends Controller
             $one->count = DB::table('categories_has_orders')->where('id_category', $one->id_category)->count();
         }
 
-        $info = [
-            'data' => $data,
-            'sort' => $sort,
-            'filter' => $filter,
-            'categories' => $categories,
-        ];
+        return view('orders.index', compact('data'), compact('categories'));
+    }
 
-        return view('orders.index', compact('info'));
+    public function sort_order(Request $req)
+    {
+        $data = DB::table('orders')->where('status', 'new')->orderBy($req->what, $req->how)->get()->toArray();
+
+        if ($req->what == 'price') {
+            $this->currency_update();
+            usort($data, array($this, "cmp"));
+
+            if ($req->how == 'desc') {
+                $data = array_reverse($data);
+            }
+        }
+
+        dd($data);
     }
 
     public function order($id)
@@ -169,12 +159,19 @@ class OrdersController extends Controller
             ->get()
             ->toArray();
 
+        $string = '';
+
+        foreach ($categories as $one) {
+            $string .= $one->id_category . '|';
+        }
+
         $data = [
             'order' => $order,
             'customer' => $customer,
             'proposals' => $proposals,
             'my_proposal' => $my_proposal,
             'categories' => $categories,
+            'string' => $string,
         ];
 
         return view('orders.order', compact('data'));
@@ -230,7 +227,7 @@ class OrdersController extends Controller
             $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
 
             if ($type == 'дні' && !is_null($time)) {
-                switch ($req->time) {
+                switch ($time) {
                     case $time == 1 :
                         $time = $time . ' день';
                         break;
@@ -317,14 +314,6 @@ class OrdersController extends Controller
         $req->session()->flash('alert-success', 'Замовлення успішно змінено!');
 
         return back();
-    }
-
-    public function sort_order(Request $req)
-    {
-        $temp = end($req->request);
-        $array = array_keys($temp);
-
-        return $this->index(end($array), $req->prev_filter);
     }
 
     public function save_order(Request $req)

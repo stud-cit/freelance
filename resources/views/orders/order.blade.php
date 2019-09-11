@@ -165,7 +165,7 @@
                                         @endforeach
                                     </select>
                                     <div style="display: none">
-                                        <input type="text" name="categories" value="{{ $skills }}">
+                                        <input type="text" name="categories" value="{{$data['string']}}">
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-7" id="themes_block"></div>
@@ -203,7 +203,7 @@
                             </div>
                             <div class="form-group row">
                                 <button type="submit" class="col-2 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="edit_order">Підтвердити</button>
-                                <button type="reset" class="col-2 btn badge-pill mb-2 px-0">Видалити</button>
+                                <button type="reset" class="col-2 btn badge-pill mb-2 px-0">Скинути</button>
                             </div>
                         </form>
                     </div>

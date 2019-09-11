@@ -50,10 +50,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col rounded shadow-lg mt-3">
-                    <p class="font-weight-bold font-size-18">Додаткова інформація</p>
-                    <div class="pb-2">{{$data->about_me}}</div>
-                </div>
+                @if(!is_null($data->about_me))
+                    <div class="col rounded shadow-lg mt-3">
+                        <p class="font-weight-bold font-size-18">Додаткова інформація</p>
+                        <div class="pb-2">{{$data->about_me}}</div>
+                    </div>
+                @endif
                 @foreach($reviews as $mark)
                     <div class="col shadow-lg mt-3">
                         <p class="font-weight-bold font-size-18">Відгуки</p>

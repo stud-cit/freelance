@@ -74,31 +74,6 @@ $("document").ready(function() {
         $('input[name="cancel_check"]').val('1');
     });
 
-    $('#sort_form > button').on('click', function () {
-        $('#sort_form').submit();
-    });
-
-    if (window.location.href.indexOf('/orders') >= 0) {
-        test();
-        $('#filter').on('keyup keydown', test);
-
-        function test() {
-            if ($('input[name="prev_filter"]').val().length !== $('#filter').val().length || !$('input[name="prev_filter"]').val().length) {
-                $('input[name="prev_filter"]').val($('#filter').val());
-
-                $('.order-title').each(function () {
-                    if ($(this).text().toLowerCase().indexOf($('#filter').val().toLowerCase()) < 0) {
-                        $(this).closest('.flex-row').hide();
-                        $(this).closest('.flex-row').removeClass('d-flex');
-                    } else {
-                        $(this).closest('.flex-row').show();
-                        $(this).closest('.flex-row').addClass('d-flex');
-                    }
-                });
-            }
-        }
-    }
-
     $("#type").on("change", function() {
         let item = $(this).children("option:selected"),
             input = $('input[name="categories"]');
@@ -122,7 +97,7 @@ $("document").ready(function() {
         item.remove();
     });
 
-    if (window.location.href.indexOf('/profile') >= 0) {
+    if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0) {
         let input = $('input[name="categories"]'),
             str = input.val().split("|");
 
@@ -139,19 +114,59 @@ $("document").ready(function() {
        $(this).hide();
     });
 
-    $('.categories_tag').on('click', function (e) {
-        e.preventDefault();
+    $('.sort-btn').on('click', function () {
+        let temp = $(this).find('span').text();
 
-        let tag = $(this).text().substr(0, $(this).text().length - 4);
+        $(this).parent().find('span').text('');
+        $(this).find('span').text(temp === 'v' ? '^' : 'v');
 
-        $('.tag-list').each(function () {
-            if ($(this).html().indexOf(tag) < 0) {
-                $(this).closest('.flex-row').hide();
-                $(this).closest('.flex-row').removeClass('d-flex');
-            } else {
-                $(this).closest('.flex-row').show();
-                $(this).closest('.flex-row').addClass('d-flex');
-            }
+        let ids = [];
+
+        $('.work-order').each(function () {
+            ids.push($(this).attr('data-id'));
         });
+
+        let data = {
+            'what': $(this).attr('id') === 'date-btn' ? 'id_order' : 'price',
+            'how': temp === 'v' ? 'asc' : 'desc',
+            'ids': ids,
+        };
+
+        $.ajax({
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'post',
+            url: '/sort_order',
+            data: data,
+            success: function (response) {
+                refresh_orders(response);
+            },
+       });
     });
+
+    function refresh_orders(array) {
+        let order = `<div class="flex-row mb-3 mt-2 d-flex">
+                        <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
+                            <div class="font-weight-bold mt-2 order-title">{{$orders->title}}</div>
+                            <div class="tag-list">
+                                @foreach($orders->categories as $tags)
+                                    <span class="tags font-italic font-size-10">{{$tags->name}}</span>
+                                @endforeach
+                            </div>
+                            <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
+                            <div class="text-right font-size-10">{{$orders->created_at}}</div>
+                        </div>
+                        <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px; !important;">
+                            <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
+                            <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
+                        </div>
+                    </div>`;
+
+        $('.work-order').closest('.flex-row').remove();
+
+        array.each(function () {
+
+        });
+    }
 });
