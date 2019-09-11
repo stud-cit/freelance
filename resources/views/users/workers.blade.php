@@ -12,8 +12,8 @@
             <div class="font-weight-bold font-size-18">Всі виконавці</div>
             <div class="container">
                 @foreach($data as $list)
-                    <div class="d-flex flex-row mb-3 mt-2 pointer to-profile">
-                        <div class="col-1 px-0 min-width-90" data-id="{{$list->id_user}}">
+                    <div class="d-flex flex-row mb-3 mt-2 pointer to-profile" data-id="{{$list->id_user}}">
+                        <div class="col-1 px-0 min-width-90">
                             <img src="{{$list->avatar}}" class="mt-1 square-80 avatar square">
                         </div>
                         <div class="col-11 shadow bg-white" data-id="{{$list->id_user}}">
