@@ -97,7 +97,7 @@ $("document").ready(function() {
         item.remove();
     });
 
-    if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0) {
+    if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0 || window.location.href.indexOf('/orders') >= 0 && $("#themes_block").length) {
         let input = $('input[name="categories"]'),
             str = input.val().split("|");
 
