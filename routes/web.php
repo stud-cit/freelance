@@ -5,6 +5,7 @@ Auth::routes(['verify' => true]);
 Route::get('/orders', 'OrdersController@index')->name('orders');
 Route::post('/save_order', 'OrdersController@save_order')->name('save_order');
 Route::post('/sort_order', 'OrdersController@sort_order')->name('sort_order');
+Route::post('/select_category', 'OrdersController@select_category')->name('select_category');
 
 Route::get('/orders/{id}', 'OrdersController@order')->middleware(['logged.in', 'new.order']);
 Route::post('/add_proposal/{id}', 'OrdersController@add_proposal')->name('order');

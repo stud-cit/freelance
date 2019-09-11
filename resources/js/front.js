@@ -120,16 +120,10 @@ $("document").ready(function() {
         $(this).parent().find('span').text('');
         $(this).find('span').text(temp === 'v' ? '^' : 'v');
 
-        let ids = [];
-
-        $('.work-order').each(function () {
-            ids.push($(this).attr('data-id'));
-        });
-
         let data = {
             'what': $(this).attr('id') === 'date-btn' ? 'id_order' : 'price',
             'how': temp === 'v' ? 'asc' : 'desc',
-            'ids': ids,
+            'ids': get_array_orders(),
         };
 
         $.ajax({
@@ -145,28 +139,72 @@ $("document").ready(function() {
        });
     });
 
-    function refresh_orders(array) {
-        let order = `<div class="flex-row mb-3 mt-2 d-flex">
-                        <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
-                            <div class="font-weight-bold mt-2 order-title">{{$orders->title}}</div>
-                            <div class="tag-list">
-                                @foreach($orders->categories as $tags)
-                                    <span class="tags font-italic font-size-10">{{$tags->name}}</span>
-                                @endforeach
-                            </div>
-                            <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
-                            <div class="text-right font-size-10">{{$orders->created_at}}</div>
-                        </div>
-                        <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px; !important;">
-                            <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
-                            <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
-                        </div>
-                    </div>`;
+    $('.categories_tag').on('click', function (e) {
+        e.preventDefault();
 
+        $('#date-btn').find('span').text('v');
+        $('#price-btn').find('span').text('');
+        $('#filter').val('');
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'post',
+            url: '/select_category',
+            data: {'category': $(this).attr('data-id')},
+            success: function (response) {
+                refresh_orders(response);
+            },
+        });
+    });
+
+    $('#filter').on('keyup keydown', function () {
+        $('.order-title').each(function () {
+            if ($(this).text().toLowerCase().indexOf($('#filter').val().toLowerCase()) < 0) {
+                $(this).closest('.flex-row').hide();
+                $(this).closest('.flex-row').removeClass('d-flex');
+            } else {
+                $(this).closest('.flex-row').show();
+                $(this).closest('.flex-row').addClass('d-flex');
+            }
+        });
+    });
+
+    function get_array_orders() {
+        let ids = [];
+
+        $('.work-order').each(function () {
+            ids.push($(this).attr('data-id'));
+        });
+
+        return ids;
+    }
+
+    function refresh_orders(array) {
         $('.work-order').closest('.flex-row').remove();
 
-        array.each(function () {
+        for (let i = 0; i < array.length; i++) {
+            let order = `<div class="flex-row mb-3 mt-2 d-flex">
+                        <div class="col-10 shadow bg-white work-order pointer" data-id="` + array[i]['id_order'] + `">
+                            <div class="font-weight-bold mt-2 order-title">` + array[i]['title'] + `</div>
+                            <div class="tag-list">`;
 
-        });
+            for (let j = 0; j < array[i]['categories'].length; j++) {
+                order += `<span class="tags font-italic font-size-10">` + array[i]['categories'][j]['name'] + `</span>&nbsp;`;
+            }
+
+            order += `</div>
+                        <div>` + array[i]['description'] + `</div>
+                        <div class="text-right font-size-10">` + array[i]['created_at'] + `</div>
+                    </div>
+                    <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px; !important;">
+                        <div class="text-center font-weight-bold mt-1">` + array[i]['price'] + `</div>
+                        <div class="text-right font-italic font-size-10 mt-2 pr-2">` + array[i]['time'] + `</div>
+                    </div>
+                </div>`;
+
+            $('#orders-list').append(order);
+        }
     }
 });
