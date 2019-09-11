@@ -46,25 +46,27 @@
                 <label class="font-weight-bold font-size-18">Додаткова інформація</label>
                 <div class="pb-2">{{$data->about_me}}</div>
             </div>
-            <div class="col shadow-lg mt-3">
+                @if(count($reviews) != 0)
+                    <p class="font-weight-bold font-size-18 mt-2">Відгуки</p>
                 @foreach($reviews as $mark)
-                    <p class="font-weight-bold font-size-18">Відгуки</p>
-                    <div class="d-flex flex-row">
-                        <div class="col-1 px-0 min-width-70">
-                            <img src="{{$mark->avatar}}" class="square-60 circle avatar">
-                        </div>
-                        <div class="col bg-blue text-white rounded pt-2 pb-2 mb-2">
-                            <div class=" mt-2">{{$mark->text}}</div>
-                            <hr class="col border-white mb-0">
-                            <div class="row font-size-10 mt-2 mb-2">
-                                <div class="col-3">{{$mark->name}} {{$mark->surname}}</div>
-                                <div class="col-2 offset-1">Оцінка: {{$mark->rating}}/5</div>
-                                <div class="col-2 offset-4">{{$mark->created_at}}</div>
+                    <div class="col shadow-lg mt-3">
+                        <div class="d-flex flex-row">
+                            <div class="col-1 px-0 min-width-70 mt-2">
+                                <img src="{{$mark->avatar}}" class="square-60 circle avatar">
+                            </div>
+                            <div class="col bg-blue text-white rounded pt-2 pb-2 mb-2">
+                                <div class=" mt-2">{{$mark->text}}</div>
+                                <hr class="col border-white mb-0">
+                                <div class="row font-size-10 mt-2 mb-2">
+                                    <div class="col-3">{{$mark->name}} {{$mark->surname}}</div>
+                                    <div class="col-2 offset-1">Оцінка: {{$mark->rating}}/5</div>
+                                    <div class="col-2 offset-4">{{$mark->created_at}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
-            </div>
+                @endif
         </div>
     </div>
 </div>
