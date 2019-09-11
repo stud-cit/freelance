@@ -158,14 +158,17 @@
                             <div class="form-group row">
                                 <label for="type" class="col-2 col-form-label mt-2">Тема:</label>
                                 <div class="col-5 mt-2">
-                                    <select id="type" class="form-control">
-                                        <option value="1" disabled selected>(Виберіть тему замовлення)</option>
+                                    <select name="type" id="type" class="form-control">
+                                        <option value="0" disabled selected>(Виберіть тему замовлення)</option>
                                         @foreach($categories as $select)
                                             <option value="{{$select->id_category}}">{{$select->name}}</option>
                                         @endforeach
                                     </select>
                                     <div style="display: none">
-                                        <input type="text" name="categories">
+                                        <input type="text" name="categories" value="{{ $skills }}">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-7" id="themes_block"></div>
                                     </div>
                                 </div>
                             </div>
