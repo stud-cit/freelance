@@ -56,11 +56,12 @@
                         <div class="pb-2">{{$data->about_me}}</div>
                     </div>
                 @endif
+                @if(count($reviews) != 0)
+                    <p class="font-weight-bold font-size-18 mt-2">Відгуки</p>
                 @foreach($reviews as $mark)
                     <div class="col shadow-lg mt-3">
-                        <p class="font-weight-bold font-size-18">Відгуки</p>
                         <div class="d-flex flex-row">
-                            <div class="col-1 px-0 min-width-70">
+                            <div class="col-1 px-0 min-width-70 mt-2">
                                 <img src="{{$mark->avatar}}" class="square-60 circle avatar">
                             </div>
                             <div class="col bg-blue text-white rounded pt-2 pb-2 mb-2">
@@ -75,6 +76,7 @@
                         </div>
                     </div>
                 @endforeach
+                @endif
             </div>
             <div class="tab-pane fade" id="v-pills-portfolio" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 {{--Portfolio--}}
@@ -112,7 +114,9 @@
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-edit-tab" data-toggle="tab" href="#nav-edit" role="tab" aria-controls="nav-edit" aria-selected="true">Про мене</a>
                         <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Контакти</a>
+                        @if(Auth::user()->id_role == 3)
                         <a class="nav-item nav-link" id="nav-skills-tab" data-toggle="tab" href="#nav-skills" role="tab" aria-controls="nav-skills" aria-selected="false">Навички</a>
+                        @endif
                         <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Додаткова інформація</a>
                     </div>
                 </nav>
@@ -277,7 +281,7 @@
                         @if(!$i)
                             <div class="container">
                                 <div class="row">
-                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає нових замовленнь</div>
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає залишених замовленнь</div>
                                 </div>
                             </div>
                         @endif
@@ -301,7 +305,7 @@
                         @if(!$i)
                             <div class="container">
                                 <div class="row">
-                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних замовленнь</div>
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає активних проектів</div>
                                 </div>
                             </div>
                         @endif
@@ -324,7 +328,7 @@
                         @if(!$i)
                             <div class="container">
                                 <div class="row">
-                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає виконаних замовленнь</div>
+                                    <div class="col font-weight-bold font-size-18 text-center mt-4">Немає виконаних проектів</div>
                                 </div>
                             </div>
                         @endif

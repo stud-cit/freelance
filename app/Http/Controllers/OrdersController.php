@@ -83,7 +83,12 @@ class OrdersController extends Controller
 
     public function sort_order(Request $req)
     {
-        $data = DB::table('orders')->where('status', 'new')->orderBy($req->what, $req->how)->get()->toArray();
+        $data = DB::table('orders')
+            ->where('status', 'new')
+            ->whereIn('id_order', $req->ids)
+            ->orderBy($req->what, $req->how)
+            ->get()
+            ->toArray();
 
         if ($req->what == 'price') {
             $this->currency_update();
@@ -94,7 +99,56 @@ class OrdersController extends Controller
             }
         }
 
-        dd($data);
+        foreach ($data as $orders) {
+            $orders->description = strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description;
+            $orders->price = is_null($orders->price) ? '' : $orders->price;
+            $orders->time = is_null($orders->time) ? '' : $orders->time;
+
+            $orders->categories = DB::table('categories_has_orders')
+                ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
+                ->where('id_order', $orders->id_order)
+                ->get()
+                ->toArray();
+        }
+
+        return $data;
+    }
+
+    public function select_category(Request $req)
+    {
+        $data = DB::table('orders')
+            ->where('status', 'new')
+            ->orderBy('id_order', 'desc')
+            ->get()
+            ->toArray();
+
+        $array = [];
+
+        foreach ($data as $orders) {
+            $orders->description = strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description;
+            $orders->price = is_null($orders->price) ? '' : $orders->price;
+            $orders->time = is_null($orders->time) ? '' : $orders->time;
+
+            $orders->categories = DB::table('categories_has_orders')
+                ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
+                ->where('id_order', $orders->id_order)
+                ->get()
+                ->toArray();
+
+            if ($req->category != '0') {
+                foreach ($orders->categories as $one) {
+                    if ($one->id_category == $req->category) {
+                        array_push($array, $orders);
+                        break;
+                    }
+                }
+            }
+            else {
+                array_push($array, $orders);
+            }
+        }
+
+        return $array;
     }
 
     public function order($id)

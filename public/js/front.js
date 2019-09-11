@@ -191,14 +191,10 @@ $("document").ready(function () {
     var temp = $(this).find('span').text();
     $(this).parent().find('span').text('');
     $(this).find('span').text(temp === 'v' ? '^' : 'v');
-    var ids = [];
-    $('.work-order').each(function () {
-      ids.push($(this).attr('data-id'));
-    });
     var data = {
       'what': $(this).attr('id') === 'date-btn' ? 'id_order' : 'price',
       'how': temp === 'v' ? 'asc' : 'desc',
-      'ids': ids
+      'ids': get_array_orders()
     };
     $.ajax({
       headers: {
@@ -212,11 +208,58 @@ $("document").ready(function () {
       }
     });
   });
+  $('.categories_tag').on('click', function (e) {
+    e.preventDefault();
+    $('#date-btn').find('span').text('v');
+    $('#price-btn').find('span').text('');
+    $('#filter').val('');
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      method: 'post',
+      url: '/select_category',
+      data: {
+        'category': $(this).attr('data-id')
+      },
+      success: function success(response) {
+        refresh_orders(response);
+      }
+    });
+  });
+  $('#filter').on('keyup keydown', function () {
+    $('.order-title').each(function () {
+      if ($(this).text().toLowerCase().indexOf($('#filter').val().toLowerCase()) < 0) {
+        $(this).closest('.flex-row').hide();
+        $(this).closest('.flex-row').removeClass('d-flex');
+      } else {
+        $(this).closest('.flex-row').show();
+        $(this).closest('.flex-row').addClass('d-flex');
+      }
+    });
+  });
+
+  function get_array_orders() {
+    var ids = [];
+    $('.work-order').each(function () {
+      ids.push($(this).attr('data-id'));
+    });
+    return ids;
+  }
 
   function refresh_orders(array) {
-    var order = "<div class=\"flex-row mb-3 mt-2 d-flex\">\n                        <div class=\"col-10 shadow bg-white work-order pointer\" data-id=\"{{$orders->id_order}}\">\n                            <div class=\"font-weight-bold mt-2 order-title\">{{$orders->title}}</div>\n                            <div class=\"tag-list\">\n                                @foreach($orders->categories as $tags)\n                                    <span class=\"tags font-italic font-size-10\">{{$tags->name}}</span>\n                                @endforeach\n                            </div>\n                            <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>\n                            <div class=\"text-right font-size-10\">{{$orders->created_at}}</div>\n                        </div>\n                        <div class=\"col c_rounded-right mt-3 bg-green text-white px-0 align-self-end\" style=\"height: 54px; !important;\">\n                            <div class=\"text-center font-weight-bold mt-1\">{{$orders->price}}</div>\n                            <div class=\"text-right font-italic font-size-10 mt-2 pr-2\">{{$orders->time}}</div>\n                        </div>\n                    </div>";
     $('.work-order').closest('.flex-row').remove();
-    array.each(function () {});
+
+    for (var _i = 0; _i < array.length; _i++) {
+      var order = "<div class=\"flex-row mb-3 mt-2 d-flex\">\n                        <div class=\"col-10 shadow bg-white work-order pointer\" data-id=\"" + array[_i]['id_order'] + "\">\n                            <div class=\"font-weight-bold mt-2 order-title\">" + array[_i]['title'] + "</div>\n                            <div class=\"tag-list\">";
+
+      for (var j = 0; j < array[_i]['categories'].length; j++) {
+        order += "<span class=\"tags font-italic font-size-10\">" + array[_i]['categories'][j]['name'] + "</span>&nbsp;";
+      }
+
+      order += "</div>\n                        <div>" + array[_i]['description'] + "</div>\n                        <div class=\"text-right font-size-10\">" + array[_i]['created_at'] + "</div>\n                    </div>\n                    <div class=\"col c_rounded-right mt-3 bg-green text-white px-0 align-self-end\" style=\"height: 54px; !important;\">\n                        <div class=\"text-center font-weight-bold mt-1\">" + array[_i]['price'] + "</div>\n                        <div class=\"text-right font-italic font-size-10 mt-2 pr-2\">" + array[_i]['time'] + "</div>\n                    </div>\n                </div>";
+      $('#orders-list').append(order);
+    }
   }
 });
 

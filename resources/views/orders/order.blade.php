@@ -66,7 +66,7 @@
             </div>
             <div class="container text-left">
                 <div class="row mb-2">
-                    <div class="col-11 offset-1 font-weight-bold">{{$customer->name}} {{$customer->surname}}</div>
+                    <div class="col-11 offset-1 font-weight-bold mt-1">{{$customer->name}} {{$customer->surname}}</div>
                     <div class="col-11 offset-1 font-size-10">E-mail: {{$customer->email}}</div>
                     <div class="col-11 offset-1 font-size-10">Phone number: {{$customer->phone_number}}</div>
                     <div class="col-11 offset-1 font-size-10">Viber: {{$customer->viber}}</div>
@@ -212,8 +212,9 @@
             @endif
             <div class="col">
                 <div class="container proposals">
-                    @foreach($proposals as $comment)
+                    @if(count($proposals) != 0)
                         <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
+                    @foreach($proposals as $comment)
                         <div class="d-flex flex-row mb-3 mt-2 pointer">
                             <div class="col-1 px-0 min-width-70 to-profile" data-id="{{$comment->id_user}}">
                                 <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
@@ -239,6 +240,9 @@
                             </div>
                         </div>
                     @endforeach
+                    @elseif(count($proposals) == 0)
+                    <div class="font-weight-bold font-size-18">Немає залишених пропозицій</div>
+                    @endif
                 </div>
             </div>
         </div>

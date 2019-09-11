@@ -96,7 +96,7 @@
                     </form>
                 </div>
             </div>
-            <div class="container orders">
+            <div class="container orders" id="orders-list">
                 @foreach($data as $orders)
                     <div class="flex-row mb-3 mt-2 d-flex">
                         <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
@@ -126,12 +126,17 @@
                 </div>
             </div>
             <div class="card px-0">
-                <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue">Всі категорії</div>
+                <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue">Категорії</div>
                 <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item py-0">
+                            <a class="categories_tag" href="" data-id="0">Всі ({{sizeof($data)}})</a>
+                        </li>
+                    </ul>
                     @foreach($categories as $tags)
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item py-0">
-                                <a class="categories_tag" href="">{{$tags->name}} ({{$tags->count}})</a>
+                                <a class="categories_tag" href="" data-id="{{$tags->id_category}}">{{$tags->name}} ({{$tags->count}})</a>
                             </li>
                         </ul>
                     @endforeach
