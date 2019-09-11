@@ -101,7 +101,7 @@ $("document").ready(function () {
   $(".to-profile").on('click', function () {
     window.location.href = '/profile/' + $(this).attr('data-id');
   });
-  $(".work-order").on('click', function () {
+  $(".orders").on('click', ".work-order", function () {
     window.location.href = '/orders/' + $(this).attr('data-id');
   });
   $('.propose-toggle').on('click', function () {
@@ -213,6 +213,8 @@ $("document").ready(function () {
     $('#date-btn').find('span').text('v');
     $('#price-btn').find('span').text('');
     $('#filter').val('');
+    $('.categories_tag').removeClass('font-weight-bold');
+    $(this).addClass('font-weight-bold');
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
