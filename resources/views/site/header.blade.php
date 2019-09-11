@@ -2,10 +2,10 @@
     <div class="container-fluid bg-blue mb-5">
         <div class="row py-2 text-white text-center">
                 <div class="col-1">
-                    <div class="bg-success rounded-circle float-right logo-circle">&nbsp;</div>
+                    <div class="bg-success rounded-circle float-right logo-circle pt-1 font-weight-bold" style="font-family: Arial; letter-spacing: -4px"><span>W</span><span class="font-italic">D</span></div>
                 </div>
                 <div class="col-1 mt-1">
-                    <a href="/" class="text-white">StudRISE</a>
+                    <a href="/" class="text-white">WorkDump</a>
                 </div>
                 @if(Auth::check())
                     <div class="col-lg-1 col-2 offset-lg-5 offset-1 mt-1 small">
