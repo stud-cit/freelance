@@ -66,7 +66,7 @@
             </div>
             <div class="container text-left">
                 <div class="row mb-2">
-                    <div class="col-11 offset-1 font-weight-bold">{{$customer->name}} {{$customer->surname}}</div>
+                    <div class="col-11 offset-1 font-weight-bold mt-1">{{$customer->name}} {{$customer->surname}}</div>
                     <div class="col-11 offset-1 font-size-10">E-mail: {{$customer->email}}</div>
                     <div class="col-11 offset-1 font-size-10">Phone number: {{$customer->phone_number}}</div>
                     <div class="col-11 offset-1 font-size-10">Viber: {{$customer->viber}}</div>
