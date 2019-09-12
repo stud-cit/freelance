@@ -84,7 +84,7 @@
             </div>
             <div class="tab-pane fade" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <p class="col font-size-18">Налаштування безпеки</p>
-                <form method="POST" action="{{route('change_pass')}}" class="row pass_change">
+                <form method="POST" action="{{route('change_pass')}}" class="row bg-white shadow-lg pass_change">
                     @csrf
                     <div class="col-12">
                         <div class="form-group row">
@@ -120,12 +120,12 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active row" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
-                        <form method="POST" action="{{ route('save_info') }}" class="col-6 offset-1" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('save_info') }}" class="col-7 bg-white shadow-lg offset-1" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row mt-4">
-                                <label>Аватар:</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="avatar" id="avatar-input" lang="ua" accept="image/*">
+                                <label class="col-5 col-form-label mt-2">Аватар:</label>
+                                <div class="custom-file col-6 mt-2">
+                                    <input type="file" class="custom-file-input form-control" name="avatar" id="avatar-input" lang="ua" accept="image/*">
                                     <label class="custom-file-label" for="avatar-input" id="avatar-input-label" data-browse="Обрати">Виберіть файл</label>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <form method="POST" action="{{route('save_contacts')}}" class="col-6">
+                        <form method="POST" action="{{route('save_contacts')}}" class="col-7 offset-1 bg-white shadow-lg">
                             @csrf
                             <div class="form-group row mt-4">
                                 <label for="phone_number" class="col-5 col-form-label mt-2">Номер телефону:</label>
@@ -215,9 +215,9 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">
-                        <form method="POST" action="{{route('save_skills')}}" class="col">
+                        <form method="POST" action="{{route('save_skills')}}" class="col-9 offset-1 bg-white shadow-lg">
                             @csrf
-                            <div class="col-9 mt-4">
+                            <div class="col-9 mt-4 pt-2">
                                 <select name="type" id="type" class="form-control">
                                     <option value="0" disabled selected>(Оберіть навички)</option>
                                     @foreach($categories as $select)
@@ -237,15 +237,15 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                        <form method="POST" action="{{route('save_about_me')}}" class="col">
+                        <form method="POST" action="{{route('save_about_me')}}" class="col-10 offset-1 bg-white shadow-lg">
                             @csrf
-                            <div class="row">
-                                <div class="col-10 mt-4">
+                            <div class="row mt-4">
+                                <div class="col-12 mt-2">
                                     <textarea class="form-control" name="about_me" rows="6">{{$data->about_me}}</textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <button type="submit" class="col-3 offset-7 text-white btn badge-pill bg-deep-blue mt-2 px-0" name="">Підтвердити</button>
+                                <button type="submit" class="col-3 offset-7 text-white btn badge-pill bg-deep-blue mt-2 mb-2 px-0" name="">Підтвердити</button>
                             </div>
                         </form>
                     </div>
