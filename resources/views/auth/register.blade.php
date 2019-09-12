@@ -128,3 +128,7 @@
     </div>
 </div>
 @endsection
+
+@section('header')
+    @include('site.footer')
+@endsection
