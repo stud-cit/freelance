@@ -51,15 +51,13 @@
                     </div>
                 </div>
                 @if(!is_null($data->about_me))
-                    <div class="col rounded shadow-lg mt-3">
-                        <p class="font-weight-bold font-size-18">Додаткова інформація</p>
-                        <div class="pb-2">{{$data->about_me}}</div>
-                    </div>
+                    <p class="font-weight-bold font-size-18 mt-3">Додаткова інформація</p>
+                    <div class="col rounded pl-2 pt-2 pb-2 bg-white shadow-lg">{{$data->about_me}}</div>
                 @endif
                 @if(count($reviews) != 0)
                     <p class="font-weight-bold font-size-18 mt-2">Відгуки</p>
                 @foreach($reviews as $mark)
-                    <div class="col shadow-lg mt-3">
+                    <div class="col bg-white shadow-lg mt-3 mb-2">
                         <div class="d-flex flex-row">
                             <div class="col-1 px-0 min-width-70 mt-2">
                                 <img src="{{$mark->avatar}}" class="square-60 circle avatar">
@@ -88,7 +86,7 @@
                 <p class="col font-size-18">Налаштування безпеки</p>
                 <form method="POST" action="{{route('change_pass')}}" class="row pass_change">
                     @csrf
-                    <div class="col-9">
+                    <div class="col-12">
                         <div class="form-group row">
                             <label for="new_password" class="col-5 col-form-label mt-2">Новий пароль:</label>
                             <div class="col-6 mt-2">
@@ -104,7 +102,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_password">Підтвердити</button>
+                            <button type="submit" class="col-2 offset-9 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_password">Підтвердити</button>
                         </div>
                     </div>
                 </form>
@@ -269,7 +267,7 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$all->id_order}}">
+                                        <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
                                             <div class="offset-1">{{$all->description}}</div>
                                             <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
@@ -293,7 +291,7 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$active->id_order}}">
+                                        <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
                                             <div class="offset-1">{{$active->description}}</div>
                                             <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
@@ -317,7 +315,7 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
+                                        <div class="col-11 mt-4 bg-white shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$complete->title}}</div>
                                             <div class="offset-1 mb-1">{{$complete->description}}</div>
                                         </div>
@@ -351,7 +349,7 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$all->id_order}}">
+                                        <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
                                             <div class="offset-1">{{$all->text}}</div>
                                             <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
@@ -375,7 +373,7 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg work-order pointer" data-id="{{$active->id_order}}">
+                                        <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
                                             <div class="offset-1">{{$active->text}}</div>
                                             <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
@@ -399,7 +397,7 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 shadow-lg">
+                                        <div class="col-11 mt-4 bg-white shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
                                             @if($complete->review)
                                                 <div>

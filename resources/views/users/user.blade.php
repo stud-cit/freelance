@@ -42,14 +42,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col rounded shadow-lg mt-3">
-                <label class="font-weight-bold font-size-18">Додаткова інформація</label>
-                <div class="pb-2">{{$data->about_me}}</div>
+            <p class="font-weight-bold font-size-18 mt-3">Додаткова інформація</p>
+            <div class="">
+                <div class="col rounded pl-2 pt-2 pb-2 bg-white shadow-lg">{{$data->about_me}}</div>
             </div>
                 @if(count($reviews) != 0)
                     <p class="font-weight-bold font-size-18 mt-2">Відгуки</p>
                 @foreach($reviews as $mark)
-                    <div class="col shadow-lg mt-3">
+                    <div class="col bg-white shadow-lg mt-3">
                         <div class="d-flex flex-row">
                             <div class="col-1 px-0 min-width-70 mt-2">
                                 <img src="{{$mark->avatar}}" class="square-60 circle avatar">

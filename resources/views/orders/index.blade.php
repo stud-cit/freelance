@@ -28,7 +28,7 @@
             @if(is_null(Auth::user()))
             @elseif(Auth::user()->id_role == 2)
                 <div class="container pointer">
-                    <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">
+                    <div class="d-flex flex-row mb-3 mt-2 bg-white" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">
                         <div class="col-11 pt-3 shadow-lg order_div">Створити власний проект</div>
                         <div class="col-1">
                             <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60 order_circle">&#43;</div>
@@ -37,7 +37,7 @@
                 </div>
             @endif
             <div class="container collapse" id="new-order">
-                <div class="d-flex flex-row">
+                <div class="d-flex flex-row bg-white shadow-lg">
                     <form class="col" method="POST" action="{{route('save_order')}}">
                         @csrf
                         <div class="form-group row">

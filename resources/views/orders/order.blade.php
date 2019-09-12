@@ -78,7 +78,7 @@
             @if(Auth::user()->isWorker() && $order->status == 'new')
                 <div id="prop" style="display: none;">
                     <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
-                    <form method="POST" action="{{ route('order', $order->id_order) }}" class="col mt-2 shadow-lg c_rounded">
+                    <form method="POST" action="{{ route('order', $order->id_order) }}" class="col mt-2 bg-white shadow-lg c_rounded">
                         @csrf
                         <div class="form-group row">
                             <label for="price" class="col-sm-2 col-form-label mt-2">Ціна:</label>
@@ -115,7 +115,7 @@
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
                 <div id="prop" style="display: none;">
                     <p class="font-size-18 font-weight-bold">Залишити відгук</p>
-                    <form method="POST" action="{{ route('add_review', $order->id_order) }}" class="col shadow-lg c_rounded">
+                    <form method="POST" action="{{ route('add_review', $order->id_order) }}" class="col bg-white shadow-lg c_rounded">
                         @csrf
                         <input name="cancel_check" style="display: none">
                         <div class="form-group row">
@@ -148,7 +148,7 @@
             @if(Auth::user()->id == $order->id_customer && $order->status == 'new')
                 <div class="container collapse" id="edit-order">
                     <div class="d-flex flex-row">
-                        <form class="col" method="POST" action="{{route('edit_order', $order->id_order)}}">
+                        <form class="col bg-white shadow-lg" method="POST" action="{{route('edit_order', $order->id_order)}}">
                             @csrf
                             <div class="form-group row">
                                 <label for="title" class="col-2 col-form-label mt-2">Назва:</label>
