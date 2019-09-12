@@ -134,4 +134,8 @@ ul.tick li:before {
     position: absolute;
     left: -15px;
 }
+.nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+}
 
