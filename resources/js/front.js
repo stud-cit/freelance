@@ -142,8 +142,8 @@ $("document").ready(function() {
     $('.categories_tag').on('click', function (e) {
         e.preventDefault();
 
-        $('#date-btn').find('span').text('v');
-        $('#price-btn').find('span').text('');
+        $('#date-btn span').text('v');
+        $('#price-btn span').text('');
         $('#filter').val('');
         $('.categories_tag').removeClass('font-weight-bold');
         $(this).addClass('font-weight-bold');
