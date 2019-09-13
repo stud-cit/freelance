@@ -82,7 +82,7 @@
                                 <input type="checkbox" class="custom-control-input" id="rememberme">
                                 <label for="rememberme" class="custom-control-label">Запам'ятати</label>
                             </div>
-                            <div class="col-lg-4 col-12 offset-lg-3">
+                            <div class="col-lg-5 col-12 offset-lg-2">
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         Забули пароль?
@@ -99,7 +99,7 @@
                             </div>
 
                             <div class="col-lg-5 col-12">
-                                <a href="{{ route('register') }}" class="btn btn-outline-secondary badge-pill w-100">
+                                <a href="{{ route('register') }}" class="btn btn-outline-secondary badge-pill w-100 bg-white">
                                     Реєстрація
                                 </a>
                             </div>
