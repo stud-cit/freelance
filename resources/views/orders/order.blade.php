@@ -36,7 +36,7 @@
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
             @if(Auth::user()->isWorker() && $order->status == 'new')
-                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 mb-2 propose-toggle"  data-toggle="collapse" data-target="#prop" aria-expanded="true">
+                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 mb-2" data-toggle="collapse" data-target="#prop" aria-expanded="true">
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
             @elseif(Auth::user()->id == $order->id_customer && $order->status == 'new')
@@ -52,10 +52,10 @@
                     </form>
                 </div>
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
-                <button class="propose-toggle btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4 mb-2" name="ok_worker">
+                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4 mb-2" name="ok_worker" data-toggle="collapse" data-target="#accepted_order" aria-expanded="true">
                     Замовлення виконано
                 </button>
-                <button type="submit" class="propose-toggle btn btn-danger badge-pill text-white px-0 col-3 mt-4 mb-2" name="cancel_worker">
+                <button type="submit" class="btn btn-danger badge-pill text-white px-0 col-3 mt-4 mb-2" name="cancel_worker" data-toggle="collapse" data-target="#accepted_order" aria-expanded="true">
                     Змінити виконавця
                 </button>
             @endif
@@ -113,7 +113,7 @@
                     </form>
                 </div>
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
-                <div id="prop" style="display: none;">
+                <div id="accepted_order" class="collapse">
                     <p class="font-size-18 font-weight-bold">Залишити відгук</p>
                     <form method="POST" action="{{ route('add_review', $order->id_order) }}" class="col bg-white shadow c_rounded">
                         @csrf
