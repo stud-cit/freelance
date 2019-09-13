@@ -8,7 +8,8 @@ Route::post('/sort_order', 'OrdersController@sort_order')->name('sort_order');
 Route::post('/select_category', 'OrdersController@select_category')->name('select_category');
 
 Route::get('/orders/{id}', 'OrdersController@order')->middleware(['logged.in', 'new.order']);
-Route::post('/add_proposal/{id}', 'OrdersController@add_proposal')->name('order');
+Route::post('/add_proposal/{id}', 'OrdersController@add_proposal')->name('add_proposal');
+Route::post('/delete_proposal', 'OrdersController@delete_proposal')->name('delete_proposal');
 Route::post('/select_worker/{id}', 'OrdersController@select_worker')->name('select_worker');
 Route::post('/add_review/{id}', 'OrdersController@add_review')->name('add_review');
 Route::post('/edit_order/{id}', 'OrdersController@edit_order')->name('edit_order');

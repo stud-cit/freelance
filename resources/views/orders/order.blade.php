@@ -78,7 +78,7 @@
             @if(Auth::user()->isWorker() && $order->status == 'new')
                 <div id="prop" style="display: none;">
                     <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
-                    <form method="POST" action="{{ route('order', $order->id_order) }}" class="col mt-2 bg-white shadow c_rounded">
+                    <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2 bg-white shadow c_rounded">
                         @csrf
                         <div class="form-group row">
                             <label for="price" class="col-sm-2 col-form-label mt-2">Ціна:</label>
