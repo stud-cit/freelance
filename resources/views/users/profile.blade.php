@@ -260,7 +260,7 @@
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active row" id="nav-all-c" role="tabpanel" aria-labelledby="nav-all-tab">
+                    <div class="tab-pane fade show active row orders" id="nav-all-c" role="tabpanel" aria-labelledby="nav-all-tab">
                         @php($i = 0)
                         @foreach($orders as $all)
                             @if($all->status == 'new')
@@ -284,7 +284,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="tab-pane fade row" id="nav-active-c" role="tabpanel" aria-labelledby="nav-active-tab">
+                    <div class="tab-pane fade row orders" id="nav-active-c" role="tabpanel" aria-labelledby="nav-active-tab">
                         @php($i = 0)
                         @foreach($orders as $active)
                             @if($active->status == 'in progress')
@@ -308,7 +308,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="tab-pane fade row" id="nav-complete-c" role="tabpanel" aria-labelledby="nav-complete-tab">
+                    <div class="tab-pane fade row orders" id="nav-complete-c" role="tabpanel" aria-labelledby="nav-complete-tab">
                         @php($i = 0)
                         @foreach($orders as $complete)
                             @if($complete->status == 'complete')
@@ -342,7 +342,7 @@
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active row" id="nav-all-w" role="tabpanel" aria-labelledby="nav-all-tab">
+                    <div class="tab-pane fade show active row orders" id="nav-all-w" role="tabpanel" aria-labelledby="nav-all-tab">
                         @php($i = 0)
                         @foreach($proposals as $all)
                             @if($all->status == 'new')
@@ -366,7 +366,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="tab-pane fade row" id="nav-active-w" role="tabpanel" aria-labelledby="nav-active-tab">
+                    <div class="tab-pane fade row orders" id="nav-active-w" role="tabpanel" aria-labelledby="nav-active-tab">
                         @php($i = 0)
                         @foreach($proposals as $active)
                             @if($active->status == 'in progress')
@@ -390,7 +390,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="tab-pane fade row" id="nav-complete-w" role="tabpanel" aria-labelledby="nav-complete-tab">
+                    <div class="tab-pane fade row orders" id="nav-complete-w" role="tabpanel" aria-labelledby="nav-complete-tab">
                         @php($i = 0)
                         @foreach($proposals as $complete)
                             @if($complete->status == 'complete')
