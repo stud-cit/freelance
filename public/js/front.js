@@ -150,8 +150,21 @@ $("document").ready(function () {
   $('#rating').on('input', function () {
     $('#rating_val').text($(this).val());
   });
-  $('button[name="delete_proposal"]').on('click', function () {
-    $('button[name="form_proposals"]').submit();
+  $('button[name="delete_proposal"]').on('click', function (e) {
+    e.preventDefault();
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      method: 'post',
+      url: '/delete_proposal',
+      data: {
+        'location': window.location.href
+      },
+      success: function success(response) {
+        document.location.reload(true);
+      }
+    });
   });
   $('button[name="cancel_worker"]').on('click', function () {
     $('input[name="cancel_check"]').val('2');
@@ -213,8 +226,8 @@ $("document").ready(function () {
   });
   $('.categories_tag').on('click', function (e) {
     e.preventDefault();
-    $('#date-btn').find('span').text('v');
-    $('#price-btn').find('span').text('');
+    $('#date-btn span').text('v');
+    $('#price-btn span').text('');
     $('#filter').val('');
     $('.categories_tag').removeClass('font-weight-bold');
     $(this).addClass('font-weight-bold');

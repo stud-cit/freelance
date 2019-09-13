@@ -23,8 +23,8 @@ class CategoriesTableSeed extends Seeder
             ['name' => 'Python'],
             ['name' => 'Ruby'],
             ['name' => 'Swift'],
-            ['name' => 'Базы данных'],
-            ['name' => 'Тестирование и QA'],
+            ['name' => 'Бази данних'],
+            ['name' => 'Тестування і QA'],
         ];
 
         DB::table('categories')->insert($values);

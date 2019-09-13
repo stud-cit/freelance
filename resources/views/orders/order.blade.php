@@ -78,7 +78,7 @@
             @if(Auth::user()->isWorker() && $order->status == 'new')
                 <div id="prop" class="collapse">
                     <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
-                    <form method="POST" action="{{ route('order', $order->id_order) }}" class="col mt-2 bg-white shadow-lg c_rounded">
+                    <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2 bg-white shadow c_rounded">
                         @csrf
                         <div class="form-group row">
                             <label for="price" class="col-sm-2 col-form-label mt-2">Ціна:</label>
@@ -115,7 +115,7 @@
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
                 <div id="prop" style="display: none;">
                     <p class="font-size-18 font-weight-bold">Залишити відгук</p>
-                    <form method="POST" action="{{ route('add_review', $order->id_order) }}" class="col bg-white shadow-lg c_rounded">
+                    <form method="POST" action="{{ route('add_review', $order->id_order) }}" class="col bg-white shadow c_rounded">
                         @csrf
                         <input name="cancel_check" style="display: none">
                         <div class="form-group row">
@@ -148,7 +148,7 @@
             @if(Auth::user()->id == $order->id_customer && $order->status == 'new')
                 <div class="container collapse" id="edit-order">
                     <div class="d-flex flex-row">
-                        <form class="col bg-white shadow-lg" method="POST" action="{{route('edit_order', $order->id_order)}}">
+                        <form class="col bg-white shadow" method="POST" action="{{route('edit_order', $order->id_order)}}">
                             @csrf
                             <div class="form-group row">
                                 <label for="title" class="col-2 col-form-label mt-2">Назва:</label>
@@ -213,7 +213,7 @@
             <div class="col">
                 <div class="container proposals">
                     @if(count($proposals) != 0)
-                        <div class="font-weight-bold font-size-18">Пропозиції виконавців</div>
+                        <div class="font-weight-bold font-size-18 mt-4">Пропозиції виконавців</div>
                     @foreach($proposals as $comment)
                         <div class="d-flex flex-row mb-3 mt-2 pointer">
                             <div class="col-1 px-0 min-width-70 to-profile" data-id="{{$comment->id_user}}">
@@ -226,7 +226,7 @@
                                     <div class="text-right font-size-10">{{$comment->created_at}}</div>
                                 </div>
                                 @if(Auth::user()->id == $order->id_customer && $order->status == 'new')
-                                    <form method="POST" action="{{route('select_worker', $order->id_order)}}" class="col shadow-lg c_rounded select_worker">
+                                    <form method="POST" action="{{route('select_worker', $order->id_order)}}" class="col c_rounded select_worker">
                                         @csrf
                                         <div class="collapse" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
                                             <button type="submit" class="col-lg-3 col-6 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="selected_worker" value="{{$comment->id_user}}">Підтвердити</button>
@@ -241,7 +241,7 @@
                         </div>
                     @endforeach
                     @elseif(count($proposals) == 0)
-                    <div class="font-weight-bold font-size-18 mb-4">Немає залишених пропозицій</div>
+                        <div class="font-weight-bold font-size-18 mb-4 mt-4">Немає залишених пропозицій</div>
                     @endif
                 </div>
             </div>
