@@ -75,7 +75,10 @@ class OrdersController extends Controller
         $categories = DB::table('categories')->orderBy('name')->get()->toArray();
 
         foreach ($categories as $one) {
-            $one->count = DB::table('categories_has_orders')->where('id_category', $one->id_category)->count();
+            $one->count = DB::table('categories_has_orders')
+                ->join('orders', 'categories_has_orders.id_order', '=', 'orders.id_order')
+                ->where([['id_category', $one->id_category], ['status', 'new']])
+                ->count();
         }
 
         return view('orders.index', compact('data'), compact('categories'));
