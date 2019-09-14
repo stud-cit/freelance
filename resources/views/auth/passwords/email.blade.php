@@ -19,7 +19,7 @@
                         <li class="list-group-item d-flex flex-row">
                             <div class="d-flex flex-column w-100">
                                 <label for="email" class="col-form-label">Email адреса</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0" name="email" placeholder="E-mail" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
