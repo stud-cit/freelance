@@ -279,6 +279,33 @@ $("document").ready(function () {
       $('#orders-list').append(order);
     }
   }
+
+  $.ajaxSetup({
+    beforeSend: function beforeSend() {
+      $("#load").modal({
+        backdrop: "static",
+        keyboard: false,
+        show: true
+      });
+      console.log("on");
+    },
+    complete: function complete() {
+      $("#load").modal("hide");
+      console.log("off");
+    }
+  });
+  /*
+      $("#load").ajaxStart(function () {
+          $(this).modal({
+              backdrop: "static",
+              keyboard: false,
+              show: true
+          });
+          console.log("on");
+      });
+  
+      $("#load").ajaxComplete(function(){$(this).modal("hide"); console.log("off");})
+  */
 });
 
 /***/ }),

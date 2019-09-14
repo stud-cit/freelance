@@ -84,6 +84,14 @@
 </footer>
 <!--Footer_section-->
 
+<!--Modal_loader-->
+<div class="modal" id="load" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+    <div class="spinner-border text-white position-absolute m-auto" role="status" style="top: 0; left: 0; bottom: 0; right: 0;">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+
 <!--<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>-->
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/front.js') }}"></script>

@@ -1,4 +1,6 @@
 $("document").ready(function() {
+
+
     $(".alert").delay(3000).slideUp();
 
     $("#avatar-input").on("change", function () {
@@ -147,7 +149,7 @@ $("document").ready(function() {
             data: data,
             success: function (response) {
                 refresh_orders(response);
-            },
+            }
        });
     });
 
@@ -169,7 +171,7 @@ $("document").ready(function() {
             data: {'category': $(this).attr('data-id')},
             success: function (response) {
                 refresh_orders(response);
-            },
+            }
         });
     });
 
@@ -221,4 +223,31 @@ $("document").ready(function() {
             $('#orders-list').append(order);
         }
     }
+
+    $.ajaxSetup({
+        beforeSend: function () {
+            $("#load").modal({
+                backdrop: "static",
+                keyboard: false,
+                show: true
+            });
+            console.log("on");},
+        complete: function() {
+            $("#load").modal("hide");
+            console.log("off");
+        }
+    });
+
+/*
+    $("#load").ajaxStart(function () {
+        $(this).modal({
+            backdrop: "static",
+            keyboard: false,
+            show: true
+        });
+        console.log("on");
+    });
+
+    $("#load").ajaxComplete(function(){$(this).modal("hide"); console.log("off");})
+*/
 });
