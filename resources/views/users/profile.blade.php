@@ -166,7 +166,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_info">Підтвердити</button>
+                                <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_info">Підтвердити</button>
                             </div>
                         </form>
                     </div>
@@ -210,7 +210,7 @@
                                 </div>
                             </div>-->
                             <div class="form-group row">
-                                <button type="submit" class="col-4 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_contacts">Підтвердити</button>
+                                <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_contacts">Підтвердити</button>
                             </div>
                         </form>
                     </div>
@@ -232,7 +232,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <button type="submit" class="col-3 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_skills">Підтвердити</button>
+                                <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_skills">Підтвердити</button>
                             </div>
                         </form>
                     </div>
@@ -244,8 +244,8 @@
                                     <textarea class="form-control" name="about_me" rows="6">{{$data->about_me}}</textarea>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <button type="submit" class="col-3 offset-7 text-white btn badge-pill bg-deep-blue mt-2 mb-2 px-0" name="">Підтвердити</button>
+                            <div class="form-group row mt-2">
+                                <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="">Підтвердити</button>
                             </div>
                         </form>
                     </div>
