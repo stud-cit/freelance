@@ -104,18 +104,6 @@ $("document").ready(function () {
   $(".orders").on('click', ".work-order", function () {
     window.location.href = '/orders/' + $(this).attr('data-id');
   });
-  /*
-      $('.propose-toggle').on('click', function () {
-          let style = $('#prop').css('display');
-  
-          if (style == 'none') {
-              $('#prop').show();
-          } else {
-              $('#prop').hide();
-          }
-      });
-  */
-
   $('#new_order-toggle').on('click', function () {
     $(this).find('.order_circle').css('transition', 'transform 0.1s linear').css('transform', $('#new-order').css('display') == 'none' ? 'rotate(360deg)' : 'rotate(0deg)').text($('#new-order').css('display') == 'none' ? '-' : '+');
   });
@@ -287,25 +275,11 @@ $("document").ready(function () {
         keyboard: false,
         show: true
       });
-      console.log("on");
     },
     complete: function complete() {
       $("#load").modal("hide");
-      console.log("off");
     }
   });
-  /*
-      $("#load").ajaxStart(function () {
-          $(this).modal({
-              backdrop: "static",
-              keyboard: false,
-              show: true
-          });
-          console.log("on");
-      });
-  
-      $("#load").ajaxComplete(function(){$(this).modal("hide"); console.log("off");})
-  */
 });
 
 /***/ }),
