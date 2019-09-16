@@ -16,7 +16,9 @@ class OrdersController extends Controller
     function currency_update()
     {
         $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
-        if ($response_json = file_get_contents($req_url)) {
+        $response_json = file_get_contents($req_url);
+
+        if ($response_json && date("Y m d", filemtime('currency.json')) < date("Y m d")) {
             $response_object = json_decode($response_json);
 
             $fp = fopen('currency.json', 'w');
@@ -288,17 +290,17 @@ class OrdersController extends Controller
         if ($type == 'дні' && !is_null($time)) {
             switch ($time) {
                 case $time == 1 :
-                    $time = $time . ' день';
+                    $time .= ' день';
                     break;
                 case $time > 1 && $time < 5 :
-                    $time = $time . ' дні';
+                    $time .= ' дні';
                     break;
                 default :
-                    $time = $time . ' днів';
+                    $time .= ' днів';
             }
         }
-        else if(!is_null($time)) {
-            $time = $time . ' ' . $type;
+        else if (!is_null($time)) {
+            $time .= ' год.';
         }
 
         $values = [
@@ -339,53 +341,12 @@ class OrdersController extends Controller
     public function delete_order(Request $req)
     {
         DB::table('categories_has_orders')->where('id_order', $req->id)->delete();
+        DB::table('proposals')->where('id_order', $req->id)->delete();
         DB::table('orders')->where('id_order', $req->id)->delete();
 
         $req->session()->flash('alert-success', 'Замовлення успішно видалено!');
 
         return redirect('/orders');
-    }
-
-    public function edit_order(Request $req)
-    {
-        $type = $req->type;
-        $time = $req->time;
-        $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
-
-        if ($type == 'дні' && !is_null($time)) {
-            switch ($req->time) {
-                case $time == 1 :
-                    $time = $time . ' день';
-                    break;
-                case $time > 1 && $time < 5 :
-                    $time = $time . ' дні';
-                    break;
-                default :
-                    $time = $time . ' днів';
-            }
-        }
-
-        $values = [
-            'title' => $req->title,
-            'description' => $req->description,
-            'price' => $price,
-            'time' => $time,
-        ];
-
-        DB::table('orders')->where('id_order', $req->id)->update($values);
-
-        $categories = explode('|', $req->categories);
-        array_pop($categories);
-
-        DB::table('categories_has_orders')->where('id_order', $req->id)->delete();
-
-        foreach ($categories as $one) {
-            DB::table('categories_has_orders')->insert(['id_category' => $one, 'id_order' => $req->id]);
-        }
-
-        $req->session()->flash('alert-success', 'Замовлення успішно змінено!');
-
-        return back();
     }
 
     public function save_order(Request $req)
@@ -397,14 +358,17 @@ class OrdersController extends Controller
         if ($type == 'дні' && !is_null($time)) {
             switch ($req->time) {
                 case $time == 1 :
-                    $time = $time . ' день';
+                    $time .= ' день';
                     break;
                 case $time > 1 && $time < 5 :
-                    $time = $time . ' дні';
+                    $time .= ' дні';
                     break;
                 default :
-                    $time = $time . ' днів';
+                    $time .= ' днів';
             }
+        }
+        else if (!is_null($time)) {
+            $time .= ' год.';
         }
 
         $values = [
@@ -432,5 +396,50 @@ class OrdersController extends Controller
         $req->session()->flash('alert-success', 'Замовлення успішно додано!');
 
         return redirect('/orders/' . $id->id_order);
+    }
+
+    public function edit_order(Request $req)
+    {
+        $type = $req->type;
+        $time = $req->time;
+        $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
+
+        if ($type == 'дні' && !is_null($time)) {
+            switch ($req->time) {
+                case $time == 1 :
+                    $time .= ' день';
+                    break;
+                case $time > 1 && $time < 5 :
+                    $time .= ' дні';
+                    break;
+                default :
+                    $time .= ' днів';
+            }
+        }
+        else if (!is_null($time)) {
+            $time .= ' год.';
+        }
+
+        $values = [
+            'title' => $req->title,
+            'description' => $req->description,
+            'price' => $price,
+            'time' => $time,
+        ];
+
+        DB::table('orders')->where('id_order', $req->id)->update($values);
+
+        $categories = explode('|', $req->categories);
+        array_pop($categories);
+
+        DB::table('categories_has_orders')->where('id_order', $req->id)->delete();
+
+        foreach ($categories as $one) {
+            DB::table('categories_has_orders')->insert(['id_category' => $one, 'id_order' => $req->id]);
+        }
+
+        $req->session()->flash('alert-success', 'Замовлення успішно змінено!');
+
+        return back();
     }
 }
