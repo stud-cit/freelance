@@ -102,7 +102,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <button type="submit" class="col-2 offset-9 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_password">Підтвердити</button>
+                            <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_password">Підтвердити</button>
                         </div>
                     </div>
                 </form>
