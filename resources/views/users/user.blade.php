@@ -54,7 +54,7 @@
                             <div class="col-1 px-0 min-width-70 mt-2">
                                 <img src="{{$mark->avatar}}" class="square-60 circle avatar">
                             </div>
-                            <div class="col bg-blue text-white rounded pt-2 pb-2 mb-2">
+                            <div class="col rounded py-2 mb-2">
                                 <div class=" mt-2">{{$mark->text}}</div>
                                 <hr class="col border-white mb-0">
                                 <div class="row font-size-10 mt-2 mb-2">

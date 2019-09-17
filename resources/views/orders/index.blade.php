@@ -130,13 +130,13 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item py-0">
-                            <a class="categories_tag font-weight-bold" href="" data-id="0">Всі ({{sizeof($data)}})</a>
+                            <a class="categories_tag font-weight-bold" href="" data-id="0"><span>Всі</span> <span class="badge badge-pill badge-primary float-right m-1">{{sizeof($data)}}</span></a>
                         </li>
                     </ul>
                     @foreach($categories as $tags)
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item py-0">
-                                <a class="categories_tag" href="" data-id="{{$tags->id_category}}">{{$tags->name}} ({{$tags->count}})</a>
+                                <a class="categories_tag" href="" data-id="{{$tags->id_category}}"><span class="">{{$tags->name}}</span> <span class="badge badge-pill badge-primary float-right m-1">{{$tags->count}}</span></a>
                             </li>
                         </ul>
                     @endforeach
