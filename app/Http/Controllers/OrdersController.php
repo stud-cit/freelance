@@ -13,24 +13,22 @@ class OrdersController extends Controller
 {
     private $eq;
 
-    function currency_update()
+    function get_currency()
     {
-        $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
-        $response_json = file_get_contents($req_url);
+        $fp = file_get_contents('currency.json');
+        $response_object = json_decode($fp, true);
+        $this->eq = $response_object['rates']['UAH'];
 
-        if ($response_json && date("Y m d", filemtime('currency.json')) < date("Y m d")) {
-            $response_object = json_decode($response_json);
+        if (date("Y m d", filemtime('currency.json')) < date("Y m d")) {
+            try {
+                $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
+                $response_json = file_get_contents($req_url);
 
-            $fp = fopen('currency.json', 'w');
-            fwrite($fp, $response_json);
-            fclose($fp);
-
-            $this->eq = $response_object->rates->UAH;
-        }
-        else {
-            $fp = file_get_contents('currency.json');
-            $response_object = json_decode($fp, true);
-            $this->eq = $response_object['rates']['UAH'];
+                $fp = fopen('currency.json', 'w');
+                fwrite($fp, $response_json);
+                fclose($fp);
+            } catch (\Exception $e) {
+            }
         }
     }
 
@@ -96,7 +94,7 @@ class OrdersController extends Controller
             ->toArray();
 
         if ($req->what == 'price') {
-            $this->currency_update();
+            $this->get_currency();
             usort($data, array($this, "cmp"));
 
             if ($req->how == 'desc') {
