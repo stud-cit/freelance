@@ -186,20 +186,11 @@ class OrdersController extends Controller
             }
         }
 
-        if ($order->status == 'new') {
-            $proposals = DB::table('proposals')
-                ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
-                ->where('id_order', $id)
-                ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
-                ->toArray();
-        }
-        else {
-            $proposals = DB::table('proposals')
-                ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
-                ->where([['id_order', $id], ['id_worker', $order->id_worker]])
-                ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
-                ->toArray();
-        }
+        $proposals = DB::table('proposals')
+            ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
+            ->where('id_order', $id)
+            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
+            ->toArray();
 
         foreach ($proposals as $one) {
             if (Storage::disk('public')->has($one->id_user . '.png')) {
