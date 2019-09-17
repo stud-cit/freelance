@@ -42,10 +42,12 @@
                     </div>
                 </div>
             </div>
+            @if(!is_null($data->about_me))
             <p class="font-weight-bold font-size-18 mt-3">Додаткова інформація</p>
             <div class="">
                 <div class="col rounded pl-2 pt-2 pb-2 bg-white shadow-lg">{{$data->about_me}}</div>
             </div>
+            @endif
                 @if(count($reviews) != 0)
                     <p class="font-weight-bold font-size-18 mt-2">Відгуки</p>
                 @foreach($reviews as $mark)
