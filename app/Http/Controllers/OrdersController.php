@@ -44,7 +44,13 @@ class OrdersController extends Controller
 
     public function index()
     {
-        $data = DB::table('orders')->where('status', 'new')->orderBy('id_order', 'desc')->get()->toArray();
+        $data = DB::table('orders')
+            ->where('status', 'new')
+            ->orWhere([['status', 'in progress'], ['id_customer', Auth::user()->id]])
+            ->orWhere([['status', 'in progress'], ['id_worker', Auth::user()->id]])
+            ->orderBy('id_order', 'desc')
+            ->get()
+            ->toArray();
 
         foreach ($data as $one) {
             $one->categories = DB::table('categories_has_orders')
@@ -66,8 +72,7 @@ class OrdersController extends Controller
         foreach ($workers as $worker) {
             if (Storage::disk('public')->has($worker->id_user . '.png')) {
                 $worker->avatar = '/img/' . $worker->id_user . '.png';
-            }
-            else {
+            } else {
                 $worker->avatar = '/img/' . $worker->id_user . '.jpg';
             }
         }
@@ -145,8 +150,7 @@ class OrdersController extends Controller
                         break;
                     }
                 }
-            }
-            else {
+            } else {
                 array_push($array, $orders);
             }
         }
@@ -171,8 +175,7 @@ class OrdersController extends Controller
                 $temp = explode(' ', $my_proposal->price);
                 $my_proposal->price = $temp[0];
                 $my_proposal->currency = $temp[1];
-            }
-            else {
+            } else {
                 $my_proposal->currency = '';
             }
 
@@ -180,8 +183,7 @@ class OrdersController extends Controller
                 $temp = explode(' ', $my_proposal->time);
                 $my_proposal->time = $temp[0];
                 $my_proposal->type = $temp[1];
-            }
-            else {
+            } else {
                 $my_proposal->type = '';
             }
         }
@@ -195,8 +197,7 @@ class OrdersController extends Controller
         foreach ($proposals as $one) {
             if (Storage::disk('public')->has($one->id_user . '.png')) {
                 $one->avatar = '/img/' . $one->id_user . '.png';
-            }
-            else {
+            } else {
                 $one->avatar = '/img/' . $one->id_user . '.jpg';
             }
         }
@@ -237,37 +238,42 @@ class OrdersController extends Controller
         return back();
     }
 
-    public function add_review(Request $req)
+    public function finish_order(Request $req)
+    {
+        DB::table('orders')->where('id_order', $req->id)->update(['status' => 'complete']);
+
+        $req->session()->flash('alert-success', 'Замовлення успішно завершено!');
+
+        return redirect('/orders');
+    }
+
+    public function change_worker(Request $req)
     {
         if (!is_null($req->text)) {
-            $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
-
-            $values = [
-                'text' => $req->text,
-                'rating' => $req->rating,
-                'id_from' => Auth::user()->id,
-                'id_to' => $worker->id_worker,
-                'id_order' => $req->id,
-                'created_at' => Carbon::now(),
-            ];
-
-            DB::table('reviews')->insert($values);
+            $this->add_review($req);
         }
 
-        if ($req->cancel_check == 1) {
-            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'complete']);
+        DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
 
-            $req->session()->flash('alert-success', 'Замовлення успішно завершено!');
-
-            return redirect('/orders');
-        }
-        else {
-            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
-
-            $req->session()->flash('alert-success', 'Виконавця успішно видалено!');
-        }
+        $req->session()->flash('alert-success', 'Виконавця успішно видалено!');
 
         return back();
+    }
+
+    public function add_review(Request $req)
+    {
+        $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
+
+        $values = [
+            'text' => $req->text,
+            'rating' => $req->rating,
+            'id_from' => Auth::user()->id,
+            'id_to' => $worker->id_worker,
+            'id_order' => $req->id,
+            'created_at' => Carbon::now(),
+        ];
+
+        DB::table('reviews')->insert($values);
     }
 
     public function add_proposal(Request $req)

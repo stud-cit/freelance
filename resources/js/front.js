@@ -68,14 +68,6 @@ $("document").ready(function() {
         });
     });
 
-    $('button[name="cancel_worker"]').on('click', function () {
-        $('input[name="cancel_check"]').val('2');
-    });
-
-    $('button[name="ok_worker"]').on('click', function () {
-        $('input[name="cancel_check"]').val('1');
-    });
-
     $("#type").on("change", function() {
         let item = $(this).children("option:selected"),
             input = $('input[name="categories"]');

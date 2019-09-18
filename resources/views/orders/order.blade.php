@@ -52,12 +52,17 @@
                     </form>
                 </div>
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
-                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-5 mt-4 mb-2" name="ok_worker" data-toggle="collapse" data-target="#accepted_order" aria-expanded="true">
-                    Замовлення виконано
-                </button>
-                <button type="submit" class="btn btn-danger badge-pill text-white px-0 col-3 mt-4 mb-2" name="cancel_worker" data-toggle="collapse" data-target="#accepted_order" aria-expanded="true">
-                    Змінити виконавця
-                </button>
+                <div class="row">
+                    <form method="POST" action="{{route('finish_order', $order->id_order)}}" class="col-3 px-0 offset-5 mt-4 mb-2">
+                        @csrf
+                        <button type="submit" class="btn badge-pill text-white bg-deep-blue">
+                            Замовлення виконано
+                        </button>
+                    </form>
+                    <button class="btn btn-danger badge-pill text-white px-0 col-3 mt-4 mb-2" data-toggle="collapse" data-target="#accepted_order" aria-expanded="true">
+                        Змінити виконавця
+                    </button>
+                </div>
             @endif
         </div>
         <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
@@ -115,13 +120,12 @@
             @elseif($order->status == 'in progress' && Auth::user()->id == $order->id_customer)
                 <div id="accepted_order" class="collapse">
                     <p class="font-size-18 font-weight-bold">Залишити відгук</p>
-                    <form method="POST" action="{{ route('add_review', $order->id_order) }}" class="col bg-white shadow c_rounded">
+                    <form method="POST" action="{{ route('change_worker', $order->id_order) }}" class="col bg-white shadow c_rounded">
                         @csrf
-                        <input name="cancel_check" style="display: none">
                         <div class="form-group row">
                             <p class="col-2 mt-3">Без відгуку:</p>
                             <div class="col-3 mt-3">
-                                <input type="checkbox" id="" class="form-check-input disable-comment">
+                                <input type="checkbox" class="form-check-input disable-comment">
                             </div>
                         </div>
                         <div class="form-group row">
