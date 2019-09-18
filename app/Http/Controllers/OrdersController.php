@@ -250,7 +250,18 @@ class OrdersController extends Controller
     public function change_worker(Request $req)
     {
         if (!is_null($req->text)) {
-            $this->add_review($req);
+            $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
+
+            $values = [
+                'text' => $req->text,
+                'rating' => $req->rating,
+                'id_from' => Auth::user()->id,
+                'id_to' => $worker->id_worker,
+                'id_order' => $req->id,
+                'created_at' => Carbon::now(),
+            ];
+
+            DB::table('reviews')->insert($values);
         }
 
         DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
@@ -258,22 +269,6 @@ class OrdersController extends Controller
         $req->session()->flash('alert-success', 'Виконавця успішно видалено!');
 
         return back();
-    }
-
-    public function add_review(Request $req)
-    {
-        $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
-
-        $values = [
-            'text' => $req->text,
-            'rating' => $req->rating,
-            'id_from' => Auth::user()->id,
-            'id_to' => $worker->id_worker,
-            'id_order' => $req->id,
-            'created_at' => Carbon::now(),
-        ];
-
-        DB::table('reviews')->insert($values);
     }
 
     public function add_proposal(Request $req)

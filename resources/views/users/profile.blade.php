@@ -406,9 +406,8 @@
                                                     </div>
                                                 </div>
                                                 <div id="id-{{$complete->id_proposal}}" class="collapse">
-                                                    <form method="POST" action="{{route('save_review')}}" class="col c_rounded">
+                                                    <form method="POST" action="{{route('save_review', $complete->id_order)}}" class="col c_rounded">
                                                         @csrf
-                                                        <input name="id_order" value="{{$complete->id_order}}" style="display: none">
                                                         <div class="form-group row">
                                                             <p class="col-2">Оцінка:</p>
                                                             <div class="col-3 rating">
