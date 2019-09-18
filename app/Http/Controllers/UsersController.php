@@ -150,13 +150,13 @@ class UsersController extends Controller
 
     public function save_review(Request $req)
     {
-        $customer = DB::table('orders')->where('id_order', $req->id)->get('id_customer')->first();
+        $customer = DB::table('orders')->where('id_order', $req->id)->get(['id_customer', 'id_worker'])->first();
 
         $values = [
             'text' => $req->text,
             'rating' => $req->rating,
             'id_from' => Auth::user()->id,
-            'id_to' => $customer->id_customer,
+            'id_to' => $customer->id_customer == Auth::user()->id ? $customer->id_worker : $customer->id_customer,
             'id_order' => $req->id,
             'created_at' => Carbon::now(),
         ];
