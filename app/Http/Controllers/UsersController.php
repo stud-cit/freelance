@@ -90,6 +90,12 @@ class UsersController extends Controller
             $one->review = is_null($review) ? 1 : 0;
         }
 
+        foreach ($orders as $one) {
+            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::user()->id]])->get()->first();
+
+            $one->review = is_null($review) ? 1 : 0;
+        }
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
