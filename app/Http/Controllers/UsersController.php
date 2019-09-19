@@ -13,13 +13,6 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
-    public function customers()
-    {
-        $data = User::getUsersInfo('id_role', 2);
-
-        return view('users.customers', compact('data'));
-    }
-
     public function workers()
     {
         $data = User::getUsersInfo('id_role', 3);

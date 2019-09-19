@@ -59,7 +59,7 @@
                 @foreach($reviews as $mark)
                     <div class="col bg-white shadow-lg mt-3 mb-2">
                         <div class="d-flex flex-row">
-                            <div class="col-1 px-0 min-width-70 mt-2 pointer to-profile">
+                            <div class="col-1 px-0 min-width-70 mt-2 pointer to-profile" data-id="{{$mark->id_user}}">
                                 <img src="{{$mark->avatar}}" class="square-60 circle avatar">
                             </div>
                             <div class="col bg-blue text-white rounded px-2 my-2">

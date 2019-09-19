@@ -16,8 +16,6 @@ Route::post('/change_worker/{id}', 'OrdersController@change_worker')->name('chan
 Route::post('/edit_order/{id}', 'OrdersController@edit_order')->name('edit_order');
 Route::post('/delete_order/{id}', 'OrdersController@delete_order')->name('delete_order');
 
-Route::get('/customers', 'UsersController@customers')->name('customers');
-
 Route::get('/workers', 'UsersController@workers')->name('workers');
 
 Route::get('/profile', 'UsersController@profile')->middleware('logged.in')->name('profile');
