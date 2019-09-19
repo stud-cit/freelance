@@ -96,26 +96,37 @@
                     </form>
                 </div>
             </div>
+            @php($i = 0)
             <div class="container orders" id="orders-list">
                 @foreach($data as $orders)
-                    <div class="flex-row mb-3 mt-2 d-flex">
-                        <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
-                            <div class="font-weight-bold mt-2 order-title">{{$orders->title}}</div>
-                            <div class="tag-list">
-                                @foreach($orders->categories as $tags)
-                                    <span class="tags font-italic font-size-10">{{$tags->name}}</span>
-                                @endforeach
+                    @if($orders->status == 'new')
+                        @php($i++)
+                        <div class="flex-row mb-3 mt-2 d-flex">
+                            <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
+                                <div class="font-weight-bold mt-2 order-title">{{$orders->title}}</div>
+                                <div class="tag-list">
+                                    @foreach($orders->categories as $tags)
+                                        <span class="tags font-italic font-size-10">{{$tags->name}}</span>
+                                    @endforeach
+                                </div>
+                                <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
+                                <div class="text-right font-size-10">{{$orders->created_at}}</div>
                             </div>
-                            <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
-                            <div class="text-right font-size-10">{{$orders->created_at}}</div>
+                            <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px; !important;">
+                                <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
+                                <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
+                            </div>
                         </div>
-                        <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px; !important;">
-                            <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
-                            <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
-                        </div>
-                    </div>
+                    @endif
                 @endforeach
             </div>
+            @if(!$i)
+                <div class="container">
+                    <div class="row">
+                        <div class="col font-weight-bold font-size-18 text-center mt-4">Немає залишених замовленнь</div>
+                    </div>
+                </div>
+            @endif
         </div>
 
         <div class="col-3 offset-1">

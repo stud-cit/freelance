@@ -51,18 +51,18 @@
                 @if(count($reviews) != 0)
                     <p class="font-weight-bold font-size-18 mt-2">Відгуки</p>
                 @foreach($reviews as $mark)
-                    <div class="col bg-white shadow-lg mt-3">
+                    <div class="col-11 bg-white shadow-lg mt-3">
                         <div class="d-flex flex-row">
-                            <div class="col-1 px-0 min-width-70 mt-2">
+                            <div class="col-1 px-0 min-width-70 mt-2 pointer to-profile">
                                 <img src="{{$mark->avatar}}" class="square-60 circle avatar">
                             </div>
-                            <div class="col rounded py-2 mb-2">
+                            <div class="col bg-blue text-white rounded px-2 my-2">
                                 <div class=" mt-2">{{$mark->text}}</div>
                                 <hr class="col border-white mb-0">
                                 <div class="row font-size-10 mt-2 mb-2">
-                                    <div class="col-3">{{$mark->name}} {{$mark->surname}}</div>
-                                    <div class="col-2 offset-1">Оцінка: {{$mark->rating}}/5</div>
-                                    <div class="col-2 offset-4">{{$mark->created_at}}</div>
+                                    <div class="col-3 pointer to-profile">{{$mark->name}} {{$mark->surname}}</div>
+                                    <div class="col-2 offset-2">Оцінка: {{$mark->rating}}/5</div>
+                                    <div class="col-2 offset-3">{{$mark->created_at}}</div>
                                 </div>
                             </div>
                         </div>
