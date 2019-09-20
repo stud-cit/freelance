@@ -44,7 +44,7 @@ class OrdersController extends Controller
 
     public function index()
     {
-        if (!is_null(Auth::user())) {
+        if (Auth::check()) {
             $data = DB::table('orders')
                 ->where('status', 'new')
                 ->orWhere([['status', 'in progress'], ['id_customer', Auth::user()->id]])
