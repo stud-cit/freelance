@@ -44,13 +44,22 @@ class OrdersController extends Controller
 
     public function index()
     {
-        $data = DB::table('orders')
-            ->where('status', 'new')
-            ->orWhere([['status', 'in progress'], ['id_customer', Auth::user()->id]])
-            ->orWhere([['status', 'in progress'], ['id_worker', Auth::user()->id]])
-            ->orderBy('id_order', 'desc')
-            ->get()
-            ->toArray();
+        if (!is_null(Auth::user())) {
+            $data = DB::table('orders')
+                ->where('status', 'new')
+                ->orWhere([['status', 'in progress'], ['id_customer', Auth::user()->id]])
+                ->orWhere([['status', 'in progress'], ['id_worker', Auth::user()->id]])
+                ->orderBy('id_order', 'desc')
+                ->get()
+                ->toArray();
+        }
+        else {
+            $data = DB::table('orders')
+                ->where('status', 'new')
+                ->orderBy('id_order', 'desc')
+                ->get()
+                ->toArray();
+        }
 
         foreach ($data as $one) {
             $one->categories = DB::table('categories_has_orders')

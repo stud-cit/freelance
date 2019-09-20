@@ -114,6 +114,6 @@
     </div>
 @endsection
 
-@section('header')
+@section('footer')
     @include('site.footer')
 @endsection
