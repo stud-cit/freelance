@@ -28,8 +28,8 @@
             @if(is_null(Auth::user()))
             @elseif(Auth::user()->id_role == 2)
                 <div class="container pointer">
-                    <div class="d-flex flex-row mb-3 mt-2 bg-white" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">
-                        <div class="col-11 pt-3 shadow order_div">Створити власний проект</div>
+                    <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">
+                        <div class="col-11 pt-3 bg-white shadow order_div">Створити власний проект</div>
                         <div class="col-1">
                             <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60 order_circle">&#43;</div>
                         </div>
@@ -109,8 +109,8 @@
                             <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
                             <div class="text-right font-size-10">{{$orders->created_at}}</div>
                         </div>
-                        <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px; !important;">
-                            <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
+                        <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px;">
+                            <div class="text-center font-weight-bold m-1 text-nowrap">{{$orders->price}}</div>
                             <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
                         </div>
                     </div>
