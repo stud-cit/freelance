@@ -51,14 +51,14 @@ class User extends Authenticatable implements MustVerifyEmail
         $id = Auth::id();
         $user = DB::table('users')->where('id', $id)->get('id_role')->first();
 
-        return $user->id_role <= 2;
+        return $user->id_role == 2;
     }
 
     function isWorker() {
         $id = Auth::id();
         $user = DB::table('users')->where('id', $id)->get('id_role')->first();
 
-        return $user->id_role == 1 || $user->id_role == 3;
+        return $user->id_role == 3;
     }
 
     function getAvatarPath() {

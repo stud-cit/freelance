@@ -16,6 +16,7 @@ class LoginCheck
         if (!Auth::check()) {
             return redirect('/');
         }
+
         return $next($request);
     }
 }

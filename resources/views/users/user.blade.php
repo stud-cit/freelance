@@ -42,30 +42,32 @@
                     </div>
                 </div>
             </div>
-            <p class="font-weight-bold font-size-18 mt-3">Додаткова інформація</p>
-            <div class="">
-                <div class="col rounded pl-2 pt-2 pb-2 bg-white shadow-lg">{{$data->about_me}}</div>
-            </div>
+            @if(!is_null($data->about_me))
+                <p class="font-weight-bold font-size-18 mt-3">Додаткова інформація</p>
+                <div class="">
+                    <div class="col rounded pl-2 pt-2 pb-2 bg-white shadow-lg">{{$data->about_me}}</div>
+                </div>
+            @endif
                 @if(count($reviews) != 0)
                     <p class="font-weight-bold font-size-18 mt-2">Відгуки</p>
-                @foreach($reviews as $mark)
-                    <div class="col bg-white shadow-lg mt-3">
-                        <div class="d-flex flex-row">
-                            <div class="col-1 px-0 min-width-70 mt-2">
-                                <img src="{{$mark->avatar}}" class="square-60 circle avatar">
-                            </div>
-                            <div class="col rounded py-2 mb-2">
-                                <div class=" mt-2">{{$mark->text}}</div>
-                                <hr class="col border-white mb-0">
-                                <div class="row font-size-10 mt-2 mb-2">
-                                    <div class="col-3">{{$mark->name}} {{$mark->surname}}</div>
-                                    <div class="col-2 offset-1">Оцінка: {{$mark->rating}}/5</div>
-                                    <div class="col-2 offset-4">{{$mark->created_at}}</div>
+                    @foreach($reviews as $mark)
+                        <div class="col-11 bg-white shadow-lg my-3">
+                            <div class="d-flex flex-row">
+                                <div class="col-1 px-0 min-width-70 mt-2 pointer to-profile" data-id="{{$mark->id_user}}">
+                                    <img src="{{$mark->avatar}}" class="square-60 circle avatar">
+                                </div>
+                                <div class="col bg-blue text-white rounded px-2 my-2">
+                                    <div class=" mt-2">{{$mark->text}}</div>
+                                    <hr class="col border-white mb-0">
+                                    <div class="row font-size-10 mt-2 mb-2">
+                                        <div class="col-3 pointer to-profile">{{$mark->name}} {{$mark->surname}}</div>
+                                        <div class="col-2 offset-2">Оцінка: {{$mark->rating}}/5</div>
+                                        <div class="col-2 offset-3">{{$mark->created_at}}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
                 @endif
         </div>
     </div>

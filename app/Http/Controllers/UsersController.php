@@ -13,13 +13,6 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
-    public function customers()
-    {
-        $data = User::getUsersInfo('id_role', 2);
-
-        return view('users.customers', compact('data'));
-    }
-
     public function workers()
     {
         $data = User::getUsersInfo('id_role', 3);
@@ -90,6 +83,12 @@ class UsersController extends Controller
             $one->review = is_null($review) ? 1 : 0;
         }
 
+        foreach ($orders as $one) {
+            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::user()->id]])->get()->first();
+
+            $one->review = is_null($review) ? 1 : 0;
+        }
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
@@ -144,14 +143,14 @@ class UsersController extends Controller
 
     public function save_review(Request $req)
     {
-        $customer = DB::table('orders')->where('id_order', $req->id_order)->get('id_customer')->first();
+        $customer = DB::table('orders')->where('id_order', $req->id)->get(['id_customer', 'id_worker'])->first();
 
         $values = [
             'text' => $req->text,
             'rating' => $req->rating,
             'id_from' => Auth::user()->id,
-            'id_to' => $customer->id_customer,
-            'id_order' => $req->id_order,
+            'id_to' => $customer->id_customer == Auth::user()->id ? $customer->id_worker : $customer->id_customer,
+            'id_order' => $req->id,
             'created_at' => Carbon::now(),
         ];
 

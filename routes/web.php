@@ -11,11 +11,10 @@ Route::get('/orders/{id}', 'OrdersController@order')->middleware(['logged.in', '
 Route::post('/add_proposal/{id}', 'OrdersController@add_proposal')->name('add_proposal');
 Route::post('/delete_proposal', 'OrdersController@delete_proposal')->name('delete_proposal');
 Route::post('/select_worker/{id}', 'OrdersController@select_worker')->name('select_worker');
-Route::post('/add_review/{id}', 'OrdersController@add_review')->name('add_review');
+Route::post('/finish_order/{id}', 'OrdersController@finish_order')->name('finish_order');
+Route::post('/change_worker/{id}', 'OrdersController@change_worker')->name('change_worker');
 Route::post('/edit_order/{id}', 'OrdersController@edit_order')->name('edit_order');
 Route::post('/delete_order/{id}', 'OrdersController@delete_order')->name('delete_order');
-
-Route::get('/customers', 'UsersController@customers')->name('customers');
 
 Route::get('/workers', 'UsersController@workers')->name('workers');
 
@@ -24,7 +23,7 @@ Route::post('/save_info', 'UsersController@save_info')->name('save_info');
 Route::post('/save_contacts', 'UsersController@save_contacts')->name('save_contacts');
 Route::post('/save_skills', 'UsersController@save_skills')->name('save_skills');
 Route::post('/change_pass', 'UsersController@change_pass')->name('change_pass');
-Route::post('/save_review', 'UsersController@save_review')->name('save_review');
+Route::post('/save_review/{id}', 'UsersController@save_review')->name('save_review');
 Route::post('/save_about_me', 'UsersController@save_about_me')->name('save_about_me');
 
 Route::get('/profile/{id}', 'UsersController@user')->name('user');

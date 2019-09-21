@@ -59,16 +59,16 @@
                 @foreach($reviews as $mark)
                     <div class="col bg-white shadow-lg mt-3 mb-2">
                         <div class="d-flex flex-row">
-                            <div class="col-1 px-0 min-width-70 mt-2">
+                            <div class="col-1 px-0 min-width-70 mt-2 pointer to-profile" data-id="{{$mark->id_user}}">
                                 <img src="{{$mark->avatar}}" class="square-60 circle avatar">
                             </div>
-                            <div class="col bg-blue text-white rounded pt-2 pb-2 mb-2">
+                            <div class="col bg-blue text-white rounded px-2 my-2">
                                 <div class=" mt-2">{{$mark->text}}</div>
                                 <hr class="col border-white mb-0">
                                 <div class="row font-size-10 mt-2 mb-2">
-                                    <div class="col-3">{{$mark->name}} {{$mark->surname}}</div>
-                                    <div class="col-2 offset-1">Оцінка: {{$mark->rating}}/5</div>
-                                    <div class="col-2 offset-4">{{$mark->created_at}}</div>
+                                    <div class="col-3 pointer to-profile">{{$mark->name}} {{$mark->surname}}</div>
+                                    <div class="col-2 offset-2">Оцінка: {{$mark->rating}}/5</div>
+                                    <div class="col-2 offset-3">{{$mark->created_at}}</div>
                                 </div>
                             </div>
                         </div>
@@ -316,8 +316,39 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-11 mt-4 bg-white shadow-lg">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$complete->title}}</div>
-                                            <div class="offset-1 mb-1">{{$complete->description}}</div>
+                                            <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
+                                            <div class="offset-1">{{$active->description}}</div>
+                                            <div class="col offset-9 font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
+                                            @if($complete->review)
+                                                <div>
+                                                    <div class="row">
+                                                        <button class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0 add-review" data-toggle="collapse" data-target="#id-{{$complete->id_order}}">Залишити коментар</button>
+                                                    </div>
+                                                </div>
+                                                <div id="id-{{$complete->id_order}}" class="collapse">
+                                                    <form method="POST" action="{{route('save_review', $complete->id_order)}}" class="col c_rounded">
+                                                        @csrf
+                                                        <div class="form-group row">
+                                                            <p class="col-2">Оцінка:</p>
+                                                            <div class="col-3 rating">
+                                                                <input type="range" id="rating" class="reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                                                            </div>
+                                                            <div class="">
+                                                                <span id="rating_val">3</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="comment" class="col-1 col-form-label">Коментар:</label>
+                                                            <div class="col offset-1">
+                                                                <textarea id="comment" class="form-control reviews-comment" rows="3" name="text" required></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="leave_review">Підтвердити</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -399,6 +430,8 @@
                                     <div class="row">
                                         <div class="col-11 mt-4 bg-white shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
+                                            <div class="offset-1">{{$active->text}}</div>
+                                            <div class="col offset-9 font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
                                             @if($complete->review)
                                                 <div>
                                                     <div class="row">
@@ -406,9 +439,8 @@
                                                     </div>
                                                 </div>
                                                 <div id="id-{{$complete->id_proposal}}" class="collapse">
-                                                    <form method="POST" action="{{route('save_review')}}" class="col c_rounded">
+                                                    <form method="POST" action="{{route('save_review', $complete->id_order)}}" class="col c_rounded">
                                                         @csrf
-                                                        <input name="id_order" value="{{$complete->id_order}}" style="display: none">
                                                         <div class="form-group row">
                                                             <p class="col-2">Оцінка:</p>
                                                             <div class="col-3 rating">
