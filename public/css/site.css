@@ -132,7 +132,7 @@ ul.tick li:before {
 .order_circle {
     font-size: 36px;
     position: absolute;
-    left: -15px;
+    left: -30px;
 }
 .nowrap {
     white-space: nowrap;
