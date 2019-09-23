@@ -116,12 +116,6 @@
                                 <div class="text-center font-weight-bold mt-1">{{$orders->price}}</div>
                                 <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
                             </div>
-                            <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
-                            <div class="text-right font-size-10">{{$orders->created_at}}</div>
-                        </div>
-                        <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px;">
-                            <div class="text-center font-weight-bold m-1 text-nowrap">{{$orders->price}}</div>
-                            <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
                         </div>
                     @endif
                 @endforeach

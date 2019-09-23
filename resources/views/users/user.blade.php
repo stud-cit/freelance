@@ -60,7 +60,7 @@
                                     <div class=" mt-2">{{$mark->text}}</div>
                                     <hr class="col border-white mb-0">
                                     <div class="row font-size-10 mt-2 mb-2">
-                                        <div class="col-3 pointer to-profile">{{$mark->name}} {{$mark->surname}}</div>
+                                        <div class="col-3 pointer to-profile" data-id="{{$mark->id_user}}">{{$mark->name}} {{$mark->surname}}</div>
                                         <div class="col-2 offset-2">Оцінка: {{$mark->rating}}/5</div>
                                         <div class="col-2 offset-3">{{$mark->created_at}}</div>
                                     </div>
