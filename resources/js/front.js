@@ -104,7 +104,6 @@ $("document").ready(function() {
 
         $("#themes_block").empty();
 
-        alert($("input[name='categories']").val());
         let input = $('input[name="categories"]'),
             str = input.val().split("|");
         input.val("");

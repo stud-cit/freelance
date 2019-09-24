@@ -181,7 +181,6 @@ $("document").ready(function () {
 
   function theme_badges_build() {
     $("#themes_block").empty();
-    alert($("input[name='categories']").val());
     var input = $('input[name="categories"]'),
         str = input.val().split("|");
     input.val("");
