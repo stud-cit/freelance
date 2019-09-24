@@ -27,6 +27,12 @@ $("document").ready(function() {
         }
     });
 
+    $("button[type='reset']").on('click', function (e) {
+        e.preventDefault();
+        $(this).closest('form').get(0).reset();
+        theme_badges_build();
+    });
+
     $('.disable-comment').on('change', function () {
         if (!$('.reviews-rating,.reviews-comment').prop('disabled')) {
             $('.reviews-rating,.reviews-comment').prop('disabled', true);
@@ -92,9 +98,15 @@ $("document").ready(function() {
     });
 
     if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0 || window.location.href.indexOf('/orders') >= 0 && $("#themes_block").length) {
+        theme_badges_build();
+    }
+    function theme_badges_build(){
+
+        $("#themes_block").empty();
+
+        alert($("input[name='categories']").val());
         let input = $('input[name="categories"]'),
             str = input.val().split("|");
-
         input.val("");
 
         for (let i = 0; i < str.length - 1; i++) {

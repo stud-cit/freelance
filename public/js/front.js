@@ -116,6 +116,11 @@ $("document").ready(function () {
       $('#reset-order').hide();
     }
   });
+  $("button[type='reset']").on('click', function (e) {
+    e.preventDefault();
+    $(this).closest('form').get(0).reset();
+    theme_badges_build();
+  });
   $('.disable-comment').on('change', function () {
     if (!$('.reviews-rating,.reviews-comment').prop('disabled')) {
       $('.reviews-rating,.reviews-comment').prop('disabled', true);
@@ -171,6 +176,12 @@ $("document").ready(function () {
   });
 
   if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0 || window.location.href.indexOf('/orders') >= 0 && $("#themes_block").length) {
+    theme_badges_build();
+  }
+
+  function theme_badges_build() {
+    $("#themes_block").empty();
+    alert($("input[name='categories']").val());
     var input = $('input[name="categories"]'),
         str = input.val().split("|");
     input.val("");
@@ -250,14 +261,14 @@ $("document").ready(function () {
   function refresh_orders(array) {
     $('.work-order').closest('.flex-row').remove();
 
-    for (var _i = 0; _i < array.length; _i++) {
-      var order = "<div class=\"flex-row mb-3 mt-2 d-flex\">\n                        <div class=\"col-10 shadow bg-white work-order pointer\" data-id=\"" + array[_i]['id_order'] + "\">\n                            <div class=\"font-weight-bold mt-2 order-title\">" + array[_i]['title'] + "</div>\n                            <div class=\"tag-list\">";
+    for (var i = 0; i < array.length; i++) {
+      var order = "<div class=\"flex-row mb-3 mt-2 d-flex\">\n                        <div class=\"col-10 shadow bg-white work-order pointer\" data-id=\"" + array[i]['id_order'] + "\">\n                            <div class=\"font-weight-bold mt-2 order-title\">" + array[i]['title'] + "</div>\n                            <div class=\"tag-list\">";
 
-      for (var j = 0; j < array[_i]['categories'].length; j++) {
-        order += "<span class=\"tags font-italic font-size-10\">" + array[_i]['categories'][j]['name'] + "</span>&nbsp;";
+      for (var j = 0; j < array[i]['categories'].length; j++) {
+        order += "<span class=\"tags font-italic font-size-10\">" + array[i]['categories'][j]['name'] + "</span>&nbsp;";
       }
 
-      order += "</div>\n                        <div>" + array[_i]['description'] + "</div>\n                        <div class=\"text-right font-size-10\">" + array[_i]['created_at'] + "</div>\n                    </div>\n                    <div class=\"col c_rounded-right mt-3 bg-green text-white px-0 align-self-end\" style=\"height: 54px; !important;\">\n                        <div class=\"text-center font-weight-bold mt-1\">" + array[_i]['price'] + "</div>\n                        <div class=\"text-right font-italic font-size-10 mt-2 pr-2\">" + array[_i]['time'] + "</div>\n                    </div>\n                </div>";
+      order += "</div>\n                        <div>" + array[i]['description'] + "</div>\n                        <div class=\"text-right font-size-10\">" + array[i]['created_at'] + "</div>\n                    </div>\n                    <div class=\"col c_rounded-right mt-3 bg-green text-white px-0 align-self-end\" style=\"height: 54px; !important;\">\n                        <div class=\"text-center font-weight-bold mt-1\">" + array[i]['price'] + "</div>\n                        <div class=\"text-right font-italic font-size-10 mt-2 pr-2\">" + array[i]['time'] + "</div>\n                    </div>\n                </div>";
       $('#orders-list').append(order);
     }
   }
