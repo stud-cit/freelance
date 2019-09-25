@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <div class="container-background"></div>
         <div class="row">
             <div class="col-11 offset-1">
                 <h1>Хочете розпочати свій кар'єрний шлях вже сьогодні?</h1>
