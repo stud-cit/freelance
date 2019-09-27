@@ -6,6 +6,9 @@
 
 @section('content')
 
+@php($data = $info['data'])
+@php($categories = $info['categories'])
+
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-8">
@@ -18,7 +21,7 @@
                                 <span class="col-form-label">Фільтрувати за:</span>
                             </div>
                             <div>
-                                <button class="btn sort-btn" id="date-btn">Датою <span class="badge badge-primary badge-pill">v</span></button>
+                                <button class="btn sort-btn sort-selected" id="date-btn">Датою <span class="badge badge-primary badge-pill">v</span></button>
                                 <button class="btn sort-btn" id="price-btn">Ціною <span class="badge badge-primary badge-pill"></span></button>
                             </div>
                         </div>
@@ -98,11 +101,9 @@
                 </div>
             </div>
             </div>
-            @php($i = 0)
-            <div class="container orders" id="orders-list">
-                @foreach($data as $orders)
-                    @if($orders->status == 'new')
-                        @php($i++)
+            @if($data != [])
+                <div class="container orders" id="orders-list">
+                    @foreach($data as $orders)
                         <div class="flex-row mb-3 mt-2 d-flex">
                             <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
                                 <div class="font-weight-bold mt-2 order-title">{{$orders->title}}</div>
@@ -119,15 +120,25 @@
                                 <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
                             </div>
                         </div>
-                    @endif
-                @endforeach
-            </div>
-            @if(!$i)
-                <div class="container">
-                    <div class="row">
+                    @endforeach
+                </div>
+                <div id="pagination" class="mb-3">
+                    <button><<</button>
+                    <button><</button>
+                    <button class="pagination-num pagination-selected" id="num-1">1</button>
+                    @for($i = 2; $i <= ceil($info['count'] / 10); $i++)
+                        <button class="pagination-num" id="num-{{$i}}">{{$i}}</button>
+                    @endfor
+                    <button>></button>
+                    <button>>></button>
+                </div>
+            @else
+                <div class="container orders" id="orders-list">
+                    <div class="flex-row">
                         <div class="col font-weight-bold font-size-18 text-center mt-4">Немає залишених замовленнь</div>
                     </div>
                 </div>
+                <div id="pagination" class="mb-3"></div>
             @endif
         </div>
 
@@ -142,14 +153,20 @@
                 <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue">Категорії</div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item py-0">
-                            <a class="categories_tag font-weight-bold" href="" data-id="0"><span>Всі</span> <span class="badge badge-pill badge-primary float-right m-1">{{sizeof($data)}}</span></a>
+                        <li class="list-group-item py-0 categ">
+                            <a class="categories_tag font-weight-bold" href="" data-id="0">
+                                <span>Всі</span>
+                                <span class="badge badge-pill badge-primary float-right m-1">{{$info['count']}}</span>
+                            </a>
                         </li>
                     </ul>
                     @foreach($categories as $tags)
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item py-0">
-                                <a class="categories_tag" href="" data-id="{{$tags->id_category}}"><span class="">{{$tags->name}}</span> <span class="badge badge-pill badge-primary float-right m-1">{{$tags->count}}</span></a>
+                            <li class="list-group-item py-0 categ">
+                                <a class="categories_tag" href="" data-id="{{$tags->id_category}}">
+                                    <span class="">{{$tags->name}}</span>
+                                    <span class="badge badge-pill badge-primary float-right m-1">{{$tags->count}}</span>
+                                </a>
                             </li>
                         </ul>
                     @endforeach

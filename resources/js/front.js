@@ -100,12 +100,13 @@ $("document").ready(function() {
     if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0 || window.location.href.indexOf('/orders') >= 0 && $("#themes_block").length) {
         theme_badges_build();
     }
-    function theme_badges_build(){
 
+    function theme_badges_build() {
         $("#themes_block").empty();
 
         let input = $('input[name="categories"]'),
             str = input.val().split("|");
+
         input.val("");
 
         for (let i = 0; i < str.length - 1; i++) {
@@ -122,86 +123,111 @@ $("document").ready(function() {
     $('.sort-btn').on('click', function () {
         let temp = $(this).find('span').text();
 
+        $(this).parent().find('button').removeClass('sort-selected');
+        $(this).addClass('sort-selected');
         $(this).parent().find('span').text('');
         $(this).find('span').text(temp === 'v' ? '^' : 'v');
 
-        let data = {
-            'what': $(this).attr('id') === 'date-btn' ? 'id_order' : 'price',
-            'how': temp === 'v' ? 'asc' : 'desc',
-            'ids': get_array_orders(),
-        };
-
-        $.ajax({
-            headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            method: 'post',
-            url: '/sort_order',
-            data: data,
-            success: function (response) {
-                refresh_orders(response);
-            }
-       });
+        ajax_filter(parseInt($('.pagination-selected').text()));
     });
 
     $('.categories_tag').on('click', function (e) {
         e.preventDefault();
 
-        $('#date-btn span').text('v');
-        $('#price-btn span').text('');
-        $('#filter').val('');
         $('.categories_tag').removeClass('font-weight-bold');
         $(this).addClass('font-weight-bold');
+
+        ajax_filter(parseInt($('.pagination-selected').text()));
+    });
+
+    let time;
+
+    $('#filter').on('keyup', function () {
+        clearTimeout(time);
+
+        if ($(this).val() === "") {
+            ajax_filter(parseInt($('.pagination-selected').text()));
+        }
+        else {
+            time = setTimeout(() => {
+                ajax_filter(parseInt($('.pagination-selected').text()));
+            }, 1000);
+        }
+    });
+
+    $('#pagination').on('click', 'button', function() {
+        let page = $(this).text(),
+            prevPage = parseInt($('.pagination-selected').text());
+
+        switch (page) {
+            case '<<':
+                page = 1;
+                break;
+            case '<':
+                page = parseInt($('.pagination-selected').text()) - 1;
+                break;
+            case '>':
+                page = parseInt($('.pagination-selected').text()) + 1;
+                break;
+            case '>>':
+                page = parseInt($('.pagination-num:last').text());
+                break;
+        }
+
+        if (!page || page > parseInt($('.pagination-num:last').text()) || prevPage == page) {
+            return;
+        }
+
+        $('#pagination button').removeClass('pagination-selected');
+        $('#num-' + page).addClass('pagination-selected');
+
+        ajax_filter(page);
+    });
+
+    function ajax_filter(page) {
+        let data = {
+            'what': $('.sort-selected').attr('id') === 'date-btn' ? 'id_order' : 'price',
+            'how': $('.sort-selected span').text() === 'v' ? 'desc' : 'asc',
+            'filter': $('#filter').val(),
+            'category': parseInt($('.categ .font-weight-bold').attr('data-id')),
+            'page': isNaN(page) ? 1 : page
+        };
 
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             method: 'post',
-            url: '/select_category',
-            data: {'category': $(this).attr('data-id')},
+            url: '/filter',
+            data: data,
             success: function (response) {
                 refresh_orders(response);
             }
         });
-    });
-
-    $('#filter').on('keyup keydown', function () {
-        $('.order-title').each(function () {
-            if ($(this).text().toLowerCase().indexOf($('#filter').val().toLowerCase()) < 0) {
-                $(this).closest('.flex-row').hide();
-                $(this).closest('.flex-row').removeClass('d-flex');
-            } else {
-                $(this).closest('.flex-row').show();
-                $(this).closest('.flex-row').addClass('d-flex');
-            }
-        });
-    });
-
-    function get_array_orders() {
-        let ids = [];
-
-        $('.work-order').each(function () {
-            ids.push($(this).attr('data-id'));
-        });
-
-        return ids;
     }
 
-    function refresh_orders(array) {
-        $('.work-order').closest('.flex-row').remove();
+    function refresh_orders(response) {
+        let array = response['array'],
+            count = response['count'];
 
-        for (let i = 0; i < array.length; i++) {
-            let order = `<div class="flex-row mb-3 mt-2 d-flex">
+        let page = parseInt($('.pagination-selected').text());
+        page = isNaN(page) ? 1 : page;
+
+        $('#pagination button').remove();
+        $('.orders .flex-row').remove();
+
+        if (array.length) {
+            for (let i = 0; i < array.length; i++) {
+                let order = `<div class="flex-row mb-3 mt-2 d-flex">
                         <div class="col-10 shadow bg-white work-order pointer" data-id="` + array[i]['id_order'] + `">
                             <div class="font-weight-bold mt-2 order-title">` + array[i]['title'] + `</div>
                             <div class="tag-list">`;
 
-            for (let j = 0; j < array[i]['categories'].length; j++) {
-                order += `<span class="tags font-italic font-size-10">` + array[i]['categories'][j]['name'] + `</span>&nbsp;`;
-            }
+                for (let j = 0; j < array[i]['categories'].length; j++) {
+                    order += `<span class="tags font-italic font-size-10">` + array[i]['categories'][j]['name'] + `</span>&nbsp;`;
+                }
 
-            order += `</div>
+                order += `</div>
                         <div>` + array[i]['description'] + `</div>
                         <div class="text-right font-size-10">` + array[i]['created_at'] + `</div>
                     </div>
@@ -211,7 +237,27 @@ $("document").ready(function() {
                     </div>
                 </div>`;
 
-            $('#orders-list').append(order);
+                $('#orders-list').append(order);
+            }
+
+            let pagination = `<button><<</button><button><</button>`;
+
+            if (page > Math.ceil(count / 10)) {
+                page = parseInt($('.pagination-num:last').text());
+            }
+
+            for (let i = 1; i <= Math.ceil(count / 10); i++) {
+                pagination += `<button class="pagination-num` + (page === i ? ' pagination-selected' : ' ') + `" id="num-` + i + `">` + i + `</button>`;
+            }
+
+            pagination += `<button>></button><button>>></button>`;
+
+            $('#pagination').append(pagination);
+        }
+        else {
+            $('#orders-list').append(`<div class="flex-row">
+                        <div class="col font-weight-bold font-size-18 text-center mt-4">Немає замовленнь з такими параметрами</div>
+                    </div>`);
         }
     }
 

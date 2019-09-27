@@ -11,7 +11,7 @@ use App\Models\User;
 
 class OrdersController extends Controller
 {
-    private $eq;
+    private $eq, $filtered;
 
     function get_currency()
     {
@@ -42,49 +42,75 @@ class OrdersController extends Controller
         return $first_price > $second_price;
     }
 
-    public function index()
+    public function get_orders($filter)
     {
-        if (Auth::check()) {
-            $data = DB::table('orders')
-                ->where('status', 'new')
-                ->orWhere([['status', 'in progress'], ['id_customer', Auth::user()->id]])
-                ->orWhere([['status', 'in progress'], ['id_worker', Auth::user()->id]])
-                ->orderBy('id_order', 'desc')
-                ->get()
-                ->toArray();
-        }
-        else {
-            $data = DB::table('orders')
-                ->where('status', 'new')
-                ->orderBy('id_order', 'desc')
-                ->get()
-                ->toArray();
+        $data = DB::table('orders')
+            ->where('status', 'new')
+            ->orderBy($filter['what'], $filter['how'])
+            ->get()
+            ->toArray();
+
+        if ($filter['what'] == 'price') {
+            $this->get_currency();
+            usort($data, array($this, "cmp"));
+
+            if ($filter['how'] == 'desc') {
+                $data = array_reverse($data);
+            }
         }
 
+        $array = [];
+
         foreach ($data as $one) {
+            $one->description = strlen($one->description) > 50 ? substr($one->description, 0, 50) . '...' : $one->description;
+            $one->price = is_null($one->price) ? '' : $one->price;
+            $one->time = is_null($one->time) ? '' : $one->time;
+
             $one->categories = DB::table('categories_has_orders')
                 ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
                 ->where('id_order', $one->id_order)
                 ->get()
                 ->toArray();
-        }
 
-        $ids = DB::table('users')->where('id_role', 3)->get('id')->toArray();
-        $array = [];
-
-        foreach ($ids as $one) {
-            array_push($array, $one->id);
-        }
-
-        $workers = DB::table('users_info')->whereIn('id_user', $array)->get()->toArray();
-
-        foreach ($workers as $worker) {
-            if (Storage::disk('public')->has($worker->id_user . '.png')) {
-                $worker->avatar = '/img/' . $worker->id_user . '.png';
-            } else {
-                $worker->avatar = '/img/' . $worker->id_user . '.jpg';
+            if ($filter['category'] != '0' && (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false)) {
+                foreach ($one->categories as $category) {
+                    if ($category->id_category == $filter['category']) {
+                        array_push($array, $one);
+                        break;
+                    }
+                }
+            }
+            else if (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false) {
+                array_push($array, $one);
             }
         }
+
+        $this->filtered = count($array);
+
+        if (count($array) > $filter['page'] * 10) {
+            $array = array_slice($array, --$filter['page'] * 10, 10);
+        }
+        else if (count($array) > --$filter['page'] * 10) {
+            $array = array_slice($array, $filter['page'] * 10);
+        }
+        else {
+            $array = array_slice($array, count($array) - count($array) % 10 ? count($array) % 10 : 10);
+        }
+
+        return $array;
+    }
+
+    public function index()
+    {
+        $values = [
+            'what' => 'id_order',
+            'how' => 'desc',
+            'filter' => null,
+            'category' => '0',
+            'page' => 1
+        ];
+
+        $data = $this->get_orders($values);
 
         $categories = DB::table('categories')->orderBy('name')->get()->toArray();
 
@@ -95,76 +121,33 @@ class OrdersController extends Controller
                 ->count();
         }
 
-        return view('orders.index', compact('data'), compact('categories'));
+        $count = DB::table('orders')->where('status', 'new')->count();
+
+        $info = [
+            'data' => $data,
+            'categories' => $categories,
+            'count' => $count,
+        ];
+
+        return view('orders.index', compact('info'));
     }
 
-    public function sort_order(Request $req)
+    public function filter(Request $req)
     {
-        $data = DB::table('orders')
-            ->where('status', 'new')
-            ->whereIn('id_order', $req->ids)
-            ->orderBy($req->what, $req->how)
-            ->get()
-            ->toArray();
+        $values = [
+            'what' => $req->what,
+            'how' => $req->how,
+            'filter' => $req->filter,
+            'category' => $req->category,
+            'page' => $req->page
+        ];
 
-        if ($req->what == 'price') {
-            $this->get_currency();
-            usort($data, array($this, "cmp"));
-
-            if ($req->how == 'desc') {
-                $data = array_reverse($data);
-            }
-        }
-
-        foreach ($data as $orders) {
-            $orders->description = strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description;
-            $orders->price = is_null($orders->price) ? '' : $orders->price;
-            $orders->time = is_null($orders->time) ? '' : $orders->time;
-
-            $orders->categories = DB::table('categories_has_orders')
-                ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
-                ->where('id_order', $orders->id_order)
-                ->get()
-                ->toArray();
-        }
+        $data = [
+            'array' => $this->get_orders($values),
+            'count' => $this->filtered,
+        ];
 
         return $data;
-    }
-
-    public function select_category(Request $req)
-    {
-        $data = DB::table('orders')
-            ->where('status', 'new')
-            ->orderBy('id_order', 'desc')
-            ->get()
-            ->toArray();
-
-        $array = [];
-
-        foreach ($data as $orders) {
-            $orders->description = strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description;
-            $orders->price = is_null($orders->price) ? '' : $orders->price;
-            $orders->time = is_null($orders->time) ? '' : $orders->time;
-
-            $orders->categories = DB::table('categories_has_orders')
-                ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
-                ->where('id_order', $orders->id_order)
-                ->get()
-                ->toArray();
-
-            if ($req->category != '0') {
-                foreach ($orders->categories as $one) {
-                    if ($one->id_category == $req->category) {
-                        array_push($array, $orders);
-                        break;
-                    }
-                }
-            } else {
-                array_push($array, $orders);
-            }
-        }
-
-        return $array;
     }
 
     public function order($id)

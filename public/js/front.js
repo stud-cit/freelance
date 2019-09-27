@@ -197,78 +197,116 @@ $("document").ready(function () {
   });
   $('.sort-btn').on('click', function () {
     var temp = $(this).find('span').text();
+    $(this).parent().find('button').removeClass('sort-selected');
+    $(this).addClass('sort-selected');
     $(this).parent().find('span').text('');
     $(this).find('span').text(temp === 'v' ? '^' : 'v');
+    ajax_filter(parseInt($('.pagination-selected').text()));
+  });
+  $('.categories_tag').on('click', function (e) {
+    e.preventDefault();
+    $('.categories_tag').removeClass('font-weight-bold');
+    $(this).addClass('font-weight-bold');
+    ajax_filter(parseInt($('.pagination-selected').text()));
+  });
+  var time;
+  $('#filter').on('keyup', function () {
+    clearTimeout(time);
+
+    if ($(this).val() === "") {
+      ajax_filter(parseInt($('.pagination-selected').text()));
+    } else {
+      time = setTimeout(function () {
+        ajax_filter(parseInt($('.pagination-selected').text()));
+      }, 1000);
+    }
+  });
+  $('#pagination').on('click', 'button', function () {
+    var page = $(this).text(),
+        prevPage = parseInt($('.pagination-selected').text());
+
+    switch (page) {
+      case '<<':
+        page = 1;
+        break;
+
+      case '<':
+        page = parseInt($('.pagination-selected').text()) - 1;
+        break;
+
+      case '>':
+        page = parseInt($('.pagination-selected').text()) + 1;
+        break;
+
+      case '>>':
+        page = parseInt($('.pagination-num:last').text());
+        break;
+    }
+
+    if (!page || page > parseInt($('.pagination-num:last').text()) || prevPage == page) {
+      return;
+    }
+
+    $('#pagination button').removeClass('pagination-selected');
+    $('#num-' + page).addClass('pagination-selected');
+    ajax_filter(page);
+  });
+
+  function ajax_filter(page) {
     var data = {
-      'what': $(this).attr('id') === 'date-btn' ? 'id_order' : 'price',
-      'how': temp === 'v' ? 'asc' : 'desc',
-      'ids': get_array_orders()
+      'what': $('.sort-selected').attr('id') === 'date-btn' ? 'id_order' : 'price',
+      'how': $('.sort-selected span').text() === 'v' ? 'desc' : 'asc',
+      'filter': $('#filter').val(),
+      'category': parseInt($('.categ .font-weight-bold').attr('data-id')),
+      'page': isNaN(page) ? 1 : page
     };
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       method: 'post',
-      url: '/sort_order',
+      url: '/filter',
       data: data,
       success: function success(response) {
         refresh_orders(response);
       }
     });
-  });
-  $('.categories_tag').on('click', function (e) {
-    e.preventDefault();
-    $('#date-btn span').text('v');
-    $('#price-btn span').text('');
-    $('#filter').val('');
-    $('.categories_tag').removeClass('font-weight-bold');
-    $(this).addClass('font-weight-bold');
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      method: 'post',
-      url: '/select_category',
-      data: {
-        'category': $(this).attr('data-id')
-      },
-      success: function success(response) {
-        refresh_orders(response);
-      }
-    });
-  });
-  $('#filter').on('keyup keydown', function () {
-    $('.order-title').each(function () {
-      if ($(this).text().toLowerCase().indexOf($('#filter').val().toLowerCase()) < 0) {
-        $(this).closest('.flex-row').hide();
-        $(this).closest('.flex-row').removeClass('d-flex');
-      } else {
-        $(this).closest('.flex-row').show();
-        $(this).closest('.flex-row').addClass('d-flex');
-      }
-    });
-  });
-
-  function get_array_orders() {
-    var ids = [];
-    $('.work-order').each(function () {
-      ids.push($(this).attr('data-id'));
-    });
-    return ids;
   }
 
-  function refresh_orders(array) {
-    $('.work-order').closest('.flex-row').remove();
+  function refresh_orders(response) {
+    var array = response['array'],
+        count = response['count'];
+    var page = parseInt($('.pagination-selected').text());
+    page = isNaN(page) ? 1 : page;
+    $('#pagination button').remove();
+    $('.orders .flex-row').remove();
 
-    for (var i = 0; i < array.length; i++) {
-      var order = "<div class=\"flex-row mb-3 mt-2 d-flex\">\n                        <div class=\"col-10 shadow bg-white work-order pointer\" data-id=\"" + array[i]['id_order'] + "\">\n                            <div class=\"font-weight-bold mt-2 order-title\">" + array[i]['title'] + "</div>\n                            <div class=\"tag-list\">";
+    if (array.length) {
+      for (var i = 0; i < array.length; i++) {
+        var order = "<div class=\"flex-row mb-3 mt-2 d-flex\">\n                        <div class=\"col-10 shadow bg-white work-order pointer\" data-id=\"" + array[i]['id_order'] + "\">\n                            <div class=\"font-weight-bold mt-2 order-title\">" + array[i]['title'] + "</div>\n                            <div class=\"tag-list\">";
 
-      for (var j = 0; j < array[i]['categories'].length; j++) {
-        order += "<span class=\"tags font-italic font-size-10\">" + array[i]['categories'][j]['name'] + "</span>&nbsp;";
+        for (var j = 0; j < array[i]['categories'].length; j++) {
+          order += "<span class=\"tags font-italic font-size-10\">" + array[i]['categories'][j]['name'] + "</span>&nbsp;";
+        }
+
+        order += "</div>\n                        <div>" + array[i]['description'] + "</div>\n                        <div class=\"text-right font-size-10\">" + array[i]['created_at'] + "</div>\n                    </div>\n                    <div class=\"col c_rounded-right mt-3 bg-green text-white px-0 align-self-end\" style=\"height: 54px; !important;\">\n                        <div class=\"text-center font-weight-bold mt-1\">" + array[i]['price'] + "</div>\n                        <div class=\"text-right font-italic font-size-10 mt-2 pr-2\">" + array[i]['time'] + "</div>\n                    </div>\n                </div>";
+        $('#orders-list').append(order);
       }
 
-      order += "</div>\n                        <div>" + array[i]['description'] + "</div>\n                        <div class=\"text-right font-size-10\">" + array[i]['created_at'] + "</div>\n                    </div>\n                    <div class=\"col c_rounded-right mt-3 bg-green text-white px-0 align-self-end\" style=\"height: 54px; !important;\">\n                        <div class=\"text-center font-weight-bold mt-1\">" + array[i]['price'] + "</div>\n                        <div class=\"text-right font-italic font-size-10 mt-2 pr-2\">" + array[i]['time'] + "</div>\n                    </div>\n                </div>";
-      $('#orders-list').append(order);
+      var pagination = "<button><<</button><button><</button>";
+
+      if (page > Math.ceil(count / 10)) {
+        page = parseInt($('.pagination-num:last').text());
+      }
+
+      for (var _i = 1; _i <= Math.ceil(count / 10); _i++) {
+        pagination += "<button class=\"pagination-num" + (page === _i ? ' pagination-selected' : ' ') + "\" id=\"num-" + _i + "\">" + _i + "</button>";
+      }
+
+      pagination += "<button>></button><button>>></button>";
+      $('#pagination').append(pagination);
+    } else {
+      $('#orders-list').append("<div class=\"flex-row\">\n                        <div class=\"col font-weight-bold font-size-18 text-center mt-4\">\u041D\u0435\u043C\u0430\u0454 \u0437\u0430\u043C\u043E\u0432\u043B\u0435\u043D\u043D\u044C \u0437 \u0442\u0430\u043A\u0438\u043C\u0438 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C\u0438</div>\n                    </div>");
     }
   }
 
