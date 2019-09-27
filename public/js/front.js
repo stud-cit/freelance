@@ -278,7 +278,7 @@ $("document").ready(function () {
         count = response['count'];
     var page = parseInt($('.pagination-selected').text());
     page = isNaN(page) ? 1 : page;
-    $('#pagination button').remove();
+    $('#pagination').empty();
     $('.orders .flex-row').remove();
 
     if (array.length) {
@@ -293,17 +293,17 @@ $("document").ready(function () {
         $('#orders-list').append(order);
       }
 
-      var pagination = "<button><<</button><button><</button>";
+      var pagination = "<button class=\"btn btn-outline-primary\"><<</button>&nbsp;<button class=\"btn btn-outline-primary\"><</button>&nbsp;";
 
       if (page > Math.ceil(count / 10)) {
         page = parseInt($('.pagination-num:last').text());
       }
 
       for (var _i = 1; _i <= Math.ceil(count / 10); _i++) {
-        pagination += "<button class=\"pagination-num" + (page === _i ? ' pagination-selected' : ' ') + "\" id=\"num-" + _i + "\">" + _i + "</button>";
+        pagination += "<button class=\"pagination-num btn btn-outline-primary" + (page === _i ? ' pagination-selected' : ' ') + "\" id=\"num-" + _i + "\">" + _i + "</button>&nbsp;";
       }
 
-      pagination += "<button>></button><button>>></button>";
+      pagination += "<button class=\"btn btn-outline-primary\">></button>&nbsp;<button class=\"btn btn-outline-primary\">>></button>";
       $('#pagination').append(pagination);
     } else {
       $('#orders-list').append("<div class=\"flex-row\">\n                        <div class=\"col font-weight-bold font-size-18 text-center mt-4\">\u041D\u0435\u043C\u0430\u0454 \u0437\u0430\u043C\u043E\u0432\u043B\u0435\u043D\u043D\u044C \u0437 \u0442\u0430\u043A\u0438\u043C\u0438 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C\u0438</div>\n                    </div>");

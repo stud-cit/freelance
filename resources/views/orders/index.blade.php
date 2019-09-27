@@ -122,15 +122,15 @@
                         </div>
                     @endforeach
                 </div>
-                <div id="pagination" class="mb-3">
-                    <button><<</button>
-                    <button><</button>
-                    <button class="pagination-num pagination-selected" id="num-1">1</button>
+                <div id="pagination" class="container mb-3">
+                    <button class="btn btn-outline-primary"><<</button>
+                    <button class="btn btn-outline-primary"><</button>
+                    <button class="pagination-num pagination-selected btn btn-outline-primary" id="num-1">1</button>
                     @for($i = 2; $i <= ceil($info['count'] / 10); $i++)
-                        <button class="pagination-num" id="num-{{$i}}">{{$i}}</button>
+                        <button class="pagination-num btn btn-outline-primary" id="num-{{$i}}">{{$i}}</button>
                     @endfor
-                    <button>></button>
-                    <button>>></button>
+                    <button class="btn btn-outline-primary">></button>
+                    <button class="btn btn-outline-primary">>></button>
                 </div>
             @else
                 <div class="container orders" id="orders-list">

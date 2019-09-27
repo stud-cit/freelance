@@ -270,7 +270,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
                                             <div class="offset-1">{{$all->description}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{$all->created_at}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -294,7 +294,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
                                             <div class="offset-1">{{$active->description}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{$active->created_at}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -318,7 +318,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
                                             <div class="offset-1">{{$active->description}}</div>
-                                            <div class="col offset-9 font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
+                                            <div class="col text-right font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
                                             @if($complete->review)
                                                 <div>
                                                     <div class="row">
@@ -383,7 +383,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
                                             <div class="offset-1">{{$all->text}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{$all->created_at}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -407,7 +407,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
                                             <div class="offset-1">{{$active->text}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{$active->created_at}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -431,7 +431,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
                                             <div class="offset-1">{{$active->text}}</div>
-                                            <div class="col offset-9 font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
+                                            <div class="col text-right font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
                                             @if($complete->review)
                                                 <div>
                                                     <div class="row">

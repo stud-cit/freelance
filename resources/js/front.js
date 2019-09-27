@@ -213,7 +213,7 @@ $("document").ready(function() {
         let page = parseInt($('.pagination-selected').text());
         page = isNaN(page) ? 1 : page;
 
-        $('#pagination button').remove();
+        $('#pagination').empty();
         $('.orders .flex-row').remove();
 
         if (array.length) {
@@ -240,17 +240,17 @@ $("document").ready(function() {
                 $('#orders-list').append(order);
             }
 
-            let pagination = `<button><<</button><button><</button>`;
+            let pagination = `<button class="btn btn-outline-primary"><<</button>&nbsp;<button class="btn btn-outline-primary"><</button>&nbsp;`;
 
             if (page > Math.ceil(count / 10)) {
                 page = parseInt($('.pagination-num:last').text());
             }
 
             for (let i = 1; i <= Math.ceil(count / 10); i++) {
-                pagination += `<button class="pagination-num` + (page === i ? ' pagination-selected' : ' ') + `" id="num-` + i + `">` + i + `</button>`;
+                pagination += `<button class="pagination-num btn btn-outline-primary` + (page === i ? ' pagination-selected' : ' ') + `" id="num-` + i + `">` + i + `</button>&nbsp;`;
             }
 
-            pagination += `<button>></button><button>>></button>`;
+            pagination += `<button class="btn btn-outline-primary">></button>&nbsp;<button class="btn btn-outline-primary">>></button>`;
 
             $('#pagination').append(pagination);
         }

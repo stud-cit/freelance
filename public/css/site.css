@@ -131,4 +131,6 @@ ul.tick li:before {
     white-space: nowrap;
     overflow: hidden;
 }
+.pagination-selected {
 
+}
