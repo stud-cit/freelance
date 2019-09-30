@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-8 mt-4 px-0">
+        <div class="col-9 mt-4 px-0">
             @if(Auth::user()->isWorker() && $order->status == 'new')
                 <div id="prop" class="collapse">
                     <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
