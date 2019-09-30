@@ -13,7 +13,6 @@
 @php($orders = $info['orders'])
 @php($proposals = $info['proposals'])
 
-
 <div class="container">
     <div class="row">
         <div class="flash-message fixed-bottom text-center">

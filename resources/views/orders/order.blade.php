@@ -13,15 +13,15 @@
 @php($categories = $data['categories'])
 @php($themes = $data['themes'])
 
-<div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<div class="container">
     <div class="row">
         <div class="col-9">
             <a href= "{{ route('orders') }}" class="btn font-weight-bold font-size-18">&#10094; Пошук</a>
         </div>
         <div class="col-9 text-white c_rounded bg-blue">
                 <div class="row mt-4">
-                    <div class="col-3 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
-                    <div class="col-1 offset-5 font-size-10 mt-2">Ціна:</div>
+                    <div class="col-5 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
+                    <div class="col-1 offset-3 font-size-10 mt-2">Ціна:</div>
                     <div class="col-2 font-weight-bold font-size-18">{{$order->price}}</div>
                 </div>
             <div class="row">

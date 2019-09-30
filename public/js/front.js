@@ -275,11 +275,12 @@ $("document").ready(function () {
 
   function refresh_orders(response) {
     var array = response['array'],
-        count = response['count'];
-    var page = parseInt($('.pagination-selected').text());
+        count = response['count'],
+        page = parseInt($('.pagination-selected').text());
     page = isNaN(page) ? 1 : page;
     $('#pagination').empty();
     $('.orders .flex-row').remove();
+    $('#drop-filter').removeClass('d-none');
 
     if (array.length) {
       for (var i = 0; i < array.length; i++) {
@@ -306,6 +307,7 @@ $("document").ready(function () {
       pagination += "<button class=\"btn btn-outline-p\">></button>&nbsp;<button class=\"btn btn-outline-p\">>></button>";
       $('#pagination').append(pagination);
     } else {
+      $('#drop-filter').addClass('d-none');
       $('#orders-list').append("<div class=\"flex-row\">\n                        <div class=\"col font-weight-bold font-size-18 text-center mt-4\">\u041D\u0435\u043C\u0430\u0454 \u0437\u0430\u043C\u043E\u0432\u043B\u0435\u043D\u043D\u044C \u0437 \u0442\u0430\u043A\u0438\u043C\u0438 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C\u0438</div>\n                    </div>");
     }
   }

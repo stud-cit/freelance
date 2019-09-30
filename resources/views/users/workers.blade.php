@@ -20,6 +20,9 @@
                             <div class="flex-row">
                                 <div class="font-weight-bold font-size-18 mt-2"><span class="" data-id="{{$list->id_user}}">{{$list->name}} {{$list->surname}}</span></div>
                                 <div class="tag-list">
+                                    @if(!count($list->categories) && !($list->about_me))
+                                        &nbsp;
+                                    @endif
                                     @foreach($list->categories as $tags)
                                         <span class="tags font-italic font-size-10">{{$tags->name}}</span>
                                     @endforeach

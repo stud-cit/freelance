@@ -208,13 +208,13 @@ $("document").ready(function() {
 
     function refresh_orders(response) {
         let array = response['array'],
-            count = response['count'];
-
-        let page = parseInt($('.pagination-selected').text());
+            count = response['count'],
+            page = parseInt($('.pagination-selected').text());
         page = isNaN(page) ? 1 : page;
 
         $('#pagination').empty();
         $('.orders .flex-row').remove();
+        $('#drop-filter').removeClass('d-none');
 
         if (array.length) {
             for (let i = 0; i < array.length; i++) {
@@ -255,6 +255,8 @@ $("document").ready(function() {
             $('#pagination').append(pagination);
         }
         else {
+            $('#drop-filter').addClass('d-none');
+
             $('#orders-list').append(`<div class="flex-row">
                         <div class="col font-weight-bold font-size-18 text-center mt-4">Немає замовленнь з такими параметрами</div>
                     </div>`);

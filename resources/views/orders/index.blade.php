@@ -9,14 +9,14 @@
 @php($data = $info['data'])
 @php($categories = $info['categories'])
 
-<div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<div class="container">
     <div class="row">
         <div class="col-8">
             <div class="container">
                 <div class="row">
                     <div class="col-3 font-weight-bold text-left font-size-18">Всі проекти</div>
                     <div class="col-7 offset-2">
-                        <div class="input-group">
+                        <div class="input-group{{count($data) ? ' ' : ' d-none'}}" id="drop-filter">
                             <div class="input-group-prepend">
                                 <span class="col-form-label">Фільтрувати за:</span>
                             </div>
@@ -88,7 +88,7 @@
                             </select>
                         </div>
                         <div class="form-group row">
-                            <label for="description" class="col-2 col-form-label mt-2">Інормація:</label>
+                            <label for="description" class="col-2 col-form-label mt-2">Інформація:</label>
                             <div class="col-8 mt-2">
                                 <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
                             </div>
