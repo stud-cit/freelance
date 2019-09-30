@@ -240,17 +240,17 @@ $("document").ready(function() {
                 $('#orders-list').append(order);
             }
 
-            let pagination = `<button class="btn btn-outline-primary"><<</button>&nbsp;<button class="btn btn-outline-primary"><</button>&nbsp;`;
+            let pagination = `<button class="btn btn-outline-p"><<</button>&nbsp;<button class="btn btn-outline-p"><</button>&nbsp;`;
 
             if (page > Math.ceil(count / 10)) {
                 page = parseInt($('.pagination-num:last').text());
             }
 
             for (let i = 1; i <= Math.ceil(count / 10); i++) {
-                pagination += `<button class="pagination-num btn btn-outline-primary` + (page === i ? ' pagination-selected' : ' ') + `" id="num-` + i + `">` + i + `</button>&nbsp;`;
+                pagination += `<button class="pagination-num btn btn-outline-p` + (page === i ? ' pagination-selected' : ' ') + `" id="num-` + i + `">` + i + `</button>&nbsp;`;
             }
 
-            pagination += `<button class="btn btn-outline-primary">></button>&nbsp;<button class="btn btn-outline-primary">>></button>`;
+            pagination += `<button class="btn btn-outline-p">></button>&nbsp;<button class="btn btn-outline-p">>></button>`;
 
             $('#pagination').append(pagination);
         }

@@ -132,5 +132,16 @@ ul.tick li:before {
     overflow: hidden;
 }
 .pagination-selected {
-
+    text-decoration: underline;
 }
+
+.btn-outline-p {
+    color: #0076de;
+    border-color: #0076de;
+}
+.btn-outline-p:hover {
+    color: #fff;
+    background-color: #0076de;
+    border-color: #0076de;
+}
+
