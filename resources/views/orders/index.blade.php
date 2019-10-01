@@ -47,7 +47,7 @@
                         <div class="form-group row">
                             <label for="title" class="col-2 col-form-label mt-2">Назва:</label>
                             <div class="col-5 mt-2">
-                                <input type="text" class="form-control" id="title" name="title" required>
+                                <input type="text" class="form-control" id="title" name="title" maxlength="50" size="50" required>
                             </div>
                         </div>
                         <div class="form-group row">

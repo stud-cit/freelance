@@ -20,14 +20,12 @@
         </div>
         <div class="col-9 text-white c_rounded bg-blue">
                 <div class="row mt-4">
-                    <div class="col-5 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
-                    <div class="col-1 offset-3 font-size-10 mt-2">Ціна:</div>
-                    <div class="col-2 font-weight-bold font-size-18">{{$order->price}}</div>
+                    <div class="col-8 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
+                    <div class="col-3">
+                        <div class="col font-weight-bold font-size-18"><span class="font-size-10">Ціна:</span>&nbsp{{$order->price}}</div>
+                        <div class="col font-weight-bold font-size-18"><span class="font-size-10">Час:</span>&nbsp&nbsp{{$order->time}}</div>
+                    </div>
                 </div>
-            <div class="row">
-                <div class="col-1 offset-9 font-size-10 mt-2">Час:</div>
-                <div class="col-2 font-weight-bold font-size-18">{{$order->time}}</div>
-            </div>
             <div class="offset-1">
                 @foreach($categories as $tags)
                     <span class="tags font-italic font-size-10">{{$tags->name}}</span>
@@ -73,7 +71,7 @@
                 </div>
             @endif
         </div>
-        <div class="col-3 text-white text-center c_rounded-right mt-4 mb-2 bg-deep-blue">
+        <div class="col-3 text-white text-center align-self-start c_rounded-right mt-4 mb-2 bg-deep-blue">
             <div class="mt-2 to-profile pointer" data-id="{{$order->id_customer}}">
                 <img src="{{$customer->avatar}}" class="square-100 avatar circle">
             </div>
