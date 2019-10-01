@@ -1,7 +1,25 @@
 $("document").ready(function() {
     $(".alert").delay(3000).slideUp();
 
+    $(window).scroll(function() {
+        var $height = $(window).scrollTop();
+        if($height > 150) {
+            $('#anchor').addClass('d-flex').show();
+        } else {
+            $('#anchor').removeClass('d-flex').hide();
+        }
+    });
+
+    $("#anchor").on("click", function () {
+        $("html").animate({ scrollTop: 0 }, 300);
+    });
+
     $("#avatar-input").on("change", function () {
+        if($(this)[0].files[0].size > 2097152) {
+            $(this).val("").addClass('is-invalid');
+            return;
+        }
+        $(this).removeClass('is-invalid');
         $("#avatar-input-label").text($(this).val().split("\\").pop());
     });
 
@@ -59,19 +77,21 @@ $("document").ready(function() {
     });
 
     $('button[name="delete_proposal"]').on('click', function (e) {
-        e.preventDefault();
+        if ($(this).attr('type') !== 'reset') {
+            e.preventDefault();
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            method: 'post',
-            url: '/delete_proposal',
-            data: {'location': window.location.href},
-            success: function (response) {
-                document.location.reload(true);
-            },
-        });
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                method: 'post',
+                url: '/delete_proposal',
+                data: {'location': window.location.href},
+                success: function (response) {
+                    document.location.reload(true);
+                },
+            });
+        }
     });
 
     $("#type").on("change", function() {

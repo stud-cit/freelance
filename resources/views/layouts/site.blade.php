@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, maximum-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>Workdump</title>
+<title>WorkDump</title>
 
 <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
 <!--<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">-->
@@ -23,6 +23,8 @@
 <!--Main_Section-->
 
 	@yield('content')
+
+<a class="position-fixed bg-blue square-60 text-white rounded-circle justify-content-center font-weight-bold d-none" style="bottom: 15px; right: 15px; z-index: 99; text-decoration: none;" id="anchor"><span class="align-self-center">^</span></a>
 
 <!--Footer_section-->
 <footer id="footer_wrapper" class="mt-auto">

@@ -2,11 +2,9 @@ body {
     background: url(/bg.png) repeat;
     background-size: 236px 234px;
 }
-
 .logo-circle {
     width: 2rem; height: 2rem
 }
-
 .bg-violet {
     background-color: #640CAB;
 }
@@ -31,7 +29,6 @@ a.bg-green:hover, button.bg-green:hover {
 a.bg-deep-blue:hover, button.bg-deep-blue:hover {
     background-color: #000049;
 }
-
 .pointer {
     cursor: pointer;
 }
@@ -144,4 +141,3 @@ ul.tick li:before {
     background-color: #0076de;
     border-color: #0076de;
 }
-

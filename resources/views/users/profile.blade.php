@@ -126,6 +126,7 @@
                                 <div class="custom-file col-6 mt-2">
                                     <input type="file" class="custom-file-input form-control" name="avatar" id="avatar-input" lang="ua" accept="image/*">
                                     <label class="custom-file-label nowrap" for="avatar-input" id="avatar-input-label" data-browse="Обрати">Виберіть файл</label>
+                                    <div class="invalid-feedback">Зображення більше 2 Мб</div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -402,7 +403,7 @@
                     <div class="tab-pane fade row orders" id="nav-active-w" role="tabpanel" aria-labelledby="nav-active-tab">
                         @php($i = 0)
                         @foreach($proposals as $active)
-                            @if($active->status == 'in progress')
+                            @if($active->status == 'in progress' && $active->id_worker == Auth::id())
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
@@ -426,7 +427,7 @@
                     <div class="tab-pane fade row orders" id="nav-complete-w" role="tabpanel" aria-labelledby="nav-complete-tab">
                         @php($i = 0)
                         @foreach($proposals as $complete)
-                            @if($complete->status == 'complete')
+                            @if($complete->status == 'complete' && $complete->id_worker == Auth::id())
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
