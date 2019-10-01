@@ -227,13 +227,13 @@
                     @if(count($proposals) != 0)
                         <div class="font-weight-bold font-size-18 mt-4">Пропозиції виконавців</div>
                     @foreach($proposals as $comment)
-                        <div class="d-flex flex-row mb-3 mt-2 pointer">
-                            <div class="col-1 px-0 min-width-70 to-profile" data-id="{{$comment->id_user}}">
+                        <div class="d-flex flex-row mb-3 mt-2 {{ Auth::user()->id == $order->id_customer ? 'pointer' : ''}}">
+                            <div class="col-1 px-0 min-width-70 pointer to-profile" data-id="{{$comment->id_user}}">
                                 <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
                             </div>
                             <div class="col-9 shadow bg-white" data-id="{{$comment->id_user}}">
                                 <div class="flex-row" @if(Auth::user()->isCustomer()) data-toggle="collapse" data-target="#w-id-{{ $comment->id_user }}" aria-expanded="true"@endif>
-                                    <div class="font-weight-bold mt-2"><span class="to-profile" data-id="{{$comment->id_user}}">{{$comment->name}} {{$comment->surname}}</span></div>
+                                    <div class="font-weight-bold mt-2"><span class="pointer to-profile" data-id="{{$comment->id_user}}">{{$comment->name}} {{$comment->surname}}</span></div>
                                     <div class="">{{$comment->text}}</div>
                                     <div class="text-right font-size-10">{{$comment->created_at}}</div>
                                 </div>

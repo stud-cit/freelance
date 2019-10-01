@@ -95,7 +95,27 @@
 
 $("document").ready(function () {
   $(".alert").delay(3000).slideUp();
+  $(window).scroll(function () {
+    var $height = $(window).scrollTop();
+
+    if ($height > 150) {
+      $('#anchor').addClass('d-flex').show();
+    } else {
+      $('#anchor').removeClass('d-flex').hide();
+    }
+  });
+  $("#anchor").on("click", function () {
+    $("html").animate({
+      scrollTop: 0
+    }, 300);
+  });
   $("#avatar-input").on("change", function () {
+    if ($(this)[0].files[0].size > 2097152) {
+      $(this).val("").addClass('is-invalid');
+      return;
+    }
+
+    $(this).removeClass('is-invalid');
     $("#avatar-input-label").text($(this).val().split("\\").pop());
   });
   $(".to-profile").on('click', function () {

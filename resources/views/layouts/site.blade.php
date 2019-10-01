@@ -24,6 +24,8 @@
 
 	@yield('content')
 
+<a class="position-fixed bg-blue square-60 text-white rounded-circle justify-content-center font-weight-bold d-none" style="bottom: 15px; right: 15px; z-index: 99; text-decoration: none;" id="anchor"><span class="align-self-center">^</span></a>
+
 <!--Footer_section-->
 <footer id="footer_wrapper" class="mt-auto">
     @yield('footer')
