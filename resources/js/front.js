@@ -59,19 +59,21 @@ $("document").ready(function() {
     });
 
     $('button[name="delete_proposal"]').on('click', function (e) {
-        e.preventDefault();
+        if ($(this).attr('type') !== 'reset') {
+            e.preventDefault();
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            method: 'post',
-            url: '/delete_proposal',
-            data: {'location': window.location.href},
-            success: function (response) {
-                document.location.reload(true);
-            },
-        });
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                method: 'post',
+                url: '/delete_proposal',
+                data: {'location': window.location.href},
+                success: function (response) {
+                    document.location.reload(true);
+                },
+            });
+        }
     });
 
     $("#type").on("change", function() {

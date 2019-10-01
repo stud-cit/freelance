@@ -22,17 +22,17 @@
                     @csrf
                     <ul class="list-group">
                         <li class="list-group-item d-flex flex-row">
-                                <div class="">&nbsp;</div>
-                                    <div class="d-flex flex-column">
-                                            <label for="name" class="col-form-label">Ім'я</label>
-                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror border-0" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
-                                            @error('name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                    </div>
-                                <div class="">&nbsp;</div>
+                            <div class="">&nbsp;</div>
+                                <div class="d-flex flex-column">
+                                    <label for="name" class="col-form-label">Ім'я</label>
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror border-0" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            <div class="">&nbsp;</div>
                         </li>
 
                         <li class="list-group-item d-flex flex-row">
@@ -41,9 +41,9 @@
                                 <label for="surname" class="col-form-label">Прізвище</label>
                                 <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror border-0" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus placeholder="Прізвище">
                                 @error('surname')
-                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
                             <div class="">&nbsp;</div>
@@ -59,8 +59,8 @@
                                 </select>
                                 @error('id_role')
                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                             <div class="">&nbsp;</div>

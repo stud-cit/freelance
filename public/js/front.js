@@ -144,20 +144,22 @@ $("document").ready(function () {
     $('#rating_val').text($(this).val());
   });
   $('button[name="delete_proposal"]').on('click', function (e) {
-    e.preventDefault();
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      method: 'post',
-      url: '/delete_proposal',
-      data: {
-        'location': window.location.href
-      },
-      success: function success(response) {
-        document.location.reload(true);
-      }
-    });
+    if ($(this).attr('type') !== 'reset') {
+      e.preventDefault();
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        method: 'post',
+        url: '/delete_proposal',
+        data: {
+          'location': window.location.href
+        },
+        success: function success(response) {
+          document.location.reload(true);
+        }
+      });
+    }
   });
   $("#type").on("change", function () {
     var item = $(this).children("option:selected"),

@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            @if(is_null(Auth::user()))
+            @if(Auth::check())
             @elseif(Auth::user()->id_role == 2)
                 <div class="container pointer">
                     <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">
@@ -176,7 +176,13 @@
     </div>
 </div>
 
-
+<div class="flash-message fixed-bottom text-center">
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+        @if(Session::has('alert-' . $msg))
+            <p class="alert alert-{{ $msg }} alert-dismissible"> {{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+        @endif
+    @endforeach
+</div>
 
 @endsection
 
