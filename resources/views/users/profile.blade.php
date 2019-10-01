@@ -13,7 +13,6 @@
 @php($orders = $info['orders'])
 @php($proposals = $info['proposals'])
 
-
 <div class="container">
     <div class="row">
         <div class="flash-message fixed-bottom text-center">
@@ -271,7 +270,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
                                             <div class="offset-1">{{$all->description}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{$all->created_at}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -295,7 +294,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
                                             <div class="offset-1">{{$active->description}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{$active->created_at}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +318,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
                                             <div class="offset-1">{{$active->description}}</div>
-                                            <div class="col offset-9 font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
+                                            <div class="col text-right font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
                                             @if($complete->review)
                                                 <div>
                                                     <div class="row">
@@ -384,7 +383,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
                                             <div class="offset-1">{{$all->text}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$all->created_at}}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{$all->created_at}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -401,14 +400,14 @@
                     <div class="tab-pane fade row orders" id="nav-active-w" role="tabpanel" aria-labelledby="nav-active-tab">
                         @php($i = 0)
                         @foreach($proposals as $active)
-                            @if($active->status == 'in progress')
+                            @if($active->status == 'in progress' && $active->id_worker == Auth::id())
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
                                             <div class="offset-1">{{$active->text}}</div>
-                                            <div class="col offset-9 font-size-10">Дата створення: {{$active->created_at}}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{$active->created_at}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -425,14 +424,14 @@
                     <div class="tab-pane fade row orders" id="nav-complete-w" role="tabpanel" aria-labelledby="nav-complete-tab">
                         @php($i = 0)
                         @foreach($proposals as $complete)
-                            @if($complete->status == 'complete')
+                            @if($complete->status == 'complete' && $complete->id_worker == Auth::id())
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-11 mt-4 bg-white shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
                                             <div class="offset-1">{{$active->text}}</div>
-                                            <div class="col offset-9 font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
+                                            <div class="col text-right font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
                                             @if($complete->review)
                                                 <div>
                                                     <div class="row">

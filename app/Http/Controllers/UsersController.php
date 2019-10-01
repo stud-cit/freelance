@@ -33,7 +33,7 @@ class UsersController extends Controller
 
     public function profile()
     {
-        $data = User::getUsersInfo('id_user', Auth::user()->id)->first();
+        $data = User::getUsersInfo('id_user', Auth::id())->first();
 
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
@@ -46,7 +46,7 @@ class UsersController extends Controller
 
         $reviews = DB::table('reviews')
             ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')
-            ->where('id_to', Auth::user()->id)
+            ->where('id_to', Auth::id())
             ->get()
             ->toArray();
 
@@ -57,34 +57,36 @@ class UsersController extends Controller
             else {
                 $review->avatar = '/img/' . $review->id_user . '.jpg';
             }
+
+            $review->avatar .= '?t=' . Carbon::now();
         }
 
         $categories = DB::table('categories')->get()->toArray();
 
-        $temp = DB::table('user_has_skills')->where('id', Auth::user()->id)->get()->toArray();
+        $temp = DB::table('user_has_skills')->where('id', Auth::id())->get()->toArray();
         $skills = '';
 
         foreach ($temp as $one) {
             $skills .= $one->id_category . '|';
         }
 
-        $orders = DB::table('orders')->where('id_customer', Auth::user()->id)->get()->toArray();
+        $orders = DB::table('orders')->where('id_customer', Auth::id())->get()->toArray();
 
         $proposals = DB::table('orders')
             ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
             ->join('users_info', 'users_info.id_user', '=', 'orders.id_customer')
-            ->where('proposals.id_worker', Auth::user()->id)
+            ->where('proposals.id_worker', Auth::id())
             ->get()
             ->toArray();
 
         foreach ($proposals as $one) {
-            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::user()->id]])->get()->first();
+            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
 
             $one->review = is_null($review) ? 1 : 0;
         }
 
         foreach ($orders as $one) {
-            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::user()->id]])->get()->first();
+            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
 
             $one->review = is_null($review) ? 1 : 0;
         }
@@ -109,7 +111,7 @@ class UsersController extends Controller
             'skype' => $req->skype
         ];
 
-        DB::table('users_info')->where('id_user', Auth::user()->id)->update($values);
+        DB::table('users_info')->where('id_user', Auth::id())->update($values);
 
         $req->session()->flash('alert-success', 'Контакти користувача успішно оновлено!');
 
@@ -118,13 +120,13 @@ class UsersController extends Controller
 
     public function save_skills(Request $req)
     {
-        DB::table('user_has_skills')->where('id', Auth::user()->id)->delete();
+        DB::table('user_has_skills')->where('id', Auth::id())->delete();
 
         $categories = explode('|', $req->categories);
         array_pop($categories);
 
         foreach ($categories as $one) {
-            DB::table('user_has_skills')->insert(['id_category' => $one, 'id' => Auth::user()->id]);
+            DB::table('user_has_skills')->insert(['id_category' => $one, 'id' => Auth::id()]);
         }
 
         $req->session()->flash('alert-success', 'Навички користувача успішно оновлено!');
@@ -148,8 +150,8 @@ class UsersController extends Controller
         $values = [
             'text' => $req->text,
             'rating' => $req->rating,
-            'id_from' => Auth::user()->id,
-            'id_to' => $customer->id_customer == Auth::user()->id ? $customer->id_worker : $customer->id_customer,
+            'id_from' => Auth::id(),
+            'id_to' => $customer->id_customer == Auth::id() ? $customer->id_worker : $customer->id_customer,
             'id_order' => $req->id,
             'created_at' => Carbon::now(),
         ];
@@ -163,7 +165,7 @@ class UsersController extends Controller
 
     public function save_about_me(Request $req)
     {
-        DB::table('users_info')->where('id_user', Auth::user()->id)->update(['about_me' => $req->about_me]);
+        DB::table('users_info')->where('id_user', Auth::id())->update(['about_me' => $req->about_me]);
 
         $req->session()->flash('alert-success', 'Додаткову інформацію про користувача успішно оновлено!');
 
@@ -182,12 +184,12 @@ class UsersController extends Controller
                 return back();
             }
 
-            $path = Auth::user()->id . '.' . $extension;
+            $path = Auth::id() . '.' . $extension;
 
             if ($extension == 'png') {
-                $del_path = Auth::user()->id . '.jpg';
+                $del_path = Auth::id() . '.jpg';
             } else {
-                $del_path = Auth::user()->id . '.png';
+                $del_path = Auth::id() . '.png';
             }
 
             Storage::disk('public')->delete($del_path);
@@ -203,7 +205,7 @@ class UsersController extends Controller
             'city' => $req->city
         ];
 
-        DB::table('users_info')->where('id_user', Auth::user()->id)->update($values);
+        DB::table('users_info')->where('id_user', Auth::id())->update($values);
 
         $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
 
@@ -242,6 +244,8 @@ class UsersController extends Controller
             else {
                 $review->avatar = '/img/' . $review->id_user . '.jpg';
             }
+
+            $review->avatar .= '?t=' . Carbon::now();
         }
 
         return view('users.user', compact('data'), compact('reviews'));

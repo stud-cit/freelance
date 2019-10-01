@@ -11,7 +11,7 @@ use App\Models\User;
 
 class OrdersController extends Controller
 {
-    private $eq;
+    private $eq, $filtered;
 
     function get_currency()
     {
@@ -42,49 +42,75 @@ class OrdersController extends Controller
         return $first_price > $second_price;
     }
 
-    public function index()
+    public function get_orders($filter)
     {
-        if (Auth::check()) {
-            $data = DB::table('orders')
-                ->where('status', 'new')
-                ->orWhere([['status', 'in progress'], ['id_customer', Auth::user()->id]])
-                ->orWhere([['status', 'in progress'], ['id_worker', Auth::user()->id]])
-                ->orderBy('id_order', 'desc')
-                ->get()
-                ->toArray();
-        }
-        else {
-            $data = DB::table('orders')
-                ->where('status', 'new')
-                ->orderBy('id_order', 'desc')
-                ->get()
-                ->toArray();
+        $data = DB::table('orders')
+            ->where('status', 'new')
+            ->orderBy($filter['what'], $filter['how'])
+            ->get()
+            ->toArray();
+
+        if ($filter['what'] == 'price') {
+            $this->get_currency();
+            usort($data, array($this, "cmp"));
+
+            if ($filter['how'] == 'desc') {
+                $data = array_reverse($data);
+            }
         }
 
+        $array = [];
+
         foreach ($data as $one) {
+            $one->description = strlen($one->description) > 50 ? substr($one->description, 0, 50) . '...' : $one->description;
+            $one->price = is_null($one->price) ? '' : $one->price;
+            $one->time = is_null($one->time) ? '' : $one->time;
+
             $one->categories = DB::table('categories_has_orders')
                 ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
                 ->where('id_order', $one->id_order)
                 ->get()
                 ->toArray();
-        }
 
-        $ids = DB::table('users')->where('id_role', 3)->get('id')->toArray();
-        $array = [];
-
-        foreach ($ids as $one) {
-            array_push($array, $one->id);
-        }
-
-        $workers = DB::table('users_info')->whereIn('id_user', $array)->get()->toArray();
-
-        foreach ($workers as $worker) {
-            if (Storage::disk('public')->has($worker->id_user . '.png')) {
-                $worker->avatar = '/img/' . $worker->id_user . '.png';
-            } else {
-                $worker->avatar = '/img/' . $worker->id_user . '.jpg';
+            if ($filter['category'] != '0' && (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false)) {
+                foreach ($one->categories as $category) {
+                    if ($category->id_category == $filter['category']) {
+                        array_push($array, $one);
+                        break;
+                    }
+                }
+            }
+            else if (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false) {
+                array_push($array, $one);
             }
         }
+
+        $this->filtered = count($array);
+
+        if (count($array) > $filter['page'] * 10) {
+            $array = array_slice($array, --$filter['page'] * 10, 10);
+        }
+        else if (count($array) > --$filter['page'] * 10) {
+            $array = array_slice($array, $filter['page'] * 10);
+        }
+        else {
+            $array = array_slice($array, count($array) - count($array) % 10 ? count($array) % 10 : 10);
+        }
+
+        return $array;
+    }
+
+    public function index()
+    {
+        $values = [
+            'what' => 'id_order',
+            'how' => 'desc',
+            'filter' => null,
+            'category' => '0',
+            'page' => 1
+        ];
+
+        $data = $this->get_orders($values);
 
         $categories = DB::table('categories')->orderBy('name')->get()->toArray();
 
@@ -95,76 +121,33 @@ class OrdersController extends Controller
                 ->count();
         }
 
-        return view('orders.index', compact('data'), compact('categories'));
+        $count = DB::table('orders')->where('status', 'new')->count();
+
+        $info = [
+            'data' => $data,
+            'categories' => $categories,
+            'count' => $count,
+        ];
+
+        return view('orders.index', compact('info'));
     }
 
-    public function sort_order(Request $req)
+    public function filter(Request $req)
     {
-        $data = DB::table('orders')
-            ->where('status', 'new')
-            ->whereIn('id_order', $req->ids)
-            ->orderBy($req->what, $req->how)
-            ->get()
-            ->toArray();
+        $values = [
+            'what' => $req->what,
+            'how' => $req->how,
+            'filter' => $req->filter,
+            'category' => $req->category,
+            'page' => $req->page
+        ];
 
-        if ($req->what == 'price') {
-            $this->get_currency();
-            usort($data, array($this, "cmp"));
-
-            if ($req->how == 'desc') {
-                $data = array_reverse($data);
-            }
-        }
-
-        foreach ($data as $orders) {
-            $orders->description = strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description;
-            $orders->price = is_null($orders->price) ? '' : $orders->price;
-            $orders->time = is_null($orders->time) ? '' : $orders->time;
-
-            $orders->categories = DB::table('categories_has_orders')
-                ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
-                ->where('id_order', $orders->id_order)
-                ->get()
-                ->toArray();
-        }
+        $data = [
+            'array' => $this->get_orders($values),
+            'count' => $this->filtered,
+        ];
 
         return $data;
-    }
-
-    public function select_category(Request $req)
-    {
-        $data = DB::table('orders')
-            ->where('status', 'new')
-            ->orderBy('id_order', 'desc')
-            ->get()
-            ->toArray();
-
-        $array = [];
-
-        foreach ($data as $orders) {
-            $orders->description = strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description;
-            $orders->price = is_null($orders->price) ? '' : $orders->price;
-            $orders->time = is_null($orders->time) ? '' : $orders->time;
-
-            $orders->categories = DB::table('categories_has_orders')
-                ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
-                ->where('id_order', $orders->id_order)
-                ->get()
-                ->toArray();
-
-            if ($req->category != '0') {
-                foreach ($orders->categories as $one) {
-                    if ($one->id_category == $req->category) {
-                        array_push($array, $orders);
-                        break;
-                    }
-                }
-            } else {
-                array_push($array, $orders);
-            }
-        }
-
-        return $array;
     }
 
     public function order($id)
@@ -174,7 +157,7 @@ class OrdersController extends Controller
 
         $my_proposal = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
-            ->where([['id_order', $id], ['id_worker', Auth::user()->id]])
+            ->where([['id_order', $id], ['id_worker', Auth::id()]])
             ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
             ->first();
 
@@ -209,6 +192,8 @@ class OrdersController extends Controller
             } else {
                 $one->avatar = '/img/' . $one->id_user . '.jpg';
             }
+
+            $one->avatar .= '?t=' . Carbon::now();
         }
 
         $categories = DB::table('categories_has_orders')
@@ -240,9 +225,16 @@ class OrdersController extends Controller
 
     public function select_worker(Request $req)
     {
-        DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
+        $check = DB::table('proposals')->where([['id_order', $req->id], ['id_worker', $req->selected_worker]])->get();
 
-        $req->session()->flash('alert-success', 'Виконавця успішно вибрано!');
+        if (!is_null($check)) {
+            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
+
+            $req->session()->flash('alert-success', 'Виконавця успішно вибрано!');
+        }
+        else {
+            $req->session()->flash('alert-danger', 'Цей виконавець видалив свою пропозицію!');
+        }
 
         return back();
     }
@@ -264,7 +256,7 @@ class OrdersController extends Controller
             $values = [
                 'text' => $req->text,
                 'rating' => $req->rating,
-                'id_from' => Auth::user()->id,
+                'id_from' => Auth::id(),
                 'id_to' => $worker->id_worker,
                 'id_order' => $req->id,
                 'created_at' => Carbon::now(),
@@ -282,59 +274,89 @@ class OrdersController extends Controller
 
     public function add_proposal(Request $req)
     {
-        $type = $req->type;
-        $time = $req->time;
-        $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
+        $check1 = DB::table('orders')->where('id_order', $req->id)->get();
+        $check2 = DB::table('orders')->where([['id_order', $req->id], ['id_worker', null]])->get();
 
-        if ($type == 'дні' && !is_null($time)) {
-            switch ($time) {
-                case $time == 1 :
-                    $time .= ' день';
-                    break;
-                case $time > 1 && $time < 5 :
-                    $time .= ' дні';
-                    break;
-                default :
-                    $time .= ' днів';
+        if (!is_null($check1) && !is_null($check2)) {
+            $type = $req->type;
+            $time = $req->time;
+            $price = is_null($req->price) ? null : $req->price . ' ' . $req->currency;
+
+            if ($type == 'дні' && !is_null($time)) {
+                switch ($time) {
+                    case $time == 1 :
+                        $time .= ' день';
+                        break;
+                    case $time > 1 && $time < 5 :
+                        $time .= ' дні';
+                        break;
+                    default :
+                        $time .= ' днів';
+                }
+            } else if (!is_null($time)) {
+                $time .= ' год.';
             }
+
+            $values = [
+                'text' => $req->text,
+                'price' => $price,
+                'time' => $time,
+                'id_order' => $req->id,
+                'id_worker' => Auth::id(),
+                'created_at' => Carbon::now(),
+            ];
+
+            $check = DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::id()]])->get('id_proposal')->first();
+
+            if (is_null($check)) {
+                DB::table('proposals')->insert($values);
+
+                $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
+            } else {
+                DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::id()]])->update($values);
+
+                $req->session()->flash('alert-success', 'Пропозицію успішно змінено!');
+            }
+
+            return back();
         }
-        else if (!is_null($time)) {
-            $time .= ' год.';
-        }
+        else if (!is_null($check1)) {
+            $req->session()->flash('alert-danger', 'У цього замовлення вже є виконавець!');
 
-        $values = [
-            'text' => $req->text,
-            'price' => $price,
-            'time' => $time,
-            'id_order' => $req->id,
-            'id_worker' => Auth::user()->id,
-            'created_at' => Carbon::now(),
-        ];
-
-        $check = DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->get('id_proposal')->first();
-
-        if (is_null($check)) {
-            DB::table('proposals')->insert($values);
-
-            $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
+            return back();
         }
         else {
-            DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::user()->id]])->update($values);
+            $req->session()->flash('alert-danger', 'Цього замолення більше не існує!');
 
-            $req->session()->flash('alert-success', 'Пропозицію успішно змінено!');
+            return redirect('/orders');
         }
-
-        return back();
     }
 
     public function delete_proposal(Request $req)
     {
-        $id = explode('/', $req->location);
-        $id = end($id);
+        $check1 = DB::table('orders')->where('id_order', $req->id)->get();
+        $check2 = DB::table('orders')->where([['id_order', $req->id], ['id_worker', null]])->get();
 
-        DB::table('proposals')->where([['id_order', $id], ['id_worker', Auth::user()->id]])->delete();
+        if (!is_null($check1) && !is_null($check2)) {
+            $id = explode('/', $req->location);
+            $id = end($id);
 
-        $req->session()->flash('alert-success', 'Пропозицію успішно видалено!');
+            DB::table('proposals')->where([['id_order', $id], ['id_worker', Auth::id()]])->delete();
+
+            $req->session()->flash('alert-success', 'Пропозицію успішно видалено!');
+
+            return back();
+        }
+        else if (!is_null($check1)) {
+            $req->session()->flash('alert-danger', 'Ви не можете видалити пропозицію у виконуємого замовлення!');
+
+            return back();
+        }
+        else {
+            $req->session()->flash('alert-danger', 'Цього замолення більше не існує!');
+
+            return redirect('/orders');
+        }
     }
 
     public function delete_order(Request $req)
@@ -376,14 +398,14 @@ class OrdersController extends Controller
             'price' => $price,
             'time' => $time,
             'status' => 'new',
-            'id_customer' => Auth::user()->id,
+            'id_customer' => Auth::id(),
             'id_worker' => null,
             'created_at' => Carbon::now(),
         ];
 
         DB::table('orders')->insert($values);
 
-        $id = DB::table('orders')->where('id_customer', Auth::user()->id)->orderBy('id_order', 'desc')->get(['id_order'])->first();
+        $id = DB::table('orders')->where('id_customer', Auth::id())->orderBy('id_order', 'desc')->get(['id_order'])->first();
 
         $categories = explode('|', $req->categories);
         array_pop($categories);

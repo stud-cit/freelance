@@ -19,21 +19,6 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <ul class="list-group">
-                            <!--
-                            <li class="list-group-item d-flex flex-row">
-                                <div class="">&nbsp;</div>
-                                <div class="d-flex flex-column">
-                                    <label for="name" class="col-form-label">Ім'я</label>
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror border-0" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
-                                    @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                    @enderror
-                                </div>
-                                <div class="">&nbsp;</div>
-                            </li>
-                            -->
                             <li class="list-group-item d-flex flex-row">
                                 <div class="">&nbsp;</div>
                                 <div class="d-flex flex-column">
@@ -41,9 +26,9 @@
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
 
                                     @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="">&nbsp;</div>
@@ -57,30 +42,19 @@
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror border-0" name="password" required autocomplete="new-password" placeholder="********">
 
                                     @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                                 <div class="">&nbsp;</div>
                             </li>
-                            <!--
-                            <li class="list-group-item d-flex flex-row">
-                                <div class="">&nbsp;</div>
-                                <div class="d-flex flex-column">
-                                    <label for="name" class="col-form-label">Повторіть пароль</label>
-
-                                    <input id="password-confirm" type="password" class="form-control border-0" name="password_confirmation" required autocomplete="new-password" placeholder="********">
-                                </div>
-                                <div class="">&nbsp;</div>
-                            </li>
-                            -->
                         </ul>
 
                         <div class="row mt-4">
                             <div class="col-lg-4 col-12 offset-1 custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="rememberme">
-                                <label for="rememberme" class="custom-control-label">Запам'ятати</label>
+                                <input type="checkbox" class="custom-control-input pointer" id="rememberme" name="remember">
+                                <label for="rememberme" class="custom-control-label pointer">Запам'ятати</label>
                             </div>
                             <div class="col-lg-5 col-12 offset-lg-2">
                                 @if (Route::has('password.request'))

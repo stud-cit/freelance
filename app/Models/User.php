@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,10 +66,10 @@ class User extends Authenticatable implements MustVerifyEmail
         $id = Auth::id();
 
         if (Storage::disk('public')->has($id . '.png')) {
-            return '/img/' . $id . '.png';
+            return '/img/' . $id . '.png' . '?t=' . Carbon::now();
         }
         else {
-            return '/img/' . $id . '.jpg';
+            return '/img/' . $id . '.jpg' . '?t=' . Carbon::now();
         }
     }
 
@@ -84,6 +85,8 @@ class User extends Authenticatable implements MustVerifyEmail
             } else {
                 $one->avatar = '/img/' . $one->id_user . '.jpg';
             }
+
+            $one->avatar .= '?t=' . Carbon::now();
         }
 
         return $info;

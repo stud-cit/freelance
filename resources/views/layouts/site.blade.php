@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, maximum-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>freelance</title>
+<title>WorkDump</title>
 
 <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
 <!--<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">-->
