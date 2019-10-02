@@ -23,7 +23,7 @@
             @endforeach
         </div>
         <div class="col-9 tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <div class="tab-pane fade {{$_SERVER['REQUEST_URI'] == '/profile' ? 'active show' : ''}}" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <div class="d-flex flex-row">
                     <div class="col-5 px-0">
                         <img src="{{Auth::user()->getAvatarPath()}}" class="square square-330 avatar">
@@ -251,7 +251,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
+            <div class="tab-pane fade {{$_SERVER['REQUEST_URI'] != '/profile' ? 'active show' : ''}}" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all-c" role="tab" aria-controls="nav-all" aria-selected="true">Залишені замовлення</a>
@@ -488,7 +488,7 @@
                     <div class="nav flex-column" id="profile-bar" role="tablist" aria-orientation="vertical">
                         <ul class="list-group list-group-flush mw-100">
                             <li class="list-group-item py-0">
-                                <a class="nav-link active" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
+                                <a class="nav-link {{$_SERVER['REQUEST_URI'] == '/profile' ? 'active' : ''}}" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
                             </li>
                             <li class="list-group-item py-0">
                                 <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-edit" role="tab" aria-selected="false">Редагування даних</a>
@@ -501,7 +501,7 @@
                             </li>
                             @if(Auth::user()->id_role == 2)
                                 <li class="list-group-item py-0">
-                                    <a class="nav-link" id="v-pills-orders-tab" data-toggle="pill" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Мої замовлення</a>
+                                    <a class="nav-link {{$_SERVER['REQUEST_URI'] != '/profile'? 'active' : ''}}" id="v-pills-orders-tab" data-toggle="pill" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Мої замовлення</a>
                                 </li>
                             @elseif(Auth::user()->id_role == 3)
                                 <li class="list-group-item py-0">
@@ -515,8 +515,6 @@
         </div>
     </div>
 </div>
-
-
 
 @endsection
 
