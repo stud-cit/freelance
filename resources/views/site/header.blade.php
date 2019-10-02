@@ -25,7 +25,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="{{ route('profile') }}">Профіль</a>
                             @if(Auth::user()->id_role == 2)
-                            <a class="dropdown-item" href="">Мої замовлення</a>
+                                <a class="dropdown-item" href="{{ route('profile', 'orders') }}">Мої замовлення</a>
                             @endif
                             <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                                 Вихід
@@ -37,27 +37,27 @@
                     </div>
                 @else
                     @if(strpos(url()->current(), 'register') === false && !Auth::check())
-                    <div class="col-1 offset-7 mt-1 small">
-                        <a href="{{ route('register') }}" class="text-white">Реєстрація</a>
-                    </div>
+                        <div class="col-1 offset-7 mt-1 small">
+                            <a href="{{ route('register') }}" class="text-white">Реєстрація</a>
+                        </div>
                     @else
-                    <div class="col-1 offset-7 mt-1 small"></div>
+                        <div class="col-1 offset-7 mt-1 small"></div>
                     @endif
                     @if(strpos(url()->current(), 'login') === false && !Auth::check())
-                    <div class="col-1">
-                        <a href="{{ route('login') }}" class="badge-pill border border-light py-1 px-3 text-white small">Вхід</a>
-                    </div>
+                        <div class="col-1">
+                            <a href="{{ route('login') }}" class="badge-pill border border-light py-1 px-3 text-white small">Вхід</a>
+                        </div>
                     @elseif(strpos(url()->current(), 'login') === false)
-                    <div class="col-1">
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="badge-pill border border-light py-1 px-3 text-white small">
-                            Вихід
-                        </a>
-                        <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                    </div>
+                        <div class="col-1">
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="badge-pill border border-light py-1 px-3 text-white small">
+                                Вихід
+                            </a>
+                            <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </div>
                     @else
-                    <div class="col-1"></div>
+                        <div class="col-1"></div>
                     @endif
                 @endif
                 <div class="col-1 mt-1">
