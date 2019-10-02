@@ -267,9 +267,9 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
-                                            <div class="offset-1">{{$all->description}}</div>
+                                            <div class="offset-1">{{strlen($all->description) > 200 ? substr($all->description, 0, 200) . '...' : $all->description}}</div>
                                             <div class="col text-right font-size-10">Дата створення: {{$all->created_at}}</div>
                                         </div>
                                     </div>
@@ -291,9 +291,9 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
-                                            <div class="offset-1">{{$active->description}}</div>
+                                            <div class="offset-1">{{strlen($all->description) > 200 ? substr($all->description, 0, 200) . '...' : $all->description}}</div>
                                             <div class="col text-right font-size-10">Дата створення: {{$active->created_at}}</div>
                                         </div>
                                     </div>
@@ -315,17 +315,17 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 bg-white shadow-lg">
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg">
                                             <div class="row mb-2 mt-1">
-                                                <div class="col-6 offset-1 font-weight-bold font-size-18">{{$complete->title}}</div>
-                                                <div class="col-5 text-right">Виконавець: {{$complete->worker->name}} {{$complete->worker->surname}}</div>
+                                                <div class="col-6 offset-1 mb-2 mt-1 font-weight-bold font-size-18">{{$complete->title}}</div>
+                                                <div class="col-5 mb-2 mt-2 text-right">Виконавець: {{$complete->worker->name}} {{$complete->worker->surname}}</div>
                                             </div>
                                             <div class="offset-1">{{$active->description}}</div>
-                                            <div class="col text-right font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
+                                            <div class="col text-right font-size-10 mt-1 mb-2">Дата створення: {{$active->created_at}}</div>
                                             @if($complete->review)
                                                 <div>
                                                     <div class="row">
-                                                        <button class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0 add-review" data-toggle="collapse" data-target="#id-{{$complete->id_order}}">Залишити коментар</button>
+                                                        <button class="col-4 offset-7 text-white btn badge-pill bg-deep-blue mb-2 px-0 add-review" data-toggle="collapse" data-target="#id-{{$complete->id_order}}">Залишити коментар виконавцю</button>
                                                     </div>
                                                 </div>
                                                 <div id="id-{{$complete->id_order}}" class="collapse">
@@ -383,7 +383,7 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
                                             <div class="offset-1">{{$all->text}}</div>
                                             <div class="col text-right font-size-10">Дата створення: {{$all->created_at}}</div>
@@ -407,7 +407,7 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
                                             <div class="offset-1">{{$active->text}}</div>
                                             <div class="col text-right font-size-10">Дата створення: {{$active->created_at}}</div>
@@ -431,14 +431,14 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-4 bg-white shadow-lg">
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg">
                                             <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
                                             <div class="offset-1">{{$active->text}}</div>
                                             <div class="col text-right font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
                                             @if($complete->review)
                                                 <div>
                                                     <div class="row">
-                                                        <button class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0 add-review" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити коментар</button>
+                                                        <button class="col-4 offset-7 text-white btn badge-pill bg-deep-blue mb-2 px-0 add-review" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити коментар замовнику</button>
                                                     </div>
                                                 </div>
                                                 <div id="id-{{$complete->id_proposal}}" class="collapse">

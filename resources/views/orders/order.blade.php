@@ -125,7 +125,7 @@
                 </div>
             @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer)
                 <div id="accepted_order" class="collapse">
-                    <p class="font-size-18 font-weight-bold">Залишити відгук</p>
+                    <p class="font-size-18 font-weight-bold">Залишити відгук виконавцю</p>
                     <form method="POST" action="{{ route('change_worker', $order->id_order) }}" class="col bg-white shadow c_rounded">
                         @csrf
                         <div class="form-group row">
