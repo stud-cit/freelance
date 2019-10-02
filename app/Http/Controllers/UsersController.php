@@ -87,7 +87,13 @@ class UsersController extends Controller
 
         foreach ($orders as $one) {
             $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
+            $slave = DB::table('orders')
+                ->join('users_info', 'orders.id_worker', '=', 'users_info.id_user')
+                ->where('id_user', $one->id_worker)
+                ->get()
+                ->first();
 
+            $one->worker = $slave;
             $one->review = is_null($review) ? 1 : 0;
         }
 

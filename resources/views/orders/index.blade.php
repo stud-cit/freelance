@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            @if(Auth::check())
+            @if(!Auth::check())
             @elseif(Auth::user()->id_role == 2)
                 <div class="container pointer">
                     <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">

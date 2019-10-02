@@ -318,7 +318,7 @@
                                         <div class="col-11 mt-4 bg-white shadow-lg">
                                             <div class="row mb-2 mt-1">
                                                 <div class="col-6 offset-1 font-weight-bold font-size-18">{{$complete->title}}</div>
-                                                <div class="col-5 text-right">Виконавець: </div>
+                                                <div class="col-5 text-right">Виконавець: {{$complete->worker->name}} {{$complete->worker->surname}}</div>
                                             </div>
                                             <div class="offset-1">{{$active->description}}</div>
                                             <div class="col text-right font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
