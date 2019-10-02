@@ -24,6 +24,9 @@
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="{{ route('profile') }}">Профіль</a>
+                            @if(Auth::user()->id_role == 2)
+                            <a class="dropdown-item" href="">Мої замовлення</a>
+                            @endif
                             <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                                 Вихід
                             </a>

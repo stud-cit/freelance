@@ -45,6 +45,12 @@
                                     <div class="col-5 font-size-10">Skype: {{$data->skype}}</div>
                                 </div>
                             </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6 font-size-10">Країна: {{$data->country}}</div>
+                                    <div class="col-6 font-size-10">Місто: {{$data->city}}</div>
+                                </div>
+                            </div>
                             <div class="col-11 font-weight-bold font-size-10">Дата реєстрації: {{$data->created_at}}</div>
                         </div>
                     </div>
@@ -139,12 +145,6 @@
                                 <label for="name" class="col-5 col-form-label mt-2">Ім'я:</label>
                                 <div class="col-6 mt-2">
                                     <input type="text" id="name" class="form-control" name="name" value="{{$data->name}}" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="patronymic" class="col-5 col-form-label mt-2">По батькові:</label>
-                                <div class="col-6 mt-2">
-                                    <input type="text" id="patronymic" class="form-control" name="patronymic" value="{{$data->patronymic}}">
                                 </div>
                             </div>
                             <div class="form-group row">
