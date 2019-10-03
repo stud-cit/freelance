@@ -22,6 +22,7 @@ class Proposals extends Migration
             $table->foreign('id_order')->references('id_order')->on('orders');
             $table->bigInteger('id_worker')->unsigned();
             $table->foreign('id_worker')->references('id')->on('users');
+            $table->boolean('blocked');
             $table->date('created_at');
         });
     }

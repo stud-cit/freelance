@@ -33,7 +33,7 @@
                 <div class="mt-4 font-size-10">{{$order->description}}</div>
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
-            @if(Auth::user()->isWorker() && $order->status == 'new')
+            @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked))
                 <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 mb-2" data-toggle="collapse" data-target="#prop" aria-expanded="true">
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div class="col-9 mt-4 px-0">
-            @if(Auth::user()->isWorker() && $order->status == 'new')
+            @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked))
                 <div id="prop" class="collapse">
                     <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
                     <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2 bg-white shadow c_rounded">
@@ -224,32 +224,32 @@
                 <div class="container proposals">
                     @if(count($proposals) != 0)
                         <div class="font-weight-bold font-size-18 mt-4">Пропозиції виконавців</div>
-                    @foreach($proposals as $comment)
-                        <div class="d-flex flex-row mb-3 mt-2 {{ Auth::user()->id == $order->id_customer ? 'pointer' : ''}}">
-                            <div class="col-1 px-0 min-width-70 pointer to-profile" data-id="{{$comment->id_user}}">
-                                <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
-                            </div>
-                            <div class="col-9 shadow bg-white" data-id="{{$comment->id_user}}">
-                                <div class="flex-row" @if(Auth::user()->isCustomer()) data-toggle="collapse" data-target="#w-id-{{ $comment->id_user }}" aria-expanded="true"@endif>
-                                    <div class="font-weight-bold mt-2"><span class="pointer to-profile" data-id="{{$comment->id_user}}">{{$comment->name}} {{$comment->surname}}</span></div>
-                                    <div class="">{{$comment->text}}</div>
-                                    <div class="text-right font-size-10">{{$comment->created_at}}</div>
+                        @foreach($proposals as $comment)
+                            <div class="d-flex flex-row mb-3 mt-2 {{ Auth::user()->id == $order->id_customer ? 'pointer' : ''}}">
+                                <div class="col-1 px-0 min-width-70 pointer to-profile" data-id="{{$comment->id_user}}">
+                                    <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
                                 </div>
-                                @if(Auth::id() == $order->id_customer && $order->status == 'new')
-                                    <form method="POST" action="{{route('select_worker', $order->id_order)}}" class="col c_rounded select_worker">
-                                        @csrf
-                                        <div class="collapse" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
-                                            <button type="submit" class="col-lg-3 col-6 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="selected_worker" value="{{$comment->id_user}}">Підтвердити</button>
-                                        </div>
-                                    </form>
-                                @endif
+                                <div class="col-9 shadow bg-white" data-id="{{$comment->id_user}}">
+                                    <div class="flex-row" @if(Auth::user()->isCustomer()) data-toggle="collapse" data-target="#w-id-{{ $comment->id_user }}" aria-expanded="true"@endif>
+                                        <div class="font-weight-bold mt-2"><span class="pointer to-profile" data-id="{{$comment->id_user}}">{{$comment->name}} {{$comment->surname}}</span></div>
+                                        <div class="">{{$comment->text}}</div>
+                                        <div class="text-right font-size-10">{{$comment->created_at}}</div>
+                                    </div>
+                                    @if(Auth::id() == $order->id_customer && $order->status == 'new')
+                                        <form method="POST" action="{{route('select_worker', $order->id_order)}}" class="col c_rounded select_worker">
+                                            @csrf
+                                            <div class="collapse" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
+                                                <button type="submit" class="col-lg-3 col-6 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="selected_worker" value="{{$comment->id_user}}">Підтвердити</button>
+                                            </div>
+                                        </form>
+                                    @endif
+                                </div>
+                                <div class="col c_rounded-right bg-green text-white mt-3 align-self-end" style="height: 54px; !important;">
+                                    <div class="text-center font-weight-bold mt-1">{{$comment->price}}&nbsp;</div>
+                                    <div class="text-right font-italic font-size-10 mt-2">{{$comment->time}}&nbsp;</div>
+                                </div>
                             </div>
-                            <div class="col c_rounded-right bg-green text-white mt-3 align-self-end" style="height: 54px; !important;">
-                                <div class="text-center font-weight-bold mt-1">{{$comment->price}}&nbsp;</div>
-                                <div class="text-right font-italic font-size-10 mt-2">{{$comment->time}}&nbsp;</div>
-                            </div>
-                        </div>
-                    @endforeach
+                        @endforeach
                     @elseif(count($proposals) == 0)
                         <div class="font-weight-bold font-size-18 mb-4 mt-4">Немає залишених пропозицій</div>
                     @endif
