@@ -260,19 +260,24 @@ $("document").ready(function() {
                 $('#orders-list').append(order);
             }
 
-            let pagination = `<button class="btn btn-outline-p"><<</button>&nbsp;<button class="btn btn-outline-p"><</button>&nbsp;`;
-
             if (page > Math.ceil(count / 10)) {
                 page = parseInt($('.pagination-num:last').text());
             }
 
+            let pagination = `<button class="btn btn-outline-p"` + (page === 1 ? 'disabled' : '') + `><<</button>&nbsp;
+                            <button class="btn btn-outline-p" ` + (page === 1 ? 'disabled' : '') + `><</button>&nbsp;`;
+
             for (let i = 1; i <= Math.ceil(count / 10); i++) {
-                pagination += `<button class="pagination-num btn btn-outline-p` + (page === i ? ' pagination-selected' : ' ') + `" id="num-` + i + `">` + i + `</button>&nbsp;`;
+                pagination += `<button class="pagination-num btn btn-outline-p ` + (page === i ? 'pagination-selected" disabled' : '"') + ` id="num-` + i + `">` + i + `</button>&nbsp;`;
             }
 
-            pagination += `<button class="btn btn-outline-p">></button>&nbsp;<button class="btn btn-outline-p">>></button>`;
+            pagination += `<button class="btn btn-outline-p" ` + (page === Math.ceil(count / 10) ? 'disabled' : '') + `>></button>&nbsp;
+                        <button class="btn btn-outline-p" ` + (page === Math.ceil(count / 10) ? 'disabled' : '') + `>>></button>`;
 
             $('#pagination').append(pagination);
+            $('#pagination').removeClass('d-flex');
+            $('#pagination').removeClass('d-none');
+            $('#pagination').addClass(Math.ceil(count / 10) < 2 ? 'd-none' : 'd-flex');
         }
         else {
             $('#drop-filter').addClass('d-none');

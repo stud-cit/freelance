@@ -316,18 +316,21 @@ $("document").ready(function () {
         $('#orders-list').append(order);
       }
 
-      var pagination = "<button class=\"btn btn-outline-p\"><<</button>&nbsp;<button class=\"btn btn-outline-p\"><</button>&nbsp;";
-
       if (page > Math.ceil(count / 10)) {
         page = parseInt($('.pagination-num:last').text());
       }
 
+      var pagination = "<button class=\"btn btn-outline-p\"" + (page === 1 ? 'disabled' : '') + "><<</button>&nbsp;\n                            <button class=\"btn btn-outline-p\" " + (page === 1 ? 'disabled' : '') + "><</button>&nbsp;";
+
       for (var _i = 1; _i <= Math.ceil(count / 10); _i++) {
-        pagination += "<button class=\"pagination-num btn btn-outline-p" + (page === _i ? ' pagination-selected' : ' ') + "\" id=\"num-" + _i + "\">" + _i + "</button>&nbsp;";
+        pagination += "<button class=\"pagination-num btn btn-outline-p " + (page === _i ? 'pagination-selected" disabled' : '"') + " id=\"num-" + _i + "\">" + _i + "</button>&nbsp;";
       }
 
-      pagination += "<button class=\"btn btn-outline-p\">></button>&nbsp;<button class=\"btn btn-outline-p\">>></button>";
+      pagination += "<button class=\"btn btn-outline-p\" " + (page === Math.ceil(count / 10) ? 'disabled' : '') + ">></button>&nbsp;\n                        <button class=\"btn btn-outline-p\" " + (page === Math.ceil(count / 10) ? 'disabled' : '') + ">>></button>";
       $('#pagination').append(pagination);
+      $('#pagination').removeClass('d-flex');
+      $('#pagination').removeClass('d-none');
+      $('#pagination').addClass(Math.ceil(count / 10) < 2 ? 'd-none' : 'd-flex');
     } else {
       $('#drop-filter').addClass('d-none');
       $('#orders-list').append("<div class=\"flex-row\">\n                        <div class=\"col font-weight-bold font-size-18 text-center mt-4\">\u041D\u0435\u043C\u0430\u0454 \u0437\u0430\u043C\u043E\u0432\u043B\u0435\u043D\u043D\u044C \u0437 \u0442\u0430\u043A\u0438\u043C\u0438 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C\u0438</div>\n                    </div>");

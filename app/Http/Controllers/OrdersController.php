@@ -182,8 +182,7 @@ class OrdersController extends Controller
         $proposals = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
             ->where([['id_order', $id], ['blocked', false]])
-            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
-            ->toArray();
+            ->paginate(5);
 
         foreach ($proposals as $one) {
             if (Storage::disk('public')->has($one->id_user . '.png')) {
