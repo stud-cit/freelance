@@ -45,7 +45,7 @@ $("document").ready(function() {
         }
     });
 
-    $("button[type='reset']").on('click', function (e) {
+    $(".badges_reset").on('click', function (e) {
         e.preventDefault();
         $(this).closest('form').get(0).reset();
         theme_badges_build();
@@ -79,18 +79,19 @@ $("document").ready(function() {
     $('button[name="delete_proposal"]').on('click', function (e) {
         if ($(this).attr('type') !== 'reset') {
             e.preventDefault();
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                method: 'post',
-                url: '/delete_proposal',
-                data: {'location': window.location.href},
-                success: function (response) {
-                    document.location.reload(true);
-                },
-            });
+            if(confirm('Ви впевнені?')) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'post',
+                    url: '/delete_proposal',
+                    data: {'location': window.location.href},
+                    success: function (response) {
+                        document.location.reload(true);
+                    }
+                });
+            }
         }
     });
 

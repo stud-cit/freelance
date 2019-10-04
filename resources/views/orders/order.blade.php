@@ -45,7 +45,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <form method="POST" action="{{ route('delete_order', $order->id_order) }}">
+                        <form method="POST" action="{{ route('delete_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
                             @csrf
                             <button class="btn badge-pill text-white bg-danger px-0 mt-4 mb-2 w-100">
                                 Видалити замовлення
@@ -58,7 +58,7 @@
                     <div class="col-3 offset-5">
                         <form method="POST" action="{{route('finish_order', $order->id_order)}}">
                             @csrf
-                            <button type="submit" class="btn badge-pill text-white bg-deep-blue mt-4 mb-2">
+                            <button type="submit" class="btn badge-pill text-white bg-deep-blue mt-4 mb-2" onsubmit="return confirm('Ви впевнені?');">
                                 Замовлення виконано
                             </button>
                         </form>
@@ -214,7 +214,7 @@
                             </div>
                             <div class="form-group row">
                                 <button type="submit" class="col-2 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="edit_order">Підтвердити</button>
-                                <button type="reset" class="col-2 btn badge-pill mb-2 px-0">Скинути</button>
+                                <button type="reset" class="col-2 btn badge-pill mb-2 px-0 badges_reset">Скинути</button>
                             </div>
                         </form>
                     </div>

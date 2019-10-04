@@ -95,7 +95,7 @@
                         </div>
                         <div class="form-group row">
                             <button type="submit" class="col-2 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="add_order">Підтвердити</button>
-                            <button type="reset" class="col-2 btn badge-pill mb-2 px-0">Скинути</button>
+                            <button type="reset" class="col-2 btn badge-pill mb-2 px-0 badges_reset">Скинути</button>
                         </div>
                     </form>
                 </div>
