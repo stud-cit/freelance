@@ -18,6 +18,7 @@ class ProposalsTableSeeder extends Seeder
             'time' => '1 day',
             'id_order' => 1,
             'id_worker' => 3,
+            'blocked' => false,
             'created_at' => Carbon::now(),
         ]);
     }

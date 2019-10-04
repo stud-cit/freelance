@@ -15,7 +15,7 @@ class UsersController extends Controller
 {
     public function workers()
     {
-        $data = User::getUsersInfo('id_role', 3);
+        $data = User::getUsersInfo('id_role', 3, 10);
 
         foreach ($data as $worker) {
             $created_at = explode(' ', $worker->created_at);
@@ -47,8 +47,7 @@ class UsersController extends Controller
         $reviews = DB::table('reviews')
             ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')
             ->where('id_to', Auth::id())
-            ->get()
-            ->toArray();
+            ->paginate(5);
 
         foreach ($reviews as $review) {
             if (Storage::disk('public')->has($review->id_user . '.png')) {
@@ -121,7 +120,7 @@ class UsersController extends Controller
 
         $req->session()->flash('alert-success', 'Контакти користувача успішно оновлено!');
 
-        return back();
+        return redirect('/profile');
     }
 
     public function save_skills(Request $req)
@@ -137,7 +136,7 @@ class UsersController extends Controller
 
         $req->session()->flash('alert-success', 'Навички користувача успішно оновлено!');
 
-        return back();
+        return redirect('/profile');
     }
 
     public function change_pass(Request $req)
@@ -146,7 +145,7 @@ class UsersController extends Controller
 
         $req->session()->flash('alert-success', 'Пароль успішно змінено!');
 
-        return back();
+        return redirect('/profile');
     }
 
     public function save_review(Request $req)
@@ -166,7 +165,7 @@ class UsersController extends Controller
 
         $req->session()->flash('alert-success', 'Відгук успішно залишено!');
 
-        return back();
+        return redirect('/profile');
     }
 
     public function save_about_me(Request $req)
@@ -175,7 +174,7 @@ class UsersController extends Controller
 
         $req->session()->flash('alert-success', 'Додаткову інформацію про користувача успішно оновлено!');
 
-        return back();
+        return redirect('/profile');
     }
 
     public function save_info(Request $req)
@@ -215,7 +214,7 @@ class UsersController extends Controller
 
         $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
 
-        return back();
+        return redirect('/profile');
     }
 
     public function user($id)
@@ -240,8 +239,7 @@ class UsersController extends Controller
         $reviews = DB::table('reviews')
             ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')
             ->where('id_to', $id)
-            ->get()
-            ->toArray();
+            ->paginate(5);
 
         foreach ($reviews as $review) {
             if (Storage::disk('public')->has($review->id_user . '.png')) {

@@ -102,7 +102,7 @@
                         </div>
 
                         <div class="col-lg-5 col-12">
-                            <a href="{{ route('login') }}" class="btn btn-outline-secondary badge-pill w-100">
+                            <a href="{{ route('login') }}" class="btn btn-outline-p badge-pill w-100">
                                 Вхід в акаунт
                             </a>
                         </div>

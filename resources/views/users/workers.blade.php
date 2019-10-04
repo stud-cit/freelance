@@ -34,6 +34,7 @@
                     </div>
                 @endforeach
             </div>
+            {{ $data->links('layouts.pagination') }}
         </div>
     </div>
 </div>

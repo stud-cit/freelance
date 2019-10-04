@@ -158,11 +158,10 @@ class OrdersController extends Controller
         $my_proposal = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
             ->where([['id_order', $id], ['id_worker', Auth::id()]])
-            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
+            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at', 'blocked'])
             ->first();
 
         if (!is_null($my_proposal)) {
-
             if (!is_null($my_proposal->price)) {
                 $temp = explode(' ', $my_proposal->price);
                 $my_proposal->price = $temp[0];
@@ -182,9 +181,8 @@ class OrdersController extends Controller
 
         $proposals = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
-            ->where('id_order', $id)
-            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at'])
-            ->toArray();
+            ->where([['id_order', $id], ['blocked', false]])
+            ->paginate(5);
 
         foreach ($proposals as $one) {
             if (Storage::disk('public')->has($one->id_user . '.png')) {
@@ -252,16 +250,18 @@ class OrdersController extends Controller
     {
         if (!is_null($req->text)) {
             $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
+            $worker = $worker->id_worker;
 
             $values = [
                 'text' => $req->text,
                 'rating' => $req->rating,
                 'id_from' => Auth::id(),
-                'id_to' => $worker->id_worker,
+                'id_to' => $worker,
                 'id_order' => $req->id,
                 'created_at' => Carbon::now(),
             ];
 
+            DB::table('proposals')->where([['id_order', $req->id], ['id_worker', $worker]])->update(['blocked' => true]);
             DB::table('reviews')->insert($values);
         }
 
@@ -303,6 +303,7 @@ class OrdersController extends Controller
                 'time' => $time,
                 'id_order' => $req->id,
                 'id_worker' => Auth::id(),
+                'blocked' => false,
                 'created_at' => Carbon::now(),
             ];
 
