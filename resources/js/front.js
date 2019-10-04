@@ -268,7 +268,7 @@ $("document").ready(function() {
                             <button class="btn btn-outline-p" ` + (page === 1 ? 'disabled' : '') + `><</button>&nbsp;`;
 
             for (let i = 1; i <= Math.ceil(count / 10); i++) {
-                pagination += `<button class="pagination-num btn btn-outline-p ` + (page === i ? 'pagination-selected" disabled' : '"') + ` id="num-` + i + `">` + i + `</button>&nbsp;`;
+                pagination += `<button class="pagination-num btn btn-outline-p ` + (page === i ? 'pagination-selected active' : '') + `" id="num-` + i + `">` + i + `</button>&nbsp;`;
             }
 
             pagination += `<button class="btn btn-outline-p" ` + (page === Math.ceil(count / 10) ? 'disabled' : '') + `>></button>&nbsp;

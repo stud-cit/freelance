@@ -323,7 +323,7 @@ $("document").ready(function () {
       var pagination = "<button class=\"btn btn-outline-p\"" + (page === 1 ? 'disabled' : '') + "><<</button>&nbsp;\n                            <button class=\"btn btn-outline-p\" " + (page === 1 ? 'disabled' : '') + "><</button>&nbsp;";
 
       for (var _i = 1; _i <= Math.ceil(count / 10); _i++) {
-        pagination += "<button class=\"pagination-num btn btn-outline-p " + (page === _i ? 'pagination-selected" disabled' : '"') + " id=\"num-" + _i + "\">" + _i + "</button>&nbsp;";
+        pagination += "<button class=\"pagination-num btn btn-outline-p " + (page === _i ? 'pagination-selected active' : '') + "\" id=\"num-" + _i + "\">" + _i + "</button>&nbsp;";
       }
 
       pagination += "<button class=\"btn btn-outline-p\" " + (page === Math.ceil(count / 10) ? 'disabled' : '') + ">></button>&nbsp;\n                        <button class=\"btn btn-outline-p\" " + (page === Math.ceil(count / 10) ? 'disabled' : '') + ">>></button>";

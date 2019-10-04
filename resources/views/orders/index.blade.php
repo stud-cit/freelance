@@ -125,7 +125,7 @@
                 <div id="pagination" class="flex-row justify-content-center mb-3 {{ceil($info['count'] / 10) < 2 ? 'd-none' : 'd-flex'}}">
                     <button class="btn btn-outline-p" disabled><<</button>&nbsp;
                     <button class="btn btn-outline-p" disabled><</button>&nbsp;
-                    <button class="pagination-num pagination-selected btn btn-outline-p" id="num-1" disabled>1</button>&nbsp;
+                    <button class="pagination-num pagination-selected btn btn-outline-p active" id="num-1" >1</button>&nbsp;
                     @for($i = 2; $i <= ceil($info['count'] / 10); $i++)
                         <button class="pagination-num btn btn-outline-p" id="num-{{$i}}">{{$i}}</button>&nbsp;
                     @endfor
