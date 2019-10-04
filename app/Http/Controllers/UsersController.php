@@ -15,7 +15,7 @@ class UsersController extends Controller
 {
     public function workers()
     {
-        $data = User::getUsersInfo('id_role', 3);
+        $data = User::getUsersInfo('id_role', 3, 10);
 
         foreach ($data as $worker) {
             $created_at = explode(' ', $worker->created_at);
@@ -47,8 +47,7 @@ class UsersController extends Controller
         $reviews = DB::table('reviews')
             ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')
             ->where('id_to', Auth::id())
-            ->get()
-            ->toArray();
+            ->paginate(5);
 
         foreach ($reviews as $review) {
             if (Storage::disk('public')->has($review->id_user . '.png')) {
@@ -240,8 +239,7 @@ class UsersController extends Controller
         $reviews = DB::table('reviews')
             ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')
             ->where('id_to', $id)
-            ->get()
-            ->toArray();
+            ->paginate(5);
 
         foreach ($reviews as $review) {
             if (Storage::disk('public')->has($review->id_user . '.png')) {

@@ -254,7 +254,7 @@
                         <div class="font-weight-bold font-size-18 mb-4 mt-4">Немає залишених пропозицій</div>
                     @endif
                 </div>
-                {{ $proposals->links() }}
+                {{ $proposals->links('layouts.pagination') }}
             </div>
         </div>
 {{--        <div class="col-3 offset-1 px-0 mt-4">--}}

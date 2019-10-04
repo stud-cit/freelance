@@ -68,6 +68,7 @@
                             </div>
                         </div>
                     @endforeach
+                    {{ $reviews->links('layouts.pagination') }}
                 @endif
         </div>
     </div>
