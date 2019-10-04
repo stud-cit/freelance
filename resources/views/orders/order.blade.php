@@ -56,9 +56,9 @@
             @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer)
                 <div class="row">
                     <div class="col-3 offset-5">
-                        <form method="POST" action="{{route('finish_order', $order->id_order)}}">
+                        <form method="POST" action="{{route('finish_order', $order->id_order)}}" onsubmit="return confirm('Ви впевнені?');">
                             @csrf
-                            <button type="submit" class="btn badge-pill text-white bg-deep-blue mt-4 mb-2" onsubmit="return confirm('Ви впевнені?');">
+                            <button type="submit" class="btn badge-pill text-white bg-deep-blue mt-4 mb-2">
                                 Замовлення виконано
                             </button>
                         </form>
