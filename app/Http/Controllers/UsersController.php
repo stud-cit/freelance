@@ -74,7 +74,8 @@ class UsersController extends Controller
         $proposals = DB::table('orders')
             ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
             ->join('users_info', 'users_info.id_user', '=', 'orders.id_customer')
-            ->where('proposals.id_worker', Auth::id())
+            ->where([['proposals.id_worker', Auth::id()], ['status', 'new']])
+            ->orWhere([['orders.id_worker', Auth::id()], ['status', '!=', 'new']])
             ->get()
             ->toArray();
 

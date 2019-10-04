@@ -404,7 +404,7 @@
                     <div class="tab-pane fade row orders" id="nav-active-w" role="tabpanel" aria-labelledby="nav-active-tab">
                         @php($i = 0)
                         @foreach($proposals as $active)
-                            @if($active->status == 'in progress' && $active->id_worker == Auth::id())
+                            @if($active->status == 'in progress')
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
@@ -428,7 +428,7 @@
                     <div class="tab-pane fade row orders" id="nav-complete-w" role="tabpanel" aria-labelledby="nav-complete-tab">
                         @php($i = 0)
                         @foreach($proposals as $complete)
-                            @if($complete->status == 'complete' && $complete->id_worker == Auth::id())
+                            @if($complete->status == 'complete')
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
