@@ -6,6 +6,9 @@
 
 @section('content')
 
+@php($users = $data['users'])
+@php($orders = $data['orders'])
+
 <div class="container">
     <div class="row">
         <div class="col-9">
@@ -18,48 +21,47 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-ban" role="tabpanel" aria-labelledby="nav-ban-tab">
                     <div class="container">
-                        <div class="d-flex flex-row mb-3 mt-2 pointer to-profile" data-id="">
-                            <div class="col-1 px-0 min-width-90">
-                                <img src="" class="mt-1 square-80 avatar square">
-                            </div>
-                            <div class="col-11 shadow bg-white" data-id="">
-                                <div class="flex-row">
-                                    <div class="font-weight-bold font-size-18 mt-2"><span class="" data-id="">Doot Dooted</span></div>
-                                    <div class="tag-list">
+                        @foreach($users as $ban)
+                        <form action="">
+                            <div class="d-flex flex-row mb-3 mt-2 pointer to-profile" data-id="{{$ban->id_user}}">
+                                <div class="col-1 px-0 min-width-90">
+                                    <img src="{{$ban->avatar}}" class="mt-1 square-80 avatar square">
+                                </div>
+                                <div class="col-11 shadow bg-white" data-id="{{$ban->id_user}}">
+                                    <div class="flex-row">
+                                        <div class="font-weight-bold font-size-18 mt-2"><span data-id="{{$ban->id_user}}">{{$ban->name}} {{$ban->surname}}</span></div>
+                                        <div class="text-right font-size-10">Дата реєстрації: {{$ban->created_at}}</div>
                                     </div>
-                                    <div>asdasdadads</div>
-                                    <div class="text-right font-size-10">Дата реєстрації: 20.10.1220</div>
-                                </div>
-                                <div class="col-3 offset-9">
-                                    <button class="btn btn-danger mb-2">asd</button>
+                                    <div class="col-2 offset-10">
+                                        <button class="btn btn-danger my-2">Заблокувати</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
+                        @endforeach
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-orders" role="tabpanel" aria-labelledby="nav-orders-tab">
                     <div class="container orders" id="orders-list">
-                        <div class="flex-row mb-3 mt-2 d-flex">
-                            <div class="col-10 shadow bg-white work-order pointer" data-id="">
-                                <div class="font-weight-bold mt-2 order-title">qwqweqwe</div>
-                                <div class="tag-list">asdaasd
-                                </div>
-                                <div>qweqweq</div>
-                                <div class="text-right font-size-10">asdad</div>
-                                <div class="row">
-                                    <div class="col-3 offset-6">
-                                        <button class="btn mb-2">asd1</button>
-                                    </div>
-                                    <div class="col-3 ">
-                                        <button class="btn btn-danger mb-2">asd2</button>
+                        @foreach($orders as $all)
+                        <form action="">
+                            <div class="flex-row mb-3 mt-2 d-flex">
+                                <div class="col-12 shadow bg-white work-order pointer" data-id="{{$all->id_order}}">
+                                    <div class="font-weight-bold mt-2 order-title">{{$all->title}}</div>
+                                    <div>{{strlen($all->description) > 50 ? substr($all->description, 0, 50) . '...' : $all->description}}</div>
+                                    <div class="text-right font-size-10">Створено: {{$all->created_at}}</div>
+                                    <div class="row mt-2">
+                                        <div class="col-2 offset-8">
+                                            <button class="btn bg-blue text-white mb-2">Завершити</button>
+                                        </div>
+                                        <div class="col-2">
+                                            <button class="btn btn-danger mb-2">Видалити</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end text-nowrap" style="height: 54px;">
-                                <div class="text-center font-weight-bold m-1"></div>
-                                <div class="text-right font-italic font-size-10 mt-2 pr-2"></div>
-                            </div>
-                        </div>
+                        </form>
+                        @endforeach
                     </div>
                 </div>
             </div>
