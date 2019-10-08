@@ -20,7 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'id_role', 'email', 'password',
+        'id_role', 'email', 'password', 'banned',
     ];
 
     /**
@@ -42,24 +42,15 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     function isAdmin() {
-        $id = Auth::id();
-        $user = DB::table('users')->where('id', $id)->get('id_role')->first();
-
-        return $user->id_role == 1;
+        return Auth::user()->id_role == 1;
     }
 
     function isCustomer() {
-        $id = Auth::id();
-        $user = DB::table('users')->where('id', $id)->get('id_role')->first();
-
-        return $user->id_role == 2;
+        return Auth::user()->id_role == 2;
     }
 
     function isWorker() {
-        $id = Auth::id();
-        $user = DB::table('users')->where('id', $id)->get('id_role')->first();
-
-        return $user->id_role == 3;
+        return Auth::user()->id_role == 3;
     }
 
     function getAvatarPath() {

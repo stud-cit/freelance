@@ -30,3 +30,7 @@ Route::get('/profile/{id}', 'UsersController@user')->name('user');
 Route::get('/', 'HomeController@index');
 
 Route::get('/admin', 'AdminController@index')->middleware('is.admin');
+Route::post('/ban_user', 'AdminController@ban')->name('ban');
+Route::post('/unban_user', 'AdminController@unban')->name('unban');
+Route::post('/finish', 'AdminController@finish_order')->name('finish');
+Route::post('/delete', 'AdminController@delete_order')->name('delete');

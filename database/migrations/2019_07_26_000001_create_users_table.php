@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_role')->unsigned();
             $table->foreign('id_role')->references('id_role')->on('roles');
+            $table->boolean('banned');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

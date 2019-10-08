@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
        	DB::table('users')->insert([
        	    'id_role' => 1,
             'email' => 'admin@gmail.com',
+            'banned' => false,
             'password' => bcrypt('admin'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
@@ -23,6 +24,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'id_role' => 2,
             'email' => 'customer@gmail.com',
+            'banned' => false,
             'password' => bcrypt('customer'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
@@ -31,6 +33,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'id_role' => 3,
             'email' => 'worker@gmail.com',
+            'banned' => false,
             'password' => bcrypt('worker'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

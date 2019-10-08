@@ -19,21 +19,21 @@
             <a href= "{{ route('orders') }}" class="btn font-weight-bold font-size-18">&#10094; Пошук</a>
         </div>
         <div class="col-9 text-white c_rounded bg-blue">
-                <div class="row mt-4">
-                    <div class="col-8 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
-                    <div class="col-3">
-                        <div class="col font-weight-bold font-size-18"><span class="font-size-10">
-                                @if(!is_null($order->price))
-                                Ціна:</span>&nbsp{{$order->price}}
-                                @endif
-                        </div>
-                        <div class="col font-weight-bold font-size-18"><span class="font-size-10">
-                                @if(!is_null($order->time))
-                                Час:</span>&nbsp&nbsp{{$order->time}}
-                                @endif
-                        </div>
+            <div class="row mt-4">
+                <div class="col-8 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
+                <div class="col-3">
+                    <div class="col font-weight-bold font-size-18"><span class="font-size-10">
+                        @if(!is_null($order->price))
+                            Ціна:</span>&nbsp;{{$order->price}}
+                        @endif
+                    </div>
+                    <div class="col font-weight-bold font-size-18"><span class="font-size-10">
+                        @if(!is_null($order->time))
+                            Час:</span>&nbsp;&nbsp;{{$order->time}}
+                        @endif
                     </div>
                 </div>
+            </div>
             <div class="offset-1">
                 @foreach($categories as $tags)
                     <span class="tags font-italic font-size-10">{{$tags->name}}</span>
@@ -41,11 +41,11 @@
                 <div class="mt-4 font-size-10">{{$order->description}}</div>
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
-            @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked))
+            @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
                 <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 mb-2" data-toggle="collapse" data-target="#prop" aria-expanded="true">
                     {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
                 </button>
-            @elseif(Auth::id() == $order->id_customer && $order->status == 'new')
+            @elseif(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                 <div class="row">
                     <div class="col-3 offset-5">
                         <button class="btn badge-pill text-white bg-deep-blue mt-4 mb-2" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
@@ -61,7 +61,7 @@
                         </form>
                     </div>
                 </div>
-            @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer)
+            @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
                 <div class="row">
                     <div class="col-3 offset-5">
                         <form method="POST" action="{{route('finish_order', $order->id_order)}}" onsubmit="return confirm('Ви впевнені?');">
@@ -94,7 +94,7 @@
             </div>
         </div>
         <div class="col-9 mt-4 px-0">
-            @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked))
+            @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
                 <div id="prop" class="collapse">
                     <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
                     <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2 bg-white shadow c_rounded">
@@ -131,7 +131,7 @@
                         </div>
                     </form>
                 </div>
-            @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer)
+            @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
                 <div id="accepted_order" class="collapse">
                     <p class="font-size-18 font-weight-bold">Залишити відгук виконавцю</p>
                     <form method="POST" action="{{ route('change_worker', $order->id_order) }}" class="col bg-white shadow c_rounded">
@@ -163,7 +163,7 @@
                     </form>
                 </div>
             @endif
-            @if(Auth::id() == $order->id_customer && $order->status == 'new')
+            @if(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                 <div class="container collapse" id="edit-order">
                     <div class="d-flex flex-row">
                         <form class="col bg-white shadow" method="POST" action="{{route('edit_order', $order->id_order)}}">
@@ -233,17 +233,17 @@
                     @if(count($proposals) != 0)
                         <div class="font-weight-bold font-size-18 mt-4">Пропозиції виконавців</div>
                         @foreach($proposals as $comment)
-                            <div class="d-flex flex-row mb-3 mt-2 {{ Auth::user()->id == $order->id_customer ? 'pointer' : ''}}">
+                            <div class="d-flex flex-row mb-3 mt-2 {{ Auth::user()->id == $order->id_customer && !Auth::user()->banned ? 'pointer' : ''}}">
                                 <div class="col-1 px-0 min-width-70 pointer to-profile" data-id="{{$comment->id_user}}">
                                     <img src="{{$comment->avatar}}" class="mt-1 square-60 avatar square">
                                 </div>
                                 <div class="col-9 shadow bg-white" data-id="{{$comment->id_user}}">
-                                    <div class="flex-row" @if(Auth::user()->isCustomer()) data-toggle="collapse" data-target="#w-id-{{ $comment->id_user }}" aria-expanded="true"@endif>
+                                    <div class="flex-row" @if(Auth::id() == $order->id_customer && !Auth::user()->banned) data-toggle="collapse" data-target="#w-id-{{ $comment->id_user }}" aria-expanded="true"@endif>
                                         <div class="font-weight-bold mt-2"><span class="pointer to-profile" data-id="{{$comment->id_user}}">{{$comment->name}} {{$comment->surname}}</span></div>
                                         <div class="">{{$comment->text}}</div>
                                         <div class="text-right font-size-10">{{$comment->created_at}}</div>
                                     </div>
-                                    @if(Auth::id() == $order->id_customer && $order->status == 'new')
+                                    @if(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                                         <form method="POST" action="{{route('select_worker', $order->id_order)}}" class="col c_rounded select_worker">
                                             @csrf
                                             <div class="collapse" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
