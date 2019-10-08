@@ -16,6 +16,7 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-ban-tab" data-toggle="tab" href="#nav-ban" role="tab" aria-controls="nav-ban" aria-selected="true">Робота з користувачами</a>
                     <a class="nav-item nav-link" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Робота з замовленнями</a>
+                    <a class="nav-item nav-link" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -79,6 +80,94 @@
                                 <div class="col font-weight-bold font-size-18 text-center mt-4">Немає залишених замовленнь</div>
                             </div>
                         @endif
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
+                    <div class="container">
+                        <form method="POST" action="{{ route('register') }}" class="col-9 mt-3">
+                            @csrf
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex flex-row">
+                                    <div class="">&nbsp;</div>
+                                    <div class="d-flex flex-column">
+                                        <label for="name" class="col-form-label">Ім'я</label>
+                                        <input id="name" type="text" class="form-control border-0" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                </li>
+
+                                <li class="list-group-item d-flex flex-row">
+                                    <div class="">&nbsp;</div>
+                                    <div class="d-flex flex-column">
+                                        <label for="surname" class="col-form-label">Прізвище</label>
+                                        <input id="surname" type="text" class="form-control border-0" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus placeholder="Прізвище">
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                </li>
+
+                                <li class="list-group-item d-flex flex-row">
+                                    <div class="">&nbsp;</div>
+                                    <div class="d-flex flex-column">
+                                        <label for="id_role" class="col-form-label">Роль</label>
+                                        <select id="id_role" class="form-control border-0" name="id_role">
+                                            <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}}>Виконавець</option>
+                                            <option {{old('id_role') == 'Замовник' ? 'selected' : ''}}>Замовник</option>
+                                        </select>
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                </li>
+
+                                <li class="list-group-item d-flex flex-row">
+                                    <div class="">&nbsp;</div>
+                                    <div class="d-flex flex-column">
+                                        <label for="name" class="col-form-label">Електронна адреса</label>
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
+
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                </li>
+
+                                <li class="list-group-item d-flex flex-row">
+                                    <div class="">&nbsp;</div>
+                                    <div class="d-flex flex-column">
+                                        <label for="name" class="col-form-label">Пароль</label>
+
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror border-0" name="password" required autocomplete="new-password" placeholder="********">
+
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                </li>
+
+                                <li class="list-group-item d-flex flex-row">
+                                    <div class="">&nbsp;</div>
+                                    <div class="d-flex flex-column">
+                                        <label for="name" class="col-form-label">Повторіть пароль</label>
+
+                                        <input id="password-confirm" type="password" class="form-control border-0" name="password_confirmation" required autocomplete="new-password" placeholder="********">
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                </li>
+
+                            </ul>
+
+                            <div class="form-group row mt-5">
+                                <div class="col-6 offset-3">
+                                    <button type="submit" class="btn text-white badge-pill w-100 bg-violet">
+                                        Реєстрація
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
