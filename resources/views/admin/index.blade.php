@@ -17,7 +17,7 @@
                     <a class="nav-item nav-link @if($errors->isEmpty())active @endif" id="nav-ban-tab" data-toggle="tab" href="#nav-ban" role="tab" aria-controls="nav-ban" aria-selected="true">Робота з користувачами</a>
                     <a class="nav-item nav-link" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Робота з замовленнями</a>
                     <a class="nav-item nav-link @if(!$errors->isEmpty())active @endif" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
-                    <a class="nav-item nav-link" id="nav-cathedra-tab" data-toggle="tab" href="#nav-cathedra" role="tab" aria-controls="nav-cathedra" aria-selected="false">Редагування кафедр</a>
+                    <a class="nav-item nav-link" id="nav-dept-tab" data-toggle="tab" href="#nav-dept" role="tab" aria-controls="nav-dept" aria-selected="false">Редагування кафедр</a>
                     <a class="nav-item nav-link" id="nav-categories-tab" data-toggle="tab" href="#nav-categories" role="tab" aria-controls="nav-categories" aria-selected="false">Редагуваня категорій</a>
                 </div>
             </nav>
@@ -171,14 +171,32 @@
                         </form>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="nav-cathedra" role="tabpanel" aria-labelledby="nav-cathedra-tab">
-                    <div class="container">
-                        <form action=""></form>
+                <div class="tab-pane fade" id="nav-dept" role="tabpanel" aria-labelledby="nav-dept-tab">
+                    <div class="container" id="dept">
+                        <form action="">
+                            <div class="toggle-box">
+                                <div class="form-row input-group">
+                                    @php($i=0)
+                                    <input type="text" class="form-control col-10" id="dept-{{ $i }}">
+                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">
+                                </div>
+                            </div>
+                            <button class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>
+                        </form>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab">
-                    <div class="container">
-                        <form action=""></form>
+                    <div class="container" id="cat">
+                        <form action="">
+                            <div class="toggle-box">
+                                <div class="form-row input-group">
+                                    @php($i=0)
+                                    <input type="text" class="form-control col-10" id="cat-{{ $i }}">
+                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">
+                                </div>
+                            </div>
+                            <button class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>
+                        </form>
                     </div>
                 </div>
             </div>
