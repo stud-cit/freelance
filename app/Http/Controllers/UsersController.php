@@ -142,11 +142,32 @@ class UsersController extends Controller
 
     public function change_pass(Request $req)
     {
-        Auth::user()->update(['password' => HASH::make($req->new_password)]);
+        $check1 = HASH::check($req->old_password, Auth::user()->password);
+        $check2 = strlen($req->new_password) >= 8;
+        $check3 = strcmp($req->new_password, $req->new_password_confirmation) === 0;
 
-        $req->session()->flash('alert-success', 'Пароль успішно змінено!');
+        if ($check1 && $check2 && $check3) {
+            Auth::user()->update(['password' => HASH::make($req->new_password)]);
 
-        return redirect('/profile');
+            $req->session()->flash('alert-success', 'Пароль успішно змінено!');
+
+            return redirect('/profile');
+        }
+        else {
+            $errors = [];
+
+            if (!$check1) {
+                $errors['old_password'] = 'Невірний старий пароль!';
+            }
+            if (!$check2) {
+                $errors['new_password'] = 'Пароль має містити не менше восьми символів!';
+            }
+            else if (!$check3) {
+                $errors['new_password'] = 'Паролі мають співпадати!';
+            }
+
+            return redirect('/profile')->withInput($req->all())->withErrors($errors);
+        }
     }
 
     public function save_review(Request $req)

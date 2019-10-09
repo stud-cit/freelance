@@ -61,17 +61,6 @@ $("document").ready(function() {
         }
     });
 
-    $('.pass_change').on('submit', function (e) {
-        let pass = $("input[name = 'new_password']"),
-            new_pass = $("input[name = 'new_password_confirmation']");
-
-        if (pass.val().length < 8 || pass.val() !== new_pass.val()) {
-            e.preventDefault();
-            $('.invalid-feedback').text(pass.val().length < 8 ? 'Довжина паролю має бути хоча б 8 символів' : 'Паролі не співпадають');
-            new_pass.addClass('is-invalid');
-        }
-    });
-
     $('#rating').on('input', function () {
         $('#rating_val').text($(this).val());
     });
