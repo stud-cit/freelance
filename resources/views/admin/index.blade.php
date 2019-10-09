@@ -11,19 +11,21 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-9">
+        <div class="col">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link @if($errors->isEmpty())active @endif" id="nav-ban-tab" data-toggle="tab" href="#nav-ban" role="tab" aria-controls="nav-ban" aria-selected="true">Робота з користувачами</a>
                     <a class="nav-item nav-link" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Робота з замовленнями</a>
                     <a class="nav-item nav-link @if(!$errors->isEmpty())active @endif" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
+                    <a class="nav-item nav-link" id="nav-cathedra-tab" data-toggle="tab" href="#nav-cathedra" role="tab" aria-controls="nav-cathedra" aria-selected="false">Редагування кафедр</a>
+                    <a class="nav-item nav-link" id="nav-categories-tab" data-toggle="tab" href="#nav-categories" role="tab" aria-controls="nav-categories" aria-selected="false">Редагуваня категорій</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade @if($errors->isEmpty())show active @endif" id="nav-ban" role="tabpanel" aria-labelledby="nav-ban-tab">
                     <div class="container">
                         @foreach($users as $ban)
-                            <form action="{{ $ban->banned ? route('unban') : route('ban') }}" method="POST">
+                            <form action="{{ $ban->banned ? route('unban') : route('ban') }}" method="POST" class="col-9">
                                 @csrf
                                 <div class="d-flex flex-row mb-3 mt-2 pointer to-profile" data-id="{{$ban->id_user}}">
                                     <div class="col-1 px-0 min-width-90">
@@ -51,7 +53,7 @@
                     <div class="container orders" id="orders-list">
                         @if(count($orders))
                             @foreach($orders as $all)
-                                <div class="flex-row mb-3 mt-2 d-flex">
+                                <div class="col-9 flex-row mb-3 mt-2 d-flex">
                                     <div class="col-12 shadow bg-white work-order pointer" data-id="{{$all->id_order}}">
                                         <div class="font-weight-bold mt-2 order-title">{{$all->title}}</div>
                                         <div>{{strlen($all->description) > 50 ? substr($all->description, 0, 50) . '...' : $all->description}}</div>
@@ -84,7 +86,7 @@
                 </div>
                 <div class="tab-pane fade @if(!$errors->isEmpty())show active @endif" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
                     <div class="container">
-                        <form method="POST" action="{{ route('new_user') }}" class="col-9 mt-3">
+                        <form method="POST" action="{{ route('new_user') }}" class="col-7 mt-3">
                             @csrf
                             <ul class="list-group">
                                 <li class="list-group-item d-flex flex-row">
@@ -167,6 +169,16 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-cathedra" role="tabpanel" aria-labelledby="nav-cathedra-tab">
+                    <div class="container">
+                        <form action=""></form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab">
+                    <div class="container">
+                        <form action=""></form>
                     </div>
                 </div>
             </div>
