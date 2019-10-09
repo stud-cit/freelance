@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Types\Array_;
 
 class AdminController extends Controller
 {
@@ -27,6 +30,9 @@ class AdminController extends Controller
         $array = [];
 
         foreach ($users as $one) {
+            $created_at = explode(' ', $one->created_at);
+            $one->created_at = $created_at[0];
+
             if ($one->id_role != 1) {
                 array_push($array, $one);
             }
@@ -87,5 +93,60 @@ class AdminController extends Controller
         DB::table('orders')->where('id_order', $req->delete)->delete();
 
         return back();
+    }
+
+    public function new_user(Request $req)
+    {
+        $check1 = DB::table('users')->where('email', $req->email)->get();
+        $check2 = strlen($req->password) >= 8;
+        $check3 = strcmp($req->password, $req->password_confirmation) === 0;
+
+        if (!count($check1) && $check2 && $check3) {
+            $id_role = DB::table('roles')->where('role_name', $req->id_role)->get('id_role')->first();
+
+            $user = User::create([
+                'id_role' => $id_role->id_role,
+                'email' => $req->email,
+                'banned' => false,
+                'password' => Hash::make($req->password),
+            ]);
+
+            Storage::disk('public')->copy('0.png', $user['id'] . '.png');
+
+            $values = [
+                'id_user' => $user['id'],
+                'name' => $req->name,
+                'surname' => $req->surname,
+                'patronymic' => null,
+                'birthday_date' => null,
+                'phone_number' => null,
+                'viber' => null,
+                'skype' => null,
+                'about_me' => null,
+                'country' => null,
+                'city' => null
+            ];
+
+            DB::table('users_info')->insert($values);
+
+            $req->session()->flash('alert-success', 'Користувача успішно додано!');
+
+            return back();
+        }
+        else {
+            $errors = [];
+
+            if (count($check1)) {
+                $errors['email'] = 'Користувач з таким email вже існує!';
+            }
+            if (!$check2) {
+                $errors['password'] = 'Пароль має містити не менше восьми символів!';
+            }
+            else if (!$check3) {
+                $errors['password'] = 'Паролі мають співпадати!';
+            }
+
+            return back()->withInput($req->all())->withErrors($errors);
+        }
     }
 }

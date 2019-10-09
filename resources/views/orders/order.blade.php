@@ -22,14 +22,14 @@
             <div class="row mt-4">
                 <div class="col-8 offset-1 font-weight-bold font-size-18">{{$order->title}}</div>
                 <div class="col-3">
-                    <div class="col font-weight-bold font-size-18"><span class="font-size-10">
+                    <div class="col font-weight-bold font-size-18">
                         @if(!is_null($order->price))
-                            Ціна:</span>&nbsp;{{$order->price}}
+                            <span class="font-size-10">Ціна:</span>&nbsp;{{$order->price}}
                         @endif
                     </div>
-                    <div class="col font-weight-bold font-size-18"><span class="font-size-10">
+                    <div class="col font-weight-bold font-size-18">
                         @if(!is_null($order->time))
-                            Час:</span>&nbsp;&nbsp;{{$order->time}}
+                            <span class="font-size-10">Час:</span>&nbsp;&nbsp;{{$order->time}}
                         @endif
                     </div>
                 </div>

@@ -9,10 +9,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if (!is_null(Auth::user())) {
-            return redirect('/orders');
-        }
-
-        return view('site.index');
+        return redirect('/orders');
+//        if (!is_null(Auth::user())) {
+//            return redirect('/orders');
+//        }
+//
+//        return view('site.index');
     }
 }

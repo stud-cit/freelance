@@ -73,9 +73,9 @@
                             </div>
 
                             <div class="col-lg-5 col-12">
-                                <a href="{{ route('register') }}" class="btn btn-outline-p badge-pill w-100">
-                                    Реєстрація
-                                </a>
+{{--                                <a href="{{ route('register') }}" class="btn btn-outline-p badge-pill w-100">--}}
+{{--                                    Реєстрація--}}
+{{--                                </a>--}}
                             </div>
                         </div>
                     </form>

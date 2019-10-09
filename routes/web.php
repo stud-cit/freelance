@@ -1,6 +1,6 @@
 <?php
 
-Auth::routes(['verify' => true]);
+Auth::routes(['register' => false]);
 
 Route::get('/orders', 'OrdersController@index')->name('orders');
 Route::post('/save_order', 'OrdersController@save_order')->name('save_order');
@@ -34,3 +34,4 @@ Route::post('/ban_user', 'AdminController@ban')->name('ban');
 Route::post('/unban_user', 'AdminController@unban')->name('unban');
 Route::post('/finish', 'AdminController@finish_order')->name('finish');
 Route::post('/delete', 'AdminController@delete_order')->name('delete');
+Route::post('/new_user', 'AdminController@new_user')->name('new_user');

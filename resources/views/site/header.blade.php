@@ -36,9 +36,10 @@
                         </div>
                     </div>
                 @else
-                    @if(strpos(url()->current(), 'register') === false && !Auth::check())
+                    @if(strpos(url()->current(), 'orders') === false && !Auth::check())
                         <div class="col-1 offset-7 mt-1 small">
-                            <a href="{{ route('register') }}" class="text-white">Реєстрація</a>
+{{--                            <a href="{{ route('register') }}" class="text-white">Реєстрація</a>--}}
+                            <a href="{{ route('orders') }}" class="text-white">Проекти</a>
                         </div>
                     @else
                         <div class="col-1 offset-7 mt-1 small"></div>

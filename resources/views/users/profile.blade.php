@@ -23,7 +23,7 @@
             @endforeach
         </div>
         <div class="col-9 tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade {{$_SERVER['REQUEST_URI'] != '/profile?orders' ? 'active show' : ''}}" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <div class="tab-pane fade {{$_SERVER['REQUEST_URI'] != '/profile?orders' && $errors->isEmpty() ? 'active show' : ''}}" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <div class="d-flex flex-row">
                     <div class="col-5 px-0">
                         <img src="{{Auth::user()->getAvatarPath()}}" class="square square-330 avatar">
@@ -88,23 +88,37 @@
 
 
             </div>
-            <div class="tab-pane fade" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            <div class="tab-pane fade {{!$errors->isEmpty() ? 'active show' : ''}}" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <p class="col font-size-18">Налаштування безпеки</p>
                 <form method="POST" action="{{route('change_pass')}}" class="col-10 offset-1 bg-white shadow-lg pass_change">
                     @csrf
                     <div class="col-12">
                         <div class="form-group row">
+                            <label for="old_password" class="col-5 col-form-label mt-2">Старий пароль:</label>
+                            <div class="col-6 mt-2">
+                                <input type="password" id="old_password" class="form-control @error('old_password') is-invalid @enderror" name="old_password" required placeholder="********">
+                                @error('old_password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="new_password" class="col-5 col-form-label mt-2">Новий пароль:</label>
                             <div class="col-6 mt-2">
-                                <input type="password" id="new_password" class="form-control" name="new_password" required>
+                                <input type="password" id="new_password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" required placeholder="********">
+                                @error('new_password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="new_password_confirmation" class="col-5 col-form-label mt-2">Повторіть новий пароль:</label>
                             <div class="col-6 mt-2">
-                                <input type="password" id="new_password_confirmation" class="form-control" name="new_password_confirmation" required>
-                                <div class="invalid-feedback">
-                                </div>
+                                <input type="password" id="new_password_confirmation" class="form-control" name="new_password_confirmation" required placeholder="********">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -489,7 +503,7 @@
                     <div class="nav flex-column" id="profile-bar" role="tablist" aria-orientation="vertical">
                         <ul class="list-group list-group-flush mw-100">
                             <li class="list-group-item py-0">
-                                <a class="nav-link {{$_SERVER['REQUEST_URI'] != '/profile?orders' ? 'active' : ''}}" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
+                                <a class="nav-link {{$_SERVER['REQUEST_URI'] != '/profile?orders' && $errors->isEmpty() ? 'active' : ''}}" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
                             </li>
                             <li class="list-group-item py-0">
                                 <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-edit" role="tab" aria-selected="false">Редагування даних</a>
@@ -498,7 +512,7 @@
 {{--                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-portfolio" role="tab" aria-controls="v-pills-profile" aria-selected="false">Портфоліо</a>--}}
 {{--                            </li>--}}
                             <li class="list-group-item py-0">
-                                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-auth" role="tab" aria-controls="v-pills-messages" aria-selected="false">Налаштування безпеки</a>
+                                <a class="nav-link {{!$errors->isEmpty() ? 'active' : ''}}" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-auth" role="tab" aria-controls="v-pills-messages" aria-selected="false">Налаштування безпеки</a>
                             </li>
                             @if(Auth::user()->id_role == 2)
                                 <li class="list-group-item py-0">
