@@ -1,6 +1,6 @@
 <?php
 
-Auth::routes(['verify' => true]);
+Auth::routes(['register' => false]);
 
 Route::get('/orders', 'OrdersController@index')->name('orders');
 Route::post('/save_order', 'OrdersController@save_order')->name('save_order');
