@@ -246,9 +246,10 @@ class UsersController extends Controller
             'patronymic' => $req->patronymic,
             'birthday_date' => $req->birthday_date,
             'country' => $req->country,
-            'city' => $req->city
+            'city' => $req->city,
         ];
 
+        DB::table('users')->where('id', Auth::id())->update(['id_dept' => $req->id_dept]);
         DB::table('users_info')->where('id_user', Auth::id())->update($values);
 
         $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');

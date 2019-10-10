@@ -33,7 +33,9 @@
                     <div class="col-7 px-0">
                         <div class="row text-white bg-deep-blue pt-4 pb-5 h-100">
                             <div class="col-11 name surname font-weight-bold font-size-18">{{$data->name}} {{$data->surname}}</div>
-                            <div class="col-11 name surname font-weight-bold font-size-10 font-italic">{{$dept->name}}</div>
+                            @if(!is_null($dept))
+                                <div class="col-11 name surname font-weight-bold font-size-10 font-italic">{{$dept->name}}</div>
+                            @endif
                             <div class="col-11 font-size-10">
                                 @foreach($data->categories as $tags)
                                     <span class="tags font-italic">{{$tags->name}}</span>
@@ -169,9 +171,9 @@
                                 <label for="id_dept" class="col-5 col-form-label mt-2">Кафедра</label>
                                 <div class="col-6 mt-2">
                                     <select id="id_dept" class="form-control" name="id_dept">
-                                        <option {{$dept->id_dept == '0' ? 'selected' : ''}} value="0">Не обрано</option>
+                                        <option {{is_null($dept) ? 'selected' : ''}} value="0">Не обрано</option>
                                         @foreach($depts as $item)
-                                            <option {{$dept->id_dept == $item->id_dept ? 'selected' : ''}} value="{{$item->id_dept}}">{{$item->name}}</option>
+                                            <option {{!is_null($dept) && $dept->id_dept == $item->id_dept ? 'selected' : ''}} value="{{$item->id_dept}}">{{$item->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
