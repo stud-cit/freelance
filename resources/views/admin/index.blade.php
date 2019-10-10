@@ -125,9 +125,9 @@
                                     <div class="d-flex flex-column">
                                         <label for="id_dept" class="col-form-label">Кафедра</label>
                                         <select id="id_dept" class="form-control border-0" name="id_dept">
-                                            <option {{old('id_dept') == 'Не обрано' ? 'selected' : ''}}>Не обрано</option>
+                                            <option {{old('id_dept') == 'Не обрано' ? 'selected' : ''}} value="0">Не обрано</option>
                                             @foreach($dept as $item)
-                                                <option {{old('id_dept') == $item->name ? 'selected' : ''}} value="{{$item->id_dept}}">{{$item->name}}</option>
+                                                <option {{old('id_dept') == $item->id_dept ? 'selected' : ''}} value="{{$item->id_dept}}">{{$item->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
