@@ -113,14 +113,14 @@
                                     <div class="d-flex flex-column">
                                         <label for="id_role" class="col-form-label">Роль</label>
                                         <select id="id_role" class="form-control border-0" name="id_role">
-                                            <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}}>Виконавець</option>
-                                            <option {{old('id_role') == 'Замовник' ? 'selected' : ''}}>Замовник</option>
+                                            <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}} value="Виконавець">Виконавець</option>
+                                            <option {{old('id_role') == 'Замовник' ? 'selected' : ''}} value="Замовник">Замовник</option>
                                         </select>
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
 
-                                <li class="list-group-item d-flex flex-row">
+                                <li class="list-group-item d-none flex-row" id="dept-block">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="id_dept" class="col-form-label">Кафедра</label>

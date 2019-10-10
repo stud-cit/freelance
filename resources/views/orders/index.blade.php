@@ -114,7 +114,9 @@
                                     @endforeach
                                 </div>
                                 <div>{{mb_strlen($orders->description) > 50 ? mb_substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
-                                <div class="text-left float-left font-size-10">{{$orders->dept->name}}</div>
+                                @if(!is_null($orders->dept))
+                                    <div class="text-left float-left font-size-10">{{$orders->dept->name}}</div>
+                                @endif
                                 <div class="text-right font-size-10">{{$orders->created_at}}</div>
                             </div>
                             <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end text-nowrap" style="height: 54px;">
@@ -151,7 +153,7 @@
                     <input type="text" class="form-control" id="filter">
                 </div>
             </div>
-            <div class="card px-0 mb-4">
+            <div class="card px-0 mb-4" id="categs">
                 <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue">Категорії</div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
@@ -174,7 +176,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="card px-0 my-3">
+            <div class="card px-0 my-3" id="depts">
                 <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue">Кафедри</div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">

@@ -118,7 +118,7 @@ class AdminController extends Controller
                 'email' => $req->email,
                 'banned' => false,
                 'password' => Hash::make($req->password),
-                'id_dept' => $req->id_dept != 0 && $req->id_role == 'Замовник' ? $req->id_dept : null,
+                'id_dept' => $req->id_dept != '0' && $req->id_role == 'Замовник' ? $req->id_dept : null,
             ]);
 
             Storage::disk('public')->copy('0.png', $user['id'] . '.png');

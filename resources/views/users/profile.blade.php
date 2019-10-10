@@ -13,6 +13,7 @@
 @php($skills = $info['skills'])
 @php($orders = $info['orders'])
 @php($proposals = $info['proposals'])
+@php($depts = $info['depts'])
 
 <div class="container">
     <div class="row">
@@ -32,6 +33,9 @@
                     <div class="col-7 px-0">
                         <div class="row text-white bg-deep-blue pt-4 pb-5 h-100">
                             <div class="col-11 name surname font-weight-bold font-size-18">{{$data->name}} {{$data->surname}}</div>
+                            @if(!is_null($dept))
+                                <div class="col-11 name surname font-weight-bold font-size-10 font-italic">{{$dept->name}}</div>
+                            @endif
                             <div class="col-11 font-size-10">
                                 @foreach($data->categories as $tags)
                                     <span class="tags font-italic">{{$tags->name}}</span>
@@ -164,6 +168,17 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="id_dept" class="col-5 col-form-label mt-2">Кафедра</label>
+                                <div class="col-6 mt-2">
+                                    <select id="id_dept" class="form-control" name="id_dept">
+                                        <option {{is_null($dept) ? 'selected' : ''}} value="0">Не обрано</option>
+                                        @foreach($depts as $item)
+                                            <option {{!is_null($dept) && $dept->id_dept == $item->id_dept ? 'selected' : ''}} value="{{$item->id_dept}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="birthday_date" class="col-5 col-form-label mt-2">Дата народження:</label>
                                 <div class="col-6 mt-2">
                                     <input type="date" id="birthday_date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}">
@@ -186,6 +201,7 @@
                             </div>
                         </form>
                     </div>
+
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <form method="POST" action="{{route('save_contacts')}}" class="col-10 offset-1 bg-white shadow-lg">
                             @csrf
@@ -285,7 +301,7 @@
                                     <div class="row">
                                         <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
-                                            <div class="offset-1">{{strlen($all->description) > 200 ? substr($all->description, 0, 200) . '...' : $all->description}}</div>
+                                            <div class="offset-1">{{mb_strlen($all->description) > 200 ? mb_substr($all->description, 0, 200) . '...' : $all->description}}</div>
                                             <div class="col text-right font-size-10">Дата створення: {{$all->created_at}}</div>
                                         </div>
                                     </div>
@@ -309,7 +325,7 @@
                                     <div class="row">
                                         <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
                                             <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
-                                            <div class="offset-1">{{strlen($all->description) > 200 ? substr($all->description, 0, 200) . '...' : $all->description}}</div>
+                                            <div class="offset-1">{{mb_strlen($all->description) > 200 ? mb_substr($all->description, 0, 200) . '...' : $all->description}}</div>
                                             <div class="col text-right font-size-10">Дата створення: {{$active->created_at}}</div>
                                         </div>
                                     </div>

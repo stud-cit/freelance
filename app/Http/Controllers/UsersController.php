@@ -26,17 +26,9 @@ class UsersController extends Controller
                                     ->where('id', $worker->id_user)
                                     ->get('name')
                                     ->toArray();
-
-            $worker->dept = DB::table('users')
-                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
-                ->where('id', $worker->id)
-                ->get()
-                ->first();
         }
 
-        $dept = DB::table('departments')->get();
-
-        return view('users.workers', compact('data'), compact('dept'));
+        return view('users.workers', compact('data'));
     }
 
     public function profile()
@@ -95,7 +87,8 @@ class UsersController extends Controller
 
         foreach ($orders as $one) {
             $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
-            $slave = DB::table('orders')
+
+            $one->worker = DB::table('orders')
                 ->join('users_info', 'orders.id_worker', '=', 'users_info.id_user')
                 ->where('id_user', $one->id_worker)
                 ->get()
@@ -108,11 +101,16 @@ class UsersController extends Controller
                 ->get()
                 ->first();
 
-            $one->worker = $slave;
             $one->review = is_null($review) ? 1 : 0;
         }
 
-        $dept = DB::table('departments')->get();
+        $dept = DB::table('users')
+            ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+            ->where('id', Auth::id())
+            ->get()
+            ->first();
+
+        $depts = DB::table('departments')->get();
 
         $info = [
             'data' => $data,
@@ -122,6 +120,7 @@ class UsersController extends Controller
             'proposals' => $proposals,
             'orders' => $orders,
             'dept' => $dept,
+            'depts' => $depts
         ];
 
         return view('users.profile', compact('info'));
@@ -247,9 +246,10 @@ class UsersController extends Controller
             'patronymic' => $req->patronymic,
             'birthday_date' => $req->birthday_date,
             'country' => $req->country,
-            'city' => $req->city
+            'city' => $req->city,
         ];
 
+        DB::table('users')->where('id', Auth::id())->update(['id_dept' => $req->id_dept]);
         DB::table('users_info')->where('id_user', Auth::id())->update($values);
 
         $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');
@@ -292,7 +292,11 @@ class UsersController extends Controller
             $review->avatar .= '?t=' . Carbon::now();
         }
 
-        $dept = DB::table('departments')->get();
+        $dept = DB::table('users')
+            ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+            ->where('id', $id)
+            ->get()
+            ->first();
 
         $info = [
             'data' => $data,
