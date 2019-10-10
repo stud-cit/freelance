@@ -40,6 +40,7 @@
                     <span class="tags font-italic font-size-10">{{$tags->name}}</span>
                 @endforeach
                 <div class="mt-4 font-size-10">{{$order->description}}</div>
+                <div class="mt-4 font-size-10">{{$dept->name}}</div>
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
             @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
