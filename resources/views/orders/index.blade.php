@@ -174,7 +174,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="card px-0">
+            <div class="card px-0 my-3">
                 <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue">Кафедри</div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
@@ -185,10 +185,10 @@
                             </a>
                         </li>
                     </ul>
-                    @foreach($categories as $tags)
+                    @foreach($dept as $tags)
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item py-0 categ">
-                                <a class="categories_tag" href="" data-id="{{$tags->id_category}}">
+                                <a class="categories_tag" href="" data-id="{{$tags->id_dept}}">
                                     <span class="">{{$tags->name}}</span>
                                     <span class="badge badge-pill badge-primary float-right m-1">{{$tags->count}}</span>
                                 </a>

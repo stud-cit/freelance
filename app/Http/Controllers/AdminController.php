@@ -33,6 +33,13 @@ class AdminController extends Controller
             $created_at = explode(' ', $one->created_at);
             $one->created_at = $created_at[0];
 
+            $one->dept = DB::table('users')
+                ->join('orders', 'users.id', '=', 'orders.id_customer')
+                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+                ->where('id_order', $one->id_order)
+                ->get()
+                ->first();
+
             if ($one->id_role != 1) {
                 array_push($array, $one);
             }
