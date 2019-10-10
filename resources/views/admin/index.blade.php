@@ -113,8 +113,8 @@
                                     <div class="d-flex flex-column">
                                         <label for="id_role" class="col-form-label">Роль</label>
                                         <select id="id_role" class="form-control border-0" name="id_role">
-                                            <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}}>Виконавець</option>
-                                            <option {{old('id_role') == 'Замовник' ? 'selected' : ''}}>Замовник</option>
+                                            <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}} value="Виконавець">Виконавець</option>
+                                            <option {{old('id_role') == 'Замовник' ? 'selected' : ''}} value="Замовник">Замовник</option>
                                         </select>
                                     </div>
                                     <div class="">&nbsp;</div>

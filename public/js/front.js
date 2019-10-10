@@ -351,11 +351,14 @@ $("document").ready(function () {
   $(".toggle-box").on('click', '.toggle-minus', function () {
     $(this).closest('.form-row').remove();
   });
-  $("#id_role").on('change', dept_block_toggle());
 
   if (window.location.href.indexOf('/admin') >= 0) {
     dept_block_toggle();
   }
+
+  $("#id_role").on('change', function () {
+    dept_block_toggle();
+  });
 
   function dept_block_toggle() {
     if ($("#id_role").val() == "Замовник") $("#dept-block").removeClass('d-none').addClass('d-flex');else $("#dept-block").removeClass('d-flex').addClass('d-none');
