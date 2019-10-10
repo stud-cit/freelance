@@ -57,7 +57,7 @@
                                 <div class="col-9 flex-row mb-3 mt-2 d-flex">
                                     <div class="col-12 shadow bg-white work-order pointer" data-id="{{$all->id_order}}">
                                         <div class="font-weight-bold mt-2 order-title">{{$all->title}}</div>
-                                        <div>{{strlen($all->description) > 50 ? substr($all->description, 0, 50) . '...' : $all->description}}</div>
+                                        <div>{{mb_strlen($all->description) > 50 ? mb_substr($all->description, 0, 50) . '...' : $all->description}}</div>
                                         <div class="text-right font-size-10">Створено: {{$all->created_at}}</div>
                                         <div class="row mt-2">
                                             <div class="col-2 offset-8">
