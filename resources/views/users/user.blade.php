@@ -27,7 +27,9 @@
                 <div class="col">
                     <div class="row text-white bg-deep-blue pt-4 pb-5 h-100">
                         <div class="col-11 name surname font-weight-bold font-size-18">{{$data->name}} {{$data->surname}}</div>
-                        <div class="col-11 name surname font-weight-bold font-size-10 font-italic">{{$dept->name}}</div>
+                        @if(!is_null($dept))
+                            <div class="col-11 name surname font-weight-bold font-size-10 font-italic">{{$dept->name}}</div>
+                        @endif
                         <div class="col-11 font-size-10">
                             @foreach($data->categories as $tags)
                                 <span class="tags font-italic">{{$tags->name}}</span>
