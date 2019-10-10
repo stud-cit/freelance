@@ -72,6 +72,13 @@ class OrdersController extends Controller
                 ->get()
                 ->toArray();
 
+            $one->dept = DB::table('users')
+                ->join('orders', 'users.id', '=', 'orders.id_customer')
+                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+                ->where('id_order', $one->id_order)
+                ->get()
+                ->first();
+
             if ($filter['category'] != '0' && (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false)) {
                 foreach ($one->categories as $category) {
                     if ($category->id_category == $filter['category']) {
@@ -121,9 +128,17 @@ class OrdersController extends Controller
                 ->count();
         }
 
-        $count = DB::table('orders')->where('status', 'new')->count();
-
         $dept = DB::table('departments')->get();
+
+        foreach ($dept as $one) {
+            $one->count = DB::table('users')
+                ->join('orders', 'users.id', '=', 'orders.id_customer')
+                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+                ->where([['departments.name', $one->name], ['status', 'new']])
+                ->count();
+        }
+
+        $count = DB::table('orders')->where('status', 'new')->count();
 
         $info = [
             'data' => $data,
@@ -211,7 +226,12 @@ class OrdersController extends Controller
             $string .= $one->id_category . '|';
         }
 
-        $dept = DB::table('departments')->get();
+        $dept = DB::table('users')
+            ->join('orders', 'users.id', '=', 'orders.id_customer')
+            ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+            ->where('id_order', $id)
+            ->get()
+            ->first();
 
         $data = [
             'order' => $order,
