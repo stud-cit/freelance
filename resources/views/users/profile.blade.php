@@ -13,6 +13,7 @@
 @php($skills = $info['skills'])
 @php($orders = $info['orders'])
 @php($proposals = $info['proposals'])
+@php($depts = $info['depts'])
 
 <div class="container">
     <div class="row">
@@ -165,6 +166,17 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="id_dept" class="col-5 col-form-label mt-2">Кафедра</label>
+                                <div class="col-6 mt-2">
+                                    <select id="id_dept" class="form-control" name="id_dept">
+                                        <option {{$dept->id_dept == '0' ? 'selected' : ''}} value="0">Не обрано</option>
+                                        @foreach($depts as $item)
+                                            <option {{$dept->id_dept == $item->id_dept ? 'selected' : ''}} value="{{$item->id_dept}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="birthday_date" class="col-5 col-form-label mt-2">Дата народження:</label>
                                 <div class="col-6 mt-2">
                                     <input type="date" id="birthday_date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}">
@@ -187,6 +199,7 @@
                             </div>
                         </form>
                     </div>
+
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <form method="POST" action="{{route('save_contacts')}}" class="col-10 offset-1 bg-white shadow-lg">
                             @csrf

@@ -110,6 +110,8 @@ class UsersController extends Controller
             ->get()
             ->first();
 
+        $depts = DB::table('departments')->get();
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
@@ -118,6 +120,7 @@ class UsersController extends Controller
             'proposals' => $proposals,
             'orders' => $orders,
             'dept' => $dept,
+            'depts' => $depts
         ];
 
         return view('users.profile', compact('info'));
