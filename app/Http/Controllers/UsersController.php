@@ -94,13 +94,6 @@ class UsersController extends Controller
                 ->get()
                 ->first();
 
-            $one->dept = DB::table('users')
-                ->join('orders', 'users.id', '=', 'orders.id_customer')
-                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
-                ->where('id_order', $one->id_order)
-                ->get()
-                ->first();
-
             $one->review = is_null($review) ? 1 : 0;
         }
 
