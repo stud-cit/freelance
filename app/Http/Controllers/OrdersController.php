@@ -62,7 +62,6 @@ class OrdersController extends Controller
         $array = [];
 
         foreach ($data as $one) {
-            $one->description = strlen($one->description) > 50 ? substr($one->description, 0, 50) . '...' : $one->description;
             $one->price = is_null($one->price) ? '' : $one->price;
             $one->time = is_null($one->time) ? '' : $one->time;
 
