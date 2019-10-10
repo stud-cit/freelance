@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             OrdersTableSeeder::class,
             ProposalsTableSeeder::class,
             UsersInfoSeeder::class,
+            DepartmentsSeeder::class
         ]);
     }
 }
