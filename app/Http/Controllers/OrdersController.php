@@ -78,7 +78,8 @@ class OrdersController extends Controller
                 ->get()
                 ->first();
 
-            if ($filter['dept'] == '0' || $filter['dept'] == $one->dept->id_dept) {
+
+            if ($filter['dept'] == '0' || (!is_null($one->dept) && $filter['dept'] == $one->dept->id_dept)) {
                 if ($filter['category'] != '0' && (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false)) {
                     foreach ($one->categories as $category) {
                         if ($category->id_category == $filter['category']) {
