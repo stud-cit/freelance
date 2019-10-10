@@ -123,6 +123,20 @@
                                 <li class="list-group-item d-flex flex-row">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
+                                        <label for="id_dept" class="col-form-label">Кафедра</label>
+                                        <select id="id_dept" class="form-control border-0" name="id_dept">
+                                            <option {{old('id_dept') == 'Не обрано' ? 'selected' : ''}}>Не обрано</option>
+                                            @foreach($dept as $item)
+                                                <option {{old('id_dept') == $item->name ? 'selected' : ''}} value="{{$item->id_dept}}">{{$item->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                </li>
+
+                                <li class="list-group-item d-flex flex-row">
+                                    <div class="">&nbsp;</div>
+                                    <div class="d-flex flex-column">
                                         <label for="name" class="col-form-label">Електронна адреса</label>
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
 
