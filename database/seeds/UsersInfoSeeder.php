@@ -17,13 +17,13 @@ class UsersInfoSeeder extends Seeder
             'name' => 'admin',
             'surname' => 'admin',
             'patronymic' => 'admin',
-            'birthday_date' => '2019-07-03',
-            'phone_number' => '777777',
-            'viber' => '123456789',
-            'skype' => '@admin',
-            'about_me' => 'very good man',
-            'country' => 'Ukraine',
-            'city' => 'Sumy'
+            'birthday_date' => null,
+            'phone_number' => null,
+            'viber' => null,
+            'skype' => null,
+            'about_me' => null,
+            'country' => null,
+            'city' => null
         ]);
 
         $files = glob('public/img/*');
