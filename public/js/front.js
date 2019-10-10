@@ -306,7 +306,13 @@ $("document").ready(function () {
           order += "<span class=\"tags font-italic font-size-10\">" + array[i]['categories'][j]['name'] + "</span>&nbsp;";
         }
 
-        order += "</div>\n                        <div>" + array[i]['description'] + "</div>\n                        <div class=\"text-right font-size-10\">" + array[i]['created_at'] + "</div>\n                    </div>\n                    <div class=\"col c_rounded-right mt-3 bg-green text-white px-0 align-self-end\" style=\"height: 54px; !important;\">\n                        <div class=\"text-center font-weight-bold mt-1\">" + array[i]['price'] + "</div>\n                        <div class=\"text-right font-italic font-size-10 mt-2 pr-2\">" + array[i]['time'] + "</div>\n                    </div>\n                </div>";
+        order += "</div>\n                        <div>" + array[i]['description'] + "</div>";
+
+        if (array[i]['dept'] !== null) {
+          order += "<div class=\"text-left float-left font-size-10\">" + array[i]['dept']['name'] + "</div>";
+        }
+
+        order += "<div class=\"text-right font-size-10\">" + array[i]['created_at'] + "</div>\n                    </div>\n                    <div class=\"col c_rounded-right mt-3 bg-green text-white px-0 align-self-end\" style=\"height: 54px; !important;\">\n                        <div class=\"text-center font-weight-bold mt-1\">" + array[i]['price'] + "</div>\n                        <div class=\"text-right font-italic font-size-10 mt-2 pr-2\">" + array[i]['time'] + "</div>\n                    </div>\n                </div>";
         $('#orders-list').append(order);
       }
 

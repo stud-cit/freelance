@@ -239,8 +239,13 @@ $("document").ready(function() {
                 }
 
                 order += `</div>
-                        <div>` + array[i]['description'] + `</div>
-                        <div class="text-right font-size-10">` + array[i]['created_at'] + `</div>
+                        <div>` + array[i]['description'] + `</div>`;
+
+                if (array[i]['dept'] !== null) {
+                    order += `<div class="text-left float-left font-size-10">` + array[i]['dept']['name'] + `</div>`;
+                }
+
+                order += `<div class="text-right font-size-10">` + array[i]['created_at'] + `</div>
                     </div>
                     <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px; !important;">
                         <div class="text-center font-weight-bold mt-1">` + array[i]['price'] + `</div>
