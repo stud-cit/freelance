@@ -79,16 +79,17 @@ class OrdersController extends Controller
                 ->get()
                 ->first();
 
-            if ($filter['category'] != '0' && (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false)) {
-                foreach ($one->categories as $category) {
-                    if ($category->id_category == $filter['category']) {
-                        array_push($array, $one);
-                        break;
+            if ($filter['dept'] == '0' || $filter['dept'] == $one->dept->id_dept) {
+                if ($filter['category'] != '0' && (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false)) {
+                    foreach ($one->categories as $category) {
+                        if ($category->id_category == $filter['category']) {
+                            array_push($array, $one);
+                            break;
+                        }
                     }
+                } else if (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false) {
+                    array_push($array, $one);
                 }
-            }
-            else if (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false) {
-                array_push($array, $one);
             }
         }
 
@@ -114,7 +115,8 @@ class OrdersController extends Controller
             'how' => 'desc',
             'filter' => null,
             'category' => '0',
-            'page' => 1
+            'page' => 1,
+            'dept' => '0',
         ];
 
         $data = $this->get_orders($values);
@@ -157,7 +159,8 @@ class OrdersController extends Controller
             'how' => $req->how,
             'filter' => $req->filter,
             'category' => $req->category,
-            'page' => $req->page
+            'page' => $req->page,
+            'dept' => $req->dept,
         ];
 
         $data = [

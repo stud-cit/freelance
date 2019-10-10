@@ -220,7 +220,7 @@ $("document").ready(function () {
   });
   $('.categories_tag').on('click', function (e) {
     e.preventDefault();
-    $('.categories_tag').removeClass('font-weight-bold');
+    $(this).closest('.card-body').find('.categories_tag').removeClass('font-weight-bold');
     $(this).addClass('font-weight-bold');
     ajax_filter(parseInt($('.pagination-selected').text()));
   });
@@ -272,8 +272,9 @@ $("document").ready(function () {
       'what': $('.sort-selected').attr('id') === 'date-btn' ? 'id_order' : 'price',
       'how': $('.sort-selected span').text() === 'v' ? 'desc' : 'asc',
       'filter': $('#filter').val(),
-      'category': parseInt($('.categ .font-weight-bold').attr('data-id')),
-      'page': isNaN(page) ? 1 : page
+      'category': parseInt($('#categs .categ .font-weight-bold').attr('data-id')),
+      'page': isNaN(page) ? 1 : page,
+      'dept': parseInt($('#depts .categ .font-weight-bold').attr('data-id'))
     };
     $.ajax({
       headers: {

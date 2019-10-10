@@ -26,17 +26,9 @@ class UsersController extends Controller
                                     ->where('id', $worker->id_user)
                                     ->get('name')
                                     ->toArray();
-
-            $worker->dept = DB::table('users')
-                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
-                ->where('id', $worker->id)
-                ->get()
-                ->first();
         }
 
-        $dept = DB::table('departments')->get();
-
-        return view('users.workers', compact('data'), compact('dept'));
+        return view('users.workers', compact('data'));
     }
 
     public function profile()
@@ -95,7 +87,8 @@ class UsersController extends Controller
 
         foreach ($orders as $one) {
             $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
-            $slave = DB::table('orders')
+
+            $one->worker = DB::table('orders')
                 ->join('users_info', 'orders.id_worker', '=', 'users_info.id_user')
                 ->where('id_user', $one->id_worker)
                 ->get()
@@ -108,11 +101,14 @@ class UsersController extends Controller
                 ->get()
                 ->first();
 
-            $one->worker = $slave;
             $one->review = is_null($review) ? 1 : 0;
         }
 
-        $dept = DB::table('departments')->get();
+        $dept = DB::table('users')
+            ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+            ->where('id', Auth::id())
+            ->get()
+            ->first();
 
         $info = [
             'data' => $data,
@@ -292,7 +288,11 @@ class UsersController extends Controller
             $review->avatar .= '?t=' . Carbon::now();
         }
 
-        $dept = DB::table('departments')->get();
+        $dept = DB::table('users')
+            ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+            ->where('id', $id)
+            ->get()
+            ->first();
 
         $info = [
             'data' => $data,
