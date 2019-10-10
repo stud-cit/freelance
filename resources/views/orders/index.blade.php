@@ -113,7 +113,7 @@
                                         <span class="tags font-italic font-size-10">{{$tags->name}}</span>
                                     @endforeach
                                 </div>
-                                <div>{{strlen($orders->description) > 50 ? substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
+                                <div>{{mb_strlen($orders->description) > 50 ? mb_substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
                                 @if(!is_null($orders->dept))
                                     <div class="text-left float-left font-size-10">{{$orders->dept->name}}</div>
                                 @endif
@@ -146,7 +146,7 @@
             @endif
         </div>
 
-        <div class="col-3 offset-1">
+        <div class="col-4">
             <div class="card text-center px-0 mb-4">
                 <div class="card-header text-white font-weight-bold font-size-18 c_rounded-top bg-blue">Пошук</div>
                 <div class="card-body">
