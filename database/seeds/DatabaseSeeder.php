@@ -15,8 +15,6 @@ class DatabaseSeeder extends Seeder
         	RolesTableSeeder::class,
         	UsersTableSeeder::class,
             CategoriesTableSeed::class,
-            OrdersTableSeeder::class,
-            ProposalsTableSeeder::class,
             UsersInfoSeeder::class,
             DepartmentsSeeder::class
         ]);
