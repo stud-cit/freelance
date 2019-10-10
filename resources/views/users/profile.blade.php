@@ -8,6 +8,7 @@
 
 @php($data = $info['data'])
 @php($reviews = $info['reviews'])
+@php($dept = $info['dept'])
 @php($categories = $info['categories'])
 @php($skills = $info['skills'])
 @php($orders = $info['orders'])

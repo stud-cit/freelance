@@ -292,13 +292,13 @@ $("document").ready(function() {
     });
 
     $(".toggle-box").on('click', '.toggle-plus', function () {
-        var counter = parseInt($('.toggle-box input[type="text"]:last').attr('name').slice(5)) + 1; // id of elem
-        var name = $(this).closest('.container').attr('name');
-        var str = "<div class='form-row input-group'><input type='text' class='form-control col-10' name='"+name+"-"+counter+"'><input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'></div>";
+        let counter = parseInt($('.toggle-box input[type="text"]:last').attr('name').slice(5)) + 1;
+        let name = $(this).closest('.container').attr('id');
+        let str = "<div class='form-row input-group'><input type='text' class='form-control col-10' name='"+name+"-"+counter+"'><input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'></div>";
         $(this).closest('.toggle-box').append(str);
     });
 
     $(".toggle-box").on('click', '.toggle-minus', function () {
         $(this).closest('.form-row').remove();
-    })
+    });
 });

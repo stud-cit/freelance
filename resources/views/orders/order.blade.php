@@ -12,6 +12,7 @@
 @php($my_proposal = $data['my_proposal'])
 @php($categories = $data['categories'])
 @php($themes = $data['themes'])
+@php($dept = $data['dept'])
 
 <div class="container">
     <div class="row">

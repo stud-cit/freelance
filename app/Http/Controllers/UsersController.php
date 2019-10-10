@@ -28,7 +28,9 @@ class UsersController extends Controller
                                     ->toArray();
         }
 
-        return view('users.workers', compact('data'));
+        $dept = DB::table('departments')->get();
+
+        return view('users.workers', compact('data'), compact('dept'));
     }
 
     public function profile()
@@ -97,6 +99,8 @@ class UsersController extends Controller
             $one->review = is_null($review) ? 1 : 0;
         }
 
+        $dept = DB::table('departments')->get();
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
@@ -104,6 +108,7 @@ class UsersController extends Controller
             'skills' => $skills,
             'proposals' => $proposals,
             'orders' => $orders,
+            'dept' => $dept,
         ];
 
         return view('users.profile', compact('info'));
@@ -274,6 +279,14 @@ class UsersController extends Controller
             $review->avatar .= '?t=' . Carbon::now();
         }
 
-        return view('users.user', compact('data'), compact('reviews'));
+        $dept = DB::table('departments')->get();
+
+        $info = [
+            'data' => $data,
+            'reviews' => $reviews,
+            'dept' => $dept
+        ];
+
+        return view('users.user', compact('info'));
     }
 }

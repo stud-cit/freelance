@@ -8,6 +8,7 @@
 
 @php($data = $info['data'])
 @php($categories = $info['categories'])
+@php($dept = $info['departments'])
 
 <div class="container">
     <div class="row">

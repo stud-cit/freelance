@@ -174,22 +174,22 @@
                 </div>
                 <div class="tab-pane fade" id="nav-dept" role="tabpanel" aria-labelledby="nav-dept-tab">
                     <div class="container" id="dept">
-                        <form action="">
+                        <form action="{{ route('save_dept') }}" method="POST">
+                            @csrf
                             <div class="toggle-box">
                                 <div class="form-row input-group">
-                                    <input type="text" class="form-control col-10" disabled>
+                                    <input type="text" class="form-control col-10" name="dept-0" disabled>
                                     <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">
                                 </div>
                                 @php($num = 1)
                                 @foreach($dept as $one)
                                     <div class="form-row input-group">
                                         <input type="text" class="form-control col-10" name="dept-{{ $one->id_dept }}" value="{{ $one->name }}">
-                                        <input type="button" class="btn-outline-danger form-control col-1 toggle-minus" value="-">
                                     </div>
                                     @php($num = $one->id_dept)
                                 @endforeach
                             </div>
-                            <button class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>
+                            <button type="submit" class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>
                         </form>
                     </div>
                 </div>

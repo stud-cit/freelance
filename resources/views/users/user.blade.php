@@ -6,6 +6,9 @@
 
 @section('content')
 
+@php($data = $info['data'])
+@php($reviews = $info['reviews'])
+@php($dept = $info['dept'])
 
 <div class="container">
     <div class="row">

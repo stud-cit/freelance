@@ -123,10 +123,13 @@ class OrdersController extends Controller
 
         $count = DB::table('orders')->where('status', 'new')->count();
 
+        $dept = DB::table('departments')->get();
+
         $info = [
             'data' => $data,
             'categories' => $categories,
             'count' => $count,
+            'dept' => $dept,
         ];
 
         return view('orders.index', compact('info'));
@@ -208,6 +211,8 @@ class OrdersController extends Controller
             $string .= $one->id_category . '|';
         }
 
+        $dept = DB::table('departments')->get();
+
         $data = [
             'order' => $order,
             'customer' => $customer,
@@ -215,7 +220,8 @@ class OrdersController extends Controller
             'my_proposal' => $my_proposal,
             'categories' => $categories,
             'string' => $string,
-            'themes' => $themes
+            'themes' => $themes,
+            'dept' => $dept,
         ];
 
         return view('orders.order', compact('data'));

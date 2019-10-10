@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
@@ -150,5 +151,32 @@ class AdminController extends Controller
 
             return back()->withInput($req->all())->withErrors($errors);
         }
+    }
+
+    public function save_dept(Request $req)
+    {
+        $i = 0;
+
+        foreach ($req->all() as $key => $one) {
+            if ($i++ != 0 && !is_null($one)) {
+                $id = explode('-', $key);
+                $id = intval($id[1]);
+
+                $value = [
+                    'name' => $one
+                ];
+
+                $check = DB::table('departments')->where('id_dept', $id)->get();
+
+                if (!count($check)) {
+                    DB::table('departments')->insert($value);
+                }
+                else {
+                    DB::table('departments')->where('id_dept', $id)->update($value);
+                }
+            }
+        }
+
+        return back();
     }
 }
