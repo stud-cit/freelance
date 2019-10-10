@@ -34,9 +34,8 @@ class AdminController extends Controller
             $one->created_at = $created_at[0];
 
             $one->dept = DB::table('users')
-                ->join('orders', 'users.id', '=', 'orders.id_customer')
                 ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
-                ->where('id_order', $one->id_order)
+                ->where('id', $one->id)
                 ->get()
                 ->first();
 
@@ -119,6 +118,7 @@ class AdminController extends Controller
                 'email' => $req->email,
                 'banned' => false,
                 'password' => Hash::make($req->password),
+                'id_dept' => $req->id_dept != 0 && $req->id_role == 'Замовник' ? $req->id_dept : null,
             ]);
 
             Storage::disk('public')->copy('0.png', $user['id'] . '.png');

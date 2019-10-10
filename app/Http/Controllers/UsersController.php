@@ -26,6 +26,12 @@ class UsersController extends Controller
                                     ->where('id', $worker->id_user)
                                     ->get('name')
                                     ->toArray();
+
+            $worker->dept = DB::table('users')
+                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+                ->where('id', $worker->id)
+                ->get()
+                ->first();
         }
 
         $dept = DB::table('departments')->get();
@@ -92,6 +98,13 @@ class UsersController extends Controller
             $slave = DB::table('orders')
                 ->join('users_info', 'orders.id_worker', '=', 'users_info.id_user')
                 ->where('id_user', $one->id_worker)
+                ->get()
+                ->first();
+
+            $one->dept = DB::table('users')
+                ->join('orders', 'users.id', '=', 'orders.id_customer')
+                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+                ->where('id_order', $one->id_order)
                 ->get()
                 ->first();
 
