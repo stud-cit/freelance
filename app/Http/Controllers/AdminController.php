@@ -8,7 +8,6 @@ use DB;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use phpDocumentor\Reflection\Types\Array_;
 
 class AdminController extends Controller
 {
@@ -38,9 +37,12 @@ class AdminController extends Controller
             }
         }
 
+        $dept = DB::table('departments')->get();
+
         $data = [
             'orders' => $orders,
             'users' => $array,
+            'dept' => $dept,
         ];
 
         return view('admin.index', compact('data'));

@@ -8,6 +8,7 @@
 
 @php($users = $data['users'])
 @php($orders = $data['orders'])
+@php($dept = $data['dept'])
 
 <div class="container">
     <div class="row">
@@ -18,7 +19,7 @@
                     <a class="nav-item nav-link" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Робота з замовленнями</a>
                     <a class="nav-item nav-link @if(!$errors->isEmpty())active @endif" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
                     <a class="nav-item nav-link" id="nav-dept-tab" data-toggle="tab" href="#nav-dept" role="tab" aria-controls="nav-dept" aria-selected="false">Редагування кафедр</a>
-                    <a class="nav-item nav-link" id="nav-categories-tab" data-toggle="tab" href="#nav-categories" role="tab" aria-controls="nav-categories" aria-selected="false">Редагуваня категорій</a>
+{{--                    <a class="nav-item nav-link" id="nav-categories-tab" data-toggle="tab" href="#nav-categories" role="tab" aria-controls="nav-categories" aria-selected="false">Редагуваня категорій</a>--}}
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -176,29 +177,36 @@
                         <form action="">
                             <div class="toggle-box">
                                 <div class="form-row input-group">
-                                    @php($i=0)
-                                    <input type="text" class="form-control col-10" id="dept-{{ $i }}">
+                                    <input type="text" class="form-control col-10" disabled>
                                     <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">
                                 </div>
+                                @php($num = 1)
+                                @foreach($dept as $one)
+                                    <div class="form-row input-group">
+                                        <input type="text" class="form-control col-10" name="dept-{{ $one->id_dept }}" value="{{ $one->name }}">
+                                        <input type="button" class="btn-outline-danger form-control col-1 toggle-minus" value="-">
+                                    </div>
+                                    @php($num = $one->id_dept)
+                                @endforeach
                             </div>
                             <button class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>
                         </form>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab">
-                    <div class="container" id="cat">
-                        <form action="">
-                            <div class="toggle-box">
-                                <div class="form-row input-group">
-                                    @php($i=0)
-                                    <input type="text" class="form-control col-10" id="cat-{{ $i }}">
-                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">
-                                </div>
-                            </div>
-                            <button class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>
-                        </form>
-                    </div>
-                </div>
+{{--                <div class="tab-pane fade" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab">--}}
+{{--                    <div class="container" id="cat">--}}
+{{--                        <form action="">--}}
+{{--                            <div class="toggle-box">--}}
+{{--                                <div class="form-row input-group">--}}
+{{--                                    @php($i=0)--}}
+{{--                                    <input type="text" class="form-control col-10" id="cat-{{ $i }}">--}}
+{{--                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <button class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>--}}
+{{--                        </form>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
