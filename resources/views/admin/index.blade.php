@@ -120,7 +120,7 @@
                                     <div class="">&nbsp;</div>
                                 </li>
 
-                                <li class="list-group-item d-flex flex-row">
+                                <li class="list-group-item d-none flex-row" id="dept-block">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="id_dept" class="col-form-label">Кафедра</label>
