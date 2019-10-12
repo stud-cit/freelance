@@ -46,14 +46,14 @@
                     <form class="col" method="POST" action="{{route('save_order')}}">
                         @csrf
                         <div class="form-group row">
-                            <label for="title" class="col-2 col-form-label mt-2">Назва:</label>
-                            <div class="col-5 mt-2">
+                            <label for="title" class="col-lg-2 col-12 col-form-label mt-2">Назва:</label>
+                            <div class="col-lg-5 col-12 mt-2">
                                 <input type="text" class="form-control" id="title" name="title" maxlength="50" size="50" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="type" class="col-2 col-form-label mt-2">Тема:</label>
-                            <div class="col-5 mt-2">
+                            <label for="type" class="col-lg-2 col-12 col-form-label mt-2">Тема:</label>
+                            <div class="col-lg-5 col-12 mt-2">
                                 <select id="type" class="form-control">
                                     <option value="0" disabled selected>(Виберіть тему замовлення)</option>
                                     @foreach($categories as $select)
@@ -69,34 +69,34 @@
                             <div class="col-7" id="themes_block"></div>
                         </div>
                         <div class="form-group row">
-                            <label for="price" class="col-2 col-form-label">Ціна:</label>
-                            <div class="col-5 mt-2">
+                            <label for="price" class="col-lg-2 col-12 col-form-label">Ціна:</label>
+                            <div class="col-lg-5 col-8 mt-2">
                                 <input type="number" id="price" class="form-control" min="0" name="price">
                             </div>
-                            <select class="col-2 mt-2 px-0 form-control" name="currency">
+                            <select class="col-lg-2 col-3 mt-2 px-0 form-control" name="currency">
                                 <option>грн.</option>
                                 <option>$</option>
                             </select>
                         </div>
                         <div class="form-group row">
-                            <label for="time" class="col-2 col-form-label">Час:</label>
-                            <div class="col-5">
+                            <label for="time" class="col-lg-2 col-12 col-form-label">Час:</label>
+                            <div class="col-lg-5 col-8">
                                 <input type="number" id="time" class="form-control" min="0" name="time">
                             </div>
-                            <select class="col-2 px-0 form-control" name="type">
+                            <select class="col-lg-2 col-3 px-0 form-control" name="type">
                                 <option>дні</option>
                                 <option>год.</option>
                             </select>
                         </div>
                         <div class="form-group row">
-                            <label for="description" class="col-2 col-form-label mt-2">Інформація:</label>
-                            <div class="col-8 mt-2">
+                            <label for="description" class="col-lg-2 col-12 col-form-label mt-2">Інформація:</label>
+                            <div class="col-lg-8 col-12 mt-2">
                                 <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <button type="submit" class="col-2 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="add_order">Підтвердити</button>
-                            <button type="reset" class="col-2 btn badge-pill mb-2 px-0 badges_reset">Скинути</button>
+                            <button type="submit" class="col-xl-2 col-5 offset-xl-8 offset-7 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="add_order">Підтвердити</button>
+                            <button type="reset" class="col-xl-2 col-5 offset-xl-0 offset-7 btn badge-pill mb-2 px-0 badges_reset">Скинути</button>
                         </div>
                     </form>
                 </div>

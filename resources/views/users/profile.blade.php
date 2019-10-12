@@ -24,7 +24,7 @@
                 @endif
             @endforeach
         </div>
-        <div class="col-9 tab-content" id="v-pills-tabContent">
+        <div class="col-xl-9 col-12 order-xl-0 order-1 tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade {{$_SERVER['REQUEST_URI'] != '/profile?orders' && $errors->isEmpty() ? 'active show' : ''}}" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <div class="d-flex flex-row">
                     <div class="col-5 px-0">
@@ -513,7 +513,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-xl-3 col-12 order-xl-1 order-0">
             <div class="card text-center px-0 mb-4">
                 <div class="card-header text-white font-weight-bold font-size-18 c_rounded-top bg-blue">Моя сторінка</div>
                 <div class="card-body">
