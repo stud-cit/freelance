@@ -46,37 +46,37 @@
                 <div class="mt-4 font-size-10">Дата створення: {{$order->created_at}}</div>
             </div>
             @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
-                <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 mb-2" data-toggle="collapse" data-target="#prop" aria-expanded="true">
+                <button class="btn badge-pill text-white bg-deep-blue px-0 col-xl-3 col-6 offset-xl-8 offset-6 mt-4 mb-2" data-toggle="collapse" data-target="#prop" aria-expanded="true">
                     {{is_null($my_proposal) ? 'Залишити пропозицію' : 'Змінити пропозицію'}}
                 </button>
             @elseif(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
-                <div class="row">
-                    <div class="col-3 offset-5">
-                        <button class="btn badge-pill text-white bg-deep-blue mt-4 mb-2" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
+                <div class="row mt-4">
+                    <div class="col-xl-3 col-6 offset-xl-5 offset-6">
+                        <button class="btn badge-pill text-white bg-deep-blue mb-2 w-100" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
                             Змінити замовлення
                         </button>
                     </div>
-                    <div class="col-3">
+                    <div class="col-xl-3 col-6 offset-xl-0 offset-6">
                         <form method="POST" action="{{ route('delete_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
                             @csrf
-                            <button class="btn badge-pill text-white bg-danger px-0 mt-4 mb-2 w-100">
+                            <button class="btn badge-pill text-white bg-danger px-0 mb-2 w-100">
                                 Видалити замовлення
                             </button>
                         </form>
                     </div>
                 </div>
             @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
-                <div class="row">
-                    <div class="col-3 offset-5">
+                <div class="row mt-4">
+                    <div class="col-xl-3 col-6 offset-xl-5 offset-6">
                         <form method="POST" action="{{route('finish_order', $order->id_order)}}" onsubmit="return confirm('Ви впевнені?');">
                             @csrf
-                            <button type="submit" class="btn badge-pill text-white bg-deep-blue mt-4 mb-2">
+                            <button type="submit" class="btn badge-pill text-white bg-deep-blue mb-2 w-100">
                                 Замовлення виконано
                             </button>
                         </form>
                     </div>
-                    <div class="col-3">
-                        <button class="btn badge-pill text-white bg-danger px-0 mt-4 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
+                    <div class="col-xl-3 col-6 offset-xl-0 offset-6">
+                        <button class="btn badge-pill text-white bg-danger px-0 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
                             Змінити виконавця
                         </button>
                     </div>
@@ -130,8 +130,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <button type="submit" class="col-lg-2 col-3 offset-lg-8 offset-5 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_proposals">Підтвердити</button>
-                            <button {{is_null($my_proposal) ? 'type=reset' : ''}} class="col-lg-2 col-3 offset-lg-0 offset-5 btn badge-pill mb-2 px-0" name="delete_proposal">{{is_null($my_proposal) ? 'Скинути' : 'Видалити'}}</button>
+                            <button type="submit" class="col-lg-2 col-5 offset-lg-8 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_proposals">Підтвердити</button>
+                            <button {{is_null($my_proposal) ? 'type=reset' : ''}} class="col-lg-2 col-5 offset-lg-0 offset-6 btn badge-pill mb-2 px-0" name="delete_proposal">{{is_null($my_proposal) ? 'Скинути' : 'Видалити'}}</button>
                         </div>
                     </form>
                 </div>
@@ -225,8 +225,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <button type="submit" class="col-2 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="edit_order">Підтвердити</button>
-                                <button type="reset" class="col-2 btn badge-pill mb-2 px-0 badges_reset">Скинути</button>
+                                <button type="submit" class="col-lg-2 col-5 offset-lg-8 offset-6 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="edit_order">Підтвердити</button>
+                                <button type="reset" class="col-lg-2 col-5 offset-lg-0 offset-6 btn badge-pill mb-2 px-0 badges_reset">Скинути</button>
                             </div>
                         </form>
                     </div>

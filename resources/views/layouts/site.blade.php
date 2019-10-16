@@ -24,7 +24,7 @@
 
 	@yield('content')
 
-<a class="position-fixed bg-blue square-60 text-white rounded-circle justify-content-center font-weight-bold d-none" style="bottom: 15px; right: 15px; z-index: 99; text-decoration: none;" id="anchor"><span class="align-self-center">^</span></a>
+<a class="position-fixed bg-blue square-60 text-white rounded-circle justify-content-center font-weight-bold d-none pointer" style="bottom: 15px; right: 15px; z-index: 99; text-decoration: none;" id="anchor"><span class="align-self-center">^</span></a>
 <div class="position-fixed fixed-bottom text-center" style="top: 50%; bottom: 50%; opacity: .7; pointer-events: none">
     @if(Auth::check() && Auth::user()->banned)
         <p class="alert-danger py-2 mb-5 text-white" style="background-color: #ff0000"> ВАС ЗАБЛОКОВАНО </p>
