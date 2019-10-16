@@ -47,7 +47,7 @@
             </div>
             @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
                 <button class="btn badge-pill text-white bg-deep-blue px-0 col-3 offset-8 mt-4 mb-2" data-toggle="collapse" data-target="#prop" aria-expanded="true">
-                    {{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}
+                    {{is_null($my_proposal) ? 'Залишити пропозицію' : 'Змінити пропозицію'}}
                 </button>
             @elseif(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                 <div class="row">
@@ -100,7 +100,7 @@
         <div class="col-9 mt-4 px-0">
             @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
                 <div id="prop" class="collapse">
-                    <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Видвинути пропозицію' : 'Змінити пропозицію'}}</p>
+                    <p class="font-size-18 font-weight-bold">{{is_null($my_proposal) ? 'Залишити пропозицію' : 'Змінити пропозицію'}}</p>
                     <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2 bg-white shadow c_rounded">
                         @csrf
                         <div class="form-group row">
