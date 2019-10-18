@@ -154,8 +154,8 @@
                 </div>
             </div>
             <div class="card px-0 mb-4" id="categs">
-                <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue">Категорії</div>
-                <div class="card-body">
+                <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue pointer" data-toggle="collapse" data-target="#categs_l" aria-expanded="true">Категорії</div>
+                <div class="card-body collapse" id="categs_l">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item py-0 categ">
                             <a class="categories_tag font-weight-bold" href="" data-id="0">
@@ -177,8 +177,8 @@
                 </div>
             </div>
             <div class="card px-0 my-3" id="depts">
-                <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue">Кафедри</div>
-                <div class="card-body">
+                <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue pointer" data-toggle="collapse" data-target="#depts_l" aria-expanded="true">Кафедри</div>
+                <div class="card-body collapse" id="depts_l">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item py-0 categ">
                             <a class="categories_tag font-weight-bold" href="" data-id="0">
