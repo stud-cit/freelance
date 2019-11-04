@@ -38,3 +38,4 @@ Route::post('/new_user', 'AdminController@new_user')->name('new_user');
 Route::post('/save_dept', 'AdminController@save_dept')->name('save_dept');
 
 Route::get('/chat', 'ChatController@index')->middleware('logged.in');
+Route::post('/chat', 'ChatController@new_message')->name('new_message');

@@ -14,12 +14,14 @@ class Messages extends Migration
     public function up()
     {
         Schema::create('messages', function (Blueprint $table) {
-            $table->bigIncrements('id_messages');
-            $table->timestamp('timestamp')->nullable();
+            $table->bigIncrements('id_message');
+            $table->date('created_at');
             $table->longText('text');
-            $table->integer('status');
-            $table->bigInteger('id_contact')->unsigned();
-            $table->foreign('id_contact')->references('id_contact')->on('contacts');
+            $table->boolean('status');
+            $table->bigInteger('id_from')->unsigned();
+            $table->foreign('id_from')->references('id')->on('users');
+            $table->bigInteger('id_to')->unsigned();
+            $table->foreign('id_to')->references('id')->on('users');
         });
     }
 

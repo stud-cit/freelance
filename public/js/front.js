@@ -368,7 +368,11 @@ $("document").ready(function () {
   });
 
   function dept_block_toggle() {
-    if ($("#id_role").val() == "Замовник") $("#dept-block").removeClass('d-none').addClass('d-flex');else $("#dept-block").removeClass('d-flex').addClass('d-none');
+    if ($("#id_role").val() == "Замовник") {
+      $("#dept-block").removeClass('d-none').addClass('d-flex');
+    } else {
+      $("#dept-block").removeClass('d-flex').addClass('d-none');
+    }
   }
 });
 
