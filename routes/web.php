@@ -39,3 +39,4 @@ Route::post('/save_dept', 'AdminController@save_dept')->name('save_dept');
 
 Route::get('/chat', 'ChatController@index')->middleware('logged.in');
 Route::post('/chat', 'ChatController@new_message')->name('new_message');
+Route::post('/get_messages', 'ChatController@get_messages')->name('get_messages');

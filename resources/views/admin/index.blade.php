@@ -19,7 +19,6 @@
                     <a class="nav-item nav-link" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Робота з замовленнями</a>
                     <a class="nav-item nav-link @if(!$errors->isEmpty())active @endif" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
                     <a class="nav-item nav-link" id="nav-dept-tab" data-toggle="tab" href="#nav-dept" role="tab" aria-controls="nav-dept" aria-selected="false">Редагування кафедр</a>
-{{--                    <a class="nav-item nav-link" id="nav-categories-tab" data-toggle="tab" href="#nav-categories" role="tab" aria-controls="nav-categories" aria-selected="false">Редагуваня категорій</a>--}}
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -28,20 +27,20 @@
                         @foreach($users as $ban)
                             <form action="{{ $ban->banned ? route('unban') : route('ban') }}" method="POST" class="col-9">
                                 @csrf
-                                <div class="d-flex flex-row mb-3 mt-2 pointer to-profile" data-id="{{$ban->id_user}}">
+                                <div class="d-flex flex-row mb-3 mt-2 pointer to-profile" data-id="{{ $ban->id_user }}">
                                     <div class="col-1 px-0 min-width-90">
                                         <img src="{{$ban->avatar}}" class="mt-1 square-80 avatar square">
                                     </div>
-                                    <div class="col-11 shadow bg-white" data-id="{{$ban->id_user}}">
+                                    <div class="col-11 shadow bg-white" data-id="{{ $ban->id_user }}">
                                         <div class="flex-row">
-                                            <div class="font-weight-bold font-size-18 mt-2"><span data-id="{{$ban->id_user}}">{{$ban->name}} {{$ban->surname}}</span></div>
-                                            <div class="text-right font-size-10">Дата реєстрації: {{$ban->created_at}}</div>
+                                            <div class="font-weight-bold font-size-18 mt-2"><span data-id="{{ $ban->id_user }}">{{ $ban->name }} {{ $ban->surname }}</span></div>
+                                            <div class="text-right font-size-10">Дата реєстрації: {{ $ban->created_at }}</div>
                                         </div>
                                         <div class="col-2 offset-10">
                                             @if(!$ban->banned)
-                                                <button type="submit" class="btn btn-danger my-2" name="ban" value="{{$ban->id_user}}">Заблокувати</button>
+                                                <button type="submit" class="btn btn-danger my-2" name="ban" value="{{ $ban->id_user }}">Заблокувати</button>
                                             @else
-                                                <button type="submit" class="btn my-2 bg-blue text-white" name="ban" value="{{$ban->id_user}}">Розблокувати</button>
+                                                <button type="submit" class="btn my-2 bg-blue text-white" name="ban" value="{{ $ban->id_user }}">Розблокувати</button>
                                             @endif
                                         </div>
                                     </div>
@@ -55,23 +54,23 @@
                         @if(count($orders))
                             @foreach($orders as $all)
                                 <div class="col-9 flex-row mb-3 mt-2 d-flex">
-                                    <div class="col-12 shadow bg-white work-order pointer" data-id="{{$all->id_order}}">
-                                        <div class="font-weight-bold mt-2 order-title">{{$all->title}}</div>
-                                        <div>{{mb_strlen($all->description) > 50 ? mb_substr($all->description, 0, 50) . '...' : $all->description}}</div>
-                                        <div class="text-right font-size-10">Створено: {{$all->created_at}}</div>
+                                    <div class="col-12 shadow bg-white work-order pointer" data-id="{{ $all->id_order }}">
+                                        <div class="font-weight-bold mt-2 order-title">{{ $all->title }}</div>
+                                        <div>{{ mb_strlen($all->description) > 50 ? mb_substr($all->description, 0, 50) . '...' : $all->description }}</div>
+                                        <div class="text-right font-size-10">Створено: {{ $all->created_at }}</div>
                                         <div class="row mt-2">
                                             <div class="col-2 offset-8">
                                                 @if($all->status == 'in progress')
                                                     <form action="{{ route('finish') }}" method="POST">
                                                         @csrf
-                                                        <button type="submit" class="btn bg-blue text-white mb-2" name="finish" value="{{$all->id_order}}">Завершити</button>
+                                                        <button type="submit" class="btn bg-blue text-white mb-2" name="finish" value="{{ $all->id_order }}">Завершити</button>
                                                     </form>
                                                 @endif
                                             </div>
                                             <div class="col-2">
                                                 <form action="{{ route('delete') }}" method="POST">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-danger mb-2" name="delete" value="{{$all->id_order}}">Видалити</button>
+                                                    <button type="submit" class="btn btn-danger mb-2" name="delete" value="{{ $all->id_order }}">Видалити</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -127,7 +126,7 @@
                                         <select id="id_dept" class="form-control border-0" name="id_dept">
                                             <option {{old('id_dept') == 'Не обрано' ? 'selected' : ''}} value="0">Не обрано</option>
                                             @foreach($dept as $item)
-                                                <option {{old('id_dept') == $item->id_dept ? 'selected' : ''}} value="{{$item->id_dept}}">{{$item->name}}</option>
+                                                <option {{ old('id_dept') == $item->id_dept ? 'selected' : '' }} value="{{ $item->id_dept}} ">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -207,20 +206,6 @@
                         </form>
                     </div>
                 </div>
-{{--                <div class="tab-pane fade" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab">--}}
-{{--                    <div class="container" id="cat">--}}
-{{--                        <form action="">--}}
-{{--                            <div class="toggle-box">--}}
-{{--                                <div class="form-row input-group">--}}
-{{--                                    @php($i=0)--}}
-{{--                                    <input type="text" class="form-control col-10" id="cat-{{ $i }}">--}}
-{{--                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <button class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>--}}
-{{--                        </form>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
             </div>
         </div>
     </div>

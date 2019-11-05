@@ -8,41 +8,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Models\User;
-use App\Events\NewMessage;
 
 class ChatController extends Controller
 {
+    function get_mess($id) {
+        return DB::table('messages')
+            ->where([['id_from', Auth::id()], ['id_to', $id]])
+            ->orWhere([['id_from', $id], ['id_to', Auth::id()]])
+            ->orderBy('id_message', 'desc')
+            ->get();
+    }
+
     public function index()
     {
-        $mess = DB::table('messages')
-            ->where('id_from', Auth::id())
-            ->orWhere('id_to', Auth::id())
-            ->get(['id_from', 'id_to']);
-
-        $ids = [];
-
-        foreach ($mess as $one) {
-            $id = $one->id_from == Auth::id() ? $one->id_to : $one->id_from;
-
-            if (!in_array($id, $ids)) {
-                array_push($ids, $id);
-            }
-        }
-
+        $contacts = DB::table('contacts')->where('id_user', Auth::id())->get('contacts')->first();
+        $users = explode('|', $contacts->contacts);
         $data = [];
+        $messages = $this->get_mess($users[1]);
 
-        foreach ($ids as $id) {
-            $history = DB::table('messages')
-                ->where([['id_from', Auth::id()], ['id_to', $id]])
-                ->orWhere([['id_from', $id], ['id_to', Auth::id()]])
-                ->get();
+        for ($i = 1; $i < count($users) - 1; $i++) {
+            $user = User::getUsersInfo('id', $users[$i])->first();
 
-            $history->user = User::getUsersInfo('id', $id)->first();
-
-            array_push($data, $history);
+            array_push($data, $user);
         }
 
-        return view('chat.chat', compact('data'));
+        return view('chat.chat', compact('data'), compact('messages'));
     }
 
     public function new_message(Request $req) {
@@ -55,5 +45,11 @@ class ChatController extends Controller
         ];
 
         Message::create($message);
+
+        return $this->get_mess($req->id_to)->toArray();
+    }
+
+    public function get_messages(Request $req) {
+        return $this->get_mess($req->id)->toArray();
     }
 }

@@ -28,57 +28,57 @@
             <div class="tab-pane fade {{$_SERVER['REQUEST_URI'] != '/profile?orders' && $errors->isEmpty() ? 'active show' : ''}}" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <div class="d-flex flex-row">
                     <div class="col-5 px-0">
-                        <img src="{{Auth::user()->getAvatarPath()}}" class="square square-330 avatar">
+                        <img src="{{ Auth::user()->getAvatarPath() }}" class="square square-330 avatar">
                     </div>
                     <div class="col-7 px-0">
                         <div class="row text-white bg-deep-blue pt-4 pb-5 h-100">
-                            <div class="col-11 name surname font-weight-bold font-size-18">{{$data->name}} {{$data->surname}}</div>
+                            <div class="col-11 name surname font-weight-bold font-size-18">{{ $data->name }} {{ $data->surname }}</div>
                             @if(!is_null($dept))
-                                <div class="col-11 name surname font-weight-bold font-size-10 font-italic">{{$dept->name}}</div>
+                                <div class="col-11 name surname font-weight-bold font-size-10 font-italic">{{ $dept->name }}</div>
                             @endif
                             <div class="col-11 font-size-10">
                                 @foreach($data->categories as $tags)
-                                    <span class="tags font-italic">{{$tags->name}}</span>
+                                    <span class="tags font-italic">{{ $tags->name }}</span>
                                 @endforeach
                             </div>
                             <div class="col-11 font-weight-bold">Контактна інформація:</div>
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-6 font-size-10">E-mail: {{$data->email}}</div>
-                                    <div class="col-5 font-size-10">Phone number: {{$data->phone_number}}</div>
-                                    <div class="col-6 font-size-10">Viber: {{$data->viber}}</div>
-                                    <div class="col-5 font-size-10">Skype: {{$data->skype}}</div>
+                                    <div class="col-6 font-size-10">E-mail: {{ $data->email }}</div>
+                                    <div class="col-5 font-size-10">Phone number: {{ $data->phone_number }}</div>
+                                    <div class="col-6 font-size-10">Viber: {{ $data->viber }}</div>
+                                    <div class="col-5 font-size-10">Skype: {{ $data->skype }}</div>
                                 </div>
                             </div>
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-6 font-size-10">Країна: {{$data->country}}</div>
-                                    <div class="col-6 font-size-10">Місто: {{$data->city}}</div>
+                                    <div class="col-6 font-size-10">Країна: {{ $data->country }}</div>
+                                    <div class="col-6 font-size-10">Місто: {{ $data->city }}</div>
                                 </div>
                             </div>
-                            <div class="col-11 font-weight-bold font-size-10">Дата реєстрації: {{$data->created_at}}</div>
+                            <div class="col-11 font-weight-bold font-size-10">Дата реєстрації: {{ $data->created_at }}</div>
                         </div>
                     </div>
                 </div>
                 @if(!is_null($data->about_me))
                     <p class="font-weight-bold font-size-18 mt-3">Додаткова інформація</p>
-                    <div class="col rounded pl-2 pt-2 pb-2 bg-white shadow-lg">{{$data->about_me}}</div>
+                    <div class="col rounded pl-2 pt-2 pb-2 bg-white shadow-lg">{{ $data->about_me }}</div>
                 @endif
                 @if(count($reviews) != 0)
                     <p class="font-weight-bold font-size-18 mt-2">Відгуки</p>
                     @foreach($reviews as $mark)
                         <div class="col bg-white shadow-lg mt-3 mb-2">
                             <div class="d-flex flex-row">
-                                <div class="col-1 px-0 min-width-70 mt-2 pointer to-profile" data-id="{{$mark->id_user}}">
-                                    <img src="{{$mark->avatar}}" class="square-60 circle avatar">
+                                <div class="col-1 px-0 min-width-70 mt-2 pointer to-profile" data-id="{{ $mark->id_user }}">
+                                    <img src="{{ $mark->avatar }}" class="square-60 circle avatar">
                                 </div>
                                 <div class="col bg-blue text-white rounded px-2 my-2">
-                                    <div class=" mt-2">{{$mark->text}}</div>
+                                    <div class=" mt-2">{{ $mark->text }}</div>
                                     <hr class="col border-white mb-0">
                                     <div class="row font-size-10 mt-2 mb-2">
-                                        <div class="col-3 pointer to-profile" data-id="{{$mark->id_user}}">{{$mark->name}} {{$mark->surname}}</div>
-                                        <div class="col-2 offset-2">Оцінка: {{$mark->rating}}/5</div>
-                                        <div class="col-2 offset-3">{{$mark->created_at}}</div>
+                                        <div class="col-3 pointer to-profile" data-id="{{ $mark->id_user }}">{{ $mark->name }} {{ $mark->surname }}</div>
+                                        <div class="col-2 offset-2">Оцінка: {{ $mark->rating }}/5</div>
+                                        <div class="col-2 offset-3">{{ $mark->created_at }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -87,15 +87,9 @@
                     {{ $reviews->links('layouts.pagination') }}
                 @endif
             </div>
-            <div class="tab-pane fade" id="v-pills-portfolio" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                {{--Portfolio--}}
-
-
-
-            </div>
-            <div class="tab-pane fade {{!$errors->isEmpty() ? 'active show' : ''}}" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            <div class="tab-pane fade {{ !$errors->isEmpty() ? 'active show' : '' }}" id="v-pills-auth" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <p class="col font-size-18">Налаштування безпеки</p>
-                <form method="POST" action="{{route('change_pass')}}" class="col-10 offset-1 bg-white shadow-lg pass_change">
+                <form method="POST" action="{{ route('change_pass') }}" class="col-10 offset-1 bg-white shadow-lg pass_change">
                     @csrf
                     <div class="col-12">
                         <div class="form-group row">
@@ -158,22 +152,22 @@
                             <div class="form-group row">
                                 <label for="surname" class="col-5 col-form-label mt-2">Прізвище:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" id="surname" class="form-control" name="surname" value="{{$data->surname}}" required>
+                                    <input type="text" id="surname" class="form-control" name="surname" value="{{ $data->surname }}" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-5 col-form-label mt-2">Ім'я:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" id="name" class="form-control" name="name" value="{{$data->name}}" required>
+                                    <input type="text" id="name" class="form-control" name="name" value="{{ $data->name }}" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="id_dept" class="col-5 col-form-label mt-2">Кафедра</label>
                                 <div class="col-6 mt-2">
                                     <select id="id_dept" class="form-control" name="id_dept">
-                                        <option {{is_null($dept) ? 'selected' : ''}} value="0">Не обрано</option>
+                                        <option {{ is_null($dept) ? 'selected' : '' }} value="0">Не обрано</option>
                                         @foreach($depts as $item)
-                                            <option {{!is_null($dept) && $dept->id_dept == $item->id_dept ? 'selected' : ''}} value="{{$item->id_dept}}">{{$item->name}}</option>
+                                            <option {{ !is_null($dept) && $dept->id_dept == $item->id_dept ? 'selected' : '' }} value="{{ $item->id_dept }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -181,19 +175,19 @@
                             <div class="form-group row">
                                 <label for="birthday_date" class="col-5 col-form-label mt-2">Дата народження:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="date" id="birthday_date" class="form-control" name="birthday_date" value="{{$data->birthday_date}}">
+                                    <input type="date" id="birthday_date" class="form-control" name="birthday_date" value="{{ $data->birthday_date }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="country" class="col-5 col-form-label mt-2">Країна:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" id="country" class="form-control" name="country" value="{{$data->country}}">
+                                    <input type="text" id="country" class="form-control" name="country" value="{{ $data->country }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="city" class="col-5 col-form-label mt-2">Місто:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" id="city" class="form-control" name="city" value="{{$data->city}}">
+                                    <input type="text" id="city" class="form-control" name="city" value="{{ $data->city }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -203,61 +197,43 @@
                     </div>
 
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <form method="POST" action="{{route('save_contacts')}}" class="col-10 offset-1 bg-white shadow-lg">
+                        <form method="POST" action="{{ route('save_contacts') }}" class="col-10 offset-1 bg-white shadow-lg">
                             @csrf
                             <div class="form-group row mt-4">
                                 <label for="phone_number" class="col-5 col-form-label mt-2">Номер телефону:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" id="phone_number" class="form-control" name="phone_number" value="{{$data->phone_number}}">
+                                    <input type="text" id="phone_number" class="form-control" name="phone_number" value="{{ $data->phone_number }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="viber" class="col-5 col-form-label mt-2">Viber:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" id="viber" class="form-control" name="viber" value="{{$data->viber}}">
+                                    <input type="text" id="viber" class="form-control" name="viber" value="{{ $data->viber }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="skype" class="col-5 col-form-label mt-2">Skype:</label>
                                 <div class="col-6 mt-2">
-                                    <input type="text" id="skype" class="form-control" name="skype" value="{{$data->skype}}">
+                                    <input type="text" id="skype" class="form-control" name="skype" value="{{ $data->skype }}">
                                 </div>
                             </div>
-                            <!--<div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Facebook:</label>
-                                <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="facebook" value="">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Telegram:</label>
-                                <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="telegram" value="">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-5 col-form-label mt-2">Instagram:</label>
-                                <div class="col-6 mt-2">
-                                    <input type="text" class="form-control" name="instagram" value="">
-                                </div>
-                            </div>-->
                             <div class="form-group row">
                                 <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="form_contacts">Підтвердити</button>
                             </div>
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-skills" role="tabpanel" aria-labelledby="nav-skills-tab">
-                        <form method="POST" action="{{route('save_skills')}}" class="col-10 offset-1 bg-white shadow-lg">
+                        <form method="POST" action="{{ route('save_skills') }}" class="col-10 offset-1 bg-white shadow-lg">
                             @csrf
                             <div class="col-9 mt-4 pt-2">
                                 <select name="type" id="type" class="form-control">
                                     <option value="0" disabled selected>(Оберіть навички)</option>
                                     @foreach($categories as $select)
-                                        <option value="{{$select->id_category}}">{{$select->name}}</option>
+                                        <option value="{{ $select->id_category }}">{{ $select->name }}</option>
                                     @endforeach
                                 </select>
                                 <div style="display: none">
-                                    <input type="text" name="categories" value="{{$skills}}">
+                                    <input type="text" name="categories" value="{{ $skills }}">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-7" id="themes_block"></div>
@@ -269,11 +245,11 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                        <form method="POST" action="{{route('save_about_me')}}" class="col-10 offset-1 bg-white shadow-lg">
+                        <form method="POST" action="{{ route('save_about_me') }}" class="col-10 offset-1 bg-white shadow-lg">
                             @csrf
                             <div class="row mt-4">
                                 <div class="col-12 mt-2">
-                                    <textarea class="form-control" name="about_me" rows="6">{{$data->about_me}}</textarea>
+                                    <textarea class="form-control" name="about_me" rows="6">{{ $data->about_me }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group row mt-2">
@@ -283,7 +259,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade {{$_SERVER['REQUEST_URI'] == '/profile?orders' ? 'active show' : ''}}" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
+            <div class="tab-pane fade {{ $_SERVER['REQUEST_URI'] == '/profile?orders' ? 'active show' : '' }}" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all-c" role="tab" aria-controls="nav-all" aria-selected="true">Залишені замовлення</a>
@@ -299,10 +275,10 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
-                                            <div class="offset-1">{{mb_strlen($all->description) > 200 ? mb_substr($all->description, 0, 200) . '...' : $all->description}}</div>
-                                            <div class="col text-right font-size-10">Дата створення: {{$all->created_at}}</div>
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{ $all->id_order }}">
+                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{ $all->title }}</div>
+                                            <div class="offset-1">{{ mb_strlen($all->description) > 200 ? mb_substr($all->description, 0, 200) . '...' : $all->description }}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{ $all->created_at }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -323,10 +299,10 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
-                                            <div class="offset-1">{{mb_strlen($all->description) > 200 ? mb_substr($all->description, 0, 200) . '...' : $all->description}}</div>
-                                            <div class="col text-right font-size-10">Дата створення: {{$active->created_at}}</div>
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{ $active->id_order }}">
+                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{ $active->title }}</div>
+                                            <div class="offset-1">{{ mb_strlen($all->description) > 200 ? mb_substr($all->description, 0, 200) . '...' : $all->description }}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{ $active->created_at }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -349,19 +325,19 @@
                                     <div class="row">
                                         <div class="col-11 mt-3 mb-2 bg-white shadow-lg">
                                             <div class="row mb-2 mt-1">
-                                                <div class="col-6 offset-1 mb-2 mt-1 font-weight-bold font-size-18">{{$complete->title}}</div>
-                                                <div class="col-5 mb-2 mt-2 text-right">Виконавець: {{$complete->worker->name}} {{$complete->worker->surname}}</div>
+                                                <div class="col-6 offset-1 mb-2 mt-1 font-weight-bold font-size-18">{{ $complete->title }}</div>
+                                                <div class="col-5 mb-2 mt-2 text-right">Виконавець: {{ $complete->worker->name }} {{ $complete->worker->surname }}</div>
                                             </div>
-                                            <div class="offset-1">{{$active->description}}</div>
-                                            <div class="col text-right font-size-10 mt-1 mb-2">Дата створення: {{$active->created_at}}</div>
+                                            <div class="offset-1">{{ $active->description }}</div>
+                                            <div class="col text-right font-size-10 mt-1 mb-2">Дата створення: {{ $active->created_at }}</div>
                                             @if($complete->review)
                                                 <div>
                                                     <div class="row">
                                                         <button class="col-4 offset-7 text-white btn badge-pill bg-deep-blue mb-2 px-0 add-review" data-toggle="collapse" data-target="#id-{{$complete->id_order}}">Залишити коментар виконавцю</button>
                                                     </div>
                                                 </div>
-                                                <div id="id-{{$complete->id_order}}" class="collapse">
-                                                    <form method="POST" action="{{route('save_review', $complete->id_order)}}" class="col c_rounded">
+                                                <div id="id-{{ $complete->id_order }}" class="collapse">
+                                                    <form method="POST" action="{{ route('save_review', $complete->id_order) }}" class="col c_rounded">
                                                         @csrf
                                                         <div class="form-group row">
                                                             <p class="col-2">Оцінка:</p>
@@ -415,10 +391,10 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$all->id_order}}">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$all->title}}</div>
-                                            <div class="offset-1">{{$all->text}}</div>
-                                            <div class="col text-right font-size-10">Дата створення: {{$all->created_at}}</div>
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{ $all->id_order }}">
+                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{ $all->title }}</div>
+                                            <div class="offset-1">{{ $all->text }}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{ $all->created_at }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -439,10 +415,10 @@
                                 @php($i++)
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{$active->id_order}}">
-                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{$active->title}}</div>
-                                            <div class="offset-1">{{$active->text}}</div>
-                                            <div class="col text-right font-size-10">Дата створення: {{$active->created_at}}</div>
+                                        <div class="col-11 mt-3 mb-2 bg-white shadow-lg work-order pointer" data-id="{{ $active->id_order }}">
+                                            <div class="offset-1 font-weight-bold font-size-18 mt-1">{{ $active->title }}</div>
+                                            <div class="offset-1">{{ $active->text }}</div>
+                                            <div class="col text-right font-size-10">Дата створення: {{ $active->created_at }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -464,17 +440,17 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-11 mt-3 mb-2 bg-white shadow-lg">
-                                            <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{$complete->title}}</div>
-                                            <div class="offset-1">{{$active->text}}</div>
-                                            <div class="col text-right font-size-10 mb-2">Дата створення: {{$active->created_at}}</div>
+                                            <div class="offset-1 font-weight-bold font-size-18 mb-2 mt-1">{{ $complete->title }}</div>
+                                            <div class="offset-1">{{ $active->text }}</div>
+                                            <div class="col text-right font-size-10 mb-2">Дата створення: {{ $active->created_at }}</div>
                                             @if($complete->review)
                                                 <div>
                                                     <div class="row">
                                                         <button class="col-4 offset-7 text-white btn badge-pill bg-deep-blue mb-2 px-0 add-review" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити коментар замовнику</button>
                                                     </div>
                                                 </div>
-                                                <div id="id-{{$complete->id_proposal}}" class="collapse">
-                                                    <form method="POST" action="{{route('save_review', $complete->id_order)}}" class="col c_rounded">
+                                                <div id="id-{{ $complete->id_proposal }}" class="collapse">
+                                                    <form method="POST" action="{{ route('save_review', $complete->id_order) }}" class="col c_rounded">
                                                         @csrf
                                                         <div class="form-group row">
                                                             <p class="col-2">Оцінка:</p>
@@ -520,20 +496,17 @@
                     <div class="nav flex-column" id="profile-bar" role="tablist" aria-orientation="vertical">
                         <ul class="list-group list-group-flush mw-100">
                             <li class="list-group-item py-0">
-                                <a class="nav-link {{$_SERVER['REQUEST_URI'] != '/profile?orders' && $errors->isEmpty() ? 'active' : ''}}" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
+                                <a class="nav-link {{ $_SERVER['REQUEST_URI'] != '/profile?orders' && $errors->isEmpty() ? 'active' : '' }}" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-settings" aria-selected="true">Перегляд профілю</a>
                             </li>
                             <li class="list-group-item py-0">
                                 <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-edit" role="tab" aria-selected="false">Редагування даних</a>
                             </li>
-{{--                            <li class="list-group-item py-0">--}}
-{{--                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-portfolio" role="tab" aria-controls="v-pills-profile" aria-selected="false">Портфоліо</a>--}}
-{{--                            </li>--}}
                             <li class="list-group-item py-0">
-                                <a class="nav-link {{!$errors->isEmpty() ? 'active' : ''}}" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-auth" role="tab" aria-controls="v-pills-messages" aria-selected="false">Налаштування безпеки</a>
+                                <a class="nav-link {{ !$errors->isEmpty() ? 'active' : '' }}" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-auth" role="tab" aria-controls="v-pills-messages" aria-selected="false">Налаштування безпеки</a>
                             </li>
                             @if(Auth::user()->id_role == 2)
                                 <li class="list-group-item py-0">
-                                    <a class="nav-link {{$_SERVER['REQUEST_URI'] == '/profile?orders' ? 'active' : ''}}" id="v-pills-orders-tab" data-toggle="pill" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Мої замовлення</a>
+                                    <a class="nav-link {{ $_SERVER['REQUEST_URI'] == '/profile?orders' ? 'active' : '' }}" id="v-pills-orders-tab" data-toggle="pill" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Мої замовлення</a>
                                 </li>
                             @elseif(Auth::user()->id_role == 3)
                                 <li class="list-group-item py-0">

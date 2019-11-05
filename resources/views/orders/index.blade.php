@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-3 font-weight-bold text-left font-size-18">Всі проекти</div>
                     <div class="col-7 offset-2">
-                        <div class="input-group{{count($data) ? ' ' : ' d-none'}}" id="drop-filter">
+                        <div class="input-group{{ count($data) ? ' ' : ' d-none' }}" id="drop-filter">
                             <div class="input-group-prepend">
                                 <span class="col-form-label">Фільтрувати за:</span>
                             </div>
@@ -43,7 +43,7 @@
             <div class="container">
             <div class="col-12 collapse bg-white shadow" id="new-order">
                 <div class="d-flex flex-row">
-                    <form class="col" method="POST" action="{{route('save_order')}}">
+                    <form class="col" method="POST" action="{{ route('save_order') }}">
                         @csrf
                         <div class="form-group row">
                             <label for="title" class="col-lg-2 col-12 col-form-label mt-2">Назва:</label>
@@ -57,7 +57,7 @@
                                 <select id="type" class="form-control">
                                     <option value="0" disabled selected>(Виберіть тему замовлення)</option>
                                     @foreach($categories as $select)
-                                        <option value="{{$select->id_category}}">{{$select->name}}</option>
+                                        <option value="{{ $select->id_category }}">{{ $select->name }}</option>
                                     @endforeach
                                 </select>
                                 <div style="display: none">
@@ -106,32 +106,32 @@
                 <div class="container orders" id="orders-list">
                     @foreach($data as $orders)
                         <div class="flex-row mb-3 mt-2 d-flex">
-                            <div class="col-10 shadow bg-white work-order pointer" data-id="{{$orders->id_order}}">
-                                <div class="font-weight-bold mt-2 order-title">{{$orders->title}}</div>
+                            <div class="col-10 shadow bg-white work-order pointer" data-id="{{ $orders->id_order }}">
+                                <div class="font-weight-bold mt-2 order-title">{{ $orders->title }}</div>
                                 <div class="tag-list">
                                     @foreach($orders->categories as $tags)
-                                        <span class="tags font-italic font-size-10">{{$tags->name}}</span>
+                                        <span class="tags font-italic font-size-10">{{ $tags->name }}</span>
                                     @endforeach
                                 </div>
-                                <div>{{mb_strlen($orders->description) > 50 ? mb_substr($orders->description, 0, 50) . '...' : $orders->description}}</div>
+                                <div>{{ mb_strlen($orders->description) > 50 ? mb_substr($orders->description, 0, 50) . '...' : $orders->description }}</div>
                                 @if(!is_null($orders->dept))
-                                    <div class="text-left float-left font-size-10">{{$orders->dept->name}}</div>
+                                    <div class="text-left float-left font-size-10">{{ $orders->dept->name }}</div>
                                 @endif
-                                <div class="text-right font-size-10">{{$orders->created_at}}</div>
+                                <div class="text-right font-size-10">{{ $orders->created_at }}</div>
                             </div>
                             <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end text-nowrap" style="height: 54px;">
-                                <div class="text-center font-weight-bold m-1">{{$orders->price}}</div>
-                                <div class="text-right font-italic font-size-10 mt-2 pr-2">{{$orders->time}}</div>
+                                <div class="text-center font-weight-bold m-1">{{ $orders->price }}</div>
+                                <div class="text-right font-italic font-size-10 mt-2 pr-2">{{ $orders->time }}</div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-                <div id="pagination" class="flex-row justify-content-center mb-3 {{ceil($info['count'] / 10) < 2 ? 'd-none' : 'd-flex'}}">
+                <div id="pagination" class="flex-row justify-content-center mb-3 {{ ceil($info['count'] / 10) < 2 ? 'd-none' : 'd-flex' }}">
                     <button class="btn btn-outline-p" disabled><<</button>&nbsp;
                     <button class="btn btn-outline-p" disabled><</button>&nbsp;
                     <button class="pagination-num pagination-selected btn btn-outline-p active" id="num-1" >1</button>&nbsp;
                     @for($i = 2; $i <= ceil($info['count'] / 10); $i++)
-                        <button class="pagination-num btn btn-outline-p" id="num-{{$i}}">{{$i}}</button>&nbsp;
+                        <button class="pagination-num btn btn-outline-p" id="num-{{ $i }}">{{ $i }}</button>&nbsp;
                     @endfor
                     <button class="btn btn-outline-p">></button>&nbsp;
                     <button class="btn btn-outline-p">>></button>
@@ -160,16 +160,16 @@
                         <li class="list-group-item py-0 categ">
                             <a class="categories_tag font-weight-bold" href="" data-id="0">
                                 <span>Всі</span>
-                                <span class="badge badge-pill badge-primary float-right m-1">{{$info['count']}}</span>
+                                <span class="badge badge-pill badge-primary float-right m-1">{{ $info['count'] }}</span>
                             </a>
                         </li>
                     </ul>
                     @foreach($categories as $tags)
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item py-0 categ">
-                                <a class="categories_tag" href="" data-id="{{$tags->id_category}}">
-                                    <span class="">{{$tags->name}}</span>
-                                    <span class="badge badge-pill badge-primary float-right m-1">{{$tags->count}}</span>
+                                <a class="categories_tag" href="" data-id="{{ $tags->id_category }}">
+                                    <span class="">{{ $tags->name }}</span>
+                                    <span class="badge badge-pill badge-primary float-right m-1">{{ $tags->count }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -183,16 +183,16 @@
                         <li class="list-group-item py-0 categ">
                             <a class="categories_tag font-weight-bold" href="" data-id="0">
                                 <span>Всі</span>
-                                <span class="badge badge-pill badge-primary float-right m-1">{{$info['count']}}</span>
+                                <span class="badge badge-pill badge-primary float-right m-1">{{ $info['count'] }}</span>
                             </a>
                         </li>
                     </ul>
                     @foreach($dept as $tags)
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item py-0 categ">
-                                <a class="categories_tag" href="" data-id="{{$tags->id_dept}}">
-                                    <span class="">{{$tags->name}}</span>
-                                    <span class="badge badge-pill badge-primary float-right m-1">{{$tags->count}}</span>
+                                <a class="categories_tag" href="" data-id="{{ $tags->id_dept }}">
+                                    <span class="">{{ $tags->name }}</span>
+                                    <span class="badge badge-pill badge-primary float-right m-1">{{ $tags->count }}</span>
                                 </a>
                             </li>
                         </ul>

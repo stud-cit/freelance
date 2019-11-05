@@ -14,10 +14,9 @@ class Contacts extends Migration
     public function up()
     {
         Schema::create('contacts', function (Blueprint $table) {
-            $table->bigInteger('id_first')->unsigned();
-            $table->foreign('id_first')->references('id')->on('users');
-            $table->bigInteger('id_second')->unsigned();
-            $table->foreign('id_second')->references('id')->on('users');
+            $table->bigInteger('id_user')->unsigned();
+            $table->foreign('id_user')->references('id')->on('users');
+            $table->text('contacts');
         });
     }
 

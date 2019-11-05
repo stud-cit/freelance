@@ -323,4 +323,60 @@ $("document").ready(function() {
             $("#dept-block").removeClass('d-flex').addClass('d-none');
         }
     }
+
+    $('#chat-form').on('submit', function(e) {
+        e.preventDefault();
+        let text = $('#message_input').val();
+        $('#message_input').val('');
+
+        if (text !== "") {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/chat',
+                method: 'post',
+                data: {
+                    'text': text,
+                    'id_to': $('.open_contact').attr('data-id'),
+                },
+                success: function (data) {
+                    update_chat(data);
+                }
+            });
+        }
+    });
+
+    $('.open-contact').on('click', function () {
+        $('.open-contact').removeClass('open-contact');
+        $(this).addClass('open-contact');
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/get_messages',
+            method: 'post',
+            data: {
+                'id': $(this).attr('data-id'),
+            },
+            success: function (data) {
+                update_chat(data);
+            }
+        });
+    });
+
+    function update_chat(data) {
+        $('#messages-list div').remove();
+        let new_chat = '';
+
+        for (let i = 0; i < data.length; i++) {
+            new_chat += `<div class="flex-row"><div class="`
+                + ($('#my_id').attr('data-id') == data[i]['id_from'] ? 'float-left' : 'float-right')
+                + ` bg-light m-2 p-2">`
+                + data[i]['text'] + `</div></div>`;
+        }
+
+        $('#messages-list').append(new_chat);
+    }
 });

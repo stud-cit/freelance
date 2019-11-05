@@ -138,6 +138,10 @@ class AdminController extends Controller
             ];
 
             DB::table('users_info')->insert($values);
+            DB::table('contacts')->insert([
+                'id_user' => $user['id'],
+                'contacts' => '|'
+            ]);
 
             $req->session()->flash('alert-success', 'Користувача успішно додано!');
 

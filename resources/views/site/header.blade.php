@@ -9,7 +9,6 @@
                 </div>
                 @if(Auth::check())
                     <div class="col-lg-1 col-2 offset-lg-5 offset-1 mt-1 small">
-{{--                        <a href="{{ route('customers') }}" class="text-white">Замовники</a>--}}
                     </div>
                     <div class="col-lg-1 col-2 mt-1 small">
                         <a href="{{ route('orders') }}" class="text-white">Проекти</a>
@@ -19,7 +18,7 @@
                     </div>
                     <div class="dropdown show col-lg-1 col-2">
                         <button class="dropdown-toggle btn badge-pill border border-light py-1 px-3 text-white small" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{Auth::user()->getAvatarPath()}}" title="title" alt="img" class="avatar square-1rem">
+                            <img src="{{ Auth::user()->getAvatarPath() }}" title="title" alt="img" class="avatar square-1rem">
                         </button>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
