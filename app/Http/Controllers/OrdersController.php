@@ -39,7 +39,11 @@ class OrdersController extends Controller
         $first_price = !is_null($a->price) ? $val_a[0] * ($val_a[1] == '$' ? $this->eq : 1) : 0;
         $second_price = !is_null($b->price) ? $val_b[0] * ($val_b[1] == '$' ? $this->eq : 1) : 0;
 
-        return $first_price > $second_price;
+        if ($first_price == $second_price) {
+            return 0;
+        }
+
+        return $first_price > $second_price ? 1 : -1;
     }
 
     public function get_orders($filter)

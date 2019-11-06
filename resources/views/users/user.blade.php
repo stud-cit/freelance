@@ -27,6 +27,12 @@
                 <div class="col">
                     <div class="row text-white bg-deep-blue pt-4 pb-5 h-100">
                         <div class="col-11 name surname font-weight-bold font-size-18">{{ $data->name }} {{ $data->surname }}</div>
+                        @if($data->id_user != Auth::id())
+                            <form method="POST" action="{{ route('new_contact') }}">
+                                @csrf
+                                <button type="submit" class="btn badge-pill bg-white" name="id_user" value="{{ $data->id_user }}">Контакт</button>
+                            </form>
+                        @endif
                         @if(!is_null($dept))
                             <div class="col-11 name surname font-weight-bold font-size-10 font-italic">{{ $dept->name }}</div>
                         @endif

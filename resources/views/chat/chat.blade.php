@@ -10,8 +10,10 @@
     <div class="flex-column w-25" style="overflow-y: scroll" id="contacts-list">
         @php($i = 0)
         @foreach($data as $one)
-            <div class="bg-light {{ $i++ ? '' : 'open_contact' }} pointer open-contact" data-id="{{ $one->id }}">
-                <img src="{{ $one->avatar }}" class="square-100 avatar circle"> {{ $one->name }} {{ $one->surname }}
+            <div class="bg-light {{ $i++ ? '' : 'open-contact' }} pointer contact" data-id="{{ $one->id }}">
+                <img src="{{ $one->avatar }}" class="square-100 avatar circle">
+                <span> {{ $one->name }} {{ $one->surname }} </span>
+                <span class="messages-count @if(!$one->count) d-none @endif"> ({{ $one->count }}) </span>
             </div>
         @endforeach
     </div>
@@ -29,7 +31,8 @@
             @foreach($messages as $one)
                 <div class="flex-row">
                     <div class="{{$one->id_from == Auth::id() ? 'float-left' : 'float-right'}} bg-light m-2 p-2">
-                        {{ $one->text }}
+                        <span title="{{ $one->created_at }}"> {{ $one->text }}</span>
+                        <span class="font-italic">{{ $one->time }}</span>
                     </div>
                 </div>
             @endforeach

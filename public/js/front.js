@@ -337,18 +337,21 @@ $("document").ready(function () {
     }
   }
 
-  $.ajaxSetup({
-    beforeSend: function beforeSend() {
-      $("#load").modal({
-        backdrop: "static",
-        keyboard: false,
-        show: true
-      });
-    },
-    complete: function complete() {
-      $("#load").modal("hide");
-    }
-  });
+  if (window.location.href.indexOf('/chat') < 0) {
+    $.ajaxSetup({
+      beforeSend: function beforeSend() {
+        $("#load").modal({
+          backdrop: "static",
+          keyboard: false,
+          show: true
+        });
+      },
+      complete: function complete() {
+        $("#load").modal("hide");
+      }
+    });
+  }
+
   $(".toggle-box").on('click', '.toggle-plus', function () {
     var counter = parseInt($('.toggle-box input[type="text"]:last').attr('name').slice(5)) + 1;
     var name = $(this).closest('.container').attr('id');
@@ -377,10 +380,8 @@ $("document").ready(function () {
 
   $('#chat-form').on('submit', function (e) {
     e.preventDefault();
-    var text = $('#message_input').val();
-    $('#message_input').val('');
 
-    if (text !== "") {
+    if ($('#message_input').val() !== "") {
       $.ajax({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -388,8 +389,30 @@ $("document").ready(function () {
         url: '/chat',
         method: 'post',
         data: {
-          'text': text,
-          'id_to': $('.open_contact').attr('data-id')
+          'text': $('#message_input').val(),
+          'id_to': $('.open-contact').attr('data-id')
+        },
+        success: function success(data) {
+          update_chat(data);
+          update_contact($('.open-contact'));
+          $('#message_input').val('');
+        }
+      });
+    }
+  });
+  $('#contacts-list').on('click', '.contact', function () {
+    if (!$(this).hasClass('open-contact')) {
+      $('.open-contact').removeClass('open-contact');
+      $(this).addClass('open-contact');
+      $(this).find('.messages-count').addClass('d-none');
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: '/get_messages',
+        method: 'post',
+        data: {
+          'id': $(this).attr('data-id')
         },
         success: function success(data) {
           update_chat(data);
@@ -397,30 +420,57 @@ $("document").ready(function () {
       });
     }
   });
-  $('.open-contact').on('click', function () {
-    $('.open-contact').removeClass('open-contact');
-    $(this).addClass('open-contact');
+
+  if (window.location.href.indexOf('/chat') >= 0) {
+    setTimeout(function () {
+      check_messages();
+    }, 4000);
+  }
+
+  function check_messages() {
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      url: '/get_messages',
+      url: '/check_messages',
       method: 'post',
       data: {
-        'id': $(this).attr('data-id')
+        'id': $('.open-contact').attr('data-id')
       },
       success: function success(data) {
-        update_chat(data);
+        if ('data' in data) {
+          $.each(data['data'], function (key, count) {
+            var user = $('.contact[data-id="' + key + '"]'),
+                span = user.find('.messages-count');
+            span.removeClass('d-none');
+            span.text(count);
+            update_contact(user);
+          });
+        }
+
+        if ('messages' in data) {
+          update_chat(data['messages']);
+        }
       }
+    }).done(function () {
+      setTimeout(function () {
+        check_messages();
+      }, 4000);
     });
-  });
+  }
+
+  function update_contact(user) {
+    var contact = user;
+    user.remove();
+    $('#contacts-list').prepend(contact);
+  }
 
   function update_chat(data) {
     $('#messages-list div').remove();
     var new_chat = '';
 
     for (var i = 0; i < data.length; i++) {
-      new_chat += "<div class=\"flex-row\"><div class=\"" + ($('#my_id').attr('data-id') == data[i]['id_from'] ? 'float-left' : 'float-right') + " bg-light m-2 p-2\">" + data[i]['text'] + "</div></div>";
+      new_chat += "<div class=\"flex-row\"><div class=\"" + ($('#my_id').attr('data-id') == data[i]['id_from'] ? 'float-left' : 'float-right') + " bg-light m-2 p-2\"><span title=\"" + data[i]['created_at'] + "\">" + data[i]['text'] + "</span><span class=\"font-italic\">" + data[i]['time'] + "</span></div></div>";
     }
 
     $('#messages-list').append(new_chat);
