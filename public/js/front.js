@@ -404,7 +404,10 @@ $("document").ready(function () {
     if (!$(this).hasClass('open-contact')) {
       $('.open-contact').removeClass('open-contact');
       $(this).addClass('open-contact');
+      $('.contact').removeClass('pointer');
+      $('.contact:not(.open-contact)').addClass('pointer');
       $(this).find('.messages-count').addClass('d-none');
+      $('#chat-form .d-none').removeClass('d-none');
       $.ajax({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -428,6 +431,12 @@ $("document").ready(function () {
   }
 
   function check_messages() {
+    var elems = $('.messages-count:not(.d-none)'),
+        data = [];
+    elems.each(function () {
+      var id = $(this).closest('.contact').attr('data-id');
+      data[id] = $(this).text();
+    });
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -435,7 +444,8 @@ $("document").ready(function () {
       url: '/check_messages',
       method: 'post',
       data: {
-        'id': $('.open-contact').attr('data-id')
+        'id': $('.open-contact').attr('data-id'),
+        'data': data
       },
       success: function success(data) {
         if ('data' in data) {

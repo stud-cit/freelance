@@ -37,16 +37,39 @@ class ChatController extends Controller
         return $messages;
     }
 
-    public function index()
+    function sorted_array()
     {
         $contacts = DB::table('contacts')->where('id_user', Auth::id())->get('contacts')->first();
         $users = explode('|', $contacts->contacts);
-        $data = [];
-        $messages = $this->get_mess($users[1]);
+        $sort = [];
 
-        DB::table('messages')->where([['id_from', $users[1]], ['id_to', Auth::id()], ['status', 0]])->update(['status' => 1]);
+        for ($i = count($users) - 2; $i > 0; $i--) {
+            $last_message = $this->get_mess($users[$i])->first();
+            $last_message = is_null($last_message) ? -1 : $last_message->id_message;
+
+            array_push($sort, ['id_user' => $users[$i], 'id_message' => $last_message]);
+        }
+
+        usort($sort, array($this, "sort_contacts"));
+
+        return $sort;
+    }
+
+    public function index()
+    {
+        $open = session()->get('id');
+        session()->forget('id');
+        $data = [];
+        $messages = null;
 
         $sort = $this->sorted_array();
+
+        if (!is_null($open)) {
+            DB::table('messages')->where([['id_from', $open], ['id_to', Auth::id()], ['status', 0]])->update(['status' => 1]);
+
+            $messages = $this->get_mess($open);
+            $messages->id_to = $open;
+        }
 
         foreach ($sort as $one) {
             $user = User::getUsersInfo('id', $one['id_user'])->first();
@@ -56,7 +79,13 @@ class ChatController extends Controller
             array_push($data, $user);
         }
 
-        return view('chat.chat', compact('data'), compact('messages'));
+        $data = [
+            'data' => $data,
+            'messages' => $messages,
+            'id_to' => $open
+        ];
+
+        return view('chat.chat', compact('data'));
     }
 
     public function new_message(Request $req) {
@@ -86,7 +115,7 @@ class ChatController extends Controller
         $user = DB::table('contacts')->where('id_user', Auth::id())->get()->first();
         $user_to = DB::table('contacts')->where('id_user', $req->id_user)->get()->first();
 
-        $check = strpos('|' . $req->id_user . '|', $user->contacts);
+        $check = strpos($user->contacts, '|' . $req->id_user . '|');
 
         if ($check === false || $user->contacts == '|') {
             DB::table('contacts')
@@ -98,7 +127,7 @@ class ChatController extends Controller
                 ->update(['contacts' => $user_to->contacts . Auth::id() . '|']);
         }
 
-        return redirect('/chat');
+        return redirect()->route('to_chat')->with(['id' => $req->id_user]);
     }
 
     public function check_messages(Request $req)
@@ -112,7 +141,7 @@ class ChatController extends Controller
             foreach ($sort as $one) {
                 $count = DB::table('messages')->where([['id_from', $one['id_user']], ['id_to', Auth::id()], ['status', 0]])->count();
 
-                if ($count && $one['id_user'] != $req->id) {
+                if ($count && $one['id_user'] != $req->id && $req->data[$req->id] != $count) {
                     $data[$one['id_user']] = $count;
                 }
             }
@@ -134,23 +163,5 @@ class ChatController extends Controller
         else {
             return [];
         }
-    }
-
-    function sorted_array()
-    {
-        $contacts = DB::table('contacts')->where('id_user', Auth::id())->get('contacts')->first();
-        $users = explode('|', $contacts->contacts);
-        $sort = [];
-
-        for ($i = 1; $i < count($users) - 1; $i++) {
-            $last_message = $this->get_mess($users[$i])->first();
-            $last_message = is_null($last_message) ? -1 : $last_message->id_message;
-
-            array_push($sort, ['id_user' => $users[$i], 'id_message' => $last_message]);
-        }
-
-        usort($sort, array($this, "sort_contacts"));
-
-        return $sort;
     }
 }
