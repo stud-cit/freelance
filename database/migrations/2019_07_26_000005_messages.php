@@ -16,7 +16,8 @@ class Messages extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id_message');
             $table->dateTime('created_at');
-            $table->longText('text');
+            $table->longText('text')->nullable();
+            $table->boolean('file');
             $table->boolean('status');
             $table->bigInteger('id_from')->unsigned();
             $table->foreign('id_from')->references('id')->on('users');

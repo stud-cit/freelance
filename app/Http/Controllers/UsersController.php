@@ -291,10 +291,15 @@ class UsersController extends Controller
             ->get()
             ->first();
 
+        $active = DB::table('orders')->where([['id_customer', Auth::id()], ['status', 'new']])->count();
+        $complete = DB::table('orders')->where([['id_customer', Auth::id()], ['status', 'complete']])->count();
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
-            'dept' => $dept
+            'dept' => $dept,
+            'active' => $active,
+            'complete' => $complete
         ];
 
         return view('users.user', compact('info'));

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ChatController extends Controller
 {
@@ -94,6 +96,7 @@ class ChatController extends Controller
             'text' => $req->text,
             'id_from' => Auth::id(),
             'id_to' => $req->id_to,
+            'file' => false,
             'status' => 0,
         ];
 
@@ -102,6 +105,26 @@ class ChatController extends Controller
         DB::table('messages')->where([['id_from', $req->id_to], ['id_to', Auth::id()], ['status', 0]])->update(['status' => 1]);
 
         return $this->get_mess($req->id_to)->toArray();
+    }
+
+    public function send_file(Request $req)
+    {
+        $extension = pathinfo($req->file('file'));
+        $extension = $extension['extension'];
+
+        $message = [
+            'created_at' => Carbon::now(),
+            'text' => null,
+            'id_from' => Auth::id(),
+            'id_to' => $req->id_to,
+            'file' => true,
+            'status' => 0,
+        ];
+
+        $message = Message::create($message);
+        $path = $message->id_message . '.' . $extension;
+
+        Storage::disk('files')->put($path, File::get($req->file('file')));
     }
 
     public function get_messages(Request $req) {

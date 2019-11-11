@@ -350,6 +350,33 @@ $("document").ready(function() {
         }
     });
 
+    $('#file_input').on('change', function () {
+        if ($(this)[0].files[0].size <= 5242880) {
+            let file = new FormData();
+
+            file.append('file', $(this).prop('files')[0]);
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'multipart/form-data'
+                },
+                url: '/send_file',
+                method: 'post',
+                data: file,
+                success: function (data) {
+                    update_chat(data);
+                    update_contact($('.open-contact'));
+                }
+            });
+        }
+        else {
+            alert('Файли можуть бути лише менш, ніж 5мб');
+        }
+
+        $('#file_input').val('');
+    });
+
     $('#contacts-list').on('click', '.contact', function () {
         if (!$(this).hasClass('open-contact')) {
             $('.open-contact').removeClass('open-contact');

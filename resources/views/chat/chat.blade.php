@@ -25,7 +25,8 @@
             <form action="{{ route('new_message') }}" id="chat-form" method="post">
                 @csrf
                 <div class="input-group">
-                    <input type="text" class="form-control col-11 @if(is_null($id_to))d-none @endif" name="text" id="message_input">
+                    <input type="text" class="form-control col-10 @if(is_null($id_to))d-none @endif" name="text" id="message_input">
+                    <input type="file" class="form-control-file col-1 @if(is_null($id_to))d-none @endif" name="file" id="file_input">
                     <button class="form-control bg-blue text-white col-1 @if(is_null($id_to))d-none @endif"> > </button>
                 </div>
             </form>

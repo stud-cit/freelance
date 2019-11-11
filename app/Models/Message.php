@@ -10,6 +10,6 @@ class Message extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'timestamp', 'text', 'id_from', 'id_to', 'status', 'created_at'
+        'timestamp', 'text', 'id_from', 'id_to', 'status', 'created_at', 'file'
     ];
 }
