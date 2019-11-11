@@ -9,6 +9,8 @@
 @php($data = $info['data'])
 @php($reviews = $info['reviews'])
 @php($dept = $info['dept'])
+@php($active = $info['active'])
+@php($complete = $info['complete'])
 
 <div>
     <div class="flash-message fixed-bottom text-center">
@@ -46,33 +48,31 @@
         </div>
     </div>
     <div class="col-12">
-        <div class="d-flex flex-row justify-content-around text-white">
+        <div class="d-flex flex-row justify-content-around text-white text-center">
             <div>
-                <div class="font-size-100 text-center">5</div>
+                <div class="font-size-100">{{$active}}</div>
                 <div class="font-size-25">ACTIVE ORDERS</div>
             </div>
             <div>
-                <div class="font-size-100 text-center">9</div>
+                <div class="font-size-100">{{$complete}}</div>
                 <div class="font-size-25">SUCCESSFULL PROJECTS</div>
             </div>
             <div>
-                <div class="font-size-100 text-center">13</div>
+                <div class="font-size-100">{{$active + $complete}}</div>
                 <div class="font-size-25">ORDERS COUNT</div>
             </div>
         </div>
     </div>
     @if(count($reviews) != 0)
-        <div class="col-12 my-4">
-            <div class="d-flex flex-row justify-content-center">
-                <button class="btn badge-pill bg-orange text-center text-white" id="mark-toggle" data-toggle="collapse" data-target="#mark" aria-expanded="true">Відобразити відгуки</button>
-            </div>
+        <div class="d-flex justify-content-center my-4">
+            <button class="btn badge-pill bg-orange text-center text-white" id="mark-toggle" data-toggle="collapse" data-target="#mark" aria-expanded="true">Відобразити відгуки</button>
         </div>
     <div class="collapse" id="mark">
-        <div class="offset-1 col-10 text-white">
+        <div class="offset-1 col-10">
             <div class="row">
             @foreach($reviews as $mark)
-                <div class="col-6 bg-deep-dark">
-                    <div class="d-flex flex-row mt-4">
+                <div class="col-6 bg-deep-dark text-white">
+                    <div class="d-flex flex-row align-items-center">
                         <div class="col-2 px-0 pointer to-profile" data-id="{{ $mark->id_user }}">
                             <img src="{{ $mark->avatar }}" class="circle avatar" style="height: 106px; width: 106px">
                         </div>
