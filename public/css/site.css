@@ -1,6 +1,7 @@
 body {
-    background: url(/bg.png) repeat;
-    background-size: 236px 234px;
+    background-color: #2D3A4D;
+    /*background: url(/bg.png) repeat;
+    background-size: 236px 234px;*/
 }
 .logo-circle {
     width: 2rem; height: 2rem
@@ -12,7 +13,7 @@ a.bg-violet:hover, button.bg-violet:hover {
     background-color: #480082;
 }
 .bg-blue {
-    background-color: #0076de;
+    background-color: #4A67F5;
 }
 a.bg-blue:hover, button.bg-blue:hover {
     background-color: #0056e1;
@@ -29,6 +30,18 @@ a.bg-green:hover, button.bg-green:hover {
 a.bg-deep-blue:hover, button.bg-deep-blue:hover {
     background-color: #000049;
 }
+.bg-light-black {
+    background-color: #222C3A;
+}
+.bg-deep-dark {
+    background-color: #2D3A4D;
+}
+.bg-orange {
+    background-color: #F97333;
+}
+.text-gray {
+    color: #707070;
+}
 .pointer {
     cursor: pointer;
 }
@@ -37,6 +50,21 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 }
 .font-size-10 {
     font-size: 10px;
+}
+.font-size-20 {
+    font-size: 20px;
+}
+.font-size-25 {
+    font-size: 25px;
+}
+.font-size-35 {
+    font-size: 35px;
+}
+.font-size-50 {
+    font-size: 50px;
+}
+.font-size-100 {
+    font-size: 100px;
 }
 .c_rounded {
     border-radius: 0.50rem; !important;

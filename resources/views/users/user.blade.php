@@ -10,81 +10,92 @@
 @php($reviews = $info['reviews'])
 @php($dept = $info['dept'])
 
-<div class="container">
-    <div class="row">
-        <div class="flash-message fixed-bottom text-center">
-            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                @if(Session::has('alert-' . $msg))
-                    <p class="alert alert-{{ $msg }} alert-dismissible"> {{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                @endif
-            @endforeach
+<div>
+    <div class="flash-message fixed-bottom text-center">
+        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            @if(Session::has('alert-' . $msg))
+                <p class="alert alert-{{ $msg }} alert-dismissible"> {{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
+        @endforeach
+    </div>
+    <div class="d-flex flex-row align-items-center bg-light-black">
+        <div class="col-2 offset-1 px-0 my-2">
+            <img src="{{ $data->avatar }}" class="circle avatar" style="height: 260px; width: 260px">
         </div>
-        <div>
-            <div class="d-flex flex-row">
-                <div class="col-4 px-0">
-                    <img src="{{ $data->avatar }}" class="square square-330 avatar">
-                </div>
-                <div class="col">
-                    <div class="row text-white bg-deep-blue pt-4 pb-5 h-100">
-                        <div class="col-11 name surname font-weight-bold font-size-18">{{ $data->name }} {{ $data->surname }}</div>
-                        @if($data->id_user != Auth::id())
-                            <form method="POST" action="{{ route('new_contact') }}">
-                                @csrf
-                                <button type="submit" class="btn badge-pill bg-white" name="id_user" value="{{ $data->id_user }}">Контакт</button>
-                            </form>
-                        @endif
-                        @if(!is_null($dept))
-                            <div class="col-11 name surname font-weight-bold font-size-10 font-italic">{{ $dept->name }}</div>
-                        @endif
-                        <div class="col-11 font-size-10">
-                            @foreach($data->categories as $tags)
-                                <span class="tags font-italic">{{ $tags->name }}</span>
-                            @endforeach
-                        </div>
-                        <div class="col-11 font-weight-bold">Контактна інформація:</div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-6 font-size-10">E-mail: {{ $data->email }}</div>
-                                <div class="col-5 font-size-10">Phone number: {{ $data->phone_number }}</div>
-                                <div class="col-6 font-size-10">Viber: {{ $data->viber }}</div>
-                                <div class="col-5 font-size-10">Skype: {{ $data->skype }}</div>
-                            </div>
-                        </div>
-                        <div class="col-11 font-weight-bold font-size-10">Дата реєстрації: {{ $data->created_at }}</div>
-                    </div>
-                </div>
+        <div class="col-6 text-white">
+            <div class="col-12 name surname font-weight-bold font-size-50">{{ $data->name }} {{ $data->surname }}</div>
+            @if(!is_null($dept))
+                <div class="col-12 font-weight-bold font-size-35 font-italic">{{ $dept->name }}</div>
+            @endif
+            <div class="col-12 font-size-35">
+                @foreach($data->categories as $tags)
+                    <span class="tags font-italic">{{ $tags->name }}</span>
+                @endforeach
             </div>
             @if(!is_null($data->about_me))
-                <p class="font-weight-bold font-size-18 mt-3">Додаткова інформація</p>
-                <div class="">
-                    <div class="col rounded pl-2 pt-2 pb-2 bg-white shadow-lg">{{ $data->about_me }}</div>
-                </div>
+                <div class="col-12 text-gray font-size-20">{{ $data->about_me }}</div>
             @endif
-                @if(count($reviews) != 0)
-                    <p class="font-weight-bold font-size-18 mt-2">Відгуки</p>
-                    @foreach($reviews as $mark)
-                        <div class="col-11 bg-white shadow-lg my-3">
-                            <div class="d-flex flex-row">
-                                <div class="col-1 px-0 min-width-70 mt-2 pointer to-profile" data-id="{{ $mark->id_user }}">
-                                    <img src="{{ $mark->avatar }}" class="square-60 circle avatar">
-                                </div>
-                                <div class="col bg-blue text-white rounded px-2 my-2">
-                                    <div class=" mt-2">{{ $mark->text }}</div>
-                                    <hr class="col border-white mb-0">
-                                    <div class="row font-size-10 mt-2 mb-2">
-                                        <div class="col-3 pointer to-profile" data-id="{{ $mark->id_user }}">{{ $mark->name }} {{ $mark->surname }}</div>
-                                        <div class="col-2 offset-2">Оцінка: {{ $mark->rating }}/5</div>
-                                        <div class="col-2 offset-3">{{ $mark->created_at }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                    {{ $reviews->links('layouts.pagination') }}
-                @endif
+        </div>
+        <div class="col-2">
+            @if($data->id_user != Auth::id())
+                <form method="POST" action="{{ route('new_contact') }}" class="px-0">
+                    @csrf
+                    <button type="submit" class="btn bg-blue text-white font-weight-bold font-size-25" name="id_user" value="{{ $data->id_user }}">Відкрити приватний чат</button>
+                </form>
+            @endif
         </div>
     </div>
+    <div class="col-12">
+        <div class="d-flex flex-row justify-content-around text-white">
+            <div>
+                <div class="font-size-100 text-center">5</div>
+                <div class="font-size-25">ACTIVE ORDERS</div>
+            </div>
+            <div>
+                <div class="font-size-100 text-center">9</div>
+                <div class="font-size-25">SUCCESSFULL PROJECTS</div>
+            </div>
+            <div>
+                <div class="font-size-100 text-center">13</div>
+                <div class="font-size-25">ORDERS COUNT</div>
+            </div>
+        </div>
+    </div>
+    @if(count($reviews) != 0)
+        <div class="col-12 my-4">
+            <div class="d-flex flex-row justify-content-center">
+                <button class="btn badge-pill bg-orange text-center text-white" id="mark-toggle" data-toggle="collapse" data-target="#mark" aria-expanded="true">Відобразити відгуки</button>
+            </div>
+        </div>
+    <div class="collapse" id="mark">
+        <div class="offset-1 col-10 text-white">
+            <div class="row">
+            @foreach($reviews as $mark)
+                <div class="col-6 bg-deep-dark">
+                    <div class="d-flex flex-row mt-4">
+                        <div class="col-2 px-0 pointer to-profile" data-id="{{ $mark->id_user }}">
+                            <img src="{{ $mark->avatar }}" class="circle avatar" style="height: 106px; width: 106px">
+                        </div>
+                        <div class="col-10 pointer to-profile" data-id="{{ $mark->id_user }}">{{ $mark->name }} {{ $mark->surname }}</div>
+                    </div>
+                    <div class="d-flex flex-row mb-4">
+                        <div class="col-10 mt-2">{{ $mark->text }}</div>
+                        <div class="col-2">
+                            <div>
+                                <img src="" alt="">
+                            </div>
+                            <div class="font-size-10">{{ $mark->created_at }}</div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            {{ $reviews->links('layouts.pagination') }}
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
+
 
 @endsection
 
