@@ -109,12 +109,9 @@ class ChatController extends Controller
 
     public function send_file(Request $req)
     {
-        $extension = pathinfo($req->file('file'));
-        $extension = $extension['extension'];
-
         $message = [
             'created_at' => Carbon::now(),
-            'text' => null,
+            'text' => $req->name,
             'id_from' => Auth::id(),
             'id_to' => $req->id_to,
             'file' => true,
@@ -122,9 +119,18 @@ class ChatController extends Controller
         ];
 
         $message = Message::create($message);
-        $path = $message->id_message . '.' . $extension;
+        $path = 'message_' . $message->id_message . '_' . $req->name;
 
         Storage::disk('files')->put($path, File::get($req->file('file')));
+
+        return $this->get_mess($req->id_to)->toArray();
+    }
+
+    public function get_file(Request $req)
+    {
+        $url = 'message_' . $req->id . '_' . $req->name;
+
+        return Storage::disk('files')->download($url, $req->name);
     }
 
     public function get_messages(Request $req) {
