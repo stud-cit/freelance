@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UsersInfoSeeder::class,
             DepartmentsSeeder::class,
             ContactsTableSeeder::class,
+            FilesRemoveSeeder::class,
         ]);
     }
 }

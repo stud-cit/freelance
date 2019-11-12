@@ -351,21 +351,25 @@ $("document").ready(function() {
     });
 
     $('#file_input').on('change', function () {
-        if ($(this)[0].files[0].size <= 5242880) {
-            let file = new FormData();
+        if ($(this).prop('files')[0].size <= 5242880) {
+            let data = new FormData(),
+                file = $(this).prop('files')[0];
 
-            file.append('file', $(this).prop('files')[0]);
+            data.append('file', file);
+            data.append('name', file.name);
+            data.append('id_to', $('.open-contact').attr('data-id'));
 
             $.ajax({
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'Content-Type': 'multipart/form-data'
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 url: '/send_file',
                 method: 'post',
-                data: file,
-                success: function (data) {
-                    update_chat(data);
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    update_chat(res);
                     update_contact($('.open-contact'));
                 }
             });
@@ -402,6 +406,13 @@ $("document").ready(function() {
                 }
             });
         }
+    });
+
+    $('#messages-list').on('click', '.this-is-file', function () {
+        $('#get-file-form input[name="id"]').val($(this).attr('data-id'));
+        $('#get-file-form input[name="name"]').val($(this).find('span:first').text());
+
+        $('#get-file-form').submit();
     });
 
     if (window.location.href.indexOf('/chat') >= 0) {
@@ -463,18 +474,19 @@ $("document").ready(function() {
     }
 
     function update_chat(data) {
-        $('#messages-list div').remove();
         let new_chat = '';
 
         for (let i = 0; i < data.length; i++) {
             new_chat += `<div class="flex-row"><div class="`
                 + ($('#my_id').attr('data-id') == data[i]['id_from'] ? 'float-left' : 'float-right')
-                + ` bg-light m-2 p-2"><span title="`
+                + (data[i]['file'] ? ' bg-green this-is-file pointer' : ' bg-light') + ` m-2 p-2" data-id="`
+                + data[i]['id_message'] + `"><span title="`
                 + data[i]['created_at'] + `">`
                 + data[i]['text'] + `</span><span class="font-italic">`
                 + data[i]['time'] + `</span></div></div>`;
         }
 
+        $('#messages-list div').remove();
         $('#messages-list').append(new_chat);
     }
 });
