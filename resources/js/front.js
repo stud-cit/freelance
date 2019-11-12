@@ -329,7 +329,11 @@ $("document").ready(function() {
     $('#chat-form').on('submit', function(e) {
         e.preventDefault();
 
-        if ($('#message_input').val() !== "") {
+        let text = $('#message_input').val();
+
+        if (text !== "") {
+            $('#message_input').val('');
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -337,14 +341,12 @@ $("document").ready(function() {
                 url: '/chat',
                 method: 'post',
                 data: {
-                    'text': $('#message_input').val(),
+                    'text': text,
                     'id_to': $('.open-contact').attr('data-id'),
                 },
                 success: function (data) {
                     update_chat(data);
                     update_contact($('.open-contact'));
-
-                    $('#message_input').val('');
                 }
             });
         }
