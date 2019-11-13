@@ -1,54 +1,57 @@
 @section('header')
-    <div class="container-fluid bg-blue mb-5">
-        <div class="row py-2 text-white text-center">
+    <div class="container-fluid mb-5">
+        <div class="d-flex flex-row justify-content-around align-items-center mt-4 text-white text-center"><!--
                 <div class="col-1">
                     <div class="bg-success rounded-circle float-right logo-circle pt-1 font-weight-bold" style="font-family: Arial; letter-spacing: -4px"><span>W</span><span class="font-italic">D</span></div>
-                </div>
-                <div class="col-1 mt-1">
-                    <a href="/" class="text-white">WorkDump</a>
+                </div>-->
+                <div class="">
+                    <a href="/" class=""><img src="{{ asset('/SVG_logo.svg') }}" alt="WorkDump" width="60px" id="logo"></a>
                 </div>
                 @if(Auth::check())
-                    <div class="col-lg-1 col-2 offset-lg-5 offset-1 mt-1 small">
+                    <div class="col-6 d-flex flex-row justify-content-around">
+                        <div class="small">
+                            <a href="{{ route('orders') }}" class="text-white">Проекти</a>
+                        </div>
+                        <div class="small">
+                            <a href="{{ route('orders') }}" class="text-white">Туторіал</a>
+                        </div>
+                        <div class="small">
+                            <a href="{{ route('profile') }}" class="text-white">Профіль</a>
+                        </div>
+                        <div class="small">
+                            <a href="{{ route('workers') }}" class="text-white">Виконавці</a>
+                        </div>
+                        <div class="small">
+                            <a href="{{ route('orders') }}" class="text-white">Зв'язок</a>
+                        </div>
                     </div>
-                    <div class="col-lg-1 col-2 mt-1 small">
-                        <a href="{{ route('orders') }}" class="text-white">Проекти</a>
-                    </div>
-                    <div class="col-lg-1 col-2 mt-1 small">
-                        <a href="{{ route('workers') }}" class="text-white">Виконавці</a>
-                    </div>
-                    <div class="dropdown show col-lg-1 col-2">
-                        <button class="dropdown-toggle btn badge-pill border border-light py-1 px-3 text-white small" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{ Auth::user()->getAvatarPath() }}" title="title" alt="img" class="avatar square-1rem">
-                        </button>
+                    <div class="">
 
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="{{ route('profile') }}">Профіль</a>
                             @if(Auth::user()->id_role == 2)
-                                <a class="dropdown-item" href="{{ route('profile', 'orders') }}">Мої замовлення</a>
                             @endif
-                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                            <a class="badge-pill border border-light py-1 px-4 text-white small" href="#" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                                 Вихід
                             </a>
                             <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
-                        </div>
+
                     </div>
                 @else
                     @if(strpos(url()->current(), 'orders') === false && !Auth::check())
-                        <div class="col-1 offset-7 mt-1 small">
+                        <div class="small">
 {{--                            <a href="{{ route('register') }}" class="text-white">Реєстрація</a>--}}
                             <a href="{{ route('orders') }}" class="text-white">Проекти</a>
                         </div>
                     @else
-                        <div class="col-1 offset-7 mt-1 small"></div>
+                        <div class="small"></div>
                     @endif
                     @if(strpos(url()->current(), 'login') === false && !Auth::check())
-                        <div class="col-1">
-                            <a href="{{ route('login') }}" class="badge-pill border border-light py-1 px-3 text-white small">Вхід</a>
+                        <div class="">
+                            <a href="{{ route('login') }}" class="badge-pill bg-orange py-1 px-4 text-white small">Вхід</a>
                         </div>
                     @elseif(strpos(url()->current(), 'login') === false)
-                        <div class="col-1">
+                        <div class="">
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="badge-pill border border-light py-1 px-3 text-white small">
                                 Вихід
                             </a>
@@ -57,12 +60,12 @@
                             </form>
                         </div>
                     @else
-                        <div class="col-1"></div>
+                        <div class=""></div>
                     @endif
-                @endif
+                @endif<!--
                 <div class="col-1 mt-1">
 {{--                    UA--}}
-                </div>
+                </div>-->
         </div>
     </div>
 @endsection

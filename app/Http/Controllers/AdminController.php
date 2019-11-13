@@ -45,11 +45,13 @@ class AdminController extends Controller
         }
 
         $dept = DB::table('departments')->get();
+        $categ = DB::table('categories')->get();
 
         $data = [
             'orders' => $orders,
             'users' => $array,
             'dept' => $dept,
+            'categ' => $categ,
         ];
 
         return view('admin.index', compact('data'));
@@ -166,26 +168,65 @@ class AdminController extends Controller
 
     public function save_dept(Request $req)
     {
-        $i = 0;
+        $new = [];
+        $old = [];
 
         foreach ($req->all() as $key => $one) {
-            if ($i++ != 0 && !is_null($one)) {
-                $id = explode('-', $key);
-                $id = intval($id[1]);
-
-                $value = [
-                    'name' => $one
-                ];
-
-                $check = DB::table('departments')->where('id_dept', $id)->get();
-
-                if (!count($check)) {
-                    DB::table('departments')->insert($value);
-                }
-                else {
-                    DB::table('departments')->where('id_dept', $id)->update($value);
-                }
+            if ($key == '_token' || is_null($one)) {
+                continue;
             }
+
+            if (strpos($key, 'new-dept') === false) {
+                $id = explode('-', $key);
+                $id = $id[1];
+
+                DB::table('departments')->where('id_dept', $id)->update(['name' => $one]);
+
+                array_push($old, $id);
+            }
+            else {
+                array_push($new, $one);
+            }
+        }
+
+        DB::table('users')->whereIn('id_dept', $old)->update(['id_dept' => null]);
+        DB::table('departments')->whereNotIn('id_dept', $old)->delete();
+
+        foreach ($new as $one) {
+            DB::table('departments')->insert(['name' => $one]);
+        }
+
+        return back();
+    }
+
+    public function save_categ(Request $req)
+    {
+        $new = [];
+        $old = [];
+
+        foreach ($req->all() as $key => $one) {
+            if ($key == '_token' || is_null($one)) {
+                continue;
+            }
+
+            if (strpos($key, 'new-categ') === false) {
+                $id = explode('-', $key);
+                $id = $id[1];
+
+                DB::table('categories')->where('id_category', $id)->update(['name' => $one]);
+
+                array_push($old, $id);
+            }
+            else {
+                array_push($new, $one);
+            }
+        }
+
+        DB::table('categories_has_orders')->whereNotIn('id_category', $old)->delete();
+        DB::table('categories')->whereNotIn('id_category', $old)->delete();
+
+        foreach ($new as $one) {
+            DB::table('categories')->insert(['name' => $one]);
         }
 
         return back();

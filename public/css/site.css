@@ -3,6 +3,9 @@ body {
     /*background: url(/bg.png) repeat;
     background-size: 236px 234px;*/
 }
+body svg{
+    fill: #777777 !important;
+}
 .logo-circle {
     width: 2rem; height: 2rem
 }

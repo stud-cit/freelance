@@ -10,6 +10,11 @@
 
 @section('content')
 <div class="d-none" id="my_id" data-id="{{ Auth::id() }}"></div>
+<form action="{{ route('get_file') }}" method="POST" class="d-none" id="get-file-form">
+    @csrf
+    <input type="text" name="id">
+    <input type="text" name="name">
+</form>
 <div class="d-flex h-100">
     <div class="flex-column w-25" style="overflow-y: scroll" id="contacts-list">
         @foreach($data as $one)
@@ -35,7 +40,7 @@
             @if(!is_null($messages))
                 @foreach($messages as $one)
                     <div class="flex-row">
-                        <div class="{{$one->id_from == Auth::id() ? 'float-left' : 'float-right'}} bg-light m-2 p-2">
+                        <div class="{{ $one->id_from == Auth::id() ? 'float-left' : 'float-right' }} {{ $one->file ? 'bg-green this-is-file pointer' : 'bg-light'}} m-2 p-2" data-id="{{ $one->id_message }}">
                             <span title="{{ $one->created_at }}"> {{ $one->text }}</span>
                             <span class="font-italic">{{ $one->time }}</span>
                         </div>

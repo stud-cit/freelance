@@ -353,9 +353,10 @@ $("document").ready(function () {
   }
 
   $(".toggle-box").on('click', '.toggle-plus', function () {
-    var counter = parseInt($('.toggle-box input[type="text"]:last').attr('name').slice(5)) + 1;
-    var name = $(this).closest('.container').attr('id');
+    var counter = parseInt($(this).closest('.container').attr('data-id')) + 1;
+    var name = 'new-' + $(this).closest('.container').attr('id');
     var str = "<div class='form-row input-group'><input type='text' class='form-control col-10' name='" + name + "-" + counter + "'><input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'></div>";
+    $(this).closest('.container').attr('data-id', counter);
     $(this).closest('.toggle-box').append(str);
   });
   $(".toggle-box").on('click', '.toggle-minus', function () {
@@ -380,8 +381,10 @@ $("document").ready(function () {
 
   $('#chat-form').on('submit', function (e) {
     e.preventDefault();
+    var text = $('#message_input').val();
 
-    if ($('#message_input').val() !== "") {
+    if (text !== "") {
+      $('#message_input').val('');
       $.ajax({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -389,31 +392,34 @@ $("document").ready(function () {
         url: '/chat',
         method: 'post',
         data: {
-          'text': $('#message_input').val(),
+          'text': text,
           'id_to': $('.open-contact').attr('data-id')
         },
         success: function success(data) {
           update_chat(data);
           update_contact($('.open-contact'));
-          $('#message_input').val('');
         }
       });
     }
   });
   $('#file_input').on('change', function () {
-    if ($(this)[0].files[0].size <= 5242880) {
-      var file = new FormData();
-      file.append('file', $(this).prop('files')[0]);
+    if ($(this).prop('files')[0].size <= 5242880) {
+      var data = new FormData(),
+          file = $(this).prop('files')[0];
+      data.append('file', file);
+      data.append('name', file.name);
+      data.append('id_to', $('.open-contact').attr('data-id'));
       $.ajax({
         headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-          'Content-Type': 'multipart/form-data'
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         url: '/send_file',
         method: 'post',
-        data: file,
-        success: function success(data) {
-          update_chat(data);
+        data: data,
+        contentType: false,
+        processData: false,
+        success: function success(res) {
+          update_chat(res);
           update_contact($('.open-contact'));
         }
       });
@@ -445,6 +451,11 @@ $("document").ready(function () {
         }
       });
     }
+  });
+  $('#messages-list').on('click', '.this-is-file', function () {
+    $('#get-file-form input[name="id"]').val($(this).attr('data-id'));
+    $('#get-file-form input[name="name"]').val($(this).find('span:first').text());
+    $('#get-file-form').submit();
   });
 
   if (window.location.href.indexOf('/chat') >= 0) {
@@ -499,13 +510,13 @@ $("document").ready(function () {
   }
 
   function update_chat(data) {
-    $('#messages-list div').remove();
     var new_chat = '';
 
     for (var i = 0; i < data.length; i++) {
-      new_chat += "<div class=\"flex-row\"><div class=\"" + ($('#my_id').attr('data-id') == data[i]['id_from'] ? 'float-left' : 'float-right') + " bg-light m-2 p-2\"><span title=\"" + data[i]['created_at'] + "\">" + data[i]['text'] + "</span><span class=\"font-italic\">" + data[i]['time'] + "</span></div></div>";
+      new_chat += "<div class=\"flex-row\"><div class=\"" + ($('#my_id').attr('data-id') == data[i]['id_from'] ? 'float-left' : 'float-right') + (data[i]['file'] ? ' bg-green this-is-file pointer' : ' bg-light') + " m-2 p-2\" data-id=\"" + data[i]['id_message'] + "\"><span title=\"" + data[i]['created_at'] + "\">" + data[i]['text'] + "</span><span class=\"font-italic\">" + data[i]['time'] + "</span></div></div>";
     }
 
+    $('#messages-list div').remove();
     $('#messages-list').append(new_chat);
   }
 });
