@@ -1,4 +1,6 @@
 $("document").ready(function() {
+    const Swal = require('sweetalert2');
+
     $(".alert").delay(3000).slideUp();
 
     $(window).scroll(function() {
@@ -375,11 +377,22 @@ $("document").ready(function() {
                 success: function (res) {
                     update_chat(res);
                     update_contact($('.open-contact'));
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Помилка',
+                        text: 'Виникла помилка при збереженні файлу'
+                    });
                 }
             });
         }
         else {
-            alert('Файли можуть бути лише менш, ніж 5мб');
+            Swal.fire({
+                icon: 'error',
+                title: 'Помилка',
+                text: 'Розмір файлів не має перевищувати 5мб'
+            });
         }
 
         $('#file_input').val('');
