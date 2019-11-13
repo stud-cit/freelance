@@ -3390,15 +3390,16 @@ $("document").ready(function () {
         contentType: false,
         processData: false,
         success: function success(res) {
-          update_chat(res);
-          update_contact($('.open-contact'));
-        },
-        error: function error() {
-          Swal.fire({
-            icon: 'error',
-            title: 'Помилка',
-            text: 'Виникла помилка при збереженні файлу'
-          });
+          if (res === 'error') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Помилка',
+              text: 'Виникла помилка при збереженні файлу'
+            });
+          } else {
+            update_chat(res);
+            update_contact($('.open-contact'));
+          }
         }
       });
     } else {

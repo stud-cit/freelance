@@ -127,7 +127,7 @@ class ChatController extends Controller
         catch (\Exception $e) {
             DB::table('messages')->where('id_message', $message->id_message)->delete();
 
-            return abort(500);
+            return 'error';
         }
 
         return $this->get_mess($req->id_to)->toArray();
