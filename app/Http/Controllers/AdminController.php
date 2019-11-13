@@ -166,26 +166,31 @@ class AdminController extends Controller
 
     public function save_dept(Request $req)
     {
-        $i = 0;
+        $new = [];
+        $old = [];
 
         foreach ($req->all() as $key => $one) {
-            if ($i++ != 0 && !is_null($one)) {
-                $id = explode('-', $key);
-                $id = intval($id[1]);
-
-                $value = [
-                    'name' => $one
-                ];
-
-                $check = DB::table('departments')->where('id_dept', $id)->get();
-
-                if (!count($check)) {
-                    DB::table('departments')->insert($value);
-                }
-                else {
-                    DB::table('departments')->where('id_dept', $id)->update($value);
-                }
+            if ($key == '_token' || is_null($one)) {
+                continue;
             }
+
+            if (strpos($key, 'new-dept') === false) {
+                $id = explode('-', $key);
+                $id = $id[1];
+
+                DB::table('departments')->where('id_dept', $id)->update(['name' => $one]);
+
+                array_push($old, $id);
+            }
+            else {
+                array_push($new, $one);
+            }
+        }
+
+        DB::table('departments')->whereNotIn('id_dept', $old)->delete();
+
+        foreach ($new as $one) {
+            DB::table('departments')->insert(['name' => $one]);
         }
 
         return back();

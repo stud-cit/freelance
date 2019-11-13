@@ -300,9 +300,11 @@ $("document").ready(function() {
     }
 
     $(".toggle-box").on('click', '.toggle-plus', function () {
-        let counter = parseInt($('.toggle-box input[type="text"]:last').attr('name').slice(5)) + 1;
-        let name = $(this).closest('.container').attr('id');
+        let counter = parseInt($(this).closest('.container').attr('data-id')) + 1;
+        let name = 'new-' + $(this).closest('.container').attr('id');
         let str = "<div class='form-row input-group'><input type='text' class='form-control col-10' name='"+name+"-"+counter+"'><input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'></div>";
+
+        $(this).closest('.container').attr('data-id', counter);
         $(this).closest('.toggle-box').append(str);
     });
 
