@@ -66,7 +66,7 @@ class OrdersController extends Controller
         $array = [];
 
         foreach ($data as $one) {
-            $one->description = mb_strlen($one->description) > 50 ? mb_substr($one->description, 0, 50) . '...' : $one->description;
+            $one->description = mb_strlen($one->description) > 200 ? mb_substr($one->description, 0, 200) . '...' : $one->description;
             $one->price = is_null($one->price) ? '' : $one->price;
             $one->time = is_null($one->time) ? '' : $one->time;
 

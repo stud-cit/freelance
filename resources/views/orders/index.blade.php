@@ -10,194 +10,142 @@
 @php($categories = $info['categories'])
 @php($dept = $info['dept'])
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-8">
-            <div class="container">
-                <div class="row">
-                    <div class="col-3 font-weight-bold text-left font-size-18">Всі проекти</div>
-                    <div class="col-7 offset-2">
-                        <div class="input-group{{ count($data) ? ' ' : ' d-none' }}" id="drop-filter">
-                            <div class="input-group-prepend">
-                                <span class="col-form-label">Фільтрувати за:</span>
-                            </div>
-                            <div>
-                                <button class="btn sort-btn sort-selected" id="date-btn">Датою <span class="badge badge-primary badge-pill">v</span></button>
-                                <button class="btn sort-btn" id="price-btn">Ціною <span class="badge badge-primary badge-pill"></span></button>
+        <div class="col-10 offset-1 text-white">
+            <div class="font-weight-bold" style="font-size: 40px">Пошук по проектам</div>
+        </div>
+        <div class="col-11">
+            <div class="d-flex flex-row">
+                <div class="col-1 d-flex justify-content-end">
+                    <button class="btn circle bg bg-green square-60" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">&#43;</button>
+                </div>
+                <form action="" class="col-11">
+                    <div class="input-group">
+                        <input type="text" class="form-control" aria-label="filter" id="filter">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary dropdown-toggle font-size-25" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Кафедри</button>
+                            <div class="dropdown-menu try">
+                                @foreach($dept as $tags)
+                                    <ul class="list-group">
+                                        <a class="categories_tag dropdown-item" href="" data-id="{{ $tags->id_dept }}">{{ $tags->name }}</a>
+                                    </ul>
+                                @endforeach
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-            @if(!Auth::check())
-            @elseif(Auth::user()->id_role == 2 && !Auth::user()->banned)
-                <div class="container pointer">
-                    <div class="d-flex flex-row mb-3 mt-2" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">
-                        <div class="col-11 pt-3 bg-white shadow order_div">Створити власний проект</div>
-                        <div class="col-1">
-                            <div class="circle text-center text-white font-weight-bold bg-blue square-60 circle min-width-60 order_circle">&#43;</div>
-                        </div>
+        </div>
+        <div class="container collapse text-white" id="new-order">
+            <form class="" method="POST" action="{{ route('save_order') }}" style="background-color: #303E51">
+                @csrf
+                <div class="row">
+                    <div class="col-6 mt-4">
+                        <p class="font-size-35 font-weight-bold bg-orange text-center">Створення замовлення</p>
                     </div>
                 </div>
-            @endif
-            <div class="container">
-            <div class="col-12 collapse bg-white shadow" id="new-order">
-                <div class="d-flex flex-row">
-                    <form class="col" method="POST" action="{{ route('save_order') }}">
-                        @csrf
-                        <div class="form-group row">
-                            <label for="title" class="col-lg-2 col-12 col-form-label mt-2">Назва:</label>
-                            <div class="col-lg-5 col-12 mt-2">
-                                <input type="text" class="form-control" id="title" name="title" maxlength="50" size="50" required>
-                            </div>
+                <div class="d-flex flex-row justify-content-around">
+                    <div class="form-group col-5 offset-1">
+                        <label for="title">Назва</label>
+                        <input type="text" class="form-control" id="title" name="title">
+                        <label for="description" class="mt-2">Інформація</label>
+                        <textarea class="form-control" name="description" id="description" rows="5" required></textarea>
+                        <div>
+                            <button class="btn badge-pill bg-white mt-2">Додаткові файли</button>
                         </div>
-                        <div class="form-group row">
-                            <label for="type" class="col-lg-2 col-12 col-form-label mt-2">Тема:</label>
-                            <div class="col-lg-5 col-12 mt-2">
-                                <select id="type" class="form-control">
-                                    <option value="0" disabled selected>(Виберіть тему замовлення)</option>
-                                    @foreach($categories as $select)
-                                        <option value="{{ $select->id_category }}">{{ $select->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div style="display: none">
-                                    <input type="text" name="categories">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-7" id="themes_block"></div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="price" class="col-lg-2 col-12 col-form-label">Ціна:</label>
-                            <div class="col-lg-5 col-8 mt-2">
-                                <input type="number" id="price" class="form-control" min="0" name="price">
-                            </div>
-                            <select class="col-lg-2 col-3 mt-2 px-0 form-control" name="currency">
+                    </div>
+                    <div class="form-group col-5">
+                        <label for="price">Ціна</label>
+                        <div class="d-flex flex-row">
+                            <input type="text" class="form-control flex-grow-1" id="price" name="price">
+                            <select class="form-control" name="currency">
                                 <option>грн.</option>
                                 <option>$</option>
                             </select>
                         </div>
-                        <div class="form-group row">
-                            <label for="time" class="col-lg-2 col-12 col-form-label">Час:</label>
-                            <div class="col-lg-5 col-8">
-                                <input type="number" id="time" class="form-control" min="0" name="time">
-                            </div>
-                            <select class="col-lg-2 col-3 px-0 form-control" name="type">
+                        <label for="time" class="mt-2">Час</label>
+                        <div class="d-flex flex-row">
+                            <input type="text" class="form-control" id="time" name="time">
+                            <select class="form-control" name="type">
                                 <option>дні</option>
                                 <option>год.</option>
                             </select>
                         </div>
-                        <div class="form-group row">
-                            <label for="description" class="col-lg-2 col-12 col-form-label mt-2">Інформація:</label>
-                            <div class="col-lg-8 col-12 mt-2">
-                                <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+                        <label for="tags" class="mt-2">Категорії</label>
+                        <div>
+                            <select id="type" class="form-control">
+                                <option value="0" disabled selected>(Виберіть тему замовлення)</option>
+                                @foreach($categories as $select)
+                                    <option value="{{ $select->id_category }}">{{ $select->name }}</option>
+                                @endforeach
+                            </select>
+                            <div style="display: none">
+                                <input type="text" name="categories">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <button type="submit" class="col-xl-2 col-5 offset-xl-8 offset-7 text-white btn badge-pill bg-deep-blue mb-2 px-0" name="add_order">Підтвердити</button>
-                            <button type="reset" class="col-xl-2 col-5 offset-xl-0 offset-7 btn badge-pill mb-2 px-0 badges_reset">Скинути</button>
+                        <div class="form-group">
+                            <div class="" id="themes_block"></div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            </div>
-            @if($data != [])
-                <div class="container orders" id="orders-list">
-                    @foreach($data as $orders)
-                        <div class="flex-row mb-3 mt-2 d-flex">
-                            <div class="col-10 shadow bg-white work-order pointer" data-id="{{ $orders->id_order }}">
-                                <div class="font-weight-bold mt-2 order-title">{{ $orders->title }}</div>
-                                <div class="tag-list">
-                                    @foreach($orders->categories as $tags)
-                                        <span class="tags font-italic font-size-10">{{ $tags->name }}</span>
-                                    @endforeach
-                                </div>
-                                <div>{{ mb_strlen($orders->description) > 50 ? mb_substr($orders->description, 0, 50) . '...' : $orders->description }}</div>
-                                @if(!is_null($orders->dept))
-                                    <div class="text-left float-left font-size-10">{{ $orders->dept->name }}</div>
-                                @endif
-                                <div class="text-right font-size-10">{{ $orders->created_at }}</div>
-                            </div>
-                            <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end text-nowrap" style="height: 54px;">
-                                <div class="text-center font-weight-bold m-1">{{ $orders->price }}</div>
-                                <div class="text-right font-italic font-size-10 mt-2 pr-2">{{ $orders->time }}</div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-2">
+                            <button class="btn badge-pill bg-green">Створити замовлення</button>
                         </div>
-                    @endforeach
-                </div>
-                <div id="pagination" class="flex-row justify-content-center mb-3 {{ ceil($info['count'] / 10) < 2 ? 'd-none' : 'd-flex' }}">
-                    <button class="btn btn-outline-p" disabled><<</button>&nbsp;
-                    <button class="btn btn-outline-p" disabled><</button>&nbsp;
-                    <button class="pagination-num pagination-selected btn btn-outline-p active" id="num-1" >1</button>&nbsp;
-                    @for($i = 2; $i <= ceil($info['count'] / 10); $i++)
-                        <button class="pagination-num btn btn-outline-p" id="num-{{ $i }}">{{ $i }}</button>&nbsp;
-                    @endfor
-                    <button class="btn btn-outline-p">></button>&nbsp;
-                    <button class="btn btn-outline-p">>></button>
-                </div>
-            @else
-                <div class="container orders" id="orders-list">
-                    <div class="flex-row">
-                        <div class="col font-weight-bold font-size-18 text-center mt-4">Немає залишених замовленнь</div>
                     </div>
                 </div>
-                <div id="pagination" class="mb-3"></div>
-            @endif
+            </form>
         </div>
-
-        <div class="col-4">
-            <div class="card text-center px-0 mb-4">
-                <div class="card-header text-white font-weight-bold font-size-18 c_rounded-top bg-blue">Пошук</div>
-                <div class="card-body">
-                    <input type="text" class="form-control" id="filter">
+        <div class="col-10 offset-1 text-white">
+            <div class="font-size-20">Пошук за категоріями</div>
+            <div>
+                @foreach($categories as $tags)
+                <button class="btn text-white categories_tag" style="border-color: #c0ddf6" data-id="{{ $tags->id_category }}">
+                    <span class="font-weight-bold">{{ $tags->name }}</span>
+                </button>
+                @endforeach
+            </div>
+            <div class="d-flex justify-content-end input-group{{ count($data) ? ' ' : ' d-none' }}" id="drop-filter">
+                <div class="">
+                    <button class="btn sort-btn sort-selected text-white" id="date-btn">Датою <span class="badge badge-primary badge-pill">v</span></button>
+                    <button class="btn sort-btn text-white" id="price-btn">Ціною <span class="badge badge-primary badge-pill"></span></button>
                 </div>
             </div>
-            <div class="card px-0 mb-4" id="categs">
-                <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue pointer" data-toggle="collapse" data-target="#categs_l" aria-expanded="true">Категорії</div>
-                <div class="card-body collapse" id="categs_l">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item py-0 categ">
-                            <a class="categories_tag font-weight-bold" href="" data-id="0">
-                                <span>Всі</span>
-                                <span class="badge badge-pill badge-primary float-right m-1">{{ $info['count'] }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                    @foreach($categories as $tags)
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item py-0 categ">
-                                <a class="categories_tag" href="" data-id="{{ $tags->id_category }}">
-                                    <span class="">{{ $tags->name }}</span>
-                                    <span class="badge badge-pill badge-primary float-right m-1">{{ $tags->count }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    @endforeach
-                </div>
-            </div>
-            <div class="card px-0 my-3" id="depts">
-                <div class="card-header text-center text-white font-weight-bold font-size-18 bg-blue pointer" data-toggle="collapse" data-target="#depts_l" aria-expanded="true">Кафедри</div>
-                <div class="card-body collapse" id="depts_l">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item py-0 categ">
-                            <a class="categories_tag font-weight-bold" href="" data-id="0">
-                                <span>Всі</span>
-                                <span class="badge badge-pill badge-primary float-right m-1">{{ $info['count'] }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                    @foreach($dept as $tags)
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item py-0 categ">
-                                <a class="categories_tag" href="" data-id="{{ $tags->id_dept }}">
-                                    <span class="">{{ $tags->name }}</span>
-                                    <span class="badge badge-pill badge-primary float-right m-1">{{ $tags->count }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    @endforeach
-                </div>
+            <div class="orders-list mt-2">
+                @foreach($data as $orders)
+                    <div class="container-fluid shadow-box mt-2">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div class="d-flex justify-content-start">
+                                <div class="d-flex flex-row">
+                                    <div class="font-weight-bold order-title" style="font-size: 30px">{{ $orders->title }}</div>
+                                    <div class="align-self-center">1</div>
+                                    <div class="align-self-center">2</div>
+                                </div>
+                            </div>
+                            <div class="text-center font-weight-bold nowrap justify-content-end" style="font-size: 30px">{{ $orders->price }}</div>
+                        </div>
+                        <div class="">{{ $orders->created_at }}</div>
+                        <div style="font-size: 22px">{{ mb_strlen($orders->description) > 200 ? mb_substr($orders->description, 0, 200) . '...' : $orders->description }}</div>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <div class="tag-list">
+                                    @foreach($orders->categories as $tags)
+                                        <button class="btn text-white categories_tag" data-id="{{ $tags->id_category }}" style="border-color: #c0ddf6">
+                                            <span class="">{{ $tags->name }}</span>
+                                        </button>
+                                    @endforeach
+                                </div>
+                                @if(!is_null($orders->dept))
+                                    <div class="text-left float-left font-size-10 ml-2">{{ $orders->dept->name }}</div>
+                                @endif
+                            </div>
+                            <div class="d-flex flex-column justify-content-end">
+                                <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
+                                <p class="text-center" style="font-size: 12px">зв'язатися</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end text-center">
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
