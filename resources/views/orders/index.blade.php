@@ -17,9 +17,7 @@
         </div>
         <div class="col-11">
             <div class="d-flex flex-row">
-                @if(!Auth::check())
-                    <div class="col-1"></div>
-                @elseif(Auth::user()->id_role != 2)
+                @if(!Auth::check() || Auth::user()->id_role !=2)
                     <div class="col-1"></div>
                 @elseif(Auth::user()->id_role == 2 && !Auth::user()->banned)
                 <div class="col-1 d-flex justify-content-end">
@@ -101,7 +99,7 @@
             </form>
         </div>
         <div class="col-10 offset-1 text-white">
-            <div class="font-size-20">Пошук за категоріями</div>
+            <div class="font-size-20">Пошук за категоріями:</div>
             <div>
                 @foreach($categories as $tags)
                 <button class="btn text-white categories_tag" style="border-color: #c0ddf6" data-id="{{ $tags->id_category }}">
@@ -116,15 +114,19 @@
                 </div>
             </div>
             @if($data !=[])
-            <div class="orders-list mt-2" id="orders-list">
+            <div class="orders-list mt-2 mb-4" id="orders-list">
                 @foreach($data as $orders)
-                    <div class="container-fluid shadow-box mt-2 work-order" data-id="{{ $orders->id_order }}">
+                    <div class="container-fluid shadow-box mb-4 work-order" data-id="{{ $orders->id_order }}">
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <div class="d-flex justify-content-start">
                                 <div class="d-flex flex-row">
                                     <div class="font-weight-bold order-title font-size-30">{{ $orders->title }}</div>
-                                    <div class="align-self-center">1</div>
-                                    <div class="align-self-center">2</div>
+                                    <div class="align-self-center ml-4">
+                                        <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit">
+                                    </div>
+                                    <div class="align-self-center ml-1">
+                                        <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar">
+                                    </div>
                                 </div>
                             </div>
                             <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $orders->price }}</div>
