@@ -44,23 +44,43 @@
                     @csrf
                     <button type="submit" class="btn bg-blue text-white font-weight-bold font-size-25" name="id_user" value="{{ $data->id_user }}">Відкрити приватний чат</button>
                 </form>
+            @else
+                <form action="">
+                    @csrf
+                    <button class="btn bg-orange text-white font-weight-bold font-size-25">Редагувати профіль</button>
+                </form>
             @endif
         </div>
     </div>
     <div class="col-12">
         <div class="d-flex flex-row justify-content-around text-white text-center">
-            <div>
-                <div class="font-size-100">{{$active}}</div>
-                <div class="font-size-25">ACTIVE ORDERS</div>
-            </div>
-            <div>
-                <div class="font-size-100">{{$complete}}</div>
-                <div class="font-size-25">SUCCESSFULL PROJECTS</div>
-            </div>
-            <div>
-                <div class="font-size-100">{{$active + $complete}}</div>
-                <div class="font-size-25">ORDERS COUNT</div>
-            </div>
+            @if(Auth::user()->id_role == 2)
+                <div>
+                    <div class="font-size-100">{{$active}}</div>
+                    <div class="font-size-25">Активні проєкти</div>
+                </div>
+                <div>
+                    <div class="font-size-100">{{$complete}}</div>
+                    <div class="font-size-25">Завершених проєктів</div>
+                </div>
+                <div>
+                    <div class="font-size-100">{{$active + $complete}}</div>
+                    <div class="font-size-25">Всього проєків</div>
+                </div>
+            @elseif(Auth::user()->id_role == 1)
+                <div>
+                    <div class="font-size-100">{{$active}}</div>
+                    <div class="font-size-25">Залишені пропозиції</div>
+                </div>
+                <div>
+                    <div class="font-size-100">{{$complete}}</div>
+                    <div class="font-size-25">Завершені проєкти</div>
+                </div>
+                <div>
+                    <div class="font-size-100">{{$active + $complete}}</div>
+                    <div class="font-size-25">Всього проєків</div>
+                </div>
+            @endif
         </div>
     </div>
     @if(count($reviews) != 0)
