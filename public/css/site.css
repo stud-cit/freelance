@@ -48,6 +48,9 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 .pointer {
     cursor: pointer;
 }
+.font-size-12 {
+    font-size: 12px;
+}
 .font-size-18 {
     font-size: 18px;
 }
@@ -57,11 +60,20 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 .font-size-20 {
     font-size: 20px;
 }
+.font-size-22 {
+    font-size: 22px;
+}
 .font-size-25 {
     font-size: 25px;
 }
+.font-size-30 {
+    font-size: 30px;
+}
 .font-size-35 {
     font-size: 35px;
+}
+.font-size-40 {
+    font-size: 40px;
 }
 .font-size-50 {
     font-size: 50px;
