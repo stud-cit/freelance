@@ -9,6 +9,7 @@
 @php($users = $data['users'])
 @php($orders = $data['orders'])
 @php($dept = $data['dept'])
+@php($categ = $data['categ'])
 
 <div class="container">
     <div class="row">
@@ -19,6 +20,7 @@
                     <a class="nav-item nav-link" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Робота з замовленнями</a>
                     <a class="nav-item nav-link @if(!$errors->isEmpty())active @endif" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
                     <a class="nav-item nav-link" id="nav-dept-tab" data-toggle="tab" href="#nav-dept" role="tab" aria-controls="nav-dept" aria-selected="false">Редагування кафедр</a>
+                    <a class="nav-item nav-link" id="nav-categ-tab" data-toggle="tab" href="#nav-categ" role="tab" aria-controls="nav-categ" aria-selected="false">Редагування категорій</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -97,7 +99,6 @@
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-
                                 <li class="list-group-item d-flex flex-row">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
@@ -106,7 +107,6 @@
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-
                                 <li class="list-group-item d-flex flex-row">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
@@ -118,7 +118,6 @@
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-
                                 <li class="list-group-item d-none flex-row" id="dept-block">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
@@ -132,13 +131,11 @@
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-
                                 <li class="list-group-item d-flex flex-row">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="name" class="col-form-label">Електронна адреса</label>
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
-
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -147,13 +144,11 @@
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-
                                 <li class="list-group-item d-flex flex-row">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="name" class="col-form-label">Пароль</label>
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror border-0" name="password" required autocomplete="new-password" placeholder="********">
-
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -162,19 +157,15 @@
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-
                                 <li class="list-group-item d-flex flex-row">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="name" class="col-form-label">Повторіть пароль</label>
-
                                         <input id="password-confirm" type="password" class="form-control border-0" name="password_confirmation" required autocomplete="new-password" placeholder="********">
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-
                             </ul>
-
                             <div class="form-group row mt-5">
                                 <div class="col-6 offset-3">
                                     <button type="submit" class="btn text-white badge-pill w-100 bg-violet">
@@ -186,20 +177,39 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-dept" role="tabpanel" aria-labelledby="nav-dept-tab">
-                    <div class="container" id="dept">
+                    <div class="container" id="dept" data-id="0">
                         <form action="{{ route('save_dept') }}" method="POST">
                             @csrf
                             <div class="toggle-box">
                                 <div class="form-row input-group">
-                                    <input type="text" class="form-control col-10" name="dept-0" disabled>
+                                    <input type="text" class="form-control col-10" disabled>
                                     <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">
                                 </div>
-                                @php($num = 1)
                                 @foreach($dept as $one)
                                     <div class="form-row input-group">
                                         <input type="text" class="form-control col-10" name="dept-{{ $one->id_dept }}" value="{{ $one->name }}">
+                                        <input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'>
                                     </div>
-                                    @php($num = $one->id_dept)
+                                @endforeach
+                            </div>
+                            <button type="submit" class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-categ" role="tabpanel" aria-labelledby="nav-categ-tab">
+                    <div class="container" id="categ" data-id="0">
+                        <form action="{{ route('save_categ') }}" method="POST">
+                            @csrf
+                            <div class="toggle-box">
+                                <div class="form-row input-group">
+                                    <input type="text" class="form-control col-10" disabled>
+                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">
+                                </div>
+                                @foreach($categ as $one)
+                                    <div class="form-row input-group">
+                                        <input type="text" class="form-control col-10" name="categ-{{ $one->id_category }}" value="{{ $one->name }}">
+                                        <input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'>
+                                    </div>
                                 @endforeach
                             </div>
                             <button type="submit" class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>

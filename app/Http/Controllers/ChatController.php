@@ -119,9 +119,16 @@ class ChatController extends Controller
         ];
 
         $message = Message::create($message);
-        $path = 'message_' . $message->id_message . '_' . $req->name;
+        $path = 'messages_' . $message->id_message . '_' . $req->name;
 
-        Storage::disk('files')->put($path, File::get($req->file('file')));
+        try {
+            Storage::disk('files')->put($path, File::get($req->file('file')));
+        }
+        catch (\Exception $e) {
+            DB::table('messages')->where('id_message', $message->id_message)->delete();
+
+            return 'error';
+        }
 
         return $this->get_mess($req->id_to)->toArray();
     }

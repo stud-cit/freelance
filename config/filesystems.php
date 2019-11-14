@@ -53,6 +53,11 @@ return [
             'root' => storage_path('files'),
         ],
 
+        'orders' => [
+            'driver' => 'local',
+            'root' => storage_path('orders'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => public_path() . '/img',

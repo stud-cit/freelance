@@ -1,4 +1,6 @@
 $("document").ready(function() {
+    const Swal = require('sweetalert2');
+
     $(".alert").delay(3000).slideUp();
 
     $(window).scroll(function() {
@@ -194,6 +196,34 @@ $("document").ready(function() {
         ajax_filter(page);
     });
 
+    $('#add-files').on('change', function () {
+        if ($(this).prop('files').length > 3) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Помилка',
+                text: 'Додати можна не більш 3 файлів'
+            });
+
+            $(this).val('');
+        }
+
+        let size = 0;
+
+        $.each($(this).prop('files'), function () {
+            size += $(this)[0].size;
+        });
+
+        if (size > 5242880) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Помилка',
+                text: 'Розмір файлів не має перевищувати 5мб'
+            });
+
+            $(this).val('');
+        }
+    });
+
     function ajax_filter(page) {
         let data = {
             'what': $('.sort-selected').attr('id') === 'date-btn' ? 'id_order' : 'price',
@@ -300,9 +330,11 @@ $("document").ready(function() {
     }
 
     $(".toggle-box").on('click', '.toggle-plus', function () {
-        let counter = parseInt($('.toggle-box input[type="text"]:last').attr('name').slice(5)) + 1;
-        let name = $(this).closest('.container').attr('id');
+        let counter = parseInt($(this).closest('.container').attr('data-id')) + 1;
+        let name = 'new-' + $(this).closest('.container').attr('id');
         let str = "<div class='form-row input-group'><input type='text' class='form-control col-10' name='"+name+"-"+counter+"'><input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'></div>";
+
+        $(this).closest('.container').attr('data-id', counter);
         $(this).closest('.toggle-box').append(str);
     });
 
@@ -371,13 +403,26 @@ $("document").ready(function() {
                 contentType: false,
                 processData: false,
                 success: function (res) {
-                    update_chat(res);
-                    update_contact($('.open-contact'));
+                    if (res === 'error') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Помилка',
+                            text: 'Виникла помилка при збереженні файлу'
+                        });
+                    }
+                    else {
+                        update_chat(res);
+                        update_contact($('.open-contact'));
+                    }
                 }
             });
         }
         else {
-            alert('Файли можуть бути лише менш, ніж 5мб');
+            Swal.fire({
+                icon: 'error',
+                title: 'Помилка',
+                text: 'Розмір файлів не має перевищувати 5мб'
+            });
         }
 
         $('#file_input').val('');

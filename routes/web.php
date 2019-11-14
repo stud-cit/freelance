@@ -36,6 +36,7 @@ Route::post('/finish', 'AdminController@finish_order')->name('finish');
 Route::post('/delete', 'AdminController@delete_order')->name('delete');
 Route::post('/new_user', 'AdminController@new_user')->name('new_user');
 Route::post('/save_dept', 'AdminController@save_dept')->name('save_dept');
+Route::post('/save_categ', 'AdminController@save_categ')->name('save_categ');
 
 Route::get('/chat', 'ChatController@index')->middleware('logged.in')->name('to_chat');
 Route::post('/chat', 'ChatController@new_message')->name('new_message');
