@@ -119,7 +119,7 @@ class ChatController extends Controller
         ];
 
         $message = Message::create($message);
-        $path = 'message_' . $message->id_message . '_' . $req->name;
+        $path = 'messages_' . $message->id_message . '_' . $req->name;
 
         try {
             Storage::disk('files')->put($path, File::get($req->file('file')));

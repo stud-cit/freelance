@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="container collapse text-white" id="new-order">
-            <form class="" method="POST" action="{{ route('save_order') }}">
+            <form method="POST" action="{{ route('save_order') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-6 mt-4">
@@ -55,9 +55,7 @@
                         <input type="text" class="form-control" id="title" name="title">
                         <label for="description" class="mt-2">Інформація</label>
                         <textarea class="form-control" name="description" id="description" rows="5" required></textarea>
-                        <div>
-                            <button class="btn badge-pill bg-white mt-2">Додаткові файли</button>
-                        </div>
+                        <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
                     </div>
                     <div class="form-group col-5">
                         <label for="price">Ціна</label>
@@ -150,7 +148,8 @@
                                 <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
                                 <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
                                     @csrf
-                                    <span class="pointer" onclick="getElementById('form-id').submit();" name="id_user" value="{{ $orders->id_customer }}">зв'язаися</span>
+                                    <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
+                                    <span class="pointer" onclick="getElementById('form-id').submit();">Зв'язатися</span>
                                 </form>
                             </div>
                         </div>
