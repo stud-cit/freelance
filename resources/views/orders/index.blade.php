@@ -146,7 +146,8 @@
                                 <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
                                 <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
                                     @csrf
-                                    <span class="pointer" onclick="getElementById('form-id').submit();" name="id_user" value="{{ $orders->id_customer }}">зв'язаися</span>
+                                    <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
+                                    <span class="pointer" onclick="getElementById('form-id').submit();">Зв'язатися</span>
                                 </form>
                             </div>
                         </div>
