@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class FilesRemoveSeeder extends Seeder
+class RemoveFilesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,12 @@ class FilesRemoveSeeder extends Seeder
     public function run()
     {
         $files = glob('storage/files/*');
+
+        foreach ($files as $file) {
+            unlink($file);
+        }
+
+        $files = glob('storage/orders/*');
 
         foreach ($files as $file) {
             unlink($file);

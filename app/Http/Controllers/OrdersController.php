@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use DB;
 use Auth;
@@ -433,6 +434,7 @@ class OrdersController extends Controller
             'price' => $price,
             'time' => $time,
             'status' => 'new',
+            'files' => $req->file() != [],
             'id_customer' => Auth::id(),
             'id_worker' => null,
             'created_at' => Carbon::now(),
@@ -441,6 +443,12 @@ class OrdersController extends Controller
         DB::table('orders')->insert($values);
 
         $id = DB::table('orders')->where('id_customer', Auth::id())->orderBy('id_order', 'desc')->get(['id_order'])->first();
+
+        foreach ($req->file()['files'] as $file) {
+            $path = $id->id_order . '/' . $file->getClientOriginalName();
+
+            Storage::disk('orders')->put($path, File::get($file));
+        }
 
         $categories = explode('|', $req->categories);
         array_pop($categories);

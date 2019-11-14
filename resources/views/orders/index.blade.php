@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="container collapse text-white" id="new-order">
-            <form class="" method="POST" action="{{ route('save_order') }}" style="background-color: #303E51">
+            <form method="POST" action="{{ route('save_order') }}" style="background-color: #303E51" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-6 mt-4">
@@ -51,9 +51,7 @@
                         <input type="text" class="form-control" id="title" name="title">
                         <label for="description" class="mt-2">Інформація</label>
                         <textarea class="form-control" name="description" id="description" rows="5" required></textarea>
-                        <div>
-                            <button class="btn badge-pill bg-white mt-2">Додаткові файли</button>
-                        </div>
+                        <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
                     </div>
                     <div class="form-group col-5">
                         <label for="price">Ціна</label>

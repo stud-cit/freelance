@@ -20,6 +20,7 @@ class Orders extends Migration
             $table->string('price', 20)->nullable();
             $table->string('time', 20)->nullable();
             $table->string('status', 45);
+            $table->boolean('files');
             $table->bigInteger('id_customer')->unsigned();
             $table->foreign('id_customer')->references('id')->on('users');
             $table->bigInteger('id_worker')->unsigned()->nullable();

@@ -196,6 +196,34 @@ $("document").ready(function() {
         ajax_filter(page);
     });
 
+    $('#add-files').on('change', function () {
+        if ($(this).prop('files').length > 3) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Помилка',
+                text: 'Додати можна не більш 3 файлів'
+            });
+
+            $(this).val('');
+        }
+
+        let size = 0;
+
+        $.each($(this).prop('files'), function () {
+            size += $(this)[0].size;
+        });
+
+        if (size > 5242880) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Помилка',
+                text: 'Розмір файлів не має перевищувати 5мб'
+            });
+
+            $(this).val('');
+        }
+    });
+
     function ajax_filter(page) {
         let data = {
             'what': $('.sort-selected').attr('id') === 'date-btn' ? 'id_order' : 'price',
