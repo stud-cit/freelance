@@ -30,6 +30,9 @@
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary bg-dark-green text-white dropdown-toggle font-size-25" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px">Кафедри</button>
                             <div class="dropdown-menu try">
+                                <ul class=" list-group">
+                                    <a class="categories_tag dropdown-item" href="" data-id="0">Всі</a>
+                                </ul>
                                 @foreach($dept as $tags)
                                     <ul class="list-group">
                                         <a class="categories_tag dropdown-item" href="" data-id="{{ $tags->id_dept }}">{{ $tags->name }}</a>
@@ -98,10 +101,13 @@
         </div>
         <div class="col-10 offset-1 text-white">
             <div class="font-size-20">Пошук за категоріями:</div>
-            <div>
+            <div class="">
+                <button class="btn mb-1 text-white border-white categories_tag" data-id="0">
+                    <span class="">Всі</span>
+                </button>
                 @foreach($categories as $tags)
-                <button class="btn text-white border-white categories_tag" data-id="{{ $tags->id_category }}">
-                    <span class="font-weight-bold">{{ $tags->name }}</span>
+                <button class="btn mb-1 text-white border-white categories_tag" data-id="{{ $tags->id_category }}">
+                    <span class="">{{ $tags->name }}</span>
                 </button>
                 @endforeach
             </div>
