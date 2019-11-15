@@ -14,17 +14,134 @@
 @php($themes = $data['themes'])
 @php($dept = $data['dept'])
 
-<div class="container">
+<div class="container-fluid w-100 bg-orange">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class="col-1">
+                <a href= "{{ route('orders') }}" class="btn font-weight-bold text-white font-size-18"><img src="{{ asset("/left_arrow.svg") }}" alt="Назад" height="29px" class="align-self-center"></a>
+            </div>
+            <div class="col-8 border-right border-gray">
+                <div class="font-weight-bold text-white font-size-18">{{ $order->title }}</div>
+            </div>
+            <div class="col-3">
+                <div class="font-weight-bold text-white font-size-18">
+                    @if(!is_null($order->price))
+                        {{ $order->price }}
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
     <form action="{{ route('get_files', $order->id_order) }}" method="POST"class="bg-white" id="get-files">
         @csrf
         <input type="text" class="d-none" value="{{ $order->title . '.zip' }}" name="name">
         <span onclick="getElementById('get-files').submit();" class="pointer">Завантажити прікріплені файли</span>
     </form>
+    <div class="container text-white">
     <div class="row">
-        <div class="col-9">
-            <a href= "{{ route('orders') }}" class="btn font-weight-bold font-size-18">&#10094; Пошук</a>
+        <div class="col-5">
+            <div>Опис замовлення</div>
+            <div>
+                <div class="mt-4 font-size-10">{{ $order->description }}</div>
+            </div><!--
+            <div class="row mt-4">
+                <div class="col-8 offset-1 font-weight-bold font-size-18">{{ $order->title }}</div>
+                <div class="col-3">
+                    <div class="col font-weight-bold font-size-18">
+                        @if(!is_null($order->price))
+                            <span class="font-size-10">Ціна:</span>&nbsp;{{ $order->price }}
+                        @endif
+                    </div>
+                    <div class="col font-weight-bold font-size-18">
+                        @if(!is_null($order->time))
+                            <span class="font-size-10">Час:</span>&nbsp;&nbsp;{{ $order->time }}
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="offset-1">
+                @foreach($categories as $tags)
+                    <span class="tags font-italic font-size-10">{{ $tags->name }}</span>
+                @endforeach
+                <div class="mt-4 font-size-10">{{ $order->description }}</div>
+                @if(!is_null($dept))
+                    <div class="mt-4 font-size-10">{{ $dept->name }}</div>
+                @endif
+                <div class="mt-4 font-size-10">Дата створення: {{ $order->created_at }}</div>
+            </div>
+            @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
+                <button class="btn badge-pill text-white bg-deep-blue px-0 col-xl-3 col-6 offset-xl-8 offset-6 mt-4 mb-2" data-toggle="collapse" data-target="#prop" aria-expanded="true">
+                    {{ is_null($my_proposal) ? 'Залишити пропозицію' : 'Змінити пропозицію' }}
+                </button>
+            @elseif(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
+                <div class="row mt-4">
+                    <div class="col-xl-3 col-6 offset-xl-5 offset-6">
+                        <button class="btn badge-pill text-white bg-deep-blue mb-2 w-100" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
+                            Змінити замовлення
+                        </button>
+                    </div>
+                    <div class="col-xl-3 col-6 offset-xl-0 offset-6">
+                        <form method="POST" action="{{ route('delete_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
+                            @csrf
+                            <button class="btn badge-pill text-white bg-danger px-0 mb-2 w-100">
+                                Видалити замовлення
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
+                <div class="row mt-4">
+                    <div class="col-xl-3 col-6 offset-xl-5 offset-6">
+                        <form method="POST" action="{{ route('finish_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
+                            @csrf
+                            <button type="submit" class="btn badge-pill text-white bg-deep-blue mb-2 w-100">
+                                Замовлення виконано
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-xl-3 col-6 offset-xl-0 offset-6">
+                        <button class="btn badge-pill text-white bg-danger px-0 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
+                            Змінити виконавця
+                        </button>
+                    </div>
+                </div>
+            @endif-->
         </div>
-        <div class="col-9 text-white c_rounded bg-blue">
+        <div class="col-1"><div class="border-right border-gray h-100">&nbsp;</div></div>
+        <div class="col-5">
+            <div class="d-flex flex-column align-items-center">
+                <div>catogories</div>
+                <div class="d-flex flex-row">
+                    <div>
+                        @foreach($categories as $tags)
+                            <button class="btn mb-1 text-white border-white categories_tag" data-id="{{ $tags->id_category }}">
+                                <span>{{ $tags->name }}</span>
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+                <hr class="w-100 border-gray">
+                <div>Строки</div>
+                <div><span class="font-weight-bold">{{ $order->time }}</span></div>
+                <hr class="w-100 border-gray">
+                <div class="row">
+                    <div class="col-3 to-profile pointer" data-id="{{ $order->id_customer }}">
+                        <img src="{{ $customer->avatar }}" class="square-60 avatar circle">
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center">
+                            <div class="font-weight-bold mt-1 nowrap">{{ $customer->name }} {{ $customer->surname }}</div>
+                            @if(!is_null($dept))
+                                <div class="text-center">{{ $dept->name }}</div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-0">
+                <div><button class="btn bg-blue rounded-pill text-white">Зв'язатися</button></div>
+            </div><!--
             <div class="row mt-4">
                 <div class="col-8 offset-1 font-weight-bold font-size-18">{{ $order->title }}</div>
                 <div class="col-3">
@@ -87,7 +204,21 @@
                     </div>
                 </div>
             @endif
+            <div class="mt-2 to-profile pointer" data-id="{{ $order->id_customer }}">
+                <img src="{{ $customer->avatar }}" class="square-100 avatar circle">
+            </div>
+            <div class="container text-left">
+                <div class="row mb-2">
+                    <div class="col-11 offset-1 font-weight-bold mt-1">{{ $customer->name }} {{ $customer->surname }}</div>
+                    <div class="col-11 offset-1 font-size-10">E-mail: {{ $customer->email }}</div>
+                    <div class="col-11 offset-1 font-size-10">Phone number: {{ $customer->phone_number }}</div>
+                    <div class="col-11 offset-1 font-size-10">Viber: {{ $customer->viber }}</div>
+                    <div class="col-11 offset-1 font-size-10">Skype: {{ $customer->skype }}</div>
+                </div>
+            </div>
+            -->
         </div>
+        <!--
         <div class="col-3 text-white text-center align-self-start c_rounded-right mt-4 mb-2 bg-deep-blue">
             <div class="mt-2 to-profile pointer" data-id="{{ $order->id_customer }}">
                 <img src="{{ $customer->avatar }}" class="square-100 avatar circle">
@@ -273,8 +404,9 @@
                 </div>
                 {{ $proposals->links('layouts.pagination') }}
             </div>
-        </div>
+        </div>-->
     </div>
+</div>
 </div>
 
 <div class="flash-message fixed-bottom text-center">

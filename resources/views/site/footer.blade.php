@@ -1,5 +1,5 @@
 @section('footer')
-    <div class="container-fluid bg-deep-dark text-white border-top border-white">
+    <div class="container-fluid bg-black text-white">
         <div class="row">
             <div class="col-6 offset-1">
                 <div>Спроектовано та розроблено</div>
