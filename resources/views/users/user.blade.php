@@ -57,17 +57,17 @@
     <div class="col-12">
         <div class="d-flex flex-row justify-content-around text-white text-center">
             @if($data->id_role == 2)
-                <div id="active-c" data-toggle="collapse" data-target="#active-c" aria-expanded="true">
+                <div id="new-c-toggle" data-toggle="collapse" data-target="#new-c" aria-expanded="false">
                     <div class="font-size-100">{{$active}}</div>
-                    <div class="font-size-25">Активні проєкти</div>
+                    <div class="font-size-25">Відкриті проєкти</div>
                 </div>
                 <div>
                     <div class="font-size-100">{{$complete}}</div>
-                    <div class="font-size-25">Завершених проєктів</div>
+                    <div class="font-size-25">Активні проєкти</div>
                 </div>
                 <div>
                     <div class="font-size-100">{{$active + $complete}}</div>
-                    <div class="font-size-25">Всього проєків</div>
+                    <div class="font-size-25">Завершені проєкти</div>
                 </div>
             @elseif($data->id_role == 3)
                 <div>
@@ -76,13 +76,52 @@
                 </div>
                 <div>
                     <div class="font-size-100">{{$complete}}</div>
-                    <div class="font-size-25">Завершені проєкти</div>
+                    <div class="font-size-25">Активн проєкти</div>
                 </div>
                 <div>
                     <div class="font-size-100">{{$active + $complete}}</div>
-                    <div class="font-size-25">Всього проєків</div>
+                    <div class="font-size-25">Завершені проєкти</div>
                 </div>
             @endif
+        </div>
+        <div class="collapse container" id="new-c">
+            <div class="text-white">
+                @php($i = 0)
+                @foreach($orders as $all)
+                    @if($all->status == 'new')
+                        @php($i++)
+                        <div class="container shadow-box mb-4 orders">
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                <div class="d-flex justify-content-start">
+                                    <div class="d-flex flex-row">
+                                        <div class="font-weight-bold order-title font-size-30">{{ $all->title }}</div>
+                                        <div class="align-self-center ml-4">
+                                            @if($all->files)
+                                                <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit">
+                                            @endif
+                                        </div>
+                                        <div class="align-self-center ml-1">
+                                            @if($all->time)
+                                                <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar">
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $all->price }}</div>
+                            </div>
+                            <div class="text-gray">{{ $all->created_at }}</div>
+                            <div class="font-size-22">{{ $all->description }}</div>
+                            <div class="d-flex flex-row justify-content-end">
+                                <button class="btn work-order bg-orange" data-id="{{ $all->id_order }}">Переглянути</button>
+                            </div>
+                            <hr class="border-gray pb-4">
+                        </div>
+                    @endif
+                @endforeach
+                @if(!$i)
+                    <div>Empty</div>
+                @endif
+            </div>
         </div>
     </div>
     @if(count($reviews) != 0)

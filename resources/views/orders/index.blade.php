@@ -21,15 +21,9 @@
                 @if(!(Auth::check()) || Auth::user()->id_role !=2)
                     <div class="col-1"></div>
                 @elseif(Auth::user()->id_role == 2 && !Auth::user()->banned)
-<<<<<<< HEAD
                 <div class="col-1 d-flex justify-content-end">
                     <button class="btn circle text-white text-center font-weight-bold font-size-25 bg-green square-54 px-0" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true" title="Створення замовлення">&#43;</button>
                 </div>
-=======
-                    <div class="col-1 d-flex justify-content-end">
-                        <button class="btn circle bg bg-green square-60" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">&#43;</button>
-                    </div>
->>>>>>> 3257d563b8684b26432bdf2f622c24d043de30c4
                 @endif
                 <div class="input-group col-11 for-filter">
                     <input type="text" class="form-control" aria-label="filter" id="filter" style="height: 54px">
