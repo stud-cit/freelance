@@ -54,7 +54,7 @@
     </div>
     <div class="col-12">
         <div class="d-flex flex-row justify-content-around text-white text-center">
-            @if(Auth::user()->id_role == 2)
+            @if($data->id_role == 2)
                 <div>
                     <div class="font-size-100">{{$active}}</div>
                     <div class="font-size-25">Активні проєкти</div>
@@ -67,7 +67,7 @@
                     <div class="font-size-100">{{$active + $complete}}</div>
                     <div class="font-size-25">Всього проєків</div>
                 </div>
-            @elseif(Auth::user()->id_role == 1)
+            @elseif($data->id_role == 3)
                 <div>
                     <div class="font-size-100">{{$active}}</div>
                     <div class="font-size-25">Залишені пропозиції</div>
