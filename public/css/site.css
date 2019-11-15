@@ -39,11 +39,20 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 .bg-deep-dark {
     background-color: #2D3A4D;
 }
+.bg-deep-dark:focus {
+    background-color: #2D3A4D;
+}
 .bg-orange {
     background-color: #F97333;
 }
+.bg-dark-green {
+    background-color: #6F6F6F;
+}
 .text-gray {
     color: #707070;
+}
+.border-gray {
+    border-color: #707070;
 }
 .pointer {
     cursor: pointer;
