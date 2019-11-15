@@ -121,7 +121,7 @@
                 <div class="container-fluid">
                     <div class="orders-list mt-2 mb-4" id="orders-list">
                         @foreach($data as $orders)
-                            <div class="container-fluid shadow-box mb-4 work-order" data-id="{{ $orders->id_order }}">
+                            <div class="container-fluid shadow-box mb-4 orders">
                                 <div class="d-flex flex-row justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start">
                                         <div class="d-flex flex-row">
