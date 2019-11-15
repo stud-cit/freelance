@@ -116,7 +116,7 @@
             @if($data !=[])
             <div class="orders-list mt-2" id="orders-list">
                 @foreach($data as $orders)
-                    <div class="container-fluid shadow-box mt-2 work-order" data-id="{{ $orders->id_order }}">
+                    <div class="container-fluid shadow-box mt-2 orders">
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <div class="d-flex justify-content-start">
                                 <div class="d-flex flex-row">
