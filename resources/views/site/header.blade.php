@@ -5,7 +5,7 @@
                     <div class="bg-success rounded-circle float-right logo-circle pt-1 font-weight-bold" style="font-family: Arial; letter-spacing: -4px"><span>W</span><span class="font-italic">D</span></div>
                 </div>-->
                 <div class="">
-                    <a href="/" class=""><img src="{{ asset('/SVG_logo.svg') }}" alt="WorkDump" width="60px" id="logo"></a>
+                    <a href="/" class=""><img src="{{ asset('/SVG_logo.svg') }}" alt="WorkDump" height="40px" id="logo"></a>
                 </div>
                 @if(Auth::check())
                     <div class="col-6 d-flex flex-row justify-content-around">
