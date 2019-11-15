@@ -146,8 +146,8 @@ $("document").ready(function() {
     $('.categories_tag').on('click', function (e) {
         e.preventDefault();
 
-        $(this).closest('.card-body').find('.categories_tag').removeClass('font-weight-bold');
-        $(this).addClass('font-weight-bold');
+        $(this).closest('.for-filter').find('.categories_tag').removeClass('selected-category');
+        $(this).addClass('selected-category');
 
         ajax_filter(parseInt($('.pagination-selected').text()));
     });
@@ -196,42 +196,14 @@ $("document").ready(function() {
         ajax_filter(page);
     });
 
-    $('#add-files').on('change', function () {
-        if ($(this).prop('files').length > 3) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Помилка',
-                text: 'Додати можна не більш 3 файлів'
-            });
-
-            $(this).val('');
-        }
-
-        let size = 0;
-
-        $.each($(this).prop('files'), function () {
-            size += $(this)[0].size;
-        });
-
-        if (size > 5242880) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Помилка',
-                text: 'Розмір файлів не має перевищувати 5мб'
-            });
-
-            $(this).val('');
-        }
-    });
-
     function ajax_filter(page) {
         let data = {
             'what': $('.sort-selected').attr('id') === 'date-btn' ? 'id_order' : 'price',
             'how': $('.sort-selected span').text() === 'v' ? 'desc' : 'asc',
             'filter': $('#filter').val(),
-            'category': parseInt($('#categs .categ .font-weight-bold').attr('data-id')),
+            'category': parseInt($('#categs .selected-category').attr('data-id')),
             'page': isNaN(page) ? 1 : page,
-            'dept': parseInt($('#depts .categ .font-weight-bold').attr('data-id')),
+            'dept': parseInt($('#depts .selected-category').attr('data-id')),
         };
 
         $.ajax({
@@ -254,34 +226,55 @@ $("document").ready(function() {
         page = isNaN(page) ? 1 : page;
 
         $('#pagination').empty();
-        $('.orders .flex-row').remove();
+        $('.container-fluid .orders').remove();
         $('#drop-filter').removeClass('d-none');
+        $('#drop-filter').addClass('d-flex');
 
         if (array.length) {
             for (let i = 0; i < array.length; i++) {
-                let order = `<div class="flex-row mb-3 mt-2 d-flex">
-                        <div class="col-10 shadow bg-white work-order pointer" data-id="` + array[i]['id_order'] + `">
-                            <div class="font-weight-bold mt-2 order-title">` + array[i]['title'] + `</div>
-                            <div class="tag-list">`;
+                let order = `<div class="container-fluid shadow-box mb-4 orders">
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-start">
+                                        <div class="d-flex flex-row">
+                                            <div class="font-weight-bold order-title font-size-30">` + array[i]['title'] + `</div>
+                                            <div class="align-self-center ml-4">`
+                                            + (array[i]['files'] ? '<img src="/edit.svg" alt="edit" width="20px" id="edit">' : '')
+                                            + `</div><div class="align-self-center ml-1">`
+                                            + (array[i]['time'] ? '<img src="/calendar.svg" alt="calendar" width="20px" id="calendar">' : '')
+                                            + `</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">` + array[i]['price']+ `</div>
+                                </div>
+                                <div class="text-gray">` + array[i]['created_at'] + `</div>
+                                <div class="font-size-22">` + array[i]['description'] + `</div>
+                                <div class="d-flex flex-row justify-content-between">
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <div class="tag-list">`;
 
                 for (let j = 0; j < array[i]['categories'].length; j++) {
-                    order += `<span class="tags font-italic font-size-10">` + array[i]['categories'][j]['name'] + `</span>&nbsp;`;
+                    order += `<button class="btn border-gray">
+                            <span class="text-gray">` + array[i]['categories'][j]['name'] + `</span>
+                        </button>`;
                 }
 
-                order += `</div>
-                        <div>` + array[i]['description'] + `</div>`;
+                order += `</div>`;
 
                 if (array[i]['dept'] !== null) {
-                    order += `<div class="text-left float-left font-size-10">` + array[i]['dept']['name'] + `</div>`;
+                    order += `<div class="text-left float-left text-gray font-size-20 ml-2">` + array[i]['dept']['name'] + `</div>`;
                 }
 
-                order += `<div class="text-right font-size-10">` + array[i]['created_at'] + `</div>
-                    </div>
-                    <div class="col c_rounded-right mt-3 bg-green text-white px-0 align-self-end" style="height: 54px; !important;">
-                        <div class="text-center font-weight-bold mt-1">` + array[i]['price'] + `</div>
-                        <div class="text-right font-italic font-size-10 mt-2 pr-2">` + array[i]['time'] + `</div>
-                    </div>
-                </div>`;
+                order += `<div class="d-flex flex-column justify-content-end">
+                                        <button class="btn work-order bg-orange" data-id="` + array[i]['id_order'] + `">Переглянути</button>
+                                        <form method="POST" action="/new_contact" id="form-id" class=" text-center">
+                                            <input type="hidden" name="_token" value="0W8fMDZuJ1HGabySd4TSEc8xeViKq6GGiFeOriGM">
+                                            <input type="text" name="id_user" class="d-none" value="` + array[i]['id_customer'] + `">`;
+
+                if (array[i]['id_customer'] != $('#my_id').attr('data-id')) {
+                    order += `<span class="pointer font-size-12 text-gray" onclick="getElementById('form-id').submit();">Зв'язатися</span>`;
+                }
+
+                order += `</form></div></div><hr class="border-gray pb-4"></div>`;
 
                 $('#orders-list').append(order);
             }
@@ -307,6 +300,7 @@ $("document").ready(function() {
         }
         else {
             $('#drop-filter').addClass('d-none');
+            $('#drop-filter').removeClass('d-flex');
 
             $('#orders-list').append(`<div class="flex-row">
                         <div class="col font-weight-bold font-size-18 text-center mt-4">Немає замовленнь з такими параметрами</div>
@@ -328,6 +322,34 @@ $("document").ready(function() {
             }
         });
     }
+
+    $('#add-files').on('change', function () {
+        if ($(this).prop('files').length > 3) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Помилка',
+                text: 'Додати можна не більш 3 файлів'
+            });
+
+            $(this).val('');
+        }
+
+        let size = 0;
+
+        $.each($(this).prop('files'), function () {
+            size += $(this)[0].size;
+        });
+
+        if (size > 20971520) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Помилка',
+                text: 'Розмір файлів не має перевищувати 20мб'
+            });
+
+            $(this).val('');
+        }
+    });
 
     $(".toggle-box").on('click', '.toggle-plus', function () {
         let counter = parseInt($(this).closest('.container').attr('data-id')) + 1;
