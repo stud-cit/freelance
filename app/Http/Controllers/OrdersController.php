@@ -277,6 +277,8 @@ class OrdersController extends Controller
     {
         DB::table('orders')->where('id_order', $req->id)->update(['status' => 'complete']);
 
+        Storage::disk('orders')->delete($req->id . '.zip');
+
         $req->session()->flash('alert-success', 'Замовлення успішно завершено!');
 
         return redirect('/orders');
@@ -398,6 +400,8 @@ class OrdersController extends Controller
 
     public function delete_order(Request $req)
     {
+        Storage::disk('orders')->delete($req->id . '.zip');
+
         DB::table('categories_has_orders')->where('id_order', $req->id)->delete();
         DB::table('proposals')->where('id_order', $req->id)->delete();
         DB::table('orders')->where('id_order', $req->id)->delete();
