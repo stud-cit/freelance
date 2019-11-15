@@ -27,11 +27,11 @@
         <div class="col-6 text-white">
             <div class="col-12 name surname font-weight-bold font-size-50">{{ $data->name }} {{ $data->surname }}</div>
             @if(!is_null($dept))
-                <div class="col-12 font-weight-bold font-size-35 font-italic">{{ $dept->name }}</div>
+                <div class="col-12 font-weight-bold font-size-35">{{ $dept->name }}</div>
             @endif
             <div class="col-12 font-size-35">
                 @foreach($data->categories as $tags)
-                    <span class="tags font-italic">{{ $tags->name }}</span>
+                    <span class="tags">{{ $tags->name }}</span>
                 @endforeach
             </div>
             @if(!is_null($data->about_me))
@@ -55,7 +55,7 @@
     <div class="col-12">
         <div class="d-flex flex-row justify-content-around text-white text-center">
             @if($data->id_role == 2)
-                <div>
+                <div id="active-c" data-toggle="collapse" data-target="#active-c" aria-expanded="true">
                     <div class="font-size-100">{{$active}}</div>
                     <div class="font-size-25">Активні проєкти</div>
                 </div>

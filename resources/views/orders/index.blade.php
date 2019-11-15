@@ -17,11 +17,11 @@
         </div>
         <div class="col-11">
             <div class="d-flex flex-row">
-                @if(!Auth::check() || Auth::user()->id_role !=2)
+                @if(!(Auth::check()) || Auth::user()->id_role !=2)
                     <div class="col-1"></div>
                 @elseif(Auth::user()->id_role == 2 && !Auth::user()->banned)
                 <div class="col-1 d-flex justify-content-end">
-                    <button class="btn circle bg bg-green square-60" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">&#43;</button>
+                    <button class="btn circle text-white text-center font-weight-bold font-size-25 bg-green square-54 px-0" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true" title="Створення замовлення">&#43;</button>
                 </div>
                 @endif
                 <form action="" class="col-11">
@@ -44,7 +44,7 @@
                 </form>
             </div>
         </div>
-        <div class="container collapse text-white" id="new-order" style="background-color: #303E51">
+        <div class="container collapse text-white my-2" id="new-order" style="background-color: #303E51">
             <form method="POST" action="{{ route('save_order') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
@@ -54,32 +54,32 @@
                 </div>
                 <div class="d-flex flex-row justify-content-around">
                     <div class="form-group col-5">
-                        <label for="title">Назва</label>
+                        <label for="title" class="font-size-20">Назва</label>
                         <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title">
-                        <label for="description" class="mt-2">Інформація</label>
+                        <label for="description" class="font-size-20 mt-2">Інформація</label>
                         <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required></textarea>
                         <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
                     </div>
                     <div class="form-group col-5">
-                        <label for="price">Ціна</label>
+                        <label for="price" class="font-size-20">Ціна</label>
                         <div class="d-flex flex-row">
                             <input type="text" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price">
-                            <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="currency">
+                            <select class="col-2 offset-1 form-control font-size-15 text-white border-0 bg-deep-dark" name="currency">
                                 <option>грн.</option>
                                 <option>$</option>
                             </select>
                         </div>
-                        <label for="time" class="mt-2">Час</label>
+                        <label for="time" class="font-size-20 mt-2">Час</label>
                         <div class="d-flex flex-row">
                             <input type="text" class="col-9 form-control border-0 bg-deep-dark" id="time" name="time">
-                            <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="type">
+                            <select class="col-2 offset-1 form-control font-size-15 text-white border-0 bg-deep-dark" name="type">
                                 <option class="">дні</option>
                                 <option class="">год.</option>
                             </select>
                         </div>
-                        <label for="tags" class="mt-2">Категорії</label>
+                        <label for="tags" class="font-size-20 mt-2">Категорії</label>
                         <div>
-                            <select id="type" class="form-control text-white border-0 bg-deep-dark">
+                            <select id="type" class="form-control font-size-15 text-white border-0 bg-deep-dark">
                                 <option value="0" disabled selected>(Виберіть тему замовлення)</option>
                                 @foreach($categories as $select)
                                     <option class="" value="{{ $select->id_category }}">{{ $select->name }}</option>
@@ -93,7 +93,7 @@
                             <div class="" id="themes_block"></div>
                         </div>
                         <div class="d-flex justify-content-center mt-4">
-                            <button class="btn badge-pill text-white font-weight-bold bg-green">Створити замовлення</button>
+                            <button class="btn badge-pill text-white font-size-25 bg-green">Створити замовлення</button>
                         </div>
                     </div>
                 </div>
@@ -156,11 +156,13 @@
                                         @endif
                                     </div>
                                     <div class="d-flex flex-column justify-content-end">
+                                        @if(Auth::check() && !Auth::user()->banned)
                                         <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
+                                        @endif
                                         <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
                                             @csrf
                                             <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
-                                            @if($orders->id_customer != Auth::id())
+                                            @if(Auth::check() && ($orders->id_customer != Auth::id()))
                                             <span class="pointer font-size-12 text-gray" onclick="getElementById('form-id').submit();">Зв'язатися</span>
                                             @endif
                                         </form>

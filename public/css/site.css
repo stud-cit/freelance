@@ -48,6 +48,9 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 .bg-dark-green {
     background-color: #6F6F6F;
 }
+.bg-black {
+    background-color: #202020;
+}
 .text-gray {
     color: #707070;
 }
@@ -59,6 +62,9 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 }
 .font-size-12 {
     font-size: 12px;
+}
+.font-size-15 {
+    font-size: 15px;
 }
 .font-size-18 {
     font-size: 18px;
@@ -132,9 +138,9 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
     width: 30px;
     height: 30px;
 }
-.square-60 {
-    width: 60px;
-    height: 60px;
+.square-54 {
+    min-width: 54px;
+    min-width: 54px;
 }
 .square-80 {
     width: 80px;
