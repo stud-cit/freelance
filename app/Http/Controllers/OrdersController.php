@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use DB;
 use Auth;
 use App\Models\User;
+use ZipArchive;
 
 class OrdersController extends Controller
 {
@@ -444,10 +445,23 @@ class OrdersController extends Controller
 
         $id = DB::table('orders')->where('id_customer', Auth::id())->orderBy('id_order', 'desc')->get(['id_order'])->first();
 
-        foreach ($req->file()['files'] as $file) {
-            $path = $id->id_order . '/' . $file->getClientOriginalName();
+        if ($req->file() != []) {
+            $zip = new ZipArchive();
+            $path = storage_path('orders/') . $id->id_order . ".zip";
 
-            Storage::disk('orders')->put($path, File::get($file));
+            $zip->open($path,  ZipArchive::CREATE);
+
+            foreach ($req->file()['files'] as $file) {
+                Storage::disk('orders')->put($id->id_order. $file->getClientOriginalName(), File::get($file));
+
+                $zip->addFile(storage_path('orders/' . $id->id_order. $file->getClientOriginalName()), $file->getClientOriginalName());
+            }
+
+            $zip->close();
+
+            foreach ($req->file()['files'] as $file) {
+                Storage::disk('orders')->delete($id->id_order. $file->getClientOriginalName());
+            }
         }
 
         $categories = explode('|', $req->categories);
@@ -505,5 +519,10 @@ class OrdersController extends Controller
         $req->session()->flash('alert-success', 'Замовлення успішно змінено!');
 
         return back();
+    }
+
+    public function get_files(Request $req)
+    {
+        return Storage::disk('orders')->download($req->id . '.zip', $req->name);
     }
 }

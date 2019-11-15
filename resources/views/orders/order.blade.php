@@ -15,6 +15,11 @@
 @php($dept = $data['dept'])
 
 <div class="container">
+    <form action="{{ route('get_files', $order->id_order) }}" method="POST"class="bg-white" id="get-files">
+        @csrf
+        <input type="text" class="d-none" value="{{ $order->title . '.zip' }}" name="name">
+        <span onclick="getElementById('get-files').submit();" class="pointer">Завантажити прікріплені файли</span>
+    </form>
     <div class="row">
         <div class="col-9">
             <a href= "{{ route('orders') }}" class="btn font-weight-bold font-size-18">&#10094; Пошук</a>
