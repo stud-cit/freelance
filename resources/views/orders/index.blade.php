@@ -10,6 +10,7 @@
 @php($categories = $info['categories'])
 @php($dept = $info['dept'])
 
+<div class="d-none" id="my_id" data-id="{{ Auth::id() }}"></div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-10 offset-1 text-white">
@@ -20,28 +21,32 @@
                 @if(!(Auth::check()) || Auth::user()->id_role !=2)
                     <div class="col-1"></div>
                 @elseif(Auth::user()->id_role == 2 && !Auth::user()->banned)
+<<<<<<< HEAD
                 <div class="col-1 d-flex justify-content-end">
                     <button class="btn circle text-white text-center font-weight-bold font-size-25 bg-green square-54 px-0" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true" title="Створення замовлення">&#43;</button>
                 </div>
+=======
+                    <div class="col-1 d-flex justify-content-end">
+                        <button class="btn circle bg bg-green square-60" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true">&#43;</button>
+                    </div>
+>>>>>>> 3257d563b8684b26432bdf2f622c24d043de30c4
                 @endif
-                <form action="" class="col-11">
-                    <div class="input-group">
-                        <input type="text" class="form-control" aria-label="filter" id="filter" style="height: 54px">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary bg-dark-green text-white dropdown-toggle font-size-25" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px">Кафедри</button>
-                            <div class="dropdown-menu try">
-                                <ul class=" list-group">
-                                    <a class="categories_tag dropdown-item" href="" data-id="0">Всі</a>
+                <div class="input-group col-11 for-filter">
+                    <input type="text" class="form-control" aria-label="filter" id="filter" style="height: 54px">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary bg-dark-green text-white dropdown-toggle font-size-25" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px">Кафедри</button>
+                        <div class="dropdown-menu try" id="depts">
+                            <ul class=" list-group">
+                                <a class="categories_tag dropdown-item selected-category" href="" data-id="0">Всі</a>
+                            </ul>
+                            @foreach($dept as $tags)
+                                <ul class="list-group">
+                                    <a class="categories_tag dropdown-item" href="" data-id="{{ $tags->id_dept }}">{{ $tags->name }}</a>
                                 </ul>
-                                @foreach($dept as $tags)
-                                    <ul class="list-group">
-                                        <a class="categories_tag dropdown-item" href="" data-id="{{ $tags->id_dept }}">{{ $tags->name }}</a>
-                                    </ul>
-                                @endforeach
-                            </div>
+                            @endforeach
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         <div class="container collapse text-white my-2" id="new-order" style="background-color: #303E51">
@@ -101,14 +106,14 @@
         </div>
         <div class="col-10 offset-1 text-white">
             <div class="font-size-20">Пошук за категоріями:</div>
-            <div class="">
-                <button class="btn mb-1 text-white border-white categories_tag" data-id="0">
+            <div class="for-filter" id="categs">
+                <button class="btn mb-1 text-white border-white categories_tag selected-category" data-id="0">
                     <span class="">Всі</span>
                 </button>
                 @foreach($categories as $tags)
-                <button class="btn mb-1 text-white border-white categories_tag" data-id="{{ $tags->id_category }}">
-                    <span class="">{{ $tags->name }}</span>
-                </button>
+                    <button class="btn mb-1 text-white border-white categories_tag" data-id="{{ $tags->id_category }}">
+                        <span class="">{{ $tags->name }}</span>
+                    </button>
                 @endforeach
             </div>
             <div class="d-flex justify-content-end input-group{{ count($data) ? ' ' : ' d-none' }}" id="drop-filter">
@@ -119,7 +124,7 @@
             </div>
             @if($data !=[])
                 <div class="container-fluid">
-                    <div class="orders-list mt-2 mb-4" id="orders-list">
+                    <div class="mt-2 mb-4" id="orders-list">
                         @foreach($data as $orders)
                             <div class="container-fluid shadow-box mb-4 orders">
                                 <div class="d-flex flex-row justify-content-between align-items-center">
@@ -127,13 +132,13 @@
                                         <div class="d-flex flex-row">
                                             <div class="font-weight-bold order-title font-size-30">{{ $orders->title }}</div>
                                             <div class="align-self-center ml-4">
-                                                @if(!($orders->files) == 0)
-                                                <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit">
+                                                @if($orders->files)
+                                                    <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit">
                                                 @endif
                                             </div>
                                             <div class="align-self-center ml-1">
-                                                @if(!($orders->time) == 0)
-                                                <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar">
+                                                @if($orders->time)
+                                                    <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar">
                                                 @endif
                                             </div>
                                         </div>
@@ -141,7 +146,7 @@
                                     <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $orders->price }}</div>
                                 </div>
                                 <div class="text-gray">{{ $orders->created_at }}</div>
-                                <div class="font-size-22">{{ mb_strlen($orders->description) > 200 ? mb_substr($orders->description, 0, 200) . '...' : $orders->description }}</div>
+                                <div class="font-size-22">{{ $orders->description }}</div>
                                 <div class="d-flex flex-row justify-content-between">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <div class="tag-list">
@@ -163,7 +168,7 @@
                                             @csrf
                                             <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
                                             @if(Auth::check() && ($orders->id_customer != Auth::id()))
-                                            <span class="pointer font-size-12 text-gray" onclick="getElementById('form-id').submit();">Зв'язатися</span>
+                                                <span class="pointer font-size-12 text-gray" onclick="getElementById('form-id').submit();">Зв'язатися</span>
                                             @endif
                                         </form>
                                     </div>
@@ -182,16 +187,16 @@
                         <button class="btn btn-outline-p">></button>&nbsp;
                         <button class="btn btn-outline-p">>></button>
                     </div>
-                @else
-                    <div class="container orders" id="orders-list">
-                        <div class="flex-row">
-                            <div class="col font-weight-bold font-size-18 text-center mt-4">Немає залишених замовленнь</div>
-                            <div class="d-flex justify-content-end text-center">
-                            </div>
+                </div>
+            @else
+                <div class="container-fluid orders" id="orders-list">
+                    <div class="flex-row">
+                        <div class="col font-weight-bold font-size-18 text-center mt-4">Немає залишених замовленнь</div>
+                        <div class="d-flex justify-content-end text-center">
                         </div>
                     </div>
-                    <div id="pagination" class="mb-3"></div>
                 </div>
+                <div id="pagination" class="mb-3"></div>
             @endif
         </div>
     </div>

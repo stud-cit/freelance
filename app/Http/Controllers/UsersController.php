@@ -294,12 +294,42 @@ class UsersController extends Controller
         $active = DB::table('orders')->where([['id_customer', $id], ['status', 'new']])->count();
         $complete = DB::table('orders')->where([['id_customer', $id], ['status', 'complete']])->count();
 
+        $orders = DB::table('orders')->where('id_customer', Auth::id())->get()->toArray();
+
+        $proposals = DB::table('orders')
+            ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
+            ->join('users_info', 'users_info.id_user', '=', 'orders.id_customer')
+            ->where([['proposals.id_worker', Auth::id()], ['status', 'new']])
+            ->orWhere([['orders.id_worker', Auth::id()], ['status', '!=', 'new']])
+            ->get()
+            ->toArray();
+
+        foreach ($proposals as $one) {
+            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
+
+            $one->review = is_null($review) ? 1 : 0;
+        }
+
+        foreach ($orders as $one) {
+            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
+
+            $one->worker = DB::table('orders')
+                ->join('users_info', 'orders.id_worker', '=', 'users_info.id_user')
+                ->where('id_user', $one->id_worker)
+                ->get()
+                ->first();
+
+            $one->review = is_null($review) ? 1 : 0;
+        }
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
             'dept' => $dept,
             'active' => $active,
-            'complete' => $complete
+            'complete' => $complete,
+            'orders' => $orders,
+            'proposals' => $proposals,
         ];
 
         return view('users.user', compact('info'));
