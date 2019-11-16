@@ -139,19 +139,19 @@
                                     </div>
                                     <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $orders->price }}</div>
                                 </div>
-                                <div class="text-gray">{{ $orders->created_at }}</div>
+                                <div class="text-grey">{{ $orders->created_at }}</div>
                                 <div class="font-size-22">{{ $orders->description }}</div>
                                 <div class="d-flex flex-row justify-content-between">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <div class="tag-list">
                                             @foreach($orders->categories as $tags)
-                                                <button class="btn border-gray">
-                                                    <span class="text-gray">{{ $tags->name }}</span>
+                                                <button class="btn border-grey">
+                                                    <span class="text-grey">{{ $tags->name }}</span>
                                                 </button>
                                             @endforeach
                                         </div>
                                         @if(!is_null($orders->dept))
-                                            <div class="text-left float-left text-gray font-size-20 ml-2">{{ $orders->dept->name }}</div>
+                                            <div class="text-left float-left text-grey font-size-20 ml-2">{{ $orders->dept->name }}</div>
                                         @endif
                                     </div>
                                     <div class="d-flex flex-column justify-content-end">
@@ -162,12 +162,12 @@
                                             @csrf
                                             <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
                                             @if(Auth::check() && ($orders->id_customer != Auth::id()))
-                                                <span class="pointer font-size-12 text-gray" onclick="getElementById('form-id').submit();">Зв'язатися</span>
+                                                <span class="pointer font-size-12 text-grey" onclick="getElementById('form-id').submit();">Зв'язатися</span>
                                             @endif
                                         </form>
                                     </div>
                                 </div>
-                                <hr class="border-gray pb-4">
+                                <hr class="border-grey pb-4">
                             </div>
                         @endforeach
                     </div>

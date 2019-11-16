@@ -3269,6 +3269,7 @@ $("document").ready(function () {
     $('.container-fluid .orders').remove();
     $('#drop-filter').removeClass('d-none');
     $('#drop-filter').addClass('d-flex');
+    $('.no_orders').remove();
 
     if (array.length) {
       for (var i = 0; i < array.length; i++) {
@@ -3312,7 +3313,7 @@ $("document").ready(function () {
     } else {
       $('#drop-filter').addClass('d-none');
       $('#drop-filter').removeClass('d-flex');
-      $('#orders-list').append("<div class=\"flex-row\">\n                        <div class=\"col font-weight-bold font-size-18 text-center mt-4\">\u041D\u0435\u043C\u0430\u0454 \u0437\u0430\u043C\u043E\u0432\u043B\u0435\u043D\u043D\u044C \u0437 \u0442\u0430\u043A\u0438\u043C\u0438 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C\u0438</div>\n                    </div>");
+      $('#orders-list').append("<div class=\"flex-row\">\n                    <div class=\"col font-weight-bold font-size-18 text-center mt-4 no_orders\">\u041D\u0435\u043C\u0430\u0454 \u0437\u0430\u043C\u043E\u0432\u043B\u0435\u043D\u043D\u044C \u0437 \u0442\u0430\u043A\u0438\u043C\u0438 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C\u0438</div>\n                </div>");
     }
   }
 

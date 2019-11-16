@@ -19,7 +19,7 @@ a.bg-violet:hover, button.bg-violet:hover {
     background-color: #4A67F5;
 }
 a.bg-blue:hover, button.bg-blue:hover {
-    background-color: #0056e1;
+    background-color: #4356b1;
 }
 .bg-green {
     background-color: #00B060;
@@ -42,6 +42,9 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 .bg-deep-dark:focus {
     background-color: #2D3A4D;
 }
+.bg-light-grey {
+    background-color: #303E51;
+}
 .bg-orange {
     background-color: #F97333;
 }
@@ -51,10 +54,10 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 .bg-black {
     background-color: #202020;
 }
-.text-gray {
+.text-grey {
     color: #707070;
 }
-.border-gray {
+.border-grey {
     border-color: #707070;
 }
 .pointer {
@@ -140,7 +143,9 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 }
 .square-54 {
     min-width: 54px;
-    min-width: 54px;
+    min-height: 54px;
+    max-width: 54px;
+    max-height: 54px;
 }
 .square-80 {
     width: 80px;
@@ -213,4 +218,11 @@ ul.tick li:before {
 }
 .shadow-box:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0,   0.19);
+}
+.selected-category, .selected-category>span{
+    color: #222C3A;
+    background-color: #FFFFFF;
+}
+textarea.bg-deep-dark:disabled {
+    background-color: #707070;
 }

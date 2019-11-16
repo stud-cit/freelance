@@ -230,6 +230,8 @@ $("document").ready(function() {
         $('#drop-filter').removeClass('d-none');
         $('#drop-filter').addClass('d-flex');
 
+        $('.no_orders').remove();
+
         if (array.length) {
             for (let i = 0; i < array.length; i++) {
                 let order = `<div class="container-fluid shadow-box mb-4 orders">
@@ -302,9 +304,10 @@ $("document").ready(function() {
             $('#drop-filter').addClass('d-none');
             $('#drop-filter').removeClass('d-flex');
 
+
             $('#orders-list').append(`<div class="flex-row">
-                        <div class="col font-weight-bold font-size-18 text-center mt-4">Немає замовленнь з такими параметрами</div>
-                    </div>`);
+                    <div class="col font-weight-bold font-size-18 text-center mt-4 no_orders">Немає замовленнь з такими параметрами</div>
+                </div>`);
         }
     }
 
