@@ -129,6 +129,9 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 .min-width-90 {
     min-width: 90px; !important;
 }
+.min-width-25 {
+    min-width: 25%; !important;
+}
 .square-1rem {
     height: 1rem;
     width: 1rem;

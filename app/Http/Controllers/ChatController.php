@@ -135,7 +135,7 @@ class ChatController extends Controller
 
     public function get_file(Request $req)
     {
-        $url = 'message_' . $req->id . '_' . $req->name;
+        $url = 'messages_' . $req->id . '_' . $req->name;
 
         return Storage::disk('files')->download($url, $req->name);
     }
