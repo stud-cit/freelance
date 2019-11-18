@@ -91,48 +91,35 @@
                             <button class="btn bg-blue rounded-pill text-white">Зв'язатися</button>
                         @endif
                     </form>
+                    @if(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
+                        <button class="btn bg-blue rounded-pill text-white" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">Змінити замовлення</button>
+                    @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
+                        <div class="row mt-4">
+                            <div class="col-xl-3 col-6 offset-xl-5 offset-6">
+                                <form method="POST" action="{{ route('finish_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
+                                    @csrf
+                                    <button type="submit" class="btn badge-pill text-white bg-deep-blue mb-2 w-100">
+                                        Замовлення виконано
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-xl-3 col-6 offset-xl-0 offset-6">
+                                <button class="btn badge-pill text-white bg-danger px-0 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
+                                    Змінити виконавця
+                                </button>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
         </div>
-        <div class="row">
+        <div class="d-flex flex-row justify-content-center">
             <div class="col-12 text-center">
                 @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
                     <button class="btn text-white" data-toggle="collapse" data-target="#prop" aria-expanded="true">
                         &#8595;&nbsp;{{ is_null($my_proposal) ? 'Залишити пропозицію' : 'Змінити пропозицію' }}&nbsp;&#8595;
                     </button>
-                @elseif(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
-                    <div class="row mt-4">
-                        <div class="col-xl-3 col-6 offset-xl-5 offset-6">
-                            <button class="btn badge-pill text-white bg-deep-blue mb-2 w-100" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
-                                Змінити замовлення
-                            </button>
-                        </div>
-                        <div class="col-xl-3 col-6 offset-xl-0 offset-6">
-                            <form method="POST" action="{{ route('delete_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
-                                @csrf
-                                <button class="btn badge-pill text-white bg-danger px-0 mb-2 w-100">
-                                    Видалити замовлення
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
-                    <div class="row mt-4">
-                        <div class="col-xl-3 col-6 offset-xl-5 offset-6">
-                            <form method="POST" action="{{ route('finish_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
-                                @csrf
-                                <button type="submit" class="btn badge-pill text-white bg-deep-blue mb-2 w-100">
-                                    Замовлення виконано
-                                </button>
-                            </form>
-                        </div>
-                        <div class="col-xl-3 col-6 offset-xl-0 offset-6">
-                            <button class="btn badge-pill text-white bg-danger px-0 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
-                                Змінити виконавця
-                            </button>
-                        </div>
-                    </div>
                 @endif
             </div>
         </div>
@@ -315,7 +302,7 @@
                             </div>
                         @endforeach
                     @elseif(count($proposals) == 0)
-                        <div class="font-weight-bold font-size-18 my-4">Немає залишених пропозицій</div>
+                        <div class="font-weight-bold font-size-18 text-center my-4">Немає залишених пропозицій</div>
                     @endif
                 </div>
                 {{ $proposals->links('layouts.pagination') }}

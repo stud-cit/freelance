@@ -59,6 +59,7 @@
                         <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required></textarea>
                         <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
                     </div>
+                    <div class="border-left"></div>
                     <div class="form-group col-5">
                         <label for="price" class="font-size-20">Ціна</label>
                         <div class="d-flex flex-row">
@@ -92,7 +93,7 @@
                             <div class="" id="themes_block"></div>
                         </div>
                         <div class="d-flex justify-content-center mt-4">
-                            <button class="btn badge-pill text-white font-size-25 bg-green">Створити замовлення</button>
+                            <button class="btn badge-pill text-white font-size-20 bg-green">Створити замовлення</button>
                         </div>
                     </div>
                 </div>
@@ -163,6 +164,11 @@
                                             <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
                                             @if(Auth::check() && ($orders->id_customer != Auth::id()))
                                                 <span class="pointer font-size-12 text-grey" onclick="getElementById('form-id').submit();">Зв'язатися</span>
+                                            @else
+                                                <form method="POST" action="{{ route('delete_order', $orders->id_order) }}" id="delete" onsubmit="return confirm('Ви впевнені?');">
+                                                    @csrf
+                                                    <span class="pointer font-size-12 text-grey" onclick="getElementById('delete')">Видалити</span>
+                                                </form>
                                             @endif
                                         </form>
                                     </div>

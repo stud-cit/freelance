@@ -48,18 +48,18 @@
                     <button type="submit" class="btn bg-blue text-white font-weight-bold font-size-25" name="id_user" value="{{ $data->id_user }}">Відкрити приватний чат</button>
                 </form>
             @else
-                <button class="btn bg-orange text-white font-weight-bold font-size-25 to-edit">Редагувати профіль</button>
+                <button class="btn bg-orange text-white font-weight-bold font-size-25">Редагувати профіль</button>
             @endif
         </div>
     </div>
     <div class="col-12">
-        <div class="d-flex flex-row justify-content-around text-white text-center">
+        <div class="d-flex flex-row justify-content-around mt-5 text-white text-center">
             @if($data->id_role == 2)
-                <div id="new-c-toggle" data-toggle="collapse" data-target="#new-c" aria-expanded="false">
+                <div class="pointer change" id="new-c-toggle" data-toggle="collapse" data-target="#new-c" aria-expanded="false">
                     <div class="font-size-100">{{ $active }}</div>
                     <div class="font-size-25">Відкриті проєкти</div>
                 </div>
-                <div>
+                <div class="pointer change" id="progress-c-toggle" data-toggle="collapse" data-target="#progress-c" aria-expanded="false">
                     <div class="font-size-100">{{ $progress }}</div>
                     <div class="font-size-25">Активні проєкти</div>
                 </div>
@@ -82,7 +82,7 @@
                 </div>
             @endif
         </div>
-        <div class="collapse container" id="new-c">
+        <div class="collapse container mt-4" id="new-c">
             <div class="text-white">
                 @php($i = 0)
                 @foreach($orders as $all)
@@ -122,8 +122,9 @@
                                     <div class="text-left float-left text-grey font-size-20 ml-2">{{ $all->dept->name }}</div>
                                 @endif
                                 </div>
-                                <div class="d-flex flex-row justify-content-end">
+                                <div class="d-flex flex-column justify-content-end">
                                     <button class="btn work-order bg-orange" data-id="{{ $all->id_order }}">Переглянути</button>
+                                    <span class="pointer font-size-12 text-grey text-center" >Видалити</span>
                                 </div>
                                 </div>
                             <hr class="border-grey pb-4">
@@ -131,7 +132,64 @@
                     @endif
                 @endforeach
                 @if(!$i)
-                    <div>Немає відкритих проєктів</div>
+                    <div class="d-flex justify-content-center">
+                        <div class="font-size-30 font-weight-bold">Немає відкритих проєктів</div>
+                    </div>
+                @endif
+            </div>
+        </div>
+        <div class="collapse container mt-4" id="progress-c">
+            <div class="text-white">
+                @php($i = 0)
+                @foreach($orders as $active)
+                    @if($active->status == 'in progress')
+                        @php($i++)
+                        <div class="container shadow-box mb-4 orders">
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                <div class="d-flex justify-content-start">
+                                    <div class="d-flex flex-row">
+                                        <div class="font-weight-bold order-title font-size-30">{{ $active->title }}</div>
+                                        <div class="align-self-center ml-4">
+                                            @if($active->files)
+                                                <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit">
+                                            @endif
+                                        </div>
+                                        <div class="align-self-center ml-1">
+                                            @if($active->time)
+                                                <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar">
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $active->price }}</div>
+                            </div>
+                            <div class="text-grey">{{ $active->created_at }}</div>
+                            <div class="font-size-22">{{ $active->description }}</div>
+                            <div class="d-flex flex-row justify-content-between">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="tag-list">
+                                        @foreach($active->categories as $tags)
+                                            <button class="btn border-grey">
+                                                <span class="text-grey">{{ $tags->name }}</span>
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                    @if(!is_null($active->dept))
+                                        <div class="text-left float-left text-grey font-size-20 ml-2">{{ $active->dept->name }}</div>
+                                    @endif
+                                </div>
+                                <div class="d-flex flex-row justify-content-end">
+                                    <button class="btn work-order bg-orange" data-id="{{ $active->id_order }}">Переглянути</button>
+                                </div>
+                            </div>
+                            <hr class="border-grey pb-4">
+                        </div>
+                    @endif
+                @endforeach
+                @if(!$i)
+                    <div class="d-flex justify-content-center">
+                        <div class="font-size-30 font-weight-bold">Немає проєктів у процесі</div>
+                    </div>
                 @endif
             </div>
         </div>
