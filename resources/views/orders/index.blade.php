@@ -157,20 +157,20 @@
                                     </div>
                                     <div class="d-flex flex-column justify-content-end">
                                         @if(Auth::check() && !Auth::user()->banned)
-                                        <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
+                                            <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
                                         @endif
-                                        <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
-                                            @csrf
-                                            <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
-                                            @if(Auth::check() && ($orders->id_customer != Auth::id()))
+                                        @if(Auth::check() && ($orders->id_customer != Auth::id()))
+                                            <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
+                                                @csrf
+                                                <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
                                                 <span class="pointer font-size-12 text-grey" onclick="getElementById('form-id').submit();">Зв'язатися</span>
-                                            @else
-                                                <form method="POST" action="{{ route('delete_order', $orders->id_order) }}" id="delete" onsubmit="return confirm('Ви впевнені?');">
-                                                    @csrf
-                                                    <span class="pointer font-size-12 text-grey" onclick="getElementById('delete')">Видалити</span>
-                                                </form>
-                                            @endif
-                                        </form>
+                                            </form>
+                                        @else
+                                            <form method="POST" action="{{ route('delete_order', $orders->id_order) }}" id="delete" class="text-center">
+                                                @csrf
+                                                <span class="pointer font-size-12 text-grey" onclick="getElementById('delete').submit()">Видалити</span>
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                                 <hr class="border-grey pb-4">

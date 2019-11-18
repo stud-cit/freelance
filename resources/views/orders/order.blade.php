@@ -207,31 +207,31 @@
                     @if(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                         <div class="container collapse py-4" id="edit-order">
                             <div class="d-flex flex-row">
-                                <form method="POST" action="{{ route('save_order') }}" enctype="multipart/form-data" class="col-12">
+                                <form method="POST" action="{{ route('edit_order', $order->id_order) }}" enctype="multipart/form-data" class="col-12">
                                     @csrf
                                     <div class="d-flex flex-row justify-content-around">
                                         <div class="form-group col-6">
                                             <label for="title" class="">Назва</label>
-                                            <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title">
+                                            <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title" value="{{ $order->title }}">
                                             <label for="description" class="mt-2">Інформація</label>
-                                            <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required></textarea>
-                                            <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
+                                            <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required>{{ $order->description }}</textarea>
+{{--                                            <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">--}}
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="price" class="">Ціна</label>
                                             <div class="d-flex flex-row">
-                                                <input type="text" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price">
+                                                <input type="text" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price"value="{{ explode(" " , $order->price)[0] }}">
                                                 <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="currency">
-                                                    <option>грн.</option>
-                                                    <option>$</option>
+                                                    <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "грн." ? "selected" : ""}}>грн.</option>
+                                                    <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "$" ? "selected" : ""}}>$</option>
                                                 </select>
                                             </div>
                                             <label for="time" class="mt-2">Час</label>
                                             <div class="d-flex flex-row">
-                                                <input type="text" class="col-9 form-control border-0 bg-deep-dark" id="time" name="time">
+                                                <input type="text" class="col-9 form-control border-0 bg-deep-dark" id="time" name="time" value="{{ explode(" ", $order->time)[0] }}">
                                                 <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="type">
-                                                    <option class="">дні</option>
-                                                    <option class="">год.</option>
+                                                    <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "дні" ? "selected" : ""}}>дні</option>
+                                                    <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "год." ? "selected" : ""}}>год.</option>
                                                 </select>
                                             </div>
                                             <label for="tags" class="mt-2">Категорії</label>
@@ -243,7 +243,7 @@
                                                     @endforeach
                                                 </select>
                                                 <div style="display: none">
-                                                    <input type="text" name="categories">
+                                                    <input type="text" name="categories" value="{{ $data['string'] }}">
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="" id="themes_block"></div>
