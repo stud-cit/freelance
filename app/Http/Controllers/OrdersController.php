@@ -109,7 +109,7 @@ class OrdersController extends Controller
             $array = array_slice($array, $filter['page'] * 10);
         }
         else {
-            $array = array_slice($array, count($array) - count($array) % 10 ? count($array) % 10 : 10);
+            $array = array_slice($array, count($array) - (count($array) % 10 ? count($array) % 10 : 10));
         }
 
         return $array;
@@ -170,12 +170,16 @@ class OrdersController extends Controller
             'dept' => $req->dept,
         ];
 
+        $array = $this->get_orders($values);
+        $page = $this->filtered > ($req->page - 1) * 10 ? $req->page : $this->filtered % 10 + 1;
+
         $data = [
-            'array' => $this->get_orders($values),
+            'array' => $array,
             'count' => $this->filtered,
+            'page' => $page
         ];
 
-        return $data;
+        return view('orders.filter', compact('data'));
     }
 
     public function order($id)

@@ -25,12 +25,10 @@ $("document").ready(function() {
         $("#avatar-input-label").text($(this).val().split("\\").pop());
     });
 
+    update_listeners();
+
     $(".to-profile").on('click', function () {
         window.location.href = '/profile/' + $(this).attr('data-id');
-    });
-
-    $(".orders").on('click', ".work-order", function () {
-        window.location.href = '/orders/' + $(this).attr('data-id');
     });
 
     $('#new_order-toggle').on('click', function () {
@@ -167,35 +165,6 @@ $("document").ready(function() {
         }
     });
 
-    $('#pagination').on('click', 'button', function() {
-        let page = $(this).text(),
-            prevPage = parseInt($('.pagination-selected').text());
-
-        switch (page) {
-            case '<<':
-                page = 1;
-                break;
-            case '<':
-                page = parseInt($('.pagination-selected').text()) - 1;
-                break;
-            case '>':
-                page = parseInt($('.pagination-selected').text()) + 1;
-                break;
-            case '>>':
-                page = parseInt($('.pagination-num:last').text());
-                break;
-        }
-
-        if (!page || page > parseInt($('.pagination-num:last').text()) || prevPage == page) {
-            return;
-        }
-
-        $('#pagination button').removeClass('pagination-selected');
-        $('#num-' + page).addClass('pagination-selected');
-
-        ajax_filter(page);
-    });
-
     function ajax_filter(page) {
         let data = {
             'what': $('.sort-selected').attr('id') === 'date-btn' ? 'id_order' : 'price',
@@ -214,102 +183,61 @@ $("document").ready(function() {
             url: '/filter',
             data: data,
             success: function (response) {
-                refresh_orders(response);
+                $('#orders-list').remove();
+                $('#orders-block').append(response);
+
+                let drop = $('#drop-filter');
+
+                if ($('.orders').length) {
+                    drop.removeClass('d-none');
+                    drop.addClass('d-flex');
+                }
+                else {
+                    drop.removeClass('d-flex');
+                    drop.addClass('d-none');
+                }
+
+                update_listeners();
             }
         });
     }
 
-    function refresh_orders(response) {
-        let array = response['array'],
-            count = response['count'],
-            page = parseInt($('.pagination-selected').text());
-        page = isNaN(page) ? 1 : page;
+    function update_listeners() {
+        $('#pagination').off('click');
+        $('#pagination').on('click', 'button', function() {
+            let page = $(this).text(),
+                prevPage = parseInt($('.pagination-selected').text());
 
-        $('#pagination').empty();
-        $('.container-fluid .orders').remove();
-        $('#drop-filter').removeClass('d-none');
-        $('#drop-filter').addClass('d-flex');
-
-        $('.no_orders').remove();
-
-        if (array.length) {
-            for (let i = 0; i < array.length; i++) {
-                let order = `<div class="container-fluid shadow-box mb-4 orders">
-                                <div class="d-flex flex-row justify-content-between align-items-center">
-                                    <div class="d-flex justify-content-start">
-                                        <div class="d-flex flex-row">
-                                            <div class="font-weight-bold order-title font-size-30">` + array[i]['title'] + `</div>
-                                            <div class="align-self-center ml-4">`
-                                            + (array[i]['files'] ? '<img src="/edit.svg" alt="edit" width="20px" id="edit">' : '')
-                                            + `</div><div class="align-self-center ml-1">`
-                                            + (array[i]['time'] ? '<img src="/calendar.svg" alt="calendar" width="20px" id="calendar">' : '')
-                                            + `</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">` + array[i]['price']+ `</div>
-                                </div>
-                                <div class="text-gray">` + array[i]['created_at'] + `</div>
-                                <div class="font-size-22">` + array[i]['description'] + `</div>
-                                <div class="d-flex flex-row justify-content-between">
-                                    <div class="d-flex justify-content-start align-items-center">
-                                        <div class="tag-list">`;
-
-                for (let j = 0; j < array[i]['categories'].length; j++) {
-                    order += `<button class="btn border-gray">
-                            <span class="text-gray">` + array[i]['categories'][j]['name'] + `</span>
-                        </button>`;
-                }
-
-                order += `</div>`;
-
-                if (array[i]['dept'] !== null) {
-                    order += `<div class="text-left float-left text-gray font-size-20 ml-2">` + array[i]['dept']['name'] + `</div>`;
-                }
-
-                order += `<div class="d-flex flex-column justify-content-end">
-                                        <button class="btn work-order bg-orange" data-id="` + array[i]['id_order'] + `">Переглянути</button>
-                                        <form method="POST" action="/new_contact" id="form-id" class=" text-center">
-                                            <input type="hidden" name="_token" value="0W8fMDZuJ1HGabySd4TSEc8xeViKq6GGiFeOriGM">
-                                            <input type="text" name="id_user" class="d-none" value="` + array[i]['id_customer'] + `">`;
-
-                if (array[i]['id_customer'] != $('#my_id').attr('data-id')) {
-                    order += `<span class="pointer font-size-12 text-gray" onclick="getElementById('form-id').submit();">Зв'язатися</span>`;
-                }
-
-                order += `</form></div></div><hr class="border-gray pb-4"></div>`;
-
-                $('#orders-list').append(order);
+            switch (page) {
+                case '<<':
+                    page = 1;
+                    break;
+                case '<':
+                    page = parseInt($('.pagination-selected').text()) - 1;
+                    break;
+                case '>':
+                    page = parseInt($('.pagination-selected').text()) + 1;
+                    break;
+                case '>>':
+                    page = parseInt($('.pagination-num:last').text());
+                    break;
             }
 
-            if (page > Math.ceil(count / 10)) {
-                page = parseInt($('.pagination-num:last').text());
+            if (!page || page > parseInt($('.pagination-num:last').text()) || prevPage == page) {
+                return;
             }
 
-            let pagination = `<button class="btn btn-outline-p"` + (page === 1 ? 'disabled' : '') + `><<</button>&nbsp;
-                            <button class="btn btn-outline-p" ` + (page === 1 ? 'disabled' : '') + `><</button>&nbsp;`;
+            $('#pagination button').removeClass('pagination-selected');
+            $('#num-' + page).addClass('pagination-selected');
 
-            for (let i = 1; i <= Math.ceil(count / 10); i++) {
-                pagination += `<button class="pagination-num btn btn-outline-p ` + (page === i ? 'pagination-selected active' : '') + `" id="num-` + i + `">` + i + `</button>&nbsp;`;
-            }
+            ajax_filter(page);
+        });
 
-            pagination += `<button class="btn btn-outline-p" ` + (page === Math.ceil(count / 10) ? 'disabled' : '') + `>></button>&nbsp;
-                        <button class="btn btn-outline-p" ` + (page === Math.ceil(count / 10) ? 'disabled' : '') + `>>></button>`;
-
-            $('#pagination').append(pagination);
-            $('#pagination').removeClass('d-flex');
-            $('#pagination').removeClass('d-none');
-            $('#pagination').addClass(Math.ceil(count / 10) < 2 ? 'd-none' : 'd-flex');
-        }
-        else {
-            $('#drop-filter').addClass('d-none');
-            $('#drop-filter').removeClass('d-flex');
-
-
-            $('#orders-list').append(`<div class="flex-row">
-                    <div class="col font-weight-bold font-size-18 text-center mt-4 no_orders">Немає замовленнь з такими параметрами</div>
-                </div>`);
-        }
-    }
+        $('.work-order').off('click');
+        $(".work-order").on('click', function () {
+            window.location.href = '/orders/' + $(this).attr('data-id');
+        });
+    };
 
     if (window.location.href.indexOf('/chat') < 0) {
         $.ajaxSetup({

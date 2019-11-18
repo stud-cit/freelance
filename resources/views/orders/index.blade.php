@@ -98,7 +98,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-10 offset-1 text-white">
+        <div class="col-10 offset-1 text-white" id="orders-block">
             <div class="font-size-20">Пошук за категоріями:</div>
             <div class="for-filter" id="categs">
                 <button class="btn mb-1 text-white border-white categories_tag selected-category" data-id="0">
@@ -116,9 +116,9 @@
                     <button class="btn sort-btn text-white" id="price-btn">Ціною <span class="badge badge-dark badge-pill"></span></button>
                 </div>
             </div>
-            @if($data !=[])
-                <div class="container-fluid">
-                    <div class="mt-2 mb-4" id="orders-list">
+            @if($data != [])
+                <div class="container-fluid" id="orders-list">
+                    <div class="mt-2 mb-4">
                         @foreach($data as $orders)
                             <div class="container-fluid shadow-box mb-4 orders">
                                 <div class="d-flex flex-row justify-content-between align-items-center">

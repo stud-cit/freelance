@@ -3089,11 +3089,9 @@ $("document").ready(function () {
     $(this).removeClass('is-invalid');
     $("#avatar-input-label").text($(this).val().split("\\").pop());
   });
+  update_listeners();
   $(".to-profile").on('click', function () {
     window.location.href = '/profile/' + $(this).attr('data-id');
-  });
-  $(".orders").on('click', ".work-order", function () {
-    window.location.href = '/orders/' + $(this).attr('data-id');
   });
   $('#new_order-toggle').on('click', function () {
     $(this).find('.order_circle').css('transition', 'transform 0.1s linear').css('transform', $('#new-order').css('display') == 'none' ? 'rotate(360deg)' : 'rotate(0deg)').text($('#new-order').css('display') == 'none' ? '-' : '+');
@@ -3207,36 +3205,6 @@ $("document").ready(function () {
       }, 1000);
     }
   });
-  $('#pagination').on('click', 'button', function () {
-    var page = $(this).text(),
-        prevPage = parseInt($('.pagination-selected').text());
-
-    switch (page) {
-      case '<<':
-        page = 1;
-        break;
-
-      case '<':
-        page = parseInt($('.pagination-selected').text()) - 1;
-        break;
-
-      case '>':
-        page = parseInt($('.pagination-selected').text()) + 1;
-        break;
-
-      case '>>':
-        page = parseInt($('.pagination-num:last').text());
-        break;
-    }
-
-    if (!page || page > parseInt($('.pagination-num:last').text()) || prevPage == page) {
-      return;
-    }
-
-    $('#pagination button').removeClass('pagination-selected');
-    $('#num-' + page).addClass('pagination-selected');
-    ajax_filter(page);
-  });
 
   function ajax_filter(page) {
     var data = {
@@ -3255,67 +3223,62 @@ $("document").ready(function () {
       url: '/filter',
       data: data,
       success: function success(response) {
-        refresh_orders(response);
+        $('#orders-list').remove();
+        $('#orders-block').append(response);
+        var drop = $('#drop-filter');
+
+        if ($('.orders').length) {
+          drop.removeClass('d-none');
+          drop.addClass('d-flex');
+        } else {
+          drop.removeClass('d-flex');
+          drop.addClass('d-none');
+        }
+
+        update_listeners();
       }
     });
   }
 
-  function refresh_orders(response) {
-    var array = response['array'],
-        count = response['count'],
-        page = parseInt($('.pagination-selected').text());
-    page = isNaN(page) ? 1 : page;
-    $('#pagination').empty();
-    $('.container-fluid .orders').remove();
-    $('#drop-filter').removeClass('d-none');
-    $('#drop-filter').addClass('d-flex');
-    $('.no_orders').remove();
+  function update_listeners() {
+    $('#pagination').off('click');
+    $('#pagination').on('click', 'button', function () {
+      var page = $(this).text(),
+          prevPage = parseInt($('.pagination-selected').text());
 
-    if (array.length) {
-      for (var i = 0; i < array.length; i++) {
-        var order = "<div class=\"container-fluid shadow-box mb-4 orders\">\n                                <div class=\"d-flex flex-row justify-content-between align-items-center\">\n                                    <div class=\"d-flex justify-content-start\">\n                                        <div class=\"d-flex flex-row\">\n                                            <div class=\"font-weight-bold order-title font-size-30\">" + array[i]['title'] + "</div>\n                                            <div class=\"align-self-center ml-4\">" + (array[i]['files'] ? '<img src="/edit.svg" alt="edit" width="20px" id="edit">' : '') + "</div><div class=\"align-self-center ml-1\">" + (array[i]['time'] ? '<img src="/calendar.svg" alt="calendar" width="20px" id="calendar">' : '') + "</div>\n                                        </div>\n                                    </div>\n                                    <div class=\"text-center font-weight-bold font-size-30 nowrap justify-content-end\">" + array[i]['price'] + "</div>\n                                </div>\n                                <div class=\"text-gray\">" + array[i]['created_at'] + "</div>\n                                <div class=\"font-size-22\">" + array[i]['description'] + "</div>\n                                <div class=\"d-flex flex-row justify-content-between\">\n                                    <div class=\"d-flex justify-content-start align-items-center\">\n                                        <div class=\"tag-list\">";
+      switch (page) {
+        case '<<':
+          page = 1;
+          break;
 
-        for (var j = 0; j < array[i]['categories'].length; j++) {
-          order += "<button class=\"btn border-gray\">\n                            <span class=\"text-gray\">" + array[i]['categories'][j]['name'] + "</span>\n                        </button>";
-        }
+        case '<':
+          page = parseInt($('.pagination-selected').text()) - 1;
+          break;
 
-        order += "</div>";
+        case '>':
+          page = parseInt($('.pagination-selected').text()) + 1;
+          break;
 
-        if (array[i]['dept'] !== null) {
-          order += "<div class=\"text-left float-left text-gray font-size-20 ml-2\">" + array[i]['dept']['name'] + "</div>";
-        }
-
-        order += "<div class=\"d-flex flex-column justify-content-end\">\n                                        <button class=\"btn work-order bg-orange\" data-id=\"" + array[i]['id_order'] + "\">\u041F\u0435\u0440\u0435\u0433\u043B\u044F\u043D\u0443\u0442\u0438</button>\n                                        <form method=\"POST\" action=\"/new_contact\" id=\"form-id\" class=\" text-center\">\n                                            <input type=\"hidden\" name=\"_token\" value=\"0W8fMDZuJ1HGabySd4TSEc8xeViKq6GGiFeOriGM\">\n                                            <input type=\"text\" name=\"id_user\" class=\"d-none\" value=\"" + array[i]['id_customer'] + "\">";
-
-        if (array[i]['id_customer'] != $('#my_id').attr('data-id')) {
-          order += "<span class=\"pointer font-size-12 text-gray\" onclick=\"getElementById('form-id').submit();\">\u0417\u0432'\u044F\u0437\u0430\u0442\u0438\u0441\u044F</span>";
-        }
-
-        order += "</form></div></div><hr class=\"border-gray pb-4\"></div>";
-        $('#orders-list').append(order);
+        case '>>':
+          page = parseInt($('.pagination-num:last').text());
+          break;
       }
 
-      if (page > Math.ceil(count / 10)) {
-        page = parseInt($('.pagination-num:last').text());
+      if (!page || page > parseInt($('.pagination-num:last').text()) || prevPage == page) {
+        return;
       }
 
-      var pagination = "<button class=\"btn btn-outline-p\"" + (page === 1 ? 'disabled' : '') + "><<</button>&nbsp;\n                            <button class=\"btn btn-outline-p\" " + (page === 1 ? 'disabled' : '') + "><</button>&nbsp;";
-
-      for (var _i = 1; _i <= Math.ceil(count / 10); _i++) {
-        pagination += "<button class=\"pagination-num btn btn-outline-p " + (page === _i ? 'pagination-selected active' : '') + "\" id=\"num-" + _i + "\">" + _i + "</button>&nbsp;";
-      }
-
-      pagination += "<button class=\"btn btn-outline-p\" " + (page === Math.ceil(count / 10) ? 'disabled' : '') + ">></button>&nbsp;\n                        <button class=\"btn btn-outline-p\" " + (page === Math.ceil(count / 10) ? 'disabled' : '') + ">>></button>";
-      $('#pagination').append(pagination);
-      $('#pagination').removeClass('d-flex');
-      $('#pagination').removeClass('d-none');
-      $('#pagination').addClass(Math.ceil(count / 10) < 2 ? 'd-none' : 'd-flex');
-    } else {
-      $('#drop-filter').addClass('d-none');
-      $('#drop-filter').removeClass('d-flex');
-      $('#orders-list').append("<div class=\"flex-row\">\n                    <div class=\"col font-weight-bold font-size-18 text-center mt-4 no_orders\">\u041D\u0435\u043C\u0430\u0454 \u0437\u0430\u043C\u043E\u0432\u043B\u0435\u043D\u043D\u044C \u0437 \u0442\u0430\u043A\u0438\u043C\u0438 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u0430\u043C\u0438</div>\n                </div>");
-    }
+      $('#pagination button').removeClass('pagination-selected');
+      $('#num-' + page).addClass('pagination-selected');
+      ajax_filter(page);
+    });
+    $('.work-order').off('click');
+    $(".work-order").on('click', function () {
+      window.location.href = '/orders/' + $(this).attr('data-id');
+    });
   }
+
+  ;
 
   if (window.location.href.indexOf('/chat') < 0) {
     $.ajaxSetup({
