@@ -27,7 +27,7 @@
                                 <div class="">&nbsp;</div>
                                 <div class="d-flex flex-column">
                                     <label for="name" class="col-form-label">Електронна адреса</label>
-                                    <input id="email" type="email" class="form-control bg-deep-dark text-grey @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
+                                    <input id="email" type="email" class="form-control bg-deep-dark text-white @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -41,7 +41,7 @@
                                 <div class="d-flex flex-column">
                                     <label for="name" class="col-form-label">Пароль</label>
 
-                                    <input id="password" type="password" class="form-control bg-deep-dark text-grey @error('password') is-invalid @enderror border-0" name="password" required autocomplete="new-password" placeholder="********">
+                                    <input id="password" type="password" class="form-control bg-deep-dark text-white @error('password') is-invalid @enderror border-0" name="password" required autocomplete="new-password" placeholder="********">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
