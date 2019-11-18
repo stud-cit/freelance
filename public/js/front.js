@@ -3093,6 +3093,9 @@ $("document").ready(function () {
   $(".to-profile").on('click', function () {
     window.location.href = '/profile/' + $(this).attr('data-id');
   });
+  $('.to-edit').on('click', function () {
+    window.location.href = '/profile';
+  });
   $('#new_order-toggle').on('click', function () {
     $(this).find('.order_circle').css('transition', 'transform 0.1s linear').css('transform', $('#new-order').css('display') == 'none' ? 'rotate(360deg)' : 'rotate(0deg)').text($('#new-order').css('display') == 'none' ? '-' : '+');
   });

@@ -70,7 +70,7 @@
                         </div>
                         <label for="time" class="font-size-20 mt-2">Час</label>
                         <div class="d-flex flex-row">
-                            <input type="text" class="col-9 form-control border-0 bg-deep-dark" id="time" name="time">
+                            <input type="text" class="col-9 form-control text-white border-0 bg-deep-dark" id="time" name="time">
                             <select class="col-2 offset-1 form-control font-size-15 text-white border-0 bg-deep-dark" name="type">
                                 <option class="">дні</option>
                                 <option class="">год.</option>

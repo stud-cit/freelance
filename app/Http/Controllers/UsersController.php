@@ -291,10 +291,35 @@ class UsersController extends Controller
             ->get()
             ->first();
 
-        $active = DB::table('orders')->where([['id_customer', $id], ['status', 'new']])->count();
-        $complete = DB::table('orders')->where([['id_customer', $id], ['status', 'complete']])->count();
+        if ($data->id_role == 2) {
+            $active = DB::table('orders')->where([['id_customer', $id], ['status', 'new']])->count();
+            $progress = DB::table('orders')->where([['id_customer', $id], ['status', 'in progress']])->count();
+            $complete = DB::table('orders')->where([['id_customer', $id], ['status', 'complete']])->count();
+        }
+        else if ($data->id_role == 3){
+            $active = DB::table('orders')
+                        ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
+                        ->where([['proposals.id_worker', $id], ['status', 'new']])->count();
+            $progress = DB::table('orders')->where([['id_worker', $id], ['status', 'in progress']])->count();
+            $complete = DB::table('orders')->where([['id_worker', $id], ['status', 'complete']])->count();
+        }
 
-        $orders = DB::table('orders')->where('id_customer', Auth::id())->get()->toArray();
+        $orders = DB::table('orders')->where('id_customer', $data->id)->get()->toArray();
+
+        foreach ($orders as $one) {
+            $one->categories = DB::table('categories_has_orders')
+                ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
+                ->where('id_order', $one->id_order)
+                ->get()
+                ->toArray();
+
+            $one->dept = DB::table('users')
+                ->join('orders', 'users.id', '=', 'orders.id_customer')
+                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
+                ->where('id_order', $one->id_order)
+                ->get()
+                ->first();
+        }
 
         $proposals = DB::table('orders')
             ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
@@ -327,6 +352,7 @@ class UsersController extends Controller
             'reviews' => $reviews,
             'dept' => $dept,
             'active' => $active,
+            'progress' => $progress,
             'complete' => $complete,
             'orders' => $orders,
             'proposals' => $proposals,

@@ -1,9 +1,6 @@
 @section('header')
     <div class="container-fluid mb-5">
-        <div class="d-flex flex-row justify-content-around align-items-center mt-4 text-white text-center"><!--
-                <div class="col-1">
-                    <div class="bg-success rounded-circle float-right logo-circle pt-1 font-weight-bold" style="font-family: Arial; letter-spacing: -4px"><span>W</span><span class="font-italic">D</span></div>
-                </div>-->
+        <div class="d-flex flex-row justify-content-around align-items-center mt-4 text-white text-center">
                 <div class="">
                     <a href="/" class=""><img src="{{ asset('/SVG_logo.svg') }}" alt="WorkDump" height="40px" id="logo"></a>
                 </div>
@@ -16,7 +13,7 @@
                             <a href="{{ route('orders') }}" class="text-white">Туторіал</a>
                         </div>
                         <div class="small">
-                            <a href="{{ route('profile') }}" class="text-white">Профіль</a>
+                            <a href="{{ route('user', Auth::id()) }}" class="text-white">Профіль</a>
                         </div>
                         <div class="small">
                             <a href="{{ route('workers') }}" class="text-white">Виконавці</a>
@@ -62,10 +59,7 @@
                     @else
                         <div class=""></div>
                     @endif
-                @endif<!--
-                <div class="col-1 mt-1">
-{{--                    UA--}}
-                </div>-->
+                @endif
         </div>
     </div>
 @endsection

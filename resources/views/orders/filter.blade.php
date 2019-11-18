@@ -58,14 +58,14 @@
             @endforeach
         </div>
         <div id="pagination" class="flex-row justify-content-center mb-3 {{ ceil($count / 10) < 2 ? 'd-none' : 'd-flex' }}">
-            <button class="btn btn-outline-p" disabled><<</button>&nbsp;
-            <button class="btn btn-outline-p" disabled><</button>&nbsp;
+            <button class="btn btn-outline-p" @if($page == 1) disabled @endif><<</button>&nbsp;
+            <button class="btn btn-outline-p" @if($page == 1) disabled @endif><</button>&nbsp;
             <button class="pagination-num btn btn-outline-p @if($page == 1) pagination-selected active @endif" id="num-1" >1</button>&nbsp;
             @for($i = 2; $i <= ceil($count / 10); $i++)
                 <button class="pagination-num btn btn-outline-p @if($page == $i) pagination-selected active @endif" id="num-{{ $i }}">{{ $i }}</button>&nbsp;
             @endfor
-            <button class="btn btn-outline-p">></button>&nbsp;
-            <button class="btn btn-outline-p">>></button>
+            <button class="btn btn-outline-p" @if($page == ceil($count / 10)) disabled @endif>></button>&nbsp;
+            <button class="btn btn-outline-p" @if($page == ceil($count / 10)) disabled @endif>>></button>
         </div>
     </div>
 @else

@@ -13,6 +13,7 @@
 @php($complete = $info['complete'])
 @php($orders = $info['orders'])
 @php($proposals = $info['proposals'])
+@php($progress = $info['progress'])
 
 <div>
     <div class="flash-message fixed-bottom text-center">
@@ -47,10 +48,7 @@
                     <button type="submit" class="btn bg-blue text-white font-weight-bold font-size-25" name="id_user" value="{{ $data->id_user }}">Відкрити приватний чат</button>
                 </form>
             @else
-                <form action="">
-                    @csrf
-                    <button class="btn bg-orange text-white font-weight-bold font-size-25">Редагувати профіль</button>
-                </form>
+                <button class="btn bg-orange text-white font-weight-bold font-size-25 to-edit">Редагувати профіль</button>
             @endif
         </div>
     </div>
@@ -58,28 +56,28 @@
         <div class="d-flex flex-row justify-content-around text-white text-center">
             @if($data->id_role == 2)
                 <div id="new-c-toggle" data-toggle="collapse" data-target="#new-c" aria-expanded="false">
-                    <div class="font-size-100">{{$active}}</div>
+                    <div class="font-size-100">{{ $active }}</div>
                     <div class="font-size-25">Відкриті проєкти</div>
                 </div>
                 <div>
-                    <div class="font-size-100">{{$complete}}</div>
+                    <div class="font-size-100">{{ $progress }}</div>
                     <div class="font-size-25">Активні проєкти</div>
                 </div>
                 <div>
-                    <div class="font-size-100">{{$active + $complete}}</div>
+                    <div class="font-size-100">{{ $complete }}</div>
                     <div class="font-size-25">Завершені проєкти</div>
                 </div>
             @elseif($data->id_role == 3)
                 <div>
-                    <div class="font-size-100">{{$active}}</div>
+                    <div class="font-size-100">{{ $active }}</div>
                     <div class="font-size-25">Залишені пропозиції</div>
                 </div>
                 <div>
-                    <div class="font-size-100">{{$complete}}</div>
+                    <div class="font-size-100">{{ $progress }}</div>
                     <div class="font-size-25">Активн проєкти</div>
                 </div>
                 <div>
-                    <div class="font-size-100">{{$active + $complete}}</div>
+                    <div class="font-size-100">{{ $complete }}</div>
                     <div class="font-size-25">Завершені проєкти</div>
                 </div>
             @endif
@@ -109,17 +107,31 @@
                                 </div>
                                 <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $all->price }}</div>
                             </div>
-                            <div class="text-gray">{{ $all->created_at }}</div>
+                            <div class="text-grey">{{ $all->created_at }}</div>
                             <div class="font-size-22">{{ $all->description }}</div>
-                            <div class="d-flex flex-row justify-content-end">
-                                <button class="btn work-order bg-orange" data-id="{{ $all->id_order }}">Переглянути</button>
-                            </div>
-                            <hr class="border-gray pb-4">
+                            <div class="d-flex flex-row justify-content-between">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <div class="tag-list">
+                                    @foreach($all->categories as $tags)
+                                        <button class="btn border-grey">
+                                            <span class="text-grey">{{ $tags->name }}</span>
+                                        </button>
+                                    @endforeach
+                                </div>
+                                @if(!is_null($all->dept))
+                                    <div class="text-left float-left text-grey font-size-20 ml-2">{{ $all->dept->name }}</div>
+                                @endif
+                                </div>
+                                <div class="d-flex flex-row justify-content-end">
+                                    <button class="btn work-order bg-orange" data-id="{{ $all->id_order }}">Переглянути</button>
+                                </div>
+                                </div>
+                            <hr class="border-grey pb-4">
                         </div>
                     @endif
                 @endforeach
                 @if(!$i)
-                    <div>Empty</div>
+                    <div>Немає відкритих проєктів</div>
                 @endif
             </div>
         </div>
