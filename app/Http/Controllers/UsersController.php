@@ -303,6 +303,11 @@ class UsersController extends Controller
             $progress = DB::table('orders')->where([['id_worker', $id], ['status', 'in progress']])->count();
             $complete = DB::table('orders')->where([['id_worker', $id], ['status', 'complete']])->count();
         }
+        else {
+            $active = 0;
+            $progress = 0;
+            $complete = 0;
+        }
 
         $orders = DB::table('orders')->where('id_customer', $data->id)->get()->toArray();
 

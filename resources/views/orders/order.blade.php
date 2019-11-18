@@ -91,48 +91,35 @@
                             <button class="btn bg-blue rounded-pill text-white">Зв'язатися</button>
                         @endif
                     </form>
+                    @if(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
+                        <button  class="btn badge-pill border-white text-white mb-2 w-100" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">Змінити замовлення</button>
+                    @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
+                        <div class="row mt-4">
+                            <div class="col-xl-3 col-6 offset-xl-5 offset-6">
+                                <form method="POST" action="{{ route('finish_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline badge-pill border-white text-white mb-2 w-100">
+                                        Замовлення виконано
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-xl-3 col-6 offset-xl-0 offset-6">
+                                <button class="btn badge-pill text-white bg-orange px-0 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
+                                    Змінити виконавця
+                                </button>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
         </div>
-        <div class="row">
+        <div class="d-flex flex-row justify-content-center">
             <div class="col-12 text-center">
                 @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
                     <button class="btn text-white" data-toggle="collapse" data-target="#prop" aria-expanded="true">
                         &#8595;&nbsp;{{ is_null($my_proposal) ? 'Залишити пропозицію' : 'Змінити пропозицію' }}&nbsp;&#8595;
                     </button>
-                @elseif(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
-                    <div class="row mt-4">
-                        <div class="col-xl-3 col-6 offset-xl-5 offset-6">
-                            <button class="btn badge-pill border-white text-white mb-2 w-100" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
-                                Змінити замовлення
-                            </button>
-                        </div>
-                        <div class="col-xl-3 col-6 offset-xl-0 offset-6">
-                            <form method="POST" action="{{ route('delete_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
-                                @csrf
-                                <button class="btn badge-pill text-white bg-orange px-0 mb-2 w-100">
-                                    Видалити замовлення
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
-                    <div class="row mt-4">
-                        <div class="col-xl-3 col-6 offset-xl-5 offset-6">
-                            <form method="POST" action="{{ route('finish_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
-                                @csrf
-                                <button type="submit" class="btn btn-outline badge-pill border-white text-white mb-2 w-100">
-                                    Замовлення виконано
-                                </button>
-                            </form>
-                        </div>
-                        <div class="col-xl-3 col-6 offset-xl-0 offset-6">
-                            <button class="btn badge-pill text-white bg-orange px-0 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
-                                Змінити виконавця
-                            </button>
-                        </div>
-                    </div>
                 @endif
             </div>
         </div>
@@ -220,31 +207,31 @@
                     @if(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                         <div class="container collapse py-4" id="edit-order">
                             <div class="d-flex flex-row">
-                                <form method="POST" action="{{ route('save_order') }}" enctype="multipart/form-data" class="col-12">
+                                <form method="POST" action="{{ route('edit_order', $order->id_order) }}" enctype="multipart/form-data" class="col-12">
                                     @csrf
                                     <div class="d-flex flex-row justify-content-around">
                                         <div class="form-group col-6">
                                             <label for="title" class="">Назва</label>
-                                            <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title">
+                                            <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title" value="{{ $order->title }}">
                                             <label for="description" class="mt-2">Інформація</label>
-                                            <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required></textarea>
-                                            <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
+                                            <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required>{{ $order->description }}</textarea>
+{{--                                            <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">--}}
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="price" class="">Ціна</label>
                                             <div class="d-flex flex-row">
-                                                <input type="text" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price">
+                                                <input type="text" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price"value="{{ explode(" " , $order->price)[0] }}">
                                                 <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="currency">
-                                                    <option>грн.</option>
-                                                    <option>$</option>
+                                                    <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "грн." ? "selected" : ""}}>грн.</option>
+                                                    <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "$" ? "selected" : ""}}>$</option>
                                                 </select>
                                             </div>
                                             <label for="time" class="mt-2">Час</label>
                                             <div class="d-flex flex-row">
-                                                <input type="text" class="col-9 form-control border-0 bg-deep-dark" id="time" name="time">
+                                                <input type="text" class="col-9 form-control border-0 bg-deep-dark" id="time" name="time" value="{{ explode(" ", $order->time)[0] }}">
                                                 <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="type">
-                                                    <option class="">дні</option>
-                                                    <option class="">год.</option>
+                                                    <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "дні" ? "selected" : ""}}>дні</option>
+                                                    <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "год." ? "selected" : ""}}>год.</option>
                                                 </select>
                                             </div>
                                             <label for="tags" class="mt-2">Категорії</label>
@@ -256,7 +243,7 @@
                                                     @endforeach
                                                 </select>
                                                 <div style="display: none">
-                                                    <input type="text" name="categories">
+                                                    <input type="text" name="categories" value="{{ $data['string'] }}">
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="" id="themes_block"></div>

@@ -405,7 +405,7 @@ class OrdersController extends Controller
 
         $req->session()->flash('alert-success', 'Замовлення успішно видалено!');
 
-        return redirect('/orders');
+        return back();
     }
 
     public function save_order(Request $req)

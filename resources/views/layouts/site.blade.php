@@ -6,7 +6,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>WorkDump</title>
 
-<link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/png">
 <!--<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">-->
 <!--<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">-->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">

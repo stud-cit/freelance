@@ -59,6 +59,7 @@
                         <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required></textarea>
                         <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
                     </div>
+                    <div class="border-left"></div>
                     <div class="form-group col-5">
                         <label for="price" class="font-size-20">Ціна</label>
                         <div class="d-flex flex-row">
@@ -92,7 +93,7 @@
                             <div class="" id="themes_block"></div>
                         </div>
                         <div class="d-flex justify-content-center mt-4">
-                            <button class="btn badge-pill text-white font-size-25 bg-green">Створити замовлення</button>
+                            <button class="btn badge-pill text-white font-size-20 bg-green">Створити замовлення</button>
                         </div>
                     </div>
                 </div>
@@ -156,15 +157,20 @@
                                     </div>
                                     <div class="d-flex flex-column justify-content-end">
                                         @if(Auth::check() && !Auth::user()->banned)
-                                        <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
+                                            <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
                                         @endif
-                                        <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
-                                            @csrf
-                                            <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
-                                            @if(Auth::check() && ($orders->id_customer != Auth::id()))
+                                        @if(Auth::check() && ($orders->id_customer != Auth::id()))
+                                            <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
+                                                @csrf
+                                                <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
                                                 <span class="pointer font-size-12 text-grey" onclick="getElementById('form-id').submit();">Зв'язатися</span>
-                                            @endif
-                                        </form>
+                                            </form>
+                                        @else
+                                            <form method="POST" action="{{ route('delete_order', $orders->id_order) }}" id="delete" class="text-center">
+                                                @csrf
+                                                <span class="pointer font-size-12 text-grey" onclick="getElementById('delete').submit()">Видалити</span>
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                                 <hr class="border-grey pb-4">

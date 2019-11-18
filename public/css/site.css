@@ -195,22 +195,22 @@ ul.tick li:before {
     overflow: hidden;
 }
 .btn-outline-p {
-    color: #0076de;
-    border-color: #0076de;
+    color: #fff;
+    border-color: #2D3A4D;
 }
 .btn-outline-p:hover {
     color: #fff;
-    background-color: #0076de;
-    border-color: #0076de;
+    background-color: #F97333;
+    border-color: #303E51;
 }
 .btn-outline-p.active {
     z-index: 1;
     color: #fff;
-    background-color: #0076de;
-    border-color: #0076de;
+    background-color: #2D3A4D;
+    border-color: #F97333;
 }
 .btn-outline-p:disabled {
-    color: #3490dc;
+    color: #4e555b;
     background-color: transparent;
 }
 .try {
@@ -228,4 +228,7 @@ ul.tick li:before {
 }
 textarea.bg-deep-dark:disabled {
     background-color: #707070;
+}
+.change:hover {
+    color: #F97333;
 }
