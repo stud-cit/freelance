@@ -483,10 +483,10 @@ $("document").ready(function() {
         for (let i = 0; i < data.length; i++) {
             new_chat += `<div class="flex-row"><div class="`
                 + ($('#my_id').attr('data-id') == data[i]['id_from'] ? 'float-left' : 'float-right')
-                + (data[i]['file'] ? ' bg-green this-is-file pointer' : ' bg-light') + ` m-2 p-2" data-id="`
+                + (data[i]['file'] ? ' bg-green this-is-file pointer' : ' bg-light') + ` m-2 p-2  min-width-25 rounded" data-id="`
                 + data[i]['id_message'] + `"><span title="`
                 + data[i]['created_at'] + `">`
-                + data[i]['text'] + `</span><span class="font-italic">`
+                + data[i]['text'] + `</span><br><span class="float-right font-italic">`
                 + data[i]['time'] + `</span></div></div>`;
         }
 

@@ -43,7 +43,7 @@
                     <div class="flex-row">
                         <div class="{{ $one->id_from == Auth::id() ? 'float-left' : 'float-right' }} {{ $one->file ? 'bg-green this-is-file pointer' : 'bg-light'}} m-2 p-2 min-width-25 rounded" data-id="{{ $one->id_message }}">
                             <span title="{{ $one->created_at }}"> {{ $one->text }}</span>
-                            </br>
+                            <br>
                             <span class="float-right font-italic">{{ $one->time }}</span>
                         </div>
                     </div>
