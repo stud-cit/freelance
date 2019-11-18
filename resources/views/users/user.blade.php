@@ -124,10 +124,12 @@
                                 </div>
                                 <div class="d-flex flex-column justify-content-end">
                                     <button class="btn work-order bg-orange" data-id="{{ $all->id_order }}">Переглянути</button>
-                                    <form method="POST" action="{{ route('delete_order', $all->id_order) }}" id="delete" class="text-center">
-                                        @csrf
-                                        <span class="pointer font-size-12 text-grey" onclick="getElementById('delete').submit()">Видалити</span>
-                                    </form>
+                                    @if($all->id_customer == Auth::id())
+                                        <form method="POST" action="{{ route('delete_order', $all->id_order) }}" id="delete" class="text-center">
+                                            @csrf
+                                            <span class="pointer font-size-12 text-grey" onclick="getElementById('delete').submit()">Видалити</span>
+                                        </form>
+                                    @endif
                                 </div>
                                 </div>
                             <hr class="border-grey pb-4">
