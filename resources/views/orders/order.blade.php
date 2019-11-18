@@ -104,14 +104,14 @@
                 @elseif(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                     <div class="row mt-4">
                         <div class="col-xl-3 col-6 offset-xl-5 offset-6">
-                            <button class="btn badge-pill text-white bg-deep-blue mb-2 w-100" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
+                            <button class="btn badge-pill border-white text-white mb-2 w-100" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">
                                 Змінити замовлення
                             </button>
                         </div>
                         <div class="col-xl-3 col-6 offset-xl-0 offset-6">
                             <form method="POST" action="{{ route('delete_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
                                 @csrf
-                                <button class="btn badge-pill text-white bg-danger px-0 mb-2 w-100">
+                                <button class="btn badge-pill text-white bg-orange px-0 mb-2 w-100">
                                     Видалити замовлення
                                 </button>
                             </form>
@@ -122,13 +122,13 @@
                         <div class="col-xl-3 col-6 offset-xl-5 offset-6">
                             <form method="POST" action="{{ route('finish_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
                                 @csrf
-                                <button type="submit" class="btn badge-pill text-white bg-deep-blue mb-2 w-100">
+                                <button type="submit" class="btn btn-outline badge-pill border-white text-white mb-2 w-100">
                                     Замовлення виконано
                                 </button>
                             </form>
                         </div>
                         <div class="col-xl-3 col-6 offset-xl-0 offset-6">
-                            <button class="btn badge-pill text-white bg-danger px-0 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
+                            <button class="btn badge-pill text-white bg-orange px-0 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
                                 Змінити виконавця
                             </button>
                         </div>
@@ -315,7 +315,7 @@
                             </div>
                         @endforeach
                     @elseif(count($proposals) == 0)
-                        <div class="font-weight-bold font-size-18 my-4">Немає залишених пропозицій</div>
+                        <div class="font-weight-bold font-size-18 my-4 text-center">Немає залишених пропозицій</div>
                     @endif
                 </div>
                 {{ $proposals->links('layouts.pagination') }}
