@@ -48,7 +48,7 @@
                     <button type="submit" class="btn bg-blue text-white font-weight-bold font-size-25" name="id_user" value="{{ $data->id_user }}">Відкрити приватний чат</button>
                 </form>
             @else
-                <button class="btn bg-orange text-white font-weight-bold font-size-25">Редагувати профіль</button>
+                &nbsp;<!--<button class="btn bg-orange text-white font-weight-bold font-size-25">Редагувати профіль</button>-->
             @endif
         </div>
     </div>

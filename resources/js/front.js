@@ -425,6 +425,12 @@ $("document").ready(function() {
         }, 4000);
     }
 
+    $('#file_selector').on('click', function(e) {
+        e.preventDefault();
+
+        $('#file_input').trigger('click');
+    });
+
     function check_messages() {
         let elems = $('.messages-count:not(.d-none)'),
             data = [];

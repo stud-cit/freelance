@@ -59,6 +59,10 @@ class ChatController extends Controller
 
     public function index()
     {
+        if (Auth::user()->banned) {
+            redirect('/orders');
+        }
+
         $open = session()->get('id');
         session()->forget('id');
         $data = [];
