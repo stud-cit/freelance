@@ -12,7 +12,7 @@
                     <div class="col-6 d-flex border-right border-grey">
                         <div class="d-flex flex-column flex-shrink-1 align-self-center mx-auto text-white col-6">
                             <p>Як зареєструватися?</p>
-                            <p>1. <a href="">Зв'язатися</a> з нами</p>
+                            <p>1. <a href="mailto:s.panchenko@ias.sumdu.edu.ua">Зв'язатися</a> з нами</p>
                             <p>2. Дочекатися даних для входу на свою електронну адресу</p>
                             <p>3. Використати дану форму для авторизації</p>
                         </div>
