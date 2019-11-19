@@ -31,7 +31,7 @@
                 @csrf
                 <div class="input-group">
                     <input type="text" class="form-control col-10 @if(is_null($id_to))d-none @endif" name="text" id="message_input">
-                    <button class="form-control bg-deep-dark text-white col-1 @if(is_null($id_to))d-none @endif" id="file_selector" onclick="$('#file_input').trigger('click')">&#128392;</button>
+                    <button class="form-control bg-deep-dark text-white col-1 @if(is_null($id_to))d-none @endif" id="file_selector">&#128392;</button>
                     <input type="file" class="d-none" name="file" id="file_input" style="display: none !important;">
                     <button class="form-control bg-deep-dark text-white col-1 @if(is_null($id_to))d-none @endif">&#8594;</button>
                 </div>

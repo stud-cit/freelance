@@ -33,6 +33,13 @@ class UsersController extends Controller
 
     public function profile()
     {
+        if (Auth::check()) {
+            return redirect('profile/' . Auth::id());
+        }
+        else {
+            return redirect('orders');
+        }
+
         $data = User::getUsersInfo('id_user', Auth::id())->first();
 
         $created_at = explode(' ', $data->created_at);
@@ -299,7 +306,7 @@ class UsersController extends Controller
         else if ($data->id_role == 3){
             $active = DB::table('orders')
                         ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
-                        ->where([['proposals.id_worker', $id], ['status', 'new']])->count();
+                        ->where([['proposals.id_worker', $id], ['status', 'new'], ['blocked', false]])->count();
             $progress = DB::table('orders')->where([['id_worker', $id], ['status', 'in progress']])->count();
             $complete = DB::table('orders')->where([['id_worker', $id], ['status', 'complete']])->count();
         }
