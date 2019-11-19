@@ -228,7 +228,7 @@
                                             </div>
                                             <label for="time" class="mt-2">Час</label>
                                             <div class="d-flex flex-row">
-                                                <input type="number" class="col-9 form-control border-0 bg-deep-dark" id="time" name="time" value="{{ explode(" ", $order->time)[0] }}">
+                                                <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="time" name="time" value="{{ explode(" ", $order->time)[0] }}">
                                                 <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="type">
                                                     <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "дні" ? "selected" : ""}}>дні</option>
                                                     <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "год." ? "selected" : ""}}>год.</option>
