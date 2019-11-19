@@ -20,10 +20,10 @@
             <div class="d-flex flex-row">
                 @if(!(Auth::check()) || Auth::user()->id_role !=2)
                     <div class="col-1"></div>
-                @elseif(Auth::user()->id_role == 2 && !Auth::user()->banned)
-                <div class="col-1 d-flex justify-content-end">
-                    <button class="btn circle text-white text-center font-weight-bold font-size-25 bg-green square-54 px-0" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true" title="Створення замовлення">&#43;</button>
-                </div>
+                @elseif(Auth::user()->id_role == 2)
+                    <div class="col-1 d-flex justify-content-end">
+                        <button class="btn circle text-white text-center font-weight-bold font-size-25 bg-green square-54 px-0 @if(Auth::user()->banned) 'd-none' @endif" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true" title="Створення замовлення">&#43;</button>
+                    </div>
                 @endif
                 <div class="input-group col-11 for-filter">
                     <input type="text" class="form-control" aria-label="filter" id="filter" style="height: 54px">
