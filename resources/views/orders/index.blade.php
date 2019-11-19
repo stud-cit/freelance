@@ -53,9 +53,9 @@
                 </div>
                 <div class="d-flex flex-row justify-content-around">
                     <div class="form-group col-5">
-                        <label for="title" class="font-size-20">Назва</label>
-                        <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title">
-                        <label for="description" class="font-size-20 mt-2">Інформація</label>
+                        <label for="title" class="font-size-20">Назва*</label>
+                        <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title" required>
+                        <label for="description" class="font-size-20 mt-2">Інформація*</label>
                         <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required></textarea>
                         <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
                     </div>
@@ -63,7 +63,7 @@
                     <div class="form-group col-5">
                         <label for="price" class="font-size-20">Ціна</label>
                         <div class="d-flex flex-row">
-                            <input type="text" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price">
+                            <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price">
                             <select class="col-2 offset-1 form-control font-size-15 text-white border-0 bg-deep-dark" name="currency">
                                 <option>грн.</option>
                                 <option>$</option>
@@ -71,7 +71,7 @@
                         </div>
                         <label for="time" class="font-size-20 mt-2">Час</label>
                         <div class="d-flex flex-row">
-                            <input type="text" class="col-9 form-control text-white border-0 bg-deep-dark" id="time" name="time">
+                            <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="time" name="time">
                             <select class="col-2 offset-1 form-control font-size-15 text-white border-0 bg-deep-dark" name="type">
                                 <option class="">дні</option>
                                 <option class="">год.</option>
