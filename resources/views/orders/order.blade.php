@@ -95,7 +95,7 @@
                         <button  class="btn badge-pill border-white text-white mb-2 w-100" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">Змінити замовлення</button>
                     @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
                         <div class="row mt-4">
-                            <div class="col-xl-3 col-6 offset-xl-5 offset-6">
+                            <div class="col-xl-6 col-12">
                                 <form method="POST" action="{{ route('finish_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
                                     @csrf
                                     <button type="submit" class="btn btn-outline badge-pill border-white text-white mb-2 w-100">
@@ -103,7 +103,7 @@
                                     </button>
                                 </form>
                             </div>
-                            <div class="col-xl-3 col-6 offset-xl-0 offset-6">
+                            <div class="col-xl-6 col-12">
                                 <button class="btn badge-pill text-white bg-orange px-0 mb-2 w-100" data-toggle="collapse" data-target="#accepted_order" aria-expanded="false">
                                     Змінити виконавця
                                 </button>
@@ -212,7 +212,7 @@
                                     <div class="d-flex flex-row justify-content-around">
                                         <div class="form-group col-6">
                                             <label for="title" class="">Назва</label>
-                                            <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title" value="{{ $order->title }}">
+                                            <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title" value="{{ $order->title }}" required>
                                             <label for="description" class="mt-2">Інформація</label>
                                             <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required>{{ $order->description }}</textarea>
 {{--                                            <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">--}}
@@ -220,7 +220,7 @@
                                         <div class="form-group col-6">
                                             <label for="price" class="">Ціна</label>
                                             <div class="d-flex flex-row">
-                                                <input type="text" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price"value="{{ explode(" " , $order->price)[0] }}">
+                                                <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price" value="{{ explode(" " , $order->price)[0] }}">
                                                 <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="currency">
                                                     <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "грн." ? "selected" : ""}}>грн.</option>
                                                     <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "$" ? "selected" : ""}}>$</option>
@@ -228,7 +228,7 @@
                                             </div>
                                             <label for="time" class="mt-2">Час</label>
                                             <div class="d-flex flex-row">
-                                                <input type="text" class="col-9 form-control border-0 bg-deep-dark" id="time" name="time" value="{{ explode(" ", $order->time)[0] }}">
+                                                <input type="number" class="col-9 form-control border-0 bg-deep-dark" id="time" name="time" value="{{ explode(" ", $order->time)[0] }}">
                                                 <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="type">
                                                     <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "дні" ? "selected" : ""}}>дні</option>
                                                     <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "год." ? "selected" : ""}}>год.</option>
