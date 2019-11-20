@@ -25,6 +25,12 @@ $("document").ready(function() {
         $("#avatar-input-label").text($(this).val().split("\\").pop());
     });
 
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+        }
+    });
+
     update_listeners();
 
     $(".to-profile").on('click', function () {
@@ -74,9 +80,6 @@ $("document").ready(function() {
             e.preventDefault();
             if(confirm('Ви впевнені?')) {
                 $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
                     method: 'post',
                     url: '/delete_proposal',
                     data: {'location': window.location.href},
@@ -180,9 +183,6 @@ $("document").ready(function() {
         };
 
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             method: 'post',
             url: '/filter',
             data: data,
@@ -242,21 +242,6 @@ $("document").ready(function() {
             window.location.href = '/orders/' + $(this).attr('data-id');
         });
     };
-
-    if (window.location.href.indexOf('/chat') < 0) {
-        $.ajaxSetup({
-            beforeSend: function () {
-                $("#load").modal({
-                    backdrop: "static",
-                    keyboard: false,
-                    show: true
-                });
-            },
-            complete: function () {
-                $("#load").modal("hide");
-            }
-        });
-    }
 
     $('#add-files').on('change', function () {
         if ($(this).prop('files').length > 3) {
@@ -324,9 +309,6 @@ $("document").ready(function() {
             $('#message_input').val('');
 
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
                 url: '/chat',
                 method: 'post',
                 data: {
@@ -351,9 +333,6 @@ $("document").ready(function() {
             data.append('id_to', $('.open-contact').attr('data-id'));
 
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
                 url: '/send_file',
                 method: 'post',
                 data: data,
@@ -425,11 +404,37 @@ $("document").ready(function() {
         }, 4000);
     }
 
+    if ($('#routes').length) {
+        setTimeout(() => {
+            check_header()
+        }, 4000);
+    }
+
     $('#file_selector').on('click', function(e) {
         e.preventDefault();
 
         $('#file_input').trigger('click');
     });
+
+    function check_header() {
+        $.ajax({
+            url: '/check_header',
+            method: 'post',
+            success: function (count) {
+                if (count != 0) {
+                    $('.header-count').removeClass('d-none');
+                    $('.header-count').text(count);
+                }
+                else {
+                    $('.header-count').addClass('d-none');
+                }
+            }
+        });
+
+        setTimeout(() => {
+            check_header()
+        }, 4000);
+    }
 
     function check_messages() {
         let elems = $('.messages-count:not(.d-none)'),
@@ -441,38 +446,37 @@ $("document").ready(function() {
             data[id] = $(this).text();
         });
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/check_messages',
-            method: 'post',
-            data: {
-                'id': $('.open-contact').attr('data-id'),
-                'data': data
-            },
-            success: function (data) {
-                if ('data' in data) {
-                    $.each(data['data'], function(key, count) {
-                        const user = $('.contact[data-id="' + key + '"]'),
-                            span = user.find('.messages-count');
+        if ($('.open-contact').length) {
+            $.ajax({
+                url: '/check_messages',
+                method: 'post',
+                data: {
+                    'id': $('.open-contact').attr('data-id'),
+                    'data': data
+                },
+                success: function (data) {
+                    if ('data' in data) {
+                        $.each(data['data'], function (key, count) {
+                            const user = $('.contact[data-id="' + key + '"]'),
+                                span = user.find('.messages-count');
 
-                        span.removeClass('d-none');
-                        span.text(count);
+                            span.removeClass('d-none');
+                            span.text(count);
 
-                        update_contact(user);
-                    });
+                            update_contact(user);
+                        });
+                    }
+
+                    if ('messages' in data) {
+                        update_chat(data['messages']);
+                    }
                 }
+            });
+        }
 
-                if ('messages' in data) {
-                    update_chat(data['messages']);
-                }
-            }
-        }).done(function () {
-            setTimeout(() => {
-                check_messages()
-            }, 4000);
-        });
+        setTimeout(() => {
+            check_messages()
+        }, 4000);
     }
 
     function update_contact(user) {
