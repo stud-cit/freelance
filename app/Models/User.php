@@ -93,4 +93,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $info;
     }
+
+    function new_messages() {
+        return DB::table('messages')->where([['id_to', Auth::id()], ['status', 0]])->count();
+    }
 }

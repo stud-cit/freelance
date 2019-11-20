@@ -3282,22 +3282,6 @@ $("document").ready(function () {
   }
 
   ;
-
-  if (window.location.href.indexOf('/chat') < 0) {
-    $.ajaxSetup({
-      beforeSend: function beforeSend() {
-        $("#load").modal({
-          backdrop: "static",
-          keyboard: false,
-          show: true
-        });
-      },
-      complete: function complete() {
-        $("#load").modal("hide");
-      }
-    });
-  }
-
   $('#add-files').on('change', function () {
     if ($(this).prop('files').length > 3) {
       Swal.fire({
@@ -3446,10 +3430,34 @@ $("document").ready(function () {
     }, 4000);
   }
 
+  setTimeout(function () {
+    check_header();
+  }, 4000);
   $('#file_selector').on('click', function (e) {
     e.preventDefault();
     $('#file_input').trigger('click');
   });
+
+  function check_header() {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/check_header',
+      method: 'post',
+      success: function success(count) {
+        if (count != 0) {
+          $('.header-count').removeClass('d-none');
+          $('.header-count').text(count);
+        } else {
+          $('.header-count').addClass('d-none');
+        }
+      }
+    });
+    setTimeout(function () {
+      check_header();
+    }, 4000);
+  }
 
   function check_messages() {
     var elems = $('.messages-count:not(.d-none)'),
@@ -3458,36 +3466,39 @@ $("document").ready(function () {
       var id = $(this).closest('.contact').attr('data-id');
       data[id] = $(this).text();
     });
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      url: '/check_messages',
-      method: 'post',
-      data: {
-        'id': $('.open-contact').attr('data-id'),
-        'data': data
-      },
-      success: function success(data) {
-        if ('data' in data) {
-          $.each(data['data'], function (key, count) {
-            var user = $('.contact[data-id="' + key + '"]'),
-                span = user.find('.messages-count');
-            span.removeClass('d-none');
-            span.text(count);
-            update_contact(user);
-          });
-        }
 
-        if ('messages' in data) {
-          update_chat(data['messages']);
+    if ($('.open-contact').length) {
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: '/check_messages',
+        method: 'post',
+        data: {
+          'id': $('.open-contact').attr('data-id'),
+          'data': data
+        },
+        success: function success(data) {
+          if ('data' in data) {
+            $.each(data['data'], function (key, count) {
+              var user = $('.contact[data-id="' + key + '"]'),
+                  span = user.find('.messages-count');
+              span.removeClass('d-none');
+              span.text(count);
+              update_contact(user);
+            });
+          }
+
+          if ('messages' in data) {
+            update_chat(data['messages']);
+          }
         }
-      }
-    }).done(function () {
-      setTimeout(function () {
-        check_messages();
-      }, 4000);
-    });
+      });
+    }
+
+    setTimeout(function () {
+      check_messages();
+    }, 4000);
   }
 
   function update_contact(user) {

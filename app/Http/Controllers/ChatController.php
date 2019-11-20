@@ -204,4 +204,9 @@ class ChatController extends Controller
             return [];
         }
     }
+
+    public function check_header()
+    {
+        return Auth::user()->new_messages();
+    }
 }

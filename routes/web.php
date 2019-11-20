@@ -45,6 +45,7 @@ Route::post('/chat', 'ChatController@new_message')->name('new_message');
 Route::post('/get_messages', 'ChatController@get_messages');
 Route::post('/new_contact', 'ChatController@new_contact')->name('new_contact');
 Route::post('/check_messages', 'ChatController@check_messages');
+Route::post('/check_header', 'ChatController@check_header');
 Route::post('/send_file', 'ChatController@send_file')->name('send_file');
 Route::post('/get_file', 'ChatController@get_file')->name('get_file');
 
