@@ -63,20 +63,20 @@
                     <div class="font-size-100">{{ $progress }}</div>
                     <div class="font-size-25">Активні проєкти</div>
                 </div>
-                <div>
+                <div class="pointer change" id="complete-c-toggle" data-toggle="collapse" data-target="#complete-c" aria-expanded="false">
                     <div class="font-size-100">{{ $complete }}</div>
                     <div class="font-size-25">Завершені проєкти</div>
                 </div>
             @elseif($data->id_role == 3)
-                <div>
+                <div class="pointer change" id="new-w-toggle" data-toggle="collapse" data-target="#new-w" aria-expanded="false">
                     <div class="font-size-100">{{ $active }}</div>
                     <div class="font-size-25">Залишені пропозиції</div>
                 </div>
-                <div>
+                <div class="pointer change" id="active-w-toggle" data-toggle="collapse" data-target="#active-w" aria-expanded="false">
                     <div class="font-size-100">{{ $progress }}</div>
                     <div class="font-size-25">Активн проєкти</div>
                 </div>
-                <div>
+                <div class="pointer change" id="complete-c-toggle" data-toggle="collapse" data-target="#complete-w" aria-expanded="false">
                     <div class="font-size-100">{{ $complete }}</div>
                     <div class="font-size-25">Завершені проєкти</div>
                 </div>
@@ -84,6 +84,9 @@
         </div>
         <div class="collapse container mt-4" id="new-c">
             <div class="text-white">
+                <div class="d-flex justify-content-center">
+                    <p class="font-size-30 font-weight-bold">Відкриті проєкти</p>
+                </div>
                 @php($i = 0)
                 @foreach($orders as $all)
                     @if($all->status == 'new')
@@ -137,14 +140,18 @@
                     @endif
                 @endforeach
                 @if(!$i)
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center mt-4">
                         <div class="font-size-30 font-weight-bold">Немає відкритих проєктів</div>
                     </div>
                 @endif
             </div>
+            <hr class="border-white w-100">
         </div>
         <div class="collapse container mt-4" id="progress-c">
             <div class="text-white">
+                <div class="d-flex justify-content-center">
+                    <p class="font-size-30 font-weight-bold">Проєкти у процесі</p>
+                </div>
                 @php($i = 0)
                 @foreach($orders as $active)
                     @if($active->status == 'in progress')
@@ -197,7 +204,95 @@
                     </div>
                 @endif
             </div>
+            <hr class="border-white w-100">
         </div>
+        <div class="collapse container mt-4" id="complete-c">
+            <div class="text-white">
+                <div class="d-flex justify-content-center">
+                    <p class="font-size-30 font-weight-bold">Завершені проєкти</p>
+                </div>
+                @php($i = 0)
+                @foreach($orders as $complete)
+                    @if($complete->status == 'complete')
+                        @php($i++)
+                        <div class="container shadow-box mb-4 orders">
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                <div class="d-flex justify-content-start">
+                                    <div class="d-flex flex-row">
+                                        <div class="font-weight-bold order-title font-size-30">{{ $complete->title }}</div>
+                                    </div>
+                                </div>
+                                <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $complete->price }}</div>
+                            </div>
+                            <div class="text-grey">{{ $complete->created_at }}</div>
+                            <div class="font-size-22">{{ $complete->description }}</div>
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                <div class="d-flex justify-content-start">
+                                    <div class="font-size-20">Виконавкць:
+                                        <span class="to-profile pointer" data-id="{{ $complete->id_worker }}">{{ $complete->worker->name }} {{ $complete->worker->surname }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn work-order bg-orange" style="display: none" data-id="{{ $complete->id_order }}">Залишити відгук</button>
+                                </div>
+                            </div>
+                            <hr class="border-grey pb-4">
+                        </div>
+                    @endif
+                @endforeach
+                @if(!$i)
+                    <div class="d-flex justify-content-center">
+                        <div class="font-size-30 font-weight-bold">Немає завершених проєктів</div>
+                    </div>
+                @endif
+            </div>
+            <hr class="border-white w-100">
+        </div>
+    </div>
+    <div class="collapse container mt-4" id="new-w">
+        <div class="text-white">
+            <div class="d-flex justify-content-center">
+                <p class="font-size-30 font-weight-bold">Залишені пропозиції</p>
+            </div>
+            @php($i = 0)
+            @foreach($proposals as $all)
+                @if($all->status == 'new')
+                    @php($i++)
+                    <div class="container shadow-box mb-4 orders">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div class="d-flex justify-content-start">
+                                <div class="d-flex flex-row">
+                                    <div class="font-weight-bold order-title font-size-30">{{ $all->title }}</div>
+                                </div>
+                            </div>
+                            <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $all->price }}</div>
+                        </div>
+                        <div class="text-grey">{{ $all->created_at }}</div>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <div class="font-size-22">{{ $all->description }}</div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-end">
+                                <button class="btn work-order bg-orange" data-id="{{ $all->id_order }}">Переглянути</button>
+                                @if($all->id_worker == Auth::id())
+                                    <form method="POST" action="{{ route('delete_order', $all->id_order) }}" id="delete" class="text-center">
+                                        @csrf
+                                        <span class="pointer font-size-12 text-grey" onclick="getElementById('delete').submit()">Видалити</span>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                        <hr class="border-grey pb-4">
+                    </div>
+                @endif
+            @endforeach
+            @if(!$i)
+                <div class="d-flex justify-content-center mt-4">
+                    <div class="font-size-30 font-weight-bold">Немає залишених пропозицій</div>
+                </div>
+            @endif
+        </div>
+        <hr class="border-white w-100">
     </div>
     @if(count($reviews) != 0)
         <div class="d-flex justify-content-center my-4">
