@@ -3089,6 +3089,11 @@ $("document").ready(function () {
     $(this).removeClass('is-invalid');
     $("#avatar-input-label").text($(this).val().split("\\").pop());
   });
+  $.ajaxSetup({
+    beforeSend: function beforeSend(xhr) {
+      xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+    }
+  });
   update_listeners();
   $(".to-profile").on('click', function () {
     window.location.href = '/profile/' + $(this).attr('data-id');
@@ -3131,9 +3136,6 @@ $("document").ready(function () {
 
       if (confirm('Ви впевнені?')) {
         $.ajax({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
           method: 'post',
           url: '/delete_proposal',
           data: {
@@ -3219,9 +3221,6 @@ $("document").ready(function () {
       'dept': parseInt($('#depts .selected-category').attr('data-id'))
     };
     $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
       method: 'post',
       url: '/filter',
       data: data,
@@ -3340,9 +3339,6 @@ $("document").ready(function () {
     if (text !== "") {
       $('#message_input').val('');
       $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
         url: '/chat',
         method: 'post',
         data: {
@@ -3364,9 +3360,6 @@ $("document").ready(function () {
       data.append('name', file.name);
       data.append('id_to', $('.open-contact').attr('data-id'));
       $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
         url: '/send_file',
         method: 'post',
         data: data,
@@ -3430,9 +3423,12 @@ $("document").ready(function () {
     }, 4000);
   }
 
-  setTimeout(function () {
-    check_header();
-  }, 4000);
+  if ($('#routes').length) {
+    setTimeout(function () {
+      check_header();
+    }, 4000);
+  }
+
   $('#file_selector').on('click', function (e) {
     e.preventDefault();
     $('#file_input').trigger('click');
@@ -3440,9 +3436,6 @@ $("document").ready(function () {
 
   function check_header() {
     $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
       url: '/check_header',
       method: 'post',
       success: function success(count) {
@@ -3469,9 +3462,6 @@ $("document").ready(function () {
 
     if ($('.open-contact').length) {
       $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
         url: '/check_messages',
         method: 'post',
         data: {

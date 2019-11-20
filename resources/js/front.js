@@ -25,6 +25,12 @@ $("document").ready(function() {
         $("#avatar-input-label").text($(this).val().split("\\").pop());
     });
 
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+        }
+    });
+
     update_listeners();
 
     $(".to-profile").on('click', function () {
@@ -74,9 +80,6 @@ $("document").ready(function() {
             e.preventDefault();
             if(confirm('Ви впевнені?')) {
                 $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
                     method: 'post',
                     url: '/delete_proposal',
                     data: {'location': window.location.href},
@@ -180,9 +183,6 @@ $("document").ready(function() {
         };
 
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             method: 'post',
             url: '/filter',
             data: data,
@@ -309,9 +309,6 @@ $("document").ready(function() {
             $('#message_input').val('');
 
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
                 url: '/chat',
                 method: 'post',
                 data: {
@@ -336,9 +333,6 @@ $("document").ready(function() {
             data.append('id_to', $('.open-contact').attr('data-id'));
 
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
                 url: '/send_file',
                 method: 'post',
                 data: data,
@@ -410,9 +404,11 @@ $("document").ready(function() {
         }, 4000);
     }
 
-    setTimeout(() => {
-        check_header()
-    }, 4000);
+    if ($('#routes').length) {
+        setTimeout(() => {
+            check_header()
+        }, 4000);
+    }
 
     $('#file_selector').on('click', function(e) {
         e.preventDefault();
@@ -422,9 +418,6 @@ $("document").ready(function() {
 
     function check_header() {
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: '/check_header',
             method: 'post',
             success: function (count) {
@@ -455,9 +448,6 @@ $("document").ready(function() {
 
         if ($('.open-contact').length) {
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
                 url: '/check_messages',
                 method: 'post',
                 data: {
