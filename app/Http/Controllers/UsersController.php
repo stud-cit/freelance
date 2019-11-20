@@ -157,6 +157,11 @@ class UsersController extends Controller
         return redirect('/profile');
     }
 
+    public function password_change()
+    {
+        return view('users.password_change');
+    }
+
     public function change_pass(Request $req)
     {
         $check1 = HASH::check($req->old_password, Auth::user()->password);
@@ -207,15 +212,6 @@ class UsersController extends Controller
         return redirect('/profile');
     }
 
-    public function save_about_me(Request $req)
-    {
-        DB::table('users_info')->where('id_user', Auth::id())->update(['about_me' => $req->about_me]);
-
-        $req->session()->flash('alert-success', 'Додаткову інформацію про користувача успішно оновлено!');
-
-        return redirect('/profile');
-    }
-
     public function save_info(Request $req)
     {
         if (!is_null($req->avatar)) {
@@ -247,9 +243,9 @@ class UsersController extends Controller
             'birthday_date' => $req->birthday_date,
             'country' => $req->country,
             'city' => $req->city,
+            'about_me' => $req->about_me,
         ];
 
-        DB::table('users')->where('id', Auth::id())->update(['id_dept' => $req->id_dept]);
         DB::table('users_info')->where('id_user', Auth::id())->update($values);
 
         $req->session()->flash('alert-success', 'Профіль користувача успішно оновлено!');

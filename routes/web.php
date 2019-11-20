@@ -20,12 +20,12 @@ Route::post('/delete_file/{id}', 'OrdersController@delete_file')->name('delete_f
 Route::get('/workers', 'UsersController@workers')->name('workers');
 
 Route::get('/profile', 'UsersController@profile')->middleware('logged.in')->name('profile');
+Route::get('/password_change', 'UsersController@password_change')->middleware('logged.in')->name('password_change');
 Route::post('/save_info', 'UsersController@save_info')->name('save_info');
 Route::post('/save_contacts', 'UsersController@save_contacts')->name('save_contacts');
 Route::post('/save_skills', 'UsersController@save_skills')->name('save_skills');
 Route::post('/change_pass', 'UsersController@change_pass')->name('change_pass');
 Route::post('/save_review/{id}', 'UsersController@save_review')->name('save_review');
-Route::post('/save_about_me', 'UsersController@save_about_me')->name('save_about_me');
 
 Route::get('/profile/{id}', 'UsersController@user')->name('user');
 

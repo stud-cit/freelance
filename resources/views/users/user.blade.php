@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <a href="{{ route('/password_change') }}" class="btn bg-green text-white font-weight-bold mb-4 mx-auto pointer">Змінити пароль</a>
+                        <a href="{{ route('password_change') }}" class="btn text-white font-weight-bold mb-4 mx-auto pointer">Змінити пароль</a>
                     </div>
                 </form>
             </div>
