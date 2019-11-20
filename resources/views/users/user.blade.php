@@ -23,33 +23,87 @@
             @endif
         @endforeach
     </div>
-    <div class="d-flex flex-row align-items-center bg-light-black">
-        <div class="col-2 offset-1 px-0 my-2">
-            <img src="{{ $data->avatar }}" class="circle avatar" style="height: 260px; width: 260px">
-        </div>
-        <div class="col-6 text-white">
-            <div class="col-12 name surname font-weight-bold font-size-50">{{ $data->name }} {{ $data->surname }}</div>
-            @if(!is_null($dept))
-                <div class="col-12 font-weight-bold font-size-35">{{ $dept->name }}</div>
-            @endif
-            <div class="col-12 font-size-35">
-                @foreach($data->categories as $tags)
-                    <span class="tags">{{ $tags->name }}</span>
-                @endforeach
+    <div class="collapse user_block show" id="profile-info">
+        <div class="d-flex flex-row align-items-center bg-light-black">
+            <div class="col-2 offset-1 px-0 my-2">
+                <img src="{{ $data->avatar }}" class="circle avatar" style="height: 260px; width: 260px">
             </div>
-            @if(!is_null($data->about_me))
-                <div class="col-12 text-gray font-size-20">{{ $data->about_me }}</div>
-            @endif
+            <div class="col-6 text-white">
+                <div class="col-12 name surname font-weight-bold font-size-50">{{ $data->name }} {{ $data->surname }}</div>
+                @if(!is_null($dept))
+                    <div class="col-12 font-weight-bold font-size-35">{{ $dept->name }}</div>
+                @endif
+                <div class="col-12 font-size-35">
+                    @foreach($data->categories as $tags)
+                        <span class="tags">{{ $tags->name }}</span>
+                    @endforeach
+                </div>
+                @if(!is_null($data->about_me))
+                    <div class="col-12 text-gray font-size-20">{{ $data->about_me }}</div>
+                @endif
+            </div>
+            <div class="col-2">
+                @if($data->id_user != Auth::id())
+                    <form method="POST" action="{{ route('new_contact') }}" class="px-0">
+                        @csrf
+                        <button type="submit" class="btn bg-blue text-white font-weight-bold font-size-25" name="id_user" value="{{ $data->id_user }}">Відкрити приватний чат</button>
+                    </form>
+                @else
+                    &nbsp;<button class="btn bg-orange text-white font-weight-bold font-size-25" data-toggle="collapse" data-target=".user_block">Редагувати профіль</button>
+                @endif
+            </div>
         </div>
-        <div class="col-2">
-            @if($data->id_user != Auth::id())
-                <form method="POST" action="{{ route('new_contact') }}" class="px-0">
+    </div>
+    <div class="collapse user_block" id="profile-edit">
+        <div class="d-flex flex-row align-items-center bg-light-black">
+            <div class="col-2 offset-1 px-0 my-2">
+                <img src="{{ $data->avatar }}" class="circle avatar" style="height: 260px; width: 260px">
+            </div>
+            <div class="col-6 text-white">
+                <form method="POST" action="{{ route('save_info') }}" class="col-10 offset-1 shadow-lg offset-1" id="save_info" enctype="multipart/form-data">
                     @csrf
-                    <button type="submit" class="btn bg-blue text-white font-weight-bold font-size-25" name="id_user" value="{{ $data->id_user }}">Відкрити приватний чат</button>
+                    <div class="form-group row mt-4">
+                        <label class="col-5 col-form-label mt-2">Аватар:</label>
+                        <div class="custom-file col-6 mt-2">
+                            <input type="file" class="custom-file-input form-control" name="avatar" id="avatar-input" lang="ua" accept="image/*">
+                            <label class="custom-file-label nowrap" for="avatar-input" id="avatar-input-label" data-browse="Обрати">Виберіть файл</label>
+                            <div class="invalid-feedback">Зображення більше 2 Мб</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="surname" class="col-5 col-form-label mt-2">Прізвище:</label>
+                        <div class="col-6 mt-2">
+                            <input type="text" id="surname" class="form-control" name="surname" value="{{ $data->surname }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-5 col-form-label mt-2">Ім'я:</label>
+                        <div class="col-6 mt-2">
+                            <input type="text" id="name" class="form-control" name="name" value="{{ $data->name }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="about_me" class="col-5 col-form-label mt-2">Про мене:</label>
+                        <div class="col-6 mt-2">
+                            <textarea class="form-control" id="about_me" name="about_me" rows="6">{{ $data->about_me }}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <a href="{{ route('password_change') }}" class="btn text-white font-weight-bold mb-4 mx-auto pointer">Змінити пароль</a>
+                    </div>
                 </form>
-            @else
-                &nbsp;<!--<button class="btn bg-orange text-white font-weight-bold font-size-25">Редагувати профіль</button>-->
-            @endif
+            </div>
+            <div class="col-2 d-flex flex-row">
+                @if($data->id_user != Auth::id())
+                    <form method="POST" action="{{ route('new_contact') }}" class="px-0">
+                        @csrf
+                        <button type="submit" class="btn bg-blue text-white font-weight-bold font-size-25" name="id_user" value="{{ $data->id_user }}">Відкрити приватний чат</button>
+                    </form>
+                @else
+                    &nbsp;<button class="btn bg-green text-white font-weight-bold font-size-25" onclick="$('#save_info').submit()">Зберегти</button>
+                    &nbsp;<button class="btn text-white font-weight-bold font-size-25" data-toggle="collapse" data-target=".user_block">X</button>
+                @endif
+            </div>
         </div>
     </div>
     <div class="col-12">
