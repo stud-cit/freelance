@@ -2,7 +2,7 @@
     <div class="container-fluid bg-black text-white">
         <div class="row">
             <div class="col-6 offset-1">
-                <div>Спроектовано та розроблено</div>
+                <div>Спроєктовано та розроблено</div>
                 <div><img src="{{ asset('/StudCIT_LogoText.svg') }}" alt="StudCIT" height="50px"></div>
             </div>
             <div class="col-4 d-flex flex-row align-items-center">

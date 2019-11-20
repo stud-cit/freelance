@@ -128,12 +128,12 @@
                                             <div class="font-weight-bold order-title font-size-30">{{ $orders->title }}</div>
                                             <div class="align-self-center ml-4">
                                                 @if($orders->files)
-                                                    <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit">
+                                                    <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit" title="Є прікріплені файли">
                                                 @endif
                                             </div>
                                             <div class="align-self-center ml-1">
                                                 @if($orders->time)
-                                                    <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar">
+                                                    <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar" title="Час виконання займає {{ $orders->time }}">
                                                 @endif
                                             </div>
                                         </div>

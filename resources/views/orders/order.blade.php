@@ -42,14 +42,22 @@
                 <div class="">{{ $order->description }}</div>
             </div>
             @if($order->files)
-            <hr class="w-100 border-grey">
-            <div>
-                <form action="{{ route('get_files', $order->id_order) }}" method="POST" id="get-files">
-                    @csrf
-                    <input type="text" class="d-none" value="{{ $order->title . '.zip' }}" name="name">
-                    <span onclick="getElementById('get-files').submit();" class="pointer btn btn-outline-light">&#128190;&nbsp;Завантажити прікріплені файли</span>
-                </form>
-            </div>
+                <hr class="w-100 border-grey">
+                <div>
+                    <form action="{{ route('get_files', $order->id_order) }}" method="POST" id="get-files">
+                        @csrf
+                        <input type="text" class="d-none" value="{{ $order->title . '.zip' }}" name="name">
+                        <span onclick="getElementById('get-files').submit();" class="pointer btn btn-outline-light">&#128190;&nbsp;Завантажити прікріплені файли</span>
+                    </form>
+                </div>
+                @if($order->id_customer == Auth::id())
+                    <div>
+                        <form action="{{ route('delete_file', $order->id_order) }}" method="POST" id="delete-files">
+                            @csrf
+                            <span onclick="getElementById('delete-files').submit();" class="pointer btn btn-outline-light">Х Видалити прікріплені файли</span>
+                        </form>
+                    </div>
+                @endif
             @endif
         </div>
         <div class="col-1"><div class="border-right border-grey h-100">&nbsp;</div></div>
@@ -211,11 +219,12 @@
                                     @csrf
                                     <div class="d-flex flex-row justify-content-around">
                                         <div class="form-group col-6">
-                                            <label for="title" class="">Назва</label>
+                                            <label for="title">Назва</label>
                                             <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title" value="{{ $order->title }}" required>
                                             <label for="description" class="mt-2">Інформація</label>
                                             <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required>{{ $order->description }}</textarea>
-{{--                                            <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">--}}
+                                            <div>Нові файли</div>
+                                            <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="price" class="">Ціна</label>

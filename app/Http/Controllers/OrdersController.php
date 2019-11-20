@@ -453,15 +453,15 @@ class OrdersController extends Controller
             $zip->open($path,  ZipArchive::CREATE);
 
             foreach ($req->file()['files'] as $file) {
-                Storage::disk('orders')->put($id->id_order. $file->getClientOriginalName(), File::get($file));
+                Storage::disk('orders')->put($id->id_order . $file->getClientOriginalName(), File::get($file));
 
-                $zip->addFile(storage_path('orders/' . $id->id_order. $file->getClientOriginalName()), $file->getClientOriginalName());
+                $zip->addFile(storage_path('orders/' . $id->id_order . $file->getClientOriginalName()), $file->getClientOriginalName());
             }
 
             $zip->close();
 
             foreach ($req->file()['files'] as $file) {
-                Storage::disk('orders')->delete($id->id_order. $file->getClientOriginalName());
+                Storage::disk('orders')->delete($id->id_order . $file->getClientOriginalName());
             }
         }
 
@@ -499,9 +499,31 @@ class OrdersController extends Controller
             $time .= ' год.';
         }
 
+        if ($req->file() != []) {
+            Storage::disk('orders')->delete($req->id . ".zip");
+
+            $zip = new ZipArchive();
+            $path = storage_path('orders/') . $req->id . ".zip";
+
+            $zip->open($path,  ZipArchive::CREATE);
+
+            foreach ($req->file()['files'] as $file) {
+                Storage::disk('orders')->put($req->id . $file->getClientOriginalName(), File::get($file));
+
+                $zip->addFile(storage_path('orders/' . $req->id . $file->getClientOriginalName()), $file->getClientOriginalName());
+            }
+
+            $zip->close();
+
+            foreach ($req->file()['files'] as $file) {
+                Storage::disk('orders')->delete($req->id . $file->getClientOriginalName());
+            }
+        }
+
         $values = [
             'title' => $req->title,
             'description' => $req->description,
+            'files' => $req->file() != [],
             'price' => $price,
             'time' => $time,
         ];
@@ -525,5 +547,16 @@ class OrdersController extends Controller
     public function get_files(Request $req)
     {
         return Storage::disk('orders')->download($req->id . '.zip', $req->name);
+    }
+
+    public function delete_file(Request $req)
+    {
+        DB::table('orders')->where('id_order', $req->id)->update(['files' => 0]);
+
+        Storage::disk('orders')->delete($req->id . '.zip');
+
+        $req->session()->flash('alert-success', 'Прікріплені файли успішно видалено!');
+
+        return back();
     }
 }
