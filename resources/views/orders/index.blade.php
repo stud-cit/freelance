@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="container collapse text-white my-2" id="new-order" style="background-color: #303E51">
+        <div class="container collapse bg-light-grey text-white my-2" id="new-order">
             <form method="POST" action="{{ route('save_order') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
@@ -157,7 +157,7 @@
                                     </div>
                                     <div class="d-flex flex-column justify-content-end">
                                         @if(Auth::check() && !Auth::user()->banned)
-                                            <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
+                                            <button class="btn work-order bg-orange text-white" data-id="{{ $orders->id_order }}">Переглянути</button>
                                         @endif
                                         @if(Auth::check() && ($orders->id_customer != Auth::id()))
                                             <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
