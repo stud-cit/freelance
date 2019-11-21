@@ -173,7 +173,7 @@ class UsersController extends Controller
 
             $req->session()->flash('alert-success', 'Пароль успішно змінено!');
 
-            return redirect('/profile');
+            return redirect('/profile/' . Auth::id());
         }
         else {
             $errors = [];
@@ -188,7 +188,7 @@ class UsersController extends Controller
                 $errors['new_password'] = 'Паролі мають співпадати!';
             }
 
-            return redirect('/profile')->withInput($req->all())->withErrors($errors);
+            return back()->withInput($req->all())->withErrors($errors);
         }
     }
 

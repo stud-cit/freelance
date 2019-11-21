@@ -15,6 +15,13 @@
 @php($proposals = $info['proposals'])
 @php($progress = $info['progress'])
 
+<div class="flash-message fixed-bottom text-center">
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+        @if(Session::has('alert-' . $msg))
+            <p class="alert alert-{{ $msg }} alert-dismissible"> {{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+        @endif
+    @endforeach
+</div>
 <div>
     <div class="flash-message fixed-bottom text-center">
         @foreach (['danger', 'warning', 'success', 'info'] as $msg)
@@ -128,7 +135,7 @@
                 </div>
                 <div class="pointer change" id="active-w-toggle" data-toggle="collapse" data-target="#active-w" aria-expanded="false">
                     <div class="font-size-100">{{ $progress }}</div>
-                    <div class="font-size-25">Активн проєкти</div>
+                    <div class="font-size-25">Активні проєкти</div>
                 </div>
                 <div class="pointer change" id="complete-c-toggle" data-toggle="collapse" data-target="#complete-w" aria-expanded="false">
                     <div class="font-size-100">{{ $complete }}</div>
@@ -180,7 +187,7 @@
                                 @endif
                                 </div>
                                 <div class="d-flex flex-column justify-content-end">
-                                    <button class="btn work-order bg-orange" data-id="{{ $all->id_order }}">Переглянути</button>
+                                    <button class="btn work-order bg-orange text-white" data-id="{{ $all->id_order }}">Переглянути</button>
                                     @if($all->id_customer == Auth::id())
                                         <form method="POST" action="{{ route('delete_order', $all->id_order) }}" id="delete" class="text-center">
                                             @csrf
@@ -245,7 +252,7 @@
                                     @endif
                                 </div>
                                 <div class="d-flex flex-row justify-content-end">
-                                    <button class="btn work-order bg-orange" data-id="{{ $active->id_order }}">Переглянути</button>
+                                    <button class="btn work-order bg-orange text-white" data-id="{{ $active->id_order }}">Переглянути</button>
                                 </div>
                             </div>
                             <hr class="border-grey pb-4">
@@ -287,7 +294,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button class="btn work-order bg-orange" style="display: none" data-id="{{ $complete->id_order }}">Залишити відгук</button>
+                                    <button class="btn work-order bg-orange text-white" style="display: none" data-id="{{ $complete->id_order }}">Залишити відгук</button>
                                 </div>
                             </div>
                             <hr class="border-grey pb-4">
@@ -327,7 +334,7 @@
                                 <div class="font-size-22">{{ $all->description }}</div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
-                                <button class="btn work-order bg-orange" data-id="{{ $all->id_order }}">Переглянути</button>
+                                <button class="btn work-order bg-orange text-white" data-id="{{ $all->id_order }}">Переглянути</button>
                                 @if($all->id_worker == Auth::id())
                                     <form method="POST" action="{{ route('delete_order', $all->id_order) }}" id="delete" class="text-center">
                                         @csrf
@@ -348,6 +355,110 @@
         </div>
         <hr class="border-white w-100">
     </div>
+    <div class="collapse container mt-4" id="active-w">
+        <div class="text-white">
+            <div class="d-flex justify-content-center">
+                <p class="font-size-30 font-weight-bold">Активні проєкти</p>
+            </div>
+            @php($i = 0)
+            @foreach($proposals as $active)
+                @if($active->status == 'in progress')
+                    @php($i++)
+                    <div class="container shadow-box mb-4 orders">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div class="d-flex justify-content-start">
+                                <div class="d-flex flex-row">
+                                    <div class="font-weight-bold order-title font-size-30">{{ $active->title }}</div>
+                                </div>
+                            </div>
+                            <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $active->price }}</div>
+                        </div>
+                        <div class="text-grey">{{ $active->created_at }}</div>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <div class="font-size-22">{{ $active->description }}</div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-end">
+                                <button class="btn work-order bg-orange text-white" data-id="{{ $active->id_order }}">Переглянути</button>
+                            </div>
+                        </div>
+                        <hr class="border-grey pb-4">
+                    </div>
+                @endif
+            @endforeach
+            @if(!$i)
+                <div class="d-flex justify-content-center mt-4">
+                    <div class="font-size-30 font-weight-bold">Немає активних проєктів</div>
+                </div>
+            @endif
+        </div>
+        <hr class="border-white w-100">
+    </div>
+    <div class="collapse container mt-4" id="complete-w">
+        <div class="text-white">
+            <div class="d-flex justify-content-center">
+                <p class="font-size-30 font-weight-bold">Завершені проєкти</p>
+            </div>
+            @php($i = 0)
+            @foreach($proposals as $complete)
+                @if($complete->status == 'complete')
+                    @php($i++)
+                    <div class="container shadow-box mb-4 orders">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div class="d-flex justify-content-start">
+                                <div class="d-flex flex-row">
+                                    <div class="font-weight-bold order-title font-size-30">{{ $complete->title }}</div>
+                                </div>
+                            </div>
+                            <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $complete->price }}</div>
+                        </div>
+                        <div class="text-grey">{{ $complete->created_at }}</div>
+                        <div class="font-size-22">{{ $complete->description }}</div>
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div class="d-flex justify-content-start">
+                                <div class="font-size-20">Замовник:
+                                    <span class="to-profile pointer" data-id=""></span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn bg-orange text-white" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити відгук</button>
+                            </div>
+                        </div>
+                        <div id="id-{{ $complete->id_proposal }}" class="container collapse bg-light-grey mt-4">
+                            <form method="POST" action="{{ route('save_review', $complete->id_order) }}" class="col">
+                                @csrf
+                                <div class="form-group row">
+                                    <label for="rating" class="col-2">Оцінка:</label>
+                                    <div class="col-3 rating">
+                                        <input type="range" id="rating" class="form-control reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                                    </div>
+                                    <div class="">
+                                        <span id="rating_val">3</span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="comment" class="col-1 col-form-label">Коментар:</label>
+                                    <div class="col offset-1">
+                                        <textarea id="comment" class="form-control text-white border-0 bg-deep-dark reviews-comment" rows="3" name="text" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-green mb-2 px-0" name="leave_review">Підтвердити</button>
+                                </div>
+                            </form>
+                        </div>
+                        <hr class="border-grey pb-4">
+                    </div>
+                @endif
+            @endforeach
+            @if(!$i)
+                <div class="d-flex justify-content-center">
+                    <div class="font-size-30 font-weight-bold">Немає завершених проєктів</div>
+                </div>
+            @endif
+        </div>
+        <hr class="border-white w-100">
+    </div>
     @if(count($reviews) != 0)
         <div class="d-flex justify-content-center my-4">
             <button class="btn badge-pill bg-orange text-center text-white" id="mark-toggle" data-toggle="collapse" data-target="#mark" aria-expanded="true">Відобразити відгуки</button>
@@ -356,20 +467,25 @@
         <div class="offset-1 col-10">
             <div class="row">
             @foreach($reviews as $mark)
-                <div class="col-6 bg-deep-dark text-white">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="col-2 px-0 pointer to-profile" data-id="{{ $mark->id_user }}">
-                            <img src="{{ $mark->avatar }}" class="circle avatar" style="height: 106px; width: 106px">
-                        </div>
-                        <div class="col-10 pointer to-profile" data-id="{{ $mark->id_user }}">{{ $mark->name }} {{ $mark->surname }}</div>
-                    </div>
-                    <div class="d-flex flex-row mb-4">
-                        <div class="col-10 mt-2">{{ $mark->text }}</div>
-                        <div class="col-2">
-                            <div>
-                                <img src="" alt="">
+                <div class="col-6 bg-deep-dark text-white shadow-box mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex flex-row align-items-center mt-2">
+                            <div class="px-0 pointer to-profile" data-id="{{ $mark->id_user }}">
+                                <img src="{{ $mark->avatar }}" class="circle avatar" style="height: 106px; width: 106px">
                             </div>
-                            <div class="font-size-10">{{ $mark->created_at }}</div>
+                            <div class="pointer to-profile font-size-30 ml-2" data-id="{{ $mark->id_user }}">{{ $mark->name }} {{ $mark->surname }}</div>
+                        </div>
+                    </div>
+                    <hr class="border-grey">
+                    <div class="d-flex flex-row justify-content-between mb-4">
+                        <div class="mt-2 align-self-center">{{ $mark->text }}</div>
+                        <div class="d-flex flex-column">
+                            <div>
+                                <div class="font-size-30">{{ $mark->rating }}/5</div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="font-size-10">{{ $mark->created_at }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
