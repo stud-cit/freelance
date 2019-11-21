@@ -19,7 +19,7 @@ Route::post('/delete_file/{id}', 'OrdersController@delete_file')->name('delete_f
 
 Route::get('/workers', 'UsersController@workers')->name('workers');
 
-Route::get('/profile', 'UsersController@profile')->middleware('logged.in')->name('profile');
+Route::get('/profile', 'UsersController@profile')->name('profile');
 Route::get('/password_change', 'UsersController@password_change')->middleware('logged.in')->name('password_change');
 Route::post('/save_info', 'UsersController@save_info')->name('save_info');
 Route::post('/save_contacts', 'UsersController@save_contacts')->name('save_contacts');

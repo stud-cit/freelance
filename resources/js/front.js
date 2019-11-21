@@ -78,17 +78,48 @@ $("document").ready(function() {
     $('button[name="delete_proposal"]').on('click', function (e) {
         if ($(this).attr('type') !== 'reset') {
             e.preventDefault();
-            if(confirm('Ви впевнені?')) {
-                $.ajax({
-                    method: 'post',
-                    url: '/delete_proposal',
-                    data: {'location': window.location.href},
-                    success: function (response) {
-                        document.location.reload(true);
-                    }
-                });
-            }
+
+            Swal.fire({
+                title: 'Видалення',
+                text: "Ви впевнені, що хочете це зробити?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#aaaaaa',
+                confirmButtonText: 'Видалити',
+                cancelButtonText: 'Скасувати'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        method: 'post',
+                        url: '/delete_proposal',
+                        data: {'location': window.location.href},
+                        success: function () {
+                            document.location.reload(true);
+                        }
+                    });
+                }
+            });
         }
+    });
+
+    $('#finish_order').on('click', function (e) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Завершення',
+            text: "Завершити замовлення?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#aaaaaa',
+            confirmButtonText: 'Завершити',
+            cancelButtonText: 'Скасувати'
+        }).then((result) => {
+            if (result.value) {
+                $(this).closest('form').submit();
+            }
+        });
     });
 
     $("#type").on("change", function() {

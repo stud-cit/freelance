@@ -104,9 +104,9 @@
                     @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
                         <div class="row mt-4">
                             <div class="col-xl-6 col-12">
-                                <form method="POST" action="{{ route('finish_order', $order->id_order) }}" onsubmit="return confirm('Ви впевнені?');">
+                                <form method="POST" action="{{ route('finish_order', $order->id_order) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-outline badge-pill border-white text-white mb-2 w-100">
+                                    <button type="submit" class="btn btn-outline badge-pill border-white text-white mb-2 w-100" id="finish_order">
                                         Замовлення виконано
                                     </button>
                                 </form>
