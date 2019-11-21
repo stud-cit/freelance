@@ -36,6 +36,9 @@ a.bg-deep-blue:hover, button.bg-deep-blue:hover {
 .bg-light-black {
     background-color: #222C3A;
 }
+.bg-light-black:focus {
+    background-color: #222C3A;
+}
 .bg-deep-dark {
     background-color: #2D3A4D;
 }

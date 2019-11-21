@@ -65,27 +65,27 @@
                     <div class="form-group row mt-4">
                         <label class="col-5 col-form-label mt-2">Аватар:</label>
                         <div class="custom-file col-6 mt-2">
-                            <input type="file" class="custom-file-input form-control" name="avatar" id="avatar-input" lang="ua" accept="image/*">
-                            <label class="custom-file-label nowrap" for="avatar-input" id="avatar-input-label" data-browse="Обрати">Виберіть файл</label>
+                            <input type="file" class="custom-file-input form-control border-0" name="avatar" id="avatar-input" lang="ua" accept="image/*">
+                            <label class="custom-file-label bg-deep-dark text-white border-0 nowrap" for="avatar-input" id="avatar-input-label" data-browse="Обрати">Виберіть файл</label>
                             <div class="invalid-feedback">Зображення більше 2 Мб</div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="surname" class="col-5 col-form-label mt-2">Прізвище:</label>
                         <div class="col-6 mt-2">
-                            <input type="text" id="surname" class="form-control" name="surname" value="{{ $data->surname }}" required>
+                            <input type="text" id="surname" class="form-control bg-deep-dark text-white border-0" name="surname" value="{{ $data->surname }}" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="name" class="col-5 col-form-label mt-2">Ім'я:</label>
                         <div class="col-6 mt-2">
-                            <input type="text" id="name" class="form-control" name="name" value="{{ $data->name }}" required>
+                            <input type="text" id="name" class="form-control bg-deep-dark text-white border-0" name="name" value="{{ $data->name }}" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="about_me" class="col-5 col-form-label mt-2">Про мене:</label>
                         <div class="col-6 mt-2">
-                            <textarea class="form-control" id="about_me" name="about_me" rows="6">{{ $data->about_me }}</textarea>
+                            <textarea class="form-control bg-deep-dark text-white border-0" id="about_me" name="about_me" rows="6">{{ $data->about_me }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
