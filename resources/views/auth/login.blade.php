@@ -9,15 +9,15 @@
         <div class="row">
             <div class="col-10 offset-1 shadow-lg bg-light-grey p-4">
                 <div class="row">
-                    <div class="col-6 d-flex border-right border-grey">
-                        <div class="d-flex flex-column flex-shrink-1 align-self-center mx-auto text-white col-6">
+                    <div class="col-5 d-flex border-right border-grey">
+                        <div class="d-flex flex-column flex-shrink-1 align-self-center mx-auto text-white col-8">
                             <p>Як зареєструватися?</p>
                             <p>1. <a href="mailto:s.panchenko@ias.sumdu.edu.ua">Зв'язатися</a> з нами</p>
                             <p>2. Дочекатися даних для входу на свою електронну адресу</p>
                             <p>3. Використати дану форму для авторизації</p>
                         </div>
                     </div>
-                    <div class="col-6 text-white">
+                    <div class="col-6 text-white offset-1">
                         <div class="row">
                             <div class="col-12 font-weight-bold font-size-50">Авторизація</div>
                         </div>
