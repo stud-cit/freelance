@@ -29,3 +29,7 @@
         </form>
     </div>
 @endsection
+
+@section('footer')
+    @include('site.footer')
+@endsection
