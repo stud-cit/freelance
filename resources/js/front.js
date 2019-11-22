@@ -485,33 +485,31 @@ $("document").ready(function() {
             data[id] = $(this).text();
         });
 
-        if ($('.open-contact').length) {
-            $.ajax({
-                url: '/check_messages',
-                method: 'post',
-                data: {
-                    'id': $('.open-contact').attr('data-id'),
-                    'data': data
-                },
-                success: function (data) {
-                    if ('data' in data) {
-                        $.each(data['data'], function (key, count) {
-                            const user = $('.contact[data-id="' + key + '"]'),
-                                span = user.find('.messages-count');
+        $.ajax({
+            url: '/check_messages',
+            method: 'post',
+            data: {
+                'id': $('.open-contact').attr('data-id'),
+                'data': data
+            },
+            success: function (data) {
+                if ('data' in data) {
+                    $.each(data['data'], function (key, count) {
+                        const user = $('.contact[data-id="' + key + '"]'),
+                            span = user.find('.messages-count');
 
-                            span.removeClass('d-none');
-                            span.text(count);
+                        span.removeClass('d-none');
+                        span.text('(' + count + ')');
 
-                            update_contact(user);
-                        });
-                    }
-
-                    if ('messages' in data) {
-                        update_chat(data['messages']);
-                    }
+                        update_contact(user);
+                    });
                 }
-            });
-        }
+
+                if ('messages' in data) {
+                    update_chat(data['messages']);
+                }
+            }
+        });
 
         setTimeout(() => {
             check_messages()

@@ -3494,33 +3494,29 @@ $("document").ready(function () {
       var id = $(this).closest('.contact').attr('data-id');
       data[id] = $(this).text();
     });
-
-    if ($('.open-contact').length) {
-      $.ajax({
-        url: '/check_messages',
-        method: 'post',
-        data: {
-          'id': $('.open-contact').attr('data-id'),
-          'data': data
-        },
-        success: function success(data) {
-          if ('data' in data) {
-            $.each(data['data'], function (key, count) {
-              var user = $('.contact[data-id="' + key + '"]'),
-                  span = user.find('.messages-count');
-              span.removeClass('d-none');
-              span.text(count);
-              update_contact(user);
-            });
-          }
-
-          if ('messages' in data) {
-            update_chat(data['messages']);
-          }
+    $.ajax({
+      url: '/check_messages',
+      method: 'post',
+      data: {
+        'id': $('.open-contact').attr('data-id'),
+        'data': data
+      },
+      success: function success(data) {
+        if ('data' in data) {
+          $.each(data['data'], function (key, count) {
+            var user = $('.contact[data-id="' + key + '"]'),
+                span = user.find('.messages-count');
+            span.removeClass('d-none');
+            span.text('(' + count + ')');
+            update_contact(user);
+          });
         }
-      });
-    }
 
+        if ('messages' in data) {
+          update_chat(data['messages']);
+        }
+      }
+    });
     setTimeout(function () {
       check_messages();
     }, 4000);

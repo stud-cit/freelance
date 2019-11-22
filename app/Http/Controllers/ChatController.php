@@ -181,7 +181,7 @@ class ChatController extends Controller
             foreach ($sort as $one) {
                 $count = DB::table('messages')->where([['id_from', $one['id_user']], ['id_to', Auth::id()], ['status', 0]])->count();
 
-                if ($count && $one['id_user'] != $req->id && $req->data[$req->id] != $count) {
+                if ($count && $one['id_user'] != $req->id && (is_null($req->data[$one['id_user']]) || $req->data[$one['id_user']] != $count)) {
                     $data[$one['id_user']] = $count;
                 }
             }
@@ -189,6 +189,8 @@ class ChatController extends Controller
             $check = DB::table('messages')->where([['id_from', $req->id], ['id_to', Auth::id()], ['status', 0]])->count();
 
             if ($check) {
+                DB::table('messages')->where([['id_from', $req->id], ['id_to', Auth::id()], ['status', 0]])->update(['status' => 1]);
+
                 return [
                     'data' => $data,
                     'messages' => $this->get_mess($req->id)
