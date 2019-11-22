@@ -331,6 +331,14 @@ $("document").ready(function() {
         }
     }
 
+    $('#message_input').on('keypress', function (e) {
+        if(e.which == 13) {
+            e.preventDefault();
+
+            $('#chat-form').submit();
+        }
+    });
+
     $('#chat-form').on('submit', function(e) {
         e.preventDefault();
 

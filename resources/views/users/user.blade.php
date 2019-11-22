@@ -15,13 +15,6 @@
 @php($proposals = $info['proposals'])
 @php($progress = $info['progress'])
 
-<div class="flash-message fixed-bottom text-center">
-    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-        @if(Session::has('alert-' . $msg))
-            <p class="alert alert-{{ $msg }} alert-dismissible"> {{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-        @endif
-    @endforeach
-</div>
 <div>
     <div class="flash-message fixed-bottom text-center">
         @foreach (['danger', 'warning', 'success', 'info'] as $msg)
@@ -50,12 +43,12 @@
                 @endif
             </div>
             <div class="col-2">
-                @if($data->id_user != Auth::id())
+                @if(Auth::check() && $data->id_user != Auth::id())
                     <form method="POST" action="{{ route('new_contact') }}" class="px-0">
                         @csrf
                         <button type="submit" class="btn bg-blue text-white font-weight-bold font-size-25" name="id_user" value="{{ $data->id_user }}">Відкрити приватний чат</button>
                     </form>
-                @else
+                @elseif(Auth::check())
                     &nbsp;<button class="btn bg-orange text-white font-weight-bold font-size-25" data-toggle="collapse" data-target=".user_block">Редагувати профіль</button>
                 @endif
             </div>

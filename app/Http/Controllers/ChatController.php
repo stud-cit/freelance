@@ -96,7 +96,7 @@ class ChatController extends Controller
 
     public function new_message(Request $req) {
         $message = [
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::now()->timezone('Europe/Kiev'),
             'text' => $req->text,
             'id_from' => Auth::id(),
             'id_to' => $req->id_to,
@@ -114,7 +114,7 @@ class ChatController extends Controller
     public function send_file(Request $req)
     {
         $message = [
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::now()->timezone('Europe/Kiev'),
             'text' => $req->name,
             'id_from' => Auth::id(),
             'id_to' => $req->id_to,
