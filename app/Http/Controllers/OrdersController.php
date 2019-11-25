@@ -263,7 +263,7 @@ class OrdersController extends Controller
             DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
 
             $order = DB::table('orders')->where('id_order', $req->id)->first();
-            $message = 'Вашу пропозицію до замовлення "' . $order->name . '" було прийнято';
+            $message = 'Вашу пропозицію до замовлення "' . $order->title . '" було прийнято';
 
             $this->send_email($req->selected_worker, $message);
 
@@ -308,7 +308,7 @@ class OrdersController extends Controller
 
         DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
 
-        $this->send_email($id, 'Ви більше не виконуєте замовлення "' . $worker->name . '"');
+        $this->send_email($id, 'Ви більше не виконуєте замовлення "' . $worker->title . '"');
 
         $req->session()->flash('alert-success', 'Виконавця успішно видалено!');
 
@@ -356,7 +356,7 @@ class OrdersController extends Controller
                 DB::table('proposals')->insert($values);
 
                 $order = DB::table('orders')->where('id_order', $req->id)->get()->first();
-                $this->send_email($order->id_customer, 'До вашого замовлення "' . $order->name . '" була залишена пропозиція');
+                $this->send_email($order->id_customer, 'До вашого замовлення "' . $order->title . '" була залишена пропозиція');
 
                 $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
             } else {

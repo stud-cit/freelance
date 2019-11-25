@@ -54,10 +54,10 @@ class Controller extends BaseController
 
         $data = array('name' => $name, 'text' => $text);
 
-        Mail::send('emails.mail', $data, function($message) use ($name, $email, $text) {
+        Mail::send('email.mail', $data, function($message) use ($name, $email, $text) {
             $message->to($email, $name)->subject($text);
 
-            $message->from('SENDER_EMAIL_ADDRESS', $text);
+            $message->from('workdump.noreply@gmail.com', $text);
         });
     }
 }
