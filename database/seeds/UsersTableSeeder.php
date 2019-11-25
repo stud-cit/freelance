@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
@@ -12,14 +13,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-       	DB::table('users')->insert([
-       	    'id_role' => 1,
+        $values = [
+            'id_role' => 1,
             'email' => 'admin@gmail.com',
             'banned' => false,
             'password' => bcrypt('admin'),
             'id_dept' => null,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-	    ]);
+        ];
+
+       	User::create($values);
     }
 }

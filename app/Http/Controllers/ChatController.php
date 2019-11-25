@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -78,7 +79,7 @@ class ChatController extends Controller
         }
 
         foreach ($sort as $one) {
-            $user = User::getUsersInfo('id', $one['id_user'])->first();
+            $user = $this->getUsersInfo('id', $one['id_user'])->first();
 
             $user->count = DB::table('messages')->where([['id_from', $one['id_user']], ['id_to', Auth::id()], ['status', 0]])->count();
 
@@ -128,7 +129,7 @@ class ChatController extends Controller
         try {
             Storage::disk('files')->put($path, File::get($req->file('file')));
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             DB::table('messages')->where('id_message', $message->id_message)->delete();
 
             return 'error';

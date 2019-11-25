@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -15,7 +15,7 @@ class UsersController extends Controller
 {
     public function workers()
     {
-        $data = User::getUsersInfo('id_role', 3, 10);
+        $data = $this->getUsersInfo('id_role', 3, 10);
 
         foreach ($data as $worker) {
             $created_at = explode(' ', $worker->created_at);
@@ -40,7 +40,7 @@ class UsersController extends Controller
             return redirect('orders');
         }
 
-        $data = User::getUsersInfo('id_user', Auth::id())->first();
+        $data = $this->getUsersInfo('id_user', Auth::id())->first();
 
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];
@@ -261,7 +261,7 @@ class UsersController extends Controller
             abort(404);
         }
 
-        $data = User::getUsersInfo('id_user', $id)->first();
+        $data = $this->getUsersInfo('id_user', $id)->first();
 
         $created_at = explode(' ', $data->created_at);
         $data->created_at = $created_at[0];

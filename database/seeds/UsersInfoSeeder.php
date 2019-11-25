@@ -16,14 +16,9 @@ class UsersInfoSeeder extends Seeder
             'id_user' => 1,
             'name' => 'admin',
             'surname' => 'admin',
-            'patronymic' => 'admin',
             'birthday_date' => null,
             'phone_number' => null,
-            'viber' => null,
-            'skype' => null,
             'about_me' => null,
-            'country' => null,
-            'city' => null
         ]);
 
         $files = glob('public/img/*');

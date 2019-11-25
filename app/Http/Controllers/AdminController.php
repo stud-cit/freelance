@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,7 +24,7 @@ class AdminController extends Controller
             $one->time = is_null($one->time) ? '' : $one->time;
         }
 
-        $users = User::getUsersInfo();
+        $users = $this->getUsersInfo();
 
         $array = [];
 

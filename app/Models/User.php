@@ -6,8 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -62,36 +62,6 @@ class User extends Authenticatable implements MustVerifyEmail
         else {
             return '/img/' . $id . '.jpg' . '?t=' . Carbon::now();
         }
-    }
-
-    static function getUsersInfo($where = null, $what = null, $paginate = null) {
-        if (!is_null($paginate)) {
-            $info = DB::table('users_info')
-                ->join('users', 'users.id', '=', 'users_info.id_user')
-                ->where($where, $what)
-                ->paginate($paginate);
-        }
-        else if (!is_null($where)){
-            $info = DB::table('users_info')
-                ->join('users', 'users.id', '=', 'users_info.id_user')
-                ->where($where, $what)
-                ->get();
-        }
-        else {
-            $info = DB::table('users_info')->join('users', 'users.id', '=', 'users_info.id_user')->get();
-        }
-
-        foreach ($info as $one) {
-            if (Storage::disk('public')->has($one->id_user . '.png')) {
-                $one->avatar = '/img/' . $one->id_user . '.png';
-            } else {
-                $one->avatar = '/img/' . $one->id_user . '.jpg';
-            }
-
-            $one->avatar .= '?t=' . Carbon::now();
-        }
-
-        return $info;
     }
 
     function new_messages() {

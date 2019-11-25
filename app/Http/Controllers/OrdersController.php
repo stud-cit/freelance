@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use DB;
-use Auth;
 use App\Models\User;
 use ZipArchive;
 
@@ -29,7 +30,7 @@ class OrdersController extends Controller
                 $fp = fopen('currency.json', 'w');
                 fwrite($fp, $response_json);
                 fclose($fp);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
             }
         }
     }
@@ -178,7 +179,7 @@ class OrdersController extends Controller
     public function order($id)
     {
         $order = DB::table('orders')->where('id_order', $id)->get()->first();
-        $customer = User::getUsersInfo('id', $order->id_customer)->first();
+        $customer = $this->getUsersInfo('id', $order->id_customer)->first();
 
         $my_proposal = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
@@ -261,6 +262,11 @@ class OrdersController extends Controller
         if (!is_null($check)) {
             DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
 
+            $order = DB::table('orders')->where('id_order', $req->id)->first();
+            $message = 'Вашу пропозицію до замовлення "' . $order->name . '" було прийнято';
+
+            $this->send_email($req->selected_worker, $message);
+
             $req->session()->flash('alert-success', 'Виконавця успішно вибрано!');
         }
         else {
@@ -283,24 +289,26 @@ class OrdersController extends Controller
 
     public function change_worker(Request $req)
     {
-        if (!is_null($req->text)) {
-            $worker = DB::table('orders')->where('id_order', $req->id)->get('id_worker')->first();
-            $worker = $worker->id_worker;
+        $worker = DB::table('orders')->where('id_order', $req->id)->get()->first();
+        $id = $worker->id_worker;
 
+        if (!is_null($req->text)) {
             $values = [
                 'text' => $req->text,
                 'rating' => $req->rating,
                 'id_from' => Auth::id(),
-                'id_to' => $worker,
+                'id_to' => $id,
                 'id_order' => $req->id,
                 'created_at' => Carbon::now(),
             ];
 
-            DB::table('proposals')->where([['id_order', $req->id], ['id_worker', $worker]])->update(['blocked' => true]);
+            DB::table('proposals')->where([['id_order', $req->id], ['id_worker', $id]])->update(['blocked' => true]);
             DB::table('reviews')->insert($values);
         }
 
         DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
+
+        $this->send_email($id, 'Ви більше не виконуєте замовлення "' . $worker->name . '"');
 
         $req->session()->flash('alert-success', 'Виконавця успішно видалено!');
 
@@ -346,6 +354,9 @@ class OrdersController extends Controller
 
             if (is_null($check)) {
                 DB::table('proposals')->insert($values);
+
+                $order = DB::table('orders')->where('id_order', $req->id)->get()->first();
+                $this->send_email($order->id_customer, 'До вашого замовлення "' . $order->name . '" була залишена пропозиція');
 
                 $req->session()->flash('alert-success', 'Пропозицію успішно додано!');
             } else {

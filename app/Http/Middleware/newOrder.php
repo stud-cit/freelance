@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class newOrder
 {
@@ -24,8 +24,8 @@ class newOrder
         }
 
         if(($order->status != 'new' && !$request->user()->isAdmin()
-            && $order->id_customer != Auth::user()->id
-            && $order->id_worker != Auth::user()->id)
+            && $order->id_customer != Auth::id()
+            && $order->id_worker != Auth::id())
             || $order->status == 'complete') {
             return redirect('/orders');
         }
