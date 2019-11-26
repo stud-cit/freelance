@@ -128,14 +128,9 @@ class AdminController extends Controller
                 'id_user' => $user['id'],
                 'name' => $req->name,
                 'surname' => $req->surname,
-                'patronymic' => null,
                 'birthday_date' => null,
                 'phone_number' => null,
-                'viber' => null,
-                'skype' => null,
                 'about_me' => null,
-                'country' => null,
-                'city' => null
             ];
 
             DB::table('users_info')->insert($values);

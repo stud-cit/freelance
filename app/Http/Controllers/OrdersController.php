@@ -184,7 +184,7 @@ class OrdersController extends Controller
         $my_proposal = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
             ->where([['id_order', $id], ['id_worker', Auth::id()]])
-            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'patronymic', 'proposals.created_at', 'blocked'])
+            ->get(['id_user', 'text', 'price', 'time', 'name', 'surname', 'proposals.created_at', 'blocked'])
             ->first();
 
         if (!is_null($my_proposal)) {
