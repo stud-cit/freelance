@@ -305,7 +305,7 @@ $("document").ready(function() {
     $(".toggle-box").on('click', '.toggle-plus', function () {
         let counter = parseInt($(this).closest('.container').attr('data-id')) + 1;
         let name = 'new-' + $(this).closest('.container').attr('id');
-        let str = "<div class='form-row input-group'><input type='text' class='form-control col-10' name='"+name+"-"+counter+"'><input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'></div>";
+        let str = "<div class='form-row input-group'><input type='text' class='form-control col-10 bg-deep-dark text-white' name='"+name+"-"+counter+"'><input type='button' class='btn-outline-danger form-control col-1 toggle-minus bg-deep-dark text-white' value='-'></div>";
 
         $(this).closest('.container').attr('data-id', counter);
         $(this).closest('.toggle-box').append(str);

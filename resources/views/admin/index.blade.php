@@ -25,20 +25,24 @@
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade @if($errors->isEmpty())show active @endif" id="nav-ban" role="tabpanel" aria-labelledby="nav-ban-tab">
-                    <div class="container">
-                        @foreach($users as $ban)
-                            <form action="{{ $ban->banned ? route('unban') : route('ban') }}" method="POST" class="col-9">
-                                @csrf
-                                <div class="d-flex flex-row mb-3 mt-2 pointer to-profile" data-id="{{ $ban->id_user }}">
-                                    <div class="col-1 px-0 min-width-90">
-                                        <img src="{{$ban->avatar}}" class="mt-1 square-80 avatar square">
+                    @foreach($users as $ban)
+                        <form action="{{ $ban->banned ? route('unban') : route('ban') }}" method="POST" class="my-2">
+                            @csrf
+                            <div class="container shadow-box text-white mb-2">
+                                <div class="d-flex flex-row justify-content-between align-items-end pointer to-profile" data-id="{{ $ban->id_user }}">
+                                    <div class="d-flex flex-row">
+                                        <div class="min-width-60 my-2">
+                                            <img src="{{ $ban->avatar }}" class="circle avatar" style="min-width: 60px; width: 100px">
+                                        </div>
+                                        <div class="d-flex align-self-center font-weight-bold font-size-20 ml-2">
+                                            <span class="" data-id="{{ $ban->id_user }}">{{ $ban->name }} {{ $ban->surname }}</span>
+                                        </div>
                                     </div>
-                                    <div class="col-11 shadow bg-white" data-id="{{ $ban->id_user }}">
-                                        <div class="flex-row">
-                                            <div class="font-weight-bold font-size-18 mt-2"><span data-id="{{ $ban->id_user }}">{{ $ban->name }} {{ $ban->surname }}</span></div>
+                                    <div class="" data-id="{{ $ban->id_user }}">
+                                        <div class="d-flex flex-row">
                                             <div class="text-right font-size-10">Дата реєстрації: {{ $ban->created_at }}</div>
                                         </div>
-                                        <div class="col-2 offset-10">
+                                        <div>
                                             @if(!$ban->banned)
                                                 <button type="submit" class="btn btn-danger my-2" name="ban" value="{{ $ban->id_user }}">Заблокувати</button>
                                             @else
@@ -47,82 +51,104 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        @endforeach
-                    </div>
+                                <hr class="border-grey pb-1">
+                            </div>
+                        </form>
+                    @endforeach
                 </div>
                 <div class="tab-pane fade" id="nav-orders" role="tabpanel" aria-labelledby="nav-orders-tab">
                     <div class="container orders" id="orders-list">
                         @if(count($orders))
                             @foreach($orders as $all)
-                                <div class="col-9 flex-row mb-3 mt-2 d-flex">
-                                    <div class="col-12 shadow bg-white work-order pointer" data-id="{{ $all->id_order }}">
-                                        <div class="font-weight-bold mt-2 order-title">{{ $all->title }}</div>
-                                        <div>{{ mb_strlen($all->description) > 50 ? mb_substr($all->description, 0, 50) . '...' : $all->description }}</div>
-                                        <div class="text-right font-size-10">Створено: {{ $all->created_at }}</div>
-                                        <div class="row mt-2">
-                                            <div class="col-2 offset-8">
-                                                @if($all->status == 'in progress')
-                                                    <form action="{{ route('finish') }}" method="POST">
-                                                        @csrf
-                                                        <button type="submit" class="btn bg-blue text-white mb-2" name="finish" value="{{ $all->id_order }}">Завершити</button>
-                                                    </form>
-                                                @endif
+                                <div class="container-fluid text-white" id="orders-list">
+                                    <div class="mt-2 mb-4">
+                                        <div class="container-fluid shadow-box mb-4 orders">
+                                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                                <div class="d-flex justify-content-start">
+                                                    <div class="d-flex flex-row">
+                                                        <div class="font-weight-bold order-title font-size-30">{{ $all->title }}</div>
+                                                        <div class="align-self-center ml-4">
+                                                            @if($all->files)
+                                                                <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit" title="Є прікріплені файли">
+                                                            @endif
+                                                        </div>
+                                                        <div class="align-self-center ml-1">
+                                                            @if($all->time)
+                                                                <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar" title="Час виконання займає {{ $all->time }}">
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $all->price }}</div>
                                             </div>
-                                            <div class="col-2">
-                                                <form action="{{ route('delete') }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger mb-2" name="delete" value="{{ $all->id_order }}">Видалити</button>
-                                                </form>
-                                            </div>
+                                            <div class="text-grey">{{ $all->created_at }}</div>
+                                            <div class="font-size-22">{{ $all->description }}</div>
+
+                                                <div class="d-flex flex-row justify-content-end">
+                                                    <div>
+                                                        @if($all->status == 'in progress')
+                                                            <form action="{{ route('finish') }}" method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="btn bg-blue text-white mb-2" name="finish" value="{{ $all->id_order }}">Завершити</button>
+                                                            </form>
+                                                        @endif
+                                                    </div>
+                                                    <div>
+                                                        <form action="{{ route('delete') }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-danger mb-1" name="delete" value="{{ $all->id_order }}">Видалити</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            <hr class="border-grey pb-4">
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
                         @else
                             <div class="flex-row">
-                                <div class="col font-weight-bold font-size-18 text-center mt-4">Немає залишених замовленнь</div>
+                                <div class="col font-weight-bold font-size-18 text-white text-center mt-4">Немає залишених замовленнь</div>
                             </div>
                         @endif
                     </div>
                 </div>
                 <div class="tab-pane fade @if(!$errors->isEmpty())show active @endif" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
                     <div class="container">
-                        <form method="POST" action="{{ route('new_user') }}" class="col-7 mt-3">
+                        <form method="POST" action="{{ route('new_user') }}" class="col-7 mt-3 text-white">
                             @csrf
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex flex-row">
+                            <ul class="list-group ">
+                                <li class="list-group-item d-flex flex-row bg-light-grey">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="name" class="col-form-label">Ім'я</label>
-                                        <input id="name" type="text" class="form-control border-0" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
+                                        <input id="name" type="text" class="form-control border-0 bg-deep-dark text-white" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-                                <li class="list-group-item d-flex flex-row">
+                                <li class="list-group-item d-flex flex-row bg-light-grey">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="surname" class="col-form-label">Прізвище</label>
-                                        <input id="surname" type="text" class="form-control border-0" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus placeholder="Прізвище">
+                                        <input id="surname" type="text" class="form-control border-0 bg-deep-dark text-white" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus placeholder="Прізвище">
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-                                <li class="list-group-item d-flex flex-row">
+                                <li class="list-group-item d-flex flex-row bg-light-grey">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="id_role" class="col-form-label">Роль</label>
-                                        <select id="id_role" class="form-control border-0" name="id_role">
+                                        <select id="id_role" class="form-control border-0 bg-deep-dark text-white" name="id_role">
                                             <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}} value="Виконавець">Виконавець</option>
                                             <option {{old('id_role') == 'Замовник' ? 'selected' : ''}} value="Замовник">Замовник</option>
                                         </select>
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-                                <li class="list-group-item d-none flex-row" id="dept-block">
+                                <li class="list-group-item d-none flex-row bg-light-grey" id="dept-block">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="id_dept" class="col-form-label">Кафедра</label>
-                                        <select id="id_dept" class="form-control border-0" name="id_dept">
+                                        <select id="id_dept" class="form-control border-0 bg-deep-dark text-white" name="id_dept">
                                             <option {{old('id_dept') == 'Не обрано' ? 'selected' : ''}} value="0">Не обрано</option>
                                             @foreach($dept as $item)
                                                 <option {{ old('id_dept') == $item->id_dept ? 'selected' : '' }} value="{{ $item->id_dept}} ">{{ $item->name }}</option>
@@ -131,11 +157,11 @@
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-                                <li class="list-group-item d-flex flex-row">
+                                <li class="list-group-item d-flex flex-row bg-light-grey">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="name" class="col-form-label">Електронна адреса</label>
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0 bg-deep-dark text-white" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -144,11 +170,11 @@
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-                                <li class="list-group-item d-flex flex-row">
+                                <li class="list-group-item d-flex flex-row bg-light-grey">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="name" class="col-form-label">Пароль</label>
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror border-0" name="password" required autocomplete="new-password" placeholder="********">
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror border-0 bg-deep-dark text-white" name="password" required autocomplete="new-password" placeholder="********">
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -157,18 +183,18 @@
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
-                                <li class="list-group-item d-flex flex-row">
+                                <li class="list-group-item d-flex flex-row bg-light-grey">
                                     <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="name" class="col-form-label">Повторіть пароль</label>
-                                        <input id="password-confirm" type="password" class="form-control border-0" name="password_confirmation" required autocomplete="new-password" placeholder="********">
+                                        <input id="password-confirm" type="password" class="form-control border-0 bg-deep-dark text-white" name="password_confirmation" required autocomplete="new-password" placeholder="********">
                                     </div>
                                     <div class="">&nbsp;</div>
                                 </li>
                             </ul>
-                            <div class="form-group row mt-5">
+                            <div class="form-group row mt-3">
                                 <div class="col-6 offset-3">
-                                    <button type="submit" class="btn text-white badge-pill w-100 bg-violet">
+                                    <button type="submit" class="btn text-white badge-pill w-100 bg-orange">
                                         Реєстрація
                                     </button>
                                 </div>
@@ -192,7 +218,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <button type="submit" class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>
+                            <button type="submit" class="btn bg-orange badge-pill text-white float-right">Підтвердити</button>
                         </form>
                     </div>
                 </div>
@@ -203,16 +229,16 @@
                             <div class="toggle-box">
                                 <div class="form-row input-group">
                                     <input type="text" class="form-control col-10" disabled>
-                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">
+                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus bg-deep-dark text-white" value="+">
                                 </div>
                                 @foreach($categ as $one)
                                     <div class="form-row input-group">
-                                        <input type="text" class="form-control col-10" name="categ-{{ $one->id_category }}" value="{{ $one->name }}">
-                                        <input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'>
+                                        <input type="text" class="form-control col-10 bg-deep-dark text-white" name="categ-{{ $one->id_category }}" value="{{ $one->name }}">
+                                        <input type='button' class='btn-outline-danger form-control col-1 toggle-minus bg-deep-dark text-white' value='-'>
                                     </div>
                                 @endforeach
                             </div>
-                            <button type="submit" class="btn bg-violet badge-pill text-white float-right">Підтвердити</button>
+                            <button type="submit" class="btn bg-orange badge-pill text-white float-right">Підтвердити</button>
                         </form>
                     </div>
                 </div>
