@@ -260,7 +260,7 @@ class OrdersController extends Controller
         $check = DB::table('proposals')->where([['id_order', $req->id], ['id_worker', $req->selected_worker]])->get();
 
         if (!is_null($check)) {
-            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker]);
+            DB::table('orders')->where('id_order', $req->id)->update(['status' => 'in progress', 'id_worker' => $req->selected_worker, 'updated_at' => Carbon::now()]);
 
             $order = DB::table('orders')->where('id_order', $req->id)->first();
             $message = 'Вашу пропозицію до замовлення "' . $order->title . '" було прийнято';
@@ -451,6 +451,7 @@ class OrdersController extends Controller
             'id_customer' => Auth::id(),
             'id_worker' => null,
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
 
         DB::table('orders')->insert($values);
