@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -31,15 +31,17 @@ class Kernel extends ConsoleKernel
              $orders = DB::table('orders')->where('status', 'in progress')->get();
 
              foreach ($orders as $one) {
-                 if (!is_null($one->time)) {
-                     $time = explode(' ', $one->time);
+                 $date = new DateTime($one->updated_at);
 
-                     $date = new DateTime($one->created_at);
+                 $proposal = DB::table('proposals')->where([['id_order', $one->id_order], ['id_worker', $one->id_worker]])->get()->first();
+
+                 if (!is_null($one->time) || !is_null($proposal->time)) {
+                     $time = explode(' ', is_null($proposal->time) ? $one->time : $proposal->time);
                      $time = $time[1] == 'год.' ? ceil($time[0] / 24) : $time[0];
 
                      $date->modify('+' . $time . ' day');
 
-                     if ($date >= Carbon::now()) {
+                     if ($date <= Carbon::now()) {
                          $message = 'Час на виконання замовлення "' . $one->title . '" закінчився';
 
                          app('App\Http\Controllers\Controller')->send_email($one->id_worker, $message);
