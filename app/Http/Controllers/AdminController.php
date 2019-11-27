@@ -236,7 +236,7 @@ class AdminController extends Controller
 
     public function send_application(Request $req)
     {
-        DB::table('applications')->insert($req->all());
+        DB::table('applications')->insert($req->except('_token'));
 
         $req->session()->flash('alert-success', 'Вашу заяву буде розглянуто у ближайший час!');
 
@@ -247,7 +247,7 @@ class AdminController extends Controller
     {
         $req->password = str_random(16);
 
-        $this->create_user($req->all());
+        $this->create_user($req->except('_token'));
 
         $id = DB::table('users')->where('id', $req->email)->get()->first();
 
