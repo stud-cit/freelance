@@ -236,15 +236,7 @@ class AdminController extends Controller
 
     public function send_application(Request $req)
     {
-        $values = [
-            'name' => $req->name,
-            'surname' => $req->surname,
-            'role' => $req->id_role,
-            'id_dept' => $req->id_dept,
-            'email' => $req->email,
-        ];
-
-        DB::table('applications')->insert($values);
+        DB::table('applications')->insert($req->all());
 
         $req->session()->flash('alert-success', 'Вашу заяву буде розглянуто у ближайший час!');
 

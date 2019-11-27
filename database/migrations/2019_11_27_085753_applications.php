@@ -20,6 +20,7 @@ class Applications extends Migration
             $table->text('role');
             $table->bigInteger('id_dept')->nullable();
             $table->string('email')->unique();
+            $table->longText('comment')->nullable();
         });
     }
 
