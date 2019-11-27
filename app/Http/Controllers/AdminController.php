@@ -236,11 +236,20 @@ class AdminController extends Controller
 
     public function send_application(Request $req)
     {
-        DB::table('applications')->insert($req->except('_token'));
+        $check = DB::table('users')->where('email', $req->email)->count();
 
-        $req->session()->flash('alert-success', 'Вашу заяву буде розглянуто у ближайший час!');
+        if (!$check) {
+            DB::table('applications')->insert($req->except('_token'));
 
-        return redirect('/orders');
+            $req->session()->flash('alert-success', 'Вашу заяву буде розглянуто у ближайший час!');
+
+            return redirect('/orders');
+        }
+        else {
+            $errors['email'] = 'Користувач з таким email вже існує!';
+
+            return back()->withInput($req->all())->withErrors($errors);
+        }
     }
 
     public function accept_application(Request $req)
