@@ -42,6 +42,13 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        $data = DB::table('departments')->get();
+
+        return view("auth.register", compact('data'));
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
