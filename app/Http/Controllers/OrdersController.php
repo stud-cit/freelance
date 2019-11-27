@@ -282,6 +282,10 @@ class OrdersController extends Controller
 
         Storage::disk('orders')->delete($req->id . '.zip');
 
+        $order = DB::table('orders')->where('id_order', $req->id)->get()->first();
+
+        $this->send_email($order->id_worker, 'Замовлення "' . $order->title . '" завершено');
+
         $req->session()->flash('alert-success', 'Замовлення успішно завершено!');
 
         return redirect('/orders');
