@@ -284,7 +284,7 @@ class AdminController extends Controller
     {
         DB::table('applications')->where('id_app', $req->id)->delete();
 
-        $req->session()->flash('alert-success', 'Заяву успішно відхилино!');
+        $req->session()->flash('alert-success', 'Заяву успішно відхилеdfно!');
 
         return back();
     }

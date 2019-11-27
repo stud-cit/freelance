@@ -239,10 +239,7 @@ class UsersController extends Controller
         $values = [
             'name' => $req->name,
             'surname' => $req->surname,
-            'patronymic' => $req->patronymic,
             'birthday_date' => $req->birthday_date,
-            'country' => $req->country,
-            'city' => $req->city,
             'about_me' => $req->about_me,
         ];
 
