@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -76,6 +75,17 @@ class AdminController extends Controller
         $dept = DB::table('departments')->get();
         $categ = DB::table('categories')->get();
         $app = DB::table('applications')->get();
+
+        foreach ($app as $one) {
+            if (!is_null($one->id_dept)) {
+                $depts = DB::table('departments')->where('id_dept', $one->id_dept)->get()->first();
+
+                $one->dept = $depts;
+            }
+            else {
+                $one->dept = '';
+            }
+        }
 
         $data = [
             'orders' => $orders,
@@ -254,13 +264,16 @@ class AdminController extends Controller
 
     public function accept_application(Request $req)
     {
-        $req->password = str_random(16);
+        $app = DB::table('applications')->where('id_app', $req->id)->get()->first();
+        $app->password = str_random(16);
 
-        $this->create_user($req->except('_token'));
+        $this->create_user($app);
 
-        $id = DB::table('users')->where('id', $req->email)->get()->first();
+        DB::table('applications')->where('id_app', $req->id)->delete();
 
-        $this->send_email($id->id, 'Ваша заява була одобрена.<br>Ваш пароль: ' . $req->password);
+        $id = DB::table('users')->where('email', $app->email)->get()->first();
+
+        $this->send_email($id->id, 'Ваша заява була одобрена.<br>Ваш пароль: ' . $app->password);
 
         $req->session()->flash('alert-success', 'Заяву успішно прийнято!');
 

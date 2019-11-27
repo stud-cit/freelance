@@ -253,29 +253,27 @@
                                         <div class="container-fluid shadow-box mb-4 orders">
                                             <div class="d-flex flex-row justify-content-between align-items-center">
                                                 <div class="font-weight-bold order-title font-size-25">{{ $reg->name }} {{ $reg->surname }}</div>
-                                                <div class="align-self-center">Роль: {{ $reg->role }}</div>
+                                                <div class="align-self-center">Роль: {{ $reg->id_role }}</div>
                                             </div>
                                             <div class="d-flex flex-row justify-content-between align-items-center">
                                                 <div>{{ $reg->email }}</div>
-                                                @if(!is_null($reg->id_dept))
-                                                <div>Кафедра: {{ $reg->id_dept }}</div>
-                                                @endif
+                                                <div>Кафедра: {{ $reg->dept }}</div>
                                             </div>
                                             @if(!is_null($reg->comment))
-                                            <div class="mt-2">Коментар:</div>
-                                            <div>{{ $reg->comment }}</div>
+                                                <div class="mt-2">Коментар:</div>
+                                                <div>{{ $reg->comment }}</div>
                                             @endif
                                             <div class="d-flex flex-row justify-content-end mt-2">
                                                 <div>
-                                                    <form action="" method="POST">
+                                                    <form action="{{ route('accept_application', $reg->id_app) }}" method="POST">
                                                         @csrf
-                                                        <button type="submit" class="btn bg-green text-white mr-2" name="finish" value="">Прийняти</button>
+                                                        <button type="submit" class="btn bg-green text-white mr-2">Прийняти</button>
                                                     </form>
                                                 </div>
                                                 <div>
-                                                    <form action="" method="POST">
+                                                    <form action="{{ route('reject_application', $reg->id_app) }}" method="POST">
                                                         @csrf
-                                                        <button type="submit" class="btn btn-danger" name="delete" value="">Відхилити</button>
+                                                        <button type="submit" class="btn btn-danger">Відхилити</button>
                                                     </form>
                                                 </div>
                                             </div>

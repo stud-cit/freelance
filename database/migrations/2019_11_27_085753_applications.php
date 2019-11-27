@@ -17,7 +17,7 @@ class Applications extends Migration
             $table->bigIncrements('id_app');
             $table->text('name');
             $table->text('surname');
-            $table->text('role');
+            $table->text('id_role');
             $table->bigInteger('id_dept')->nullable();
             $table->string('email')->unique();
             $table->longText('comment')->nullable();
