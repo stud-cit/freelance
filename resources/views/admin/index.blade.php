@@ -120,34 +120,27 @@
                             @csrf
                             <ul class="list-group ">
                                 <li class="list-group-item d-flex flex-row bg-light-grey">
-                                    <div class="">&nbsp;</div>
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex flex-column flex-grow-1">
                                         <label for="name" class="col-form-label">Ім'я</label>
                                         <input id="name" type="text" class="form-control border-0 bg-deep-dark text-white" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
                                     </div>
-                                    <div class="">&nbsp;</div>
                                 </li>
                                 <li class="list-group-item d-flex flex-row bg-light-grey">
-                                    <div class="">&nbsp;</div>
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex flex-column flex-grow-1">
                                         <label for="surname" class="col-form-label">Прізвище</label>
                                         <input id="surname" type="text" class="form-control border-0 bg-deep-dark text-white" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus placeholder="Прізвище">
                                     </div>
-                                    <div class="">&nbsp;</div>
                                 </li>
                                 <li class="list-group-item d-flex flex-row bg-light-grey">
-                                    <div class="">&nbsp;</div>
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex flex-column flex-grow-1">
                                         <label for="id_role" class="col-form-label">Роль</label>
                                         <select id="id_role" class="form-control border-0 bg-deep-dark text-white" name="id_role">
                                             <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}} value="Виконавець">Виконавець</option>
                                             <option {{old('id_role') == 'Замовник' ? 'selected' : ''}} value="Замовник">Замовник</option>
                                         </select>
                                     </div>
-                                    <div class="">&nbsp;</div>
                                 </li>
                                 <li class="list-group-item d-none flex-row bg-light-grey" id="dept-block">
-                                    <div class="">&nbsp;</div>
                                     <div class="d-flex flex-column">
                                         <label for="id_dept" class="col-form-label">Кафедра</label>
                                         <select id="id_dept" class="form-control border-0 bg-deep-dark text-white" name="id_dept">
@@ -157,11 +150,9 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="">&nbsp;</div>
                                 </li>
                                 <li class="list-group-item d-flex flex-row bg-light-grey">
-                                    <div class="">&nbsp;</div>
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex flex-column flex-grow-1">
                                         <label for="name" class="col-form-label">Електронна адреса</label>
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-0 bg-deep-dark text-white" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
                                         @error('email')
@@ -170,11 +161,9 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="">&nbsp;</div>
                                 </li>
                                 <li class="list-group-item d-flex flex-row bg-light-grey">
-                                    <div class="">&nbsp;</div>
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex flex-column flex-grow-1">
                                         <label for="name" class="col-form-label">Пароль</label>
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror border-0 bg-deep-dark text-white" name="password" required autocomplete="new-password" placeholder="********">
                                         @error('password')
@@ -183,15 +172,12 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="">&nbsp;</div>
                                 </li>
                                 <li class="list-group-item d-flex flex-row bg-light-grey">
-                                    <div class="">&nbsp;</div>
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex flex-column flex-grow-1">
                                         <label for="name" class="col-form-label">Повторіть пароль</label>
                                         <input id="password-confirm" type="password" class="form-control border-0 bg-deep-dark text-white" name="password_confirmation" required autocomplete="new-password" placeholder="********">
                                     </div>
-                                    <div class="">&nbsp;</div>
                                 </li>
                             </ul>
                             <div class="form-group row mt-3">
