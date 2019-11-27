@@ -10,6 +10,7 @@
 @php($orders = $data['orders'])
 @php($dept = $data['dept'])
 @php($categ = $data['categ'])
+@php($app = $data['app'])
 
 <div class="container">
     <div class="row">
@@ -21,6 +22,7 @@
                     <a class="nav-item nav-link @if(!$errors->isEmpty())active @endif" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
                     <a class="nav-item nav-link" id="nav-dept-tab" data-toggle="tab" href="#nav-dept" role="tab" aria-controls="nav-dept" aria-selected="false">Редагування кафедр</a>
                     <a class="nav-item nav-link" id="nav-categ-tab" data-toggle="tab" href="#nav-categ" role="tab" aria-controls="nav-categ" aria-selected="false">Редагування категорій</a>
+                    <a class="nav-item nav-link" id="nav-applications-tab" data-toggle="tab" href="#nav-applications" role="tab" aria-controls="nav-applications" aria-selected="false">Заявки на реєстрацію</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -240,6 +242,53 @@
                             </div>
                             <button type="submit" class="btn bg-orange badge-pill text-white float-right">Підтвердити</button>
                         </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-applications" role="tabpanel" aria-labelledby="nav-applications-tab">
+                    <div class="container orders" id="orders-list">
+                        @if(count($app))
+                            @foreach($app as $reg)
+                                <div class="container-fluid text-white" id="orders-list">
+                                    <div class="mt-2 mb-4">
+                                        <div class="container-fluid shadow-box mb-4 orders">
+                                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                                <div class="font-weight-bold order-title font-size-25">{{ $reg->name }} {{ $reg->surname }}</div>
+                                                <div class="align-self-center">Роль: {{ $reg->role }}</div>
+                                            </div>
+                                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                                <div>{{ $reg->email }}</div>
+                                                @if(!is_null($reg->id_dept))
+                                                <div>Кафедра: {{ $reg->id_dept }}</div>
+                                                @endif
+                                            </div>
+                                            @if(!is_null($reg->comment))
+                                            <div class="mt-2">Коментар:</div>
+                                            <div>{{ $reg->comment }}</div>
+                                            @endif
+                                            <div class="d-flex flex-row justify-content-end mt-2">
+                                                <div>
+                                                    <form action="" method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn bg-green text-white mr-2" name="finish" value="">Прийняти</button>
+                                                    </form>
+                                                </div>
+                                                <div>
+                                                    <form action="" method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger" name="delete" value="">Відхилити</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <hr class="border-grey pb-2">
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="flex-row">
+                                <div class="col font-weight-bold font-size-18 text-white text-center mt-4">Немає залишених заявок</div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
