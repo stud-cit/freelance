@@ -31,8 +31,8 @@
                     @enderror
                 </div>
                 <div class="form-group row">
-                    <label for="id_role" class="col-form-label">Роль</label>
-                    <select id="id_role" class="form-control bg-light-black text-white border-0" name="id_role">
+                    <label for="id_role " class="col-form-label">Роль</label>
+                    <select id="id_role" class="form-control bg-light-black text-white border-0" name="role">
                         <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}}>Виконавець</option>
                         <option {{old('id_role') == 'Замовник' ? 'selected' : ''}}>Замовник</option>
                     </select>
