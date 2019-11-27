@@ -12,22 +12,22 @@ class AdminController extends Controller
 {
     private function create_user($info)
     {
-        $id_role = DB::table('roles')->where('role_name', $info->id_role)->get('id_role')->first();
+        $id_role = DB::table('roles')->where('role_name', $info['id_role'])->get('id_role')->first();
 
         $user = User::create([
             'id_role' => $id_role->id_role,
-            'email' => $info->email,
+            'email' => $info['email'],
             'banned' => false,
-            'password' => Hash::make($info->password),
-            'id_dept' => $info->id_dept != '0' && $info->id_role == 'Замовник' ? $info->id_dept : null,
+            'password' => Hash::make($info['password']),
+            'id_dept' => $info['id_dept'] != '0' && $info['id_role'] == 'Замовник' ? $info['id_dept'] : null,
         ]);
 
         Storage::disk('public')->copy('0.png', $user['id'] . '.png');
 
         $values = [
             'id_user' => $user['id'],
-            'name' => $info->name,
-            'surname' => $info->surname,
+            'name' => $info['name'],
+            'surname' => $info['surname'],
             'birthday_date' => null,
             'phone_number' => null,
             'about_me' => null,
@@ -267,7 +267,7 @@ class AdminController extends Controller
         $app = DB::table('applications')->where('id_app', $req->id)->get()->first();
         $app->password = str_random(16);
 
-        $this->create_user($app);
+        $this->create_user((array) $app);
 
         DB::table('applications')->where('id_app', $req->id)->delete();
 
