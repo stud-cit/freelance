@@ -5,6 +5,58 @@
 @endsection
 
 @section('content')
+
+
+    <div class="text-white" id="password_change">
+        <p class="col font-size-18 text-center">Заявка на реєстрацію</p>
+        <form method="POST" action="{{ route('send_application') }}" class="col-6 offset-3 shadow-lg pass_change">
+            @csrf
+            <div class="col-12">
+                <div class="form-group row">
+                    <label for="name" class="col-form-label">Ім'я</label>
+                    <input id="name" type="text" class="form-control bg-light-black text-white border-0" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
+                    @error('name')
+                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="form-group row">
+                    <label for="surname" class="col-form-label">Прізвище</label>
+                    <input id="surname" type="text" class="form-control bg-light-black text-white border-0" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus placeholder="Прізвище">
+                    @error('surname')
+                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="form-group row">
+                    <label for="id_role" class="col-form-label">Роль</label>
+                    <select id="id_role" class="form-control bg-light-black text-white border-0" name="id_role">
+                        <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}}>Виконавець</option>
+                        <option {{old('id_role') == 'Замовник' ? 'selected' : ''}}>Замовник</option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="name" class="col-form-label">Електронна адреса</label>
+                    <input id="email" type="email" class="form-control bg-light-black text-white @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="form-group row justify-content-center">
+                    <button type="submit" class="btn bg-green text-white mb-2 mt-2 badge-pill">
+                        Відправити
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<!--
+
 <div class="container">
     <div class="row">
         <div class="col-7">
@@ -19,16 +71,16 @@
             </div>
             <div>
                 <form method="POST" action="{{ route('send_application') }}">
-                    @csrf
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex flex-row">
-                            <div class="">&nbsp;</div>
+                        @csrf
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex flex-row">
+                                <div class="">&nbsp;</div>
                                 <div class="d-flex flex-column">
                                     <label for="name" class="col-form-label">Ім'я</label>
                                     <input id="name" type="text" class="form-control border-0" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Ім'я">
                                 </div>
-                            <div class="">&nbsp;</div>
-                        </li>
+                                <div class="">&nbsp;</div>
+                            </li>
 
                         <li class="list-group-item d-flex flex-row">
                             <div class="">&nbsp;</div>
@@ -76,7 +128,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 @endsection
 
 @section('footer')
