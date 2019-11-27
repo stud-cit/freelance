@@ -31,6 +31,8 @@ Route::get('/profile/{id}', 'UsersController@user')->name('user');
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/email/mail', function () {return view('email.mail');});
+
 Route::get('/admin', 'AdminController@index')->middleware('is.admin');
 Route::post('/ban_user', 'AdminController@ban')->name('ban');
 Route::post('/unban_user', 'AdminController@unban')->name('unban');
