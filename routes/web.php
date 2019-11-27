@@ -1,6 +1,6 @@
 <?php
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::get('/orders', 'OrdersController@index')->name('orders');
 Route::post('/save_order', 'OrdersController@save_order')->name('save_order');
@@ -39,6 +39,9 @@ Route::post('/delete', 'AdminController@delete_order')->name('delete');
 Route::post('/new_user', 'AdminController@new_user')->name('new_user');
 Route::post('/save_dept', 'AdminController@save_dept')->name('save_dept');
 Route::post('/save_categ', 'AdminController@save_categ')->name('save_categ');
+Route::post('/send_application', 'AdminController@send_application')->name('send_application');
+Route::post('/accept_application/{id}', 'AdminController@accept_application')->name('accept_application');
+Route::post('/reject_application/{id}', 'AdminController@reject_application')->name('reject_application');
 
 Route::get('/chat', 'ChatController@index')->middleware('logged.in')->name('to_chat');
 Route::post('/chat', 'ChatController@new_message')->name('new_message');

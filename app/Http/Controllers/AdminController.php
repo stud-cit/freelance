@@ -11,6 +11,36 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
+    private function create_user($info)
+    {
+        $id_role = DB::table('roles')->where('role_name', $info->id_role)->get('id_role')->first();
+
+        $user = User::create([
+            'id_role' => $id_role->id_role,
+            'email' => $info->email,
+            'banned' => false,
+            'password' => Hash::make($info->password),
+            'id_dept' => $info->id_dept != '0' && $info->id_role == 'Замовник' ? $info->id_dept : null,
+        ]);
+
+        Storage::disk('public')->copy('0.png', $user['id'] . '.png');
+
+        $values = [
+            'id_user' => $user['id'],
+            'name' => $info->name,
+            'surname' => $info->surname,
+            'birthday_date' => null,
+            'phone_number' => null,
+            'about_me' => null,
+        ];
+
+        DB::table('users_info')->insert($values);
+        DB::table('contacts')->insert([
+            'id_user' => $user['id'],
+            'contacts' => '|'
+        ]);
+    }
+
     public function index()
     {
         $orders = DB::table('orders')
@@ -45,12 +75,14 @@ class AdminController extends Controller
 
         $dept = DB::table('departments')->get();
         $categ = DB::table('categories')->get();
+        $app = DB::table('applications')->get();
 
         $data = [
             'orders' => $orders,
             'users' => $array,
             'dept' => $dept,
             'categ' => $categ,
+            'app' => $app,
         ];
 
         return view('admin.index', compact('data'));
@@ -112,32 +144,8 @@ class AdminController extends Controller
         $check3 = strcmp($req->password, $req->password_confirmation) === 0;
 
         if (!count($check1) && $check2 && $check3) {
-            $id_role = DB::table('roles')->where('role_name', $req->id_role)->get('id_role')->first();
 
-            $user = User::create([
-                'id_role' => $id_role->id_role,
-                'email' => $req->email,
-                'banned' => false,
-                'password' => Hash::make($req->password),
-                'id_dept' => $req->id_dept != '0' && $req->id_role == 'Замовник' ? $req->id_dept : null,
-            ]);
-
-            Storage::disk('public')->copy('0.png', $user['id'] . '.png');
-
-            $values = [
-                'id_user' => $user['id'],
-                'name' => $req->name,
-                'surname' => $req->surname,
-                'birthday_date' => null,
-                'phone_number' => null,
-                'about_me' => null,
-            ];
-
-            DB::table('users_info')->insert($values);
-            DB::table('contacts')->insert([
-                'id_user' => $user['id'],
-                'contacts' => '|'
-            ]);
+            $this->create_user($req->all());
 
             $req->session()->flash('alert-success', 'Користувача успішно додано!');
 
@@ -222,6 +230,47 @@ class AdminController extends Controller
         foreach ($new as $one) {
             DB::table('categories')->insert(['name' => $one]);
         }
+
+        return back();
+    }
+
+    public function send_application(Request $req)
+    {
+        $values = [
+            'name' => $req->name,
+            'surname' => $req->surname,
+            'role' => $req->id_role,
+            'id_dept' => $req->id_dept,
+            'email' => $req->email,
+        ];
+
+        DB::table('applications')->insert($values);
+
+        $req->session()->flash('alert-success', 'Вашу заяву буде розглянуто у ближайший час!');
+
+        return redirect('/orders');
+    }
+
+    public function accept_application(Request $req)
+    {
+        $req->password = str_random(16);
+
+        $this->create_user($req->all());
+
+        $id = DB::table('users')->where('id', $req->email)->get()->first();
+
+        $this->send_email($id->id, 'Ваша заява була одобрена.<br>Ваш пароль: ' . $req->password);
+
+        $req->session()->flash('alert-success', 'Заяву успішно прийнято!');
+
+        return back();
+    }
+
+    public function reject_application(Request $req)
+    {
+        DB::table('applications')->where('id_app', $req->id)->delete();
+
+        $req->session()->flash('alert-success', 'Заяву успішно відхилино!');
 
         return back();
     }

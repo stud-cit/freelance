@@ -12,8 +12,8 @@
                     <div class="col-5 d-flex border-right border-grey">
                         <div class="d-flex flex-column flex-shrink-1 align-self-center mx-auto text-white col-8">
                             <p>Як зареєструватися?</p>
-                            <p>1. <a href="mailto:s.panchenko@ias.sumdu.edu.ua">Зв'язатися</a> з нами</p>
-                            <p>2. Дочекатися даних для входу на свою електронну адресу</p>
+                            <p>1. <a href="{{ route('register') }}">Залиште заяву</a></p>
+                            <p>2. Дочекатися підтверження форми адміністратором</p>
                             <p>3. Використати дану форму для авторизації</p>
                         </div>
                     </div>
