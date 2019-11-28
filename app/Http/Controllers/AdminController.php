@@ -273,7 +273,7 @@ class AdminController extends Controller
 
         $id = DB::table('users')->where('email', $app->email)->get()->first();
 
-        $this->send_email($id->id, 'Ваша заява була одобрена.<br>Ваш пароль: ' . $app->password);
+        $this->send_email($id->id, 'Ваша заява була одобрена. Ваш пароль: ' . $app->password);
 
         $req->session()->flash('alert-success', 'Заяву успішно прийнято!');
 
@@ -284,7 +284,7 @@ class AdminController extends Controller
     {
         DB::table('applications')->where('id_app', $req->id)->delete();
 
-        $req->session()->flash('alert-success', 'Заяву успішно відхилеdfно!');
+        $req->session()->flash('alert-success', 'Заяву успішно відхилено!');
 
         return back();
     }

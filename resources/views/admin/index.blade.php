@@ -91,14 +91,14 @@
                                                         @if($all->status == 'in progress')
                                                             <form action="{{ route('finish') }}" method="POST">
                                                                 @csrf
-                                                                <button type="submit" class="btn bg-blue text-white mb-2" name="finish" value="{{ $all->id_order }}">Завершити</button>
+                                                                <button type="submit" class="btn bg-blue text-white mr-2" name="finish" value="{{ $all->id_order }}">Завершити</button>
                                                             </form>
                                                         @endif
                                                     </div>
                                                     <div>
                                                         <form action="{{ route('delete') }}" method="POST">
                                                             @csrf
-                                                            <button type="submit" class="btn btn-danger mb-1" name="delete" value="{{ $all->id_order }}">Видалити</button>
+                                                            <button type="submit" class="btn btn-danger" name="delete" value="{{ $all->id_order }}">Видалити</button>
                                                         </form>
                                                     </div>
                                                 </div>

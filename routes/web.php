@@ -26,7 +26,6 @@ Route::post('/save_contacts', 'UsersController@save_contacts')->name('save_conta
 Route::post('/save_skills', 'UsersController@save_skills')->name('save_skills');
 Route::post('/change_pass', 'UsersController@change_pass')->name('change_pass');
 Route::post('/save_review/{id}', 'UsersController@save_review')->name('save_review');
-
 Route::get('/profile/{id}', 'UsersController@user')->name('user');
 
 Route::get('/', 'HomeController@index');

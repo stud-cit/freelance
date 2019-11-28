@@ -39,91 +39,6 @@ class UsersController extends Controller
         else {
             return redirect('orders');
         }
-
-        $data = $this->getUsersInfo('id_user', Auth::id())->first();
-
-        $created_at = explode(' ', $data->created_at);
-        $data->created_at = $created_at[0];
-
-        $data->categories = DB::table('user_has_skills')
-            ->join('categories', 'categories.id_category', '=', 'user_has_skills.id_category')
-            ->where('id', $data->id_user)
-            ->get('name')
-            ->toArray();
-
-        $reviews = DB::table('reviews')
-            ->join('users_info', 'users_info.id_user', '=', 'reviews.id_from')
-            ->where('id_to', Auth::id())
-            ->paginate(5);
-
-        foreach ($reviews as $review) {
-            if (Storage::disk('public')->has($review->id_user . '.png')) {
-                $review->avatar = '/img/' . $review->id_user . '.png';
-            }
-            else {
-                $review->avatar = '/img/' . $review->id_user . '.jpg';
-            }
-
-            $review->avatar .= '?t=' . Carbon::now();
-        }
-
-        $categories = DB::table('categories')->get()->toArray();
-
-        $temp = DB::table('user_has_skills')->where('id', Auth::id())->get()->toArray();
-        $skills = '';
-
-        foreach ($temp as $one) {
-            $skills .= $one->id_category . '|';
-        }
-
-        $orders = DB::table('orders')->where('id_customer', Auth::id())->get()->toArray();
-
-        $proposals = DB::table('orders')
-            ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
-            ->join('users_info', 'users_info.id_user', '=', 'orders.id_customer')
-            ->where([['proposals.id_worker', Auth::id()], ['status', 'new']])
-            ->orWhere([['orders.id_worker', Auth::id()], ['status', '!=', 'new']])
-            ->get()
-            ->toArray();
-
-        foreach ($proposals as $one) {
-            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
-
-            $one->review = is_null($review) ? 1 : 0;
-        }
-
-        foreach ($orders as $one) {
-            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
-
-            $one->worker = DB::table('orders')
-                ->join('users_info', 'orders.id_worker', '=', 'users_info.id_user')
-                ->where('id_user', $one->id_worker)
-                ->get()
-                ->first();
-
-            $one->review = is_null($review) ? 1 : 0;
-        }
-
-        $dept = DB::table('users')
-            ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
-            ->where('id', Auth::id())
-            ->get()
-            ->first();
-
-        $depts = DB::table('departments')->get();
-
-        $info = [
-            'data' => $data,
-            'reviews' => $reviews,
-            'categories' => $categories,
-            'skills' => $skills,
-            'proposals' => $proposals,
-            'orders' => $orders,
-            'dept' => $dept,
-            'depts' => $depts
-        ];
-
-        return view('users.profile', compact('info'));
     }
 
     public function save_contacts(Request $req)
@@ -329,19 +244,19 @@ class UsersController extends Controller
         $proposals = DB::table('orders')
             ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
             ->join('users_info', 'users_info.id_user', '=', 'orders.id_customer')
-            ->where([['proposals.id_worker', Auth::id()], ['status', 'new']])
-            ->orWhere([['orders.id_worker', Auth::id()], ['status', '!=', 'new']])
+            ->where([['proposals.id_worker', $id], ['status', 'new']])
+            ->orWhere([['orders.id_worker', $id], ['status', '!=', 'new']])
             ->get()
             ->toArray();
 
         foreach ($proposals as $one) {
-            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
+            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', $id]])->get()->first();
 
             $one->review = is_null($review) ? 1 : 0;
         }
 
         foreach ($orders as $one) {
-            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', Auth::id()]])->get()->first();
+            $review = DB::table('reviews')->where([['id_order', $one->id_order], ['id_from', $id]])->get()->first();
 
             $one->worker = DB::table('orders')
                 ->join('users_info', 'orders.id_worker', '=', 'users_info.id_user')
