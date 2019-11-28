@@ -1,16 +1,42 @@
-<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/site.css') }}" rel="stylesheet" type="text/css">
+<style>
+    .bg-deep-grey {
+        background-color: #2D3A4D;
+    }
+    .bg-light-black {
+        background-color: #222C3A;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        color: white;
+    }
+    .center {
+        text-align: center;
+    }
+    .p-15 {
+        padding: 15px;
+    }
+</style>
 
-<div class="container text-white">
-    <div class="d-flex flex-row">
-        <a href="/" class="m-auto"><img src="{{ asset('/SVG_Logo.svg') }}" alt="WorkDump" height="40px" id="logo"></a>
+<div class="container bg-deep-grey">
+    <div class="center p-15">
+        <svg xmlns="http://www.w3.org/2000/svg" width="376.273" height="40px" viewBox="0 0 376.273 217.241">
+            <g id="Group_125" data-name="Group 125" transform="translate(-1129 -336.759)">
+                <path id="Path_16" data-name="Path 16" d="M26.9.5,3-70H19.5L34-22.6,49.7-70.2H62.9L78.6-22.6,93.1-70h16.1L85.3.5H71.9L56.1-45.3,40.3.5Z" transform="translate(1126 461)" fill="#fff"/>
+                <path id="Path_15" data-name="Path 15" d="M8.4,0V-70H35.7q16.4,0,26.8,9.95T72.9-35q0,15-10.45,25T35.7,0ZM23.8-13.9H35.7q9.5,0,15.3-5.85T56.8-35q0-9.3-5.85-15.2T35.7-56.1H23.8Z" transform="translate(1145 538)" fill="#fff"/>
+                <path id="Path_17" data-name="Path 17" d="M6.8,0V-53.6H22v10.8q5.2-12.3,17.1-11.8v15.9h-.8q-7.8,0-12.05,4.75T22-19.8V0ZM48.6,0V-73H63.8v38.9L81.6-53.6H99.8L79.4-32.5,100.5,0H83.1l-14-21.9-5.3,5.6V0Z" transform="translate(1332 461)" fill="#fff"/>
+                <path id="Path_14" data-name="Path 14" d="M6.8,0V-53.6H22V-46q6.7-8.6,15.8-8.6,10.7,0,15.1,8.5,7.3-8.5,17.6-8.5,8.6,0,13.35,5.05T88.6-34.9V0H73.4V-29.9q0-10.9-8.9-10.9A8.5,8.5,0,0,0,57.75-38q-2.45,2.8-2.45,8.1V0H40.1V-29.9q0-10.9-8.9-10.9A8.5,8.5,0,0,0,24.45-38Q22-35.2,22-29.9V0Zm95,16V-53.6H117v7.7q6.4-8.7,16.7-8.7a23.019,23.019,0,0,1,17.2,7.5q7.2,7.5,7.2,20.4,0,12.8-7.15,20.25A23.042,23.042,0,0,1,133.7,1,20.919,20.919,0,0,1,117-7V16Zm18.75-32.05a11.976,11.976,0,0,0,9.25,4.15,12.128,12.128,0,0,0,9.3-4.15q3.8-4.15,3.8-10.85a15.157,15.157,0,0,0-3.8-10.65,12.128,12.128,0,0,0-9.3-4.15,11.976,11.976,0,0,0-9.25,4.15Q116.8-33.4,116.8-26.7A15.278,15.278,0,0,0,120.55-16.05Z" transform="translate(1332 538)" fill="#fff"/>
+                <path id="Subtraction_1" data-name="Subtraction 1" d="M2964.6-2499.23c-24.576,0-44.57-19.5-44.57-43.465v-27.3h9.091v27.3c0,19.078,15.916,34.6,35.479,34.6s35.478-15.521,35.478-34.6v-27.3h9.091v27.3C3009.171-2518.729,2989.177-2499.23,2964.6-2499.23Zm-35.479-76.761h-9.091v-27.543c0-23.967,19.994-43.466,44.57-43.466s44.569,19.5,44.569,43.466v27.542h-9.091v-27.543c0-19.078-15.915-34.6-35.478-34.6s-35.479,15.521-35.479,34.6v27.543ZM2964.6-2590.6a4.551,4.551,0,0,1-4.546-4.546v-20.921a4.551,4.551,0,0,1,4.546-4.546,4.55,4.55,0,0,1,4.544,4.546v20.921A4.55,4.55,0,0,1,2964.6-2590.6Z" transform="translate(-1682 3037.992)" fill="#fff"/>
+                <path id="Path_13" data-name="Path 13" d="M-1219.5,1749.4c0-48.463,31.052-54.139,85.32-54.139s121.529,2.272,131.752,54.139-50.732,77.234-50.732,77.234" transform="translate(2503 -1355)" fill="none" stroke="#fff" stroke-width="7"/>
+            </g>
+        </svg>
     </div>
-    <div class="d-flex flex-column mt-4"><p>Шановний(а) @if(!empty($name)) {{ $name }} @else Іван Іванов@endif.</p>
-        <p>@if(!empty($text)) {{ $text }}  @else Шаблонный текст @endif</p>
+    <div class="p-15"><p>Шановний(а) @if(!empty($name)) {{ $name }} @else Іван Іванов@endif.</p>
+        <p>@if(!empty($text)) {{ $text }} @else Шаблонный текст @endif</p>
         <p>Дякуємо за співпрацю з нами.</p>
         <p>Команда WorkDump</p>
     </div>
-</div>
-<div class="container-fluid bg-light-black text-center text-white">
-    <div>WorkDump(c) 2019</div>
+    <div class="bg-light-black center">
+        <div class="p-15">WorkDump(c) 2019</div>
+    </div>
 </div>

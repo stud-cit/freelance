@@ -51,3 +51,4 @@ Route::post('/check_header', 'ChatController@check_header');
 Route::post('/send_file', 'ChatController@send_file')->name('send_file');
 Route::post('/get_file', 'ChatController@get_file')->name('get_file');
 
+Route::get('/email/mail', function () {return view('/email/mail');});
