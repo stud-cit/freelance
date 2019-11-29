@@ -3446,6 +3446,24 @@ $("document").ready(function () {
       });
     }
   });
+  $('.app-event').on('click', function (e) {
+    var _this2 = this;
+
+    e.preventDefault();
+    Swal.fire({
+      text: "Ви впевнені, що хочете це зробити?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#aaaaaa',
+      confirmButtonText: 'Так',
+      cancelButtonText: 'Ні'
+    }).then(function (result) {
+      if (result.value) {
+        $(_this2).closest('form').submit();
+      }
+    });
+  });
   $('#messages-list').on('click', '.this-is-file', function () {
     $('#get-file-form input[name="id"]').val($(this).attr('data-id'));
     $('#get-file-form input[name="name"]').val($(this).find('span:first').text());

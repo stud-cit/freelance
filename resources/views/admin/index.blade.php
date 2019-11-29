@@ -253,13 +253,13 @@
                                                 <div>
                                                     <form action="{{ route('accept_application', $reg->id_app) }}" method="POST">
                                                         @csrf
-                                                        <button type="submit" class="btn bg-green text-white mr-2">Прийняти</button>
+                                                        <button type="submit" class="btn bg-green text-white mr-2 app-event">Прийняти</button>
                                                     </form>
                                                 </div>
                                                 <div>
                                                     <form action="{{ route('reject_application', $reg->id_app) }}" method="POST">
                                                         @csrf
-                                                        <button type="submit" class="btn btn-danger">Відхилити</button>
+                                                        <button type="submit" class="btn btn-danger app-event">Відхилити</button>
                                                     </form>
                                                 </div>
                                             </div>
