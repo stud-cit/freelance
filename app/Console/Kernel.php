@@ -28,26 +28,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->call(function() {
-             $orders = DB::table('orders')->where('status', 'in progress')->get();
+             $this->deadline_check();
 
-             foreach ($orders as $one) {
-                 $date = new DateTime($one->updated_at);
-
-                 $proposal = DB::table('proposals')->where([['id_order', $one->id_order], ['id_worker', $one->id_worker]])->get()->first();
-
-                 if (!is_null($one->time) || !is_null($proposal->time)) {
-                     $time = explode(' ', is_null($proposal->time) ? $one->time : $proposal->time);
-                     $time = $time[1] == 'год.' ? ceil($time[0] / 24) : $time[0];
-
-                     $date->modify('+' . $time . ' day');
-
-                     if ($date <= Carbon::now()) {
-                         $message = 'Час на виконання замовлення "' . $one->title . '" закінчився';
-
-                         app('App\Http\Controllers\Controller')->send_email($one->id_worker, $message);
-                     }
-                 }
-             }
+             $this->update_dept();
          })->daily();
     }
 
@@ -61,5 +44,74 @@ class Kernel extends ConsoleKernel
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
+    }
+
+    function update_dept()
+    {
+        try {
+            $req_url = 'https://asu.sumdu.edu.ua/api/getDivisions?key=DmHLw4JWcDjY9yoCVsle0J2D4am3EPuh';
+            $response_json = json_decode(file_get_contents($req_url));
+
+            DB::table('departments')->delete();
+            DB::table('dept_type')->delete();
+
+            $values = [];
+            $types = [];
+
+            foreach ($response_json->result as $one) {
+                $temp = [
+                    'id_dept' => $one->ID_DIV,
+                    'name' => $one->NAME_DIV,
+                    'id_type' => $one->KOD_TYPE
+                ];
+
+                $type = [
+                    'id_type' => $one->KOD_TYPE,
+                    'type_name' => $one->NAME_TYPE
+                ];
+
+                array_push($values, $temp);
+
+                if(!in_array($type, $types)) {
+                    array_push($types, $type);
+                }
+            }
+
+            DB::table('dept_type')->insert($types);
+            DB::table('departments')->insert($values);
+
+            $users = DB::table('users')
+                    ->leftJoin('departments', 'users.id_dept', '=', 'departments.id_dept')
+                    ->whereNull('departments.name')
+                    ->update(['id' => null]);
+        } catch (\Exception $e) {
+        }
+    }
+
+    private function deadline_check()
+    {
+        $orders = DB::table('orders')->where('status', 'in progress')->get();
+
+        foreach ($orders as $one) {
+            try {
+                $date = new DateTime($one->updated_at);
+
+                $proposal = DB::table('proposals')->where([['id_order', $one->id_order], ['id_worker', $one->id_worker]])->get()->first();
+
+                if (!is_null($one->time) || !is_null($proposal->time)) {
+                    $time = explode(' ', is_null($proposal->time) ? $one->time : $proposal->time);
+                    $time = $time[1] == 'год.' ? ceil($time[0] / 24) : $time[0];
+
+                    $date->modify('+' . $time . ' day');
+
+                    if ($date <= Carbon::now()) {
+                        $message = 'Час на виконання замовлення "' . $one->title . '" закінчився';
+
+                        app('App\Http\Controllers\Controller')->send_email($one->id_worker, $message);
+                    }
+                }
+            } catch (\Exception $e) {
+            }
+        }
     }
 }

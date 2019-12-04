@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Departments extends Migration
+class DeptType extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class Departments extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
-            $table->integer('id_dept')->unique();
-            $table->text('name');
-            $table->text('id_type')->references('id_type')->on('dept_type');
+        Schema::create('dept_type', function (Blueprint $table) {
+            $table->integer('id_type');
+            $table->text('type_name');
         });
     }
 
@@ -27,6 +26,6 @@ class Departments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('dept_type');
     }
 }

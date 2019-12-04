@@ -20,7 +20,6 @@
                     <a class="nav-item nav-link @if($errors->isEmpty())active @endif" id="nav-ban-tab" data-toggle="tab" href="#nav-ban" role="tab" aria-controls="nav-ban" aria-selected="true">Робота з користувачами</a>
                     <a class="nav-item nav-link" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Робота з замовленнями</a>
                     <a class="nav-item nav-link @if(!$errors->isEmpty())active @endif" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
-                    <a class="nav-item nav-link" id="nav-dept-tab" data-toggle="tab" href="#nav-dept" role="tab" aria-controls="nav-dept" aria-selected="false">Редагування кафедр</a>
                     <a class="nav-item nav-link" id="nav-categ-tab" data-toggle="tab" href="#nav-categ" role="tab" aria-controls="nav-categ" aria-selected="false">Редагування категорій</a>
                     <a class="nav-item nav-link" id="nav-applications-tab" data-toggle="tab" href="#nav-applications" role="tab" aria-controls="nav-applications" aria-selected="false">Заявки на реєстрацію</a>
                 </div>
@@ -187,26 +186,6 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="nav-dept" role="tabpanel" aria-labelledby="nav-dept-tab">
-                    <div class="container" id="dept" data-id="0">
-                        <form action="{{ route('save_dept') }}" method="POST">
-                            @csrf
-                            <div class="toggle-box">
-                                <div class="form-row input-group">
-                                    <input type="text" class="form-control col-10" disabled>
-                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus" value="+">
-                                </div>
-                                @foreach($dept as $one)
-                                    <div class="form-row input-group">
-                                        <input type="text" class="form-control col-10" name="dept-{{ $one->id_dept }}" value="{{ $one->name }}">
-                                        <input type='button' class='btn-outline-danger form-control col-1 toggle-minus' value='-'>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <button type="submit" class="btn bg-orange badge-pill text-white float-right">Підтвердити</button>
                         </form>
                     </div>
                 </div>
