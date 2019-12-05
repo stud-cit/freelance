@@ -14,6 +14,7 @@
 @php($orders = $info['orders'])
 @php($proposals = $info['proposals'])
 @php($progress = $info['progress'])
+@php($all_dept = $info['all_dept'])
 
 <div>
     <div class="flash-message fixed-bottom text-center">

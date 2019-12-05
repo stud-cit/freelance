@@ -72,7 +72,13 @@ class AdminController extends Controller
             }
         }
 
-        $dept = DB::table('departments')->get();
+        $types = DB::table('dept_type')->get();
+        $dept = [];
+
+        foreach ($types as $one) {
+            $dept[$one->type_name] = DB::table('departments')->where('id_type', $one->id_type)->get()->toArray();
+        }
+
         $categ = DB::table('categories')->get();
         $app = DB::table('applications')->get();
 

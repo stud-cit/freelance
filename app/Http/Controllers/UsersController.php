@@ -267,6 +267,13 @@ class UsersController extends Controller
             $one->review = is_null($review) ? 1 : 0;
         }
 
+        $types = DB::table('dept_type')->get();
+        $all_dept = [];
+
+        foreach ($types as $one) {
+            $all_dept[$one->type_name] = DB::table('departments')->where('id_type', $one->id_type)->get()->toArray();
+        }
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
@@ -276,6 +283,7 @@ class UsersController extends Controller
             'complete' => $complete,
             'orders' => $orders,
             'proposals' => $proposals,
+            'all_dept' => $all_dept,
         ];
 
         return view('users.user', compact('info'));

@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use App\Models\User;
 use ZipArchive;
 
 class OrdersController extends Controller
@@ -131,14 +130,11 @@ class OrdersController extends Controller
 
         $categories = DB::table('categories')->orderBy('name')->get()->toArray();
 
-        $dept = DB::table('departments')->get();
+        $types = DB::table('dept_type')->get();
+        $dept = [];
 
-        foreach ($dept as $one) {
-            $one->count = DB::table('users')
-                ->join('orders', 'users.id', '=', 'orders.id_customer')
-                ->join('departments', 'departments.id_dept', '=', 'users.id_dept')
-                ->where([['departments.name', $one->name], ['status', 'new']])
-                ->count();
+        foreach ($types as $one) {
+            $dept[$one->type_name] = DB::table('departments')->where('id_type', $one->id_type)->get()->toArray();
         }
 
         $count = DB::table('orders')->where('status', 'new')->count();
