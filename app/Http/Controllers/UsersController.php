@@ -165,8 +165,10 @@ class UsersController extends Controller
         return redirect('/profile');
     }
 
-    public function user($id)
+    public function user($id = null)
     {
+        $flag = is_null($id);
+        $id = is_null($id) ? Auth::id() : $id;
         $id_user = DB::table('users')->where('id', $id)->get('id')->first();
 
         if (!$id_user) {
@@ -286,6 +288,13 @@ class UsersController extends Controller
             'all_dept' => $all_dept,
         ];
 
-        return view('users.user', compact('info'));
+        if ($flag && Auth::user()->id_role != 1) {
+            $view = Auth::user()->id_role == 2 ? 'users.my_orders' : 'users.my_prop';
+        }
+        else {
+            $view = 'users.user';
+        }
+
+        return view($view, compact('info'));
     }
 }
