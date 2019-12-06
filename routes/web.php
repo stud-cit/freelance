@@ -30,6 +30,7 @@ Route::post('/save_skills', 'UsersController@save_skills')->name('save_skills');
 Route::post('/change_pass', 'UsersController@change_pass')->name('change_pass');
 Route::post('/save_review/{id}', 'UsersController@save_review')->name('save_review');
 Route::get('/profile/{id}', 'UsersController@user')->name('user');
+Route::get('/my_orders', 'UsersController@user')->name('my_orders');
 
 Route::get('/', 'HomeController@index');
 
