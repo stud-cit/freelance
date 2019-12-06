@@ -34,7 +34,7 @@ Route::get('/my_orders', 'UsersController@user')->name('my_orders');
 
 Route::get('/', 'HomeController@index');
 
-Route::get('/admin', 'AdminController@index')->middleware('is.admin');
+Route::get('/admin', 'AdminController@index')->middleware('is.admin')->name('admin');
 Route::post('/ban_user', 'AdminController@ban')->name('ban');
 Route::post('/unban_user', 'AdminController@unban')->name('unban');
 Route::post('/finish', 'AdminController@finish_order')->name('finish');

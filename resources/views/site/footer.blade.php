@@ -7,6 +7,9 @@
             </div>
             <div class="col-4 d-flex flex-row align-items-center">
                 <div class="d-flex flex-grow-1">
+                    <div class="mr-auto">
+                        <a href="{{ route('orders') }}" class="text-white">Туторіал</a>
+                    </div>
                     <div>
                         <a href="http://studcit.obdev.sumdu.edu.ua/" class="text-white">Наш сайт</a>
                     </div>

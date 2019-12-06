@@ -9,17 +9,29 @@
                     <div>
                         <a href="{{ route('orders') }}" class="text-white">Проекти</a>
                     </div>
+                    @if(Auth::user()->id_role == 1)
                     <div>
-                        <a href="{{ route('orders') }}" class="text-white">Туторіал</a>
+                        <a href="{{ route('admin') }}" class="text-white">Панель адміна</a>
                     </div>
+                    @endif
+                    @if(Auth::user()->id_role == 2)
                     <div>
-                        <a href="{{ route('user', Auth::id()) }}" class="text-white">Профіль</a>
+                        <a href="{{ route('my_orders') }}" class="text-white">Мої замовлення</a>
                     </div>
                     <div>
                         <a href="{{ route('workers') }}" class="text-white">Виконавці</a>
                     </div>
+                    @endif
+                    @if(Auth::user()->id_role == 3)
                     <div>
-                        <a href="{{ route('to_chat') }}" class="text-white">Зв'язок&nbsp;<span class="header-count badge badge-pill bg-orange @if(Auth::user()->new_messages() == 0 )d-none @endif">{{ Auth::user()->new_messages() }}</span></a>
+                        <a href="{{ route('my_orders') }}" class="text-white">Мої пропозиції</a>
+                    </div>
+                    @endif
+                    <div>
+                        <a href="{{ route('to_chat') }}" class="text-white">Чат&nbsp;<span class="header-count badge badge-pill bg-orange @if(Auth::user()->new_messages() == 0 )d-none @endif">{{ Auth::user()->new_messages() }}</span></a>
+                    </div>
+                    <div>
+                        <a href="{{ route('user', Auth::id()) }}" class="text-white">Профіль</a>
                     </div>
                 </div>
                 <div>
