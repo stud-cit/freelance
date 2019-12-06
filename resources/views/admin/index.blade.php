@@ -141,11 +141,21 @@
                                 </li>
                                 <li class="list-group-item d-none flex-row bg-light-grey" id="dept-block">
                                     <div class="d-flex flex-column">
-                                        <label for="id_dept" class="col-form-label">Кафедра</label>
+                                        <label for="dept_type" class="col-form-label">Тип підрозділу</label>
+                                        <select id="dept_type" class="form-control border-0 bg-deep-dark text-white" name="dept_type">
+                                            <option {{old('type_dept') == 'Не обрано' ? 'selected' : ''}} value="0">Не обрано</option>
+                                            @foreach($dept as $key=>$item)
+                                                <option id="type-{{$item[0]->id_type}}" value="{{ $key }}">{{ $key }}</option>
+                                            @endforeach
+                                        </select>
+                                        <br>
+                                        <label for="id_dept" class="col-form-label">Назва підрозділу</label>
                                         <select id="id_dept" class="form-control border-0 bg-deep-dark text-white" name="id_dept">
-                                            <option {{old('id_dept') == 'Не обрано' ? 'selected' : ''}} value="0">Не обрано</option>
-                                            @foreach($dept as $item)
-                                                <option {{ old('id_dept') == $item->id_dept ? 'selected' : '' }} value="{{ $item->id_dept}} ">{{ $item->name }}</option>
+                                            <option value="0">Не обрано</option>
+                                            @foreach($dept as $key=>$item)
+                                                @foreach($item as $value)
+                                                    <option class="depts type-{{$value->id_type}}" value="{{ $value->id_dept }} ">{{ $value->name }}</option>
+                                                @endforeach
                                             @endforeach
                                         </select>
                                     </div>

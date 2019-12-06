@@ -3556,6 +3556,13 @@ $("document").ready(function () {
     $('#messages-list div').remove();
     $('#messages-list').append(new_chat);
   }
+
+  $("#dept_type").on("change", function () {
+    var item = $(this).children("option:selected").attr("id"),
+        input = $('input[name="id_dept"]');
+    $(".depts").hide();
+    $("#dept-block ." + item).show();
+  });
 });
 
 /***/ }),

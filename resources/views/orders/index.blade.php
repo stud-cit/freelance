@@ -33,11 +33,18 @@
                             <ul class=" list-group">
                                 <a class="categories_tag dropdown-item selected-category" href="" data-id="0">Всі</a>
                             </ul>
+                            @foreach($dept as $key=>$item)
+                                @foreach($item as $value)
+                                    <a class="categories_tag dropdown-item type-{{$value->id_type}}" href=""data-id="{{ $value->id_dept }} ">{{ $value->name }}</a>
+                            @endforeach
+                        @endforeach
+                        <!--
                             @foreach($dept as $tags)
                                 <ul class="list-group">
-                                    <a class="categories_tag dropdown-item" href="" data-id="{{ $tags->id_dept }}">{{ $tags->name }}</a>
+                                    <a class="categories_tag dropdown-item" href="" data-id="{ $tags->id_dept }}">{ $tags->name }}</a>
                                 </ul>
                             @endforeach
+                            -->
                         </div>
                     </div>
                 </div>
