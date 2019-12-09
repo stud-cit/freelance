@@ -9,7 +9,7 @@ Route::get('/orders', 'OrdersController@index')->name('orders');
 Route::post('/save_order', 'OrdersController@save_order')->name('save_order');
 Route::post('/filter', 'OrdersController@filter');
 
-Route::get('/orders/{id}', 'OrdersController@order')->middleware(['logged.in', 'new.order']);
+Route::get('/orders/{id}', 'OrdersController@order')->middleware(['new.order']);
 Route::post('/add_proposal/{id}', 'OrdersController@add_proposal')->name('add_proposal');
 Route::post('/delete_proposal', 'OrdersController@delete_proposal')->name('delete_proposal');
 Route::post('/select_worker/{id}', 'OrdersController@select_worker')->name('select_worker');
