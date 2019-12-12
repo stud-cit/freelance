@@ -216,6 +216,25 @@ ul.tick li:before {
     color: #4e555b;
     background-color: transparent;
 }
+.dropdown-item:hover,
+.dropdown-item:focus {
+    color: #16181b;
+    text-decoration: underline;
+    background-color: #2D3A4D;
+}
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #3490dc;
+}
+
+.dropdown-item.disabled,
+.dropdown-item:disabled {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: transparent;
+}
 .try {
     max-height: 300px;
     margin-bottom: 10px;

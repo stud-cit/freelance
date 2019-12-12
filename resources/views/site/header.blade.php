@@ -37,12 +37,37 @@
                 <div>
                     @if(Auth::user()->id_role == 2)
                     @endif
-                    <a class="badge-pill border border-light py-1 px-4 text-white" href="#" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-                        Вихід
+                    <a class="dropdown-toggle pointer" id="profile_btn" data-toggle="dropdown">
+                    @if(Auth::user()->id_role == 1)
+                        ADMIN
+                    @endif
+                    @if(Auth::user()->id_role == 2)
+                        CUSTOMER
+                    @endif
+                    @if(Auth::user()->id_role == 3)
+                        WORKER
+                    @endif
                     </a>
-                    <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
+                    <div class="dropdown-menu bg-deep-dark text-white shadow-lg" aria-labelledby="profile_btn">
+                        <a class="dropdown-item text-white" href="#">Профіль</a>
+                        @if(Auth::user()->id_role == 1)
+                            <a class="dropdown-item text-white" href="{{ route('admin') }}">Панель адміністратора</a>
+                        @endif
+                        @if(Auth::user()->id_role == 2)
+                            <a class="dropdown-item text-white" href="{{ route('my_orders') }}">Замовлення</a>
+                        @endif
+                        @if(Auth::user()->id_role == 3)
+                            <a class="dropdown-item text-white" href="{{ route('my_orders') }}">Пропозиції</a>
+                        @endif
+                        <a class="dropdown-item text-white" href="#">Налаштування</a>
+                        <a class="dropdown-item text-white" href="#" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                            Вихід
+                        </a>
+                        <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </div>
+
                 </div>
             @else
                 @if(strpos(url()->current(), 'orders') === false && !Auth::check())
