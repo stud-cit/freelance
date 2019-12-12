@@ -53,6 +53,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return Auth::user()->id_role == 3;
     }
 
+    function getName() {
+        $name = DB::table('users_info')->where('id_user', Auth::id())->get();
+        return $name[0]->name.' '.$name[0]->surname;
+    }
+
     function getAvatarPath() {
         $id = Auth::id();
 
