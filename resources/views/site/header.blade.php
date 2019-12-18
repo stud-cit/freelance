@@ -51,7 +51,7 @@
                     </a>
                     <div class="dropdown-menu bg-deep-dark text-white shadow-lg" aria-labelledby="profile_btn">
                         <div class="dropdown-item text-white">{{ Auth::user()->getName() }}</div>
-                        <a class="dropdown-item text-white" href="#">Профіль</a>
+                        <a class="dropdown-item text-white" href="{{ route('profile') }}">Профіль</a>
                         @if(Auth::user()->id_role == 1)
                             <a class="dropdown-item text-white" href="{{ route('admin') }}">Панель адміністратора</a>
                         @endif

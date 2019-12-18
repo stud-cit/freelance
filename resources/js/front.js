@@ -33,6 +33,7 @@ $("document").ready(function() {
 
     update_listeners();
 
+
     $(".to-profile").on('click', function () {
         window.location.href = '/profile/' + $(this).attr('data-id');
     });
@@ -80,12 +81,13 @@ $("document").ready(function() {
             e.preventDefault();
 
             Swal.fire({
-                title: 'Видалення',
-                text: "Ви впевнені, що хочете це зробити?",
-                icon: 'warning',
+                title: '<span class="text-white">Видалення</span>',
+                html: "<span class='text-white'>Ви впевнені, що хочете це зробити?</span>",
                 showCancelButton: true,
+                showCloseButton: true,
+                background: '#303E51',
                 confirmButtonColor: '#d33',
-                cancelButtonColor: '#aaaaaa',
+                cancelButtonColor: '#303e51',
                 confirmButtonText: 'Видалити',
                 cancelButtonText: 'Скасувати'
             }).then((result) => {
@@ -107,12 +109,13 @@ $("document").ready(function() {
         e.preventDefault();
 
         Swal.fire({
-            title: 'Завершення',
-            text: "Завершити замовлення?",
-            icon: 'warning',
+            background: '#303E51',
+            title: '<span class="text-white">Завершення</span>',
+            html: "<span class='text-white'>Завершити замовлення?</span>",
             showCancelButton: true,
+            showCloseButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#aaaaaa',
+            cancelButtonColor: '#303e51',
             confirmButtonText: 'Завершити',
             cancelButtonText: 'Скасувати'
         }).then((result) => {
@@ -434,11 +437,12 @@ $("document").ready(function() {
         e.preventDefault();
 
         Swal.fire({
-            text: "Ви впевнені, що хочете це зробити?",
-            icon: 'warning',
+            html: "<span class='text-white'>Ви впевнені, що хочете це зробити?</span>",
+            background: '#303E51',
             showCancelButton: true,
+            showCloseButton: true,
             confirmButtonColor: '#d33',
-            cancelButtonColor: '#aaaaaa',
+            cancelButtonColor: '#303e51',
             confirmButtonText: 'Так',
             cancelButtonText: 'Ні'
         }).then((result) => {
