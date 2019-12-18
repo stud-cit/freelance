@@ -15,17 +15,17 @@
                     </div>
                     @endif
                     @if(Auth::user()->id_role == 2)
-                    <div>
-                        <a href="{{ route('my_orders') }}" class="text-white">Мої замовлення</a>
-                    </div>
-                    <div>
-                        <a href="{{ route('workers') }}" class="text-white">Виконавці</a>
-                    </div>
+                        <div>
+                            <a href="{{ route('my_orders') }}" class="text-white">Мої замовлення <span class="header-count badge badge-pill bg-orange @if(Auth::user()->order_change() == 0 )d-none @endif">{{ Auth::user()->order_change() }}</span></a>
+                        </div>
+                        <div>
+                            <a href="{{ route('workers') }}" class="text-white">Виконавці</a>
+                        </div>
                     @endif
                     @if(Auth::user()->id_role == 3)
-                    <div>
-                        <a href="{{ route('my_orders') }}" class="text-white">Мої пропозиції</a>
-                    </div>
+                        <div>
+                            <a href="{{ route('my_orders') }}" class="text-white">Мої пропозиції&nbsp;<span class="header-count badge badge-pill bg-orange @if(Auth::user()->new_messages() == 0 )d-none @endif">{{ Auth::user()->order_change() }}</span></a>
+                        </div>
                     @endif
                     <div>
                         <a href="{{ route('to_chat') }}" class="text-white">Чат&nbsp;<span class="header-count badge badge-pill bg-orange @if(Auth::user()->new_messages() == 0 )d-none @endif">{{ Auth::user()->new_messages() }}</span></a>

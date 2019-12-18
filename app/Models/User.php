@@ -72,4 +72,22 @@ class User extends Authenticatable implements MustVerifyEmail
     function new_messages() {
         return DB::table('messages')->where([['id_to', Auth::id()], ['status', 0]])->count();
     }
+
+    function order_change() {
+        $orders = DB::table('orders')->where('status', 'new')->get();
+        $count = 0;
+
+        if (Auth::user()->id_role == 2) {
+            foreach ($orders as $order) {
+                $proposals = DB::table('proposals')->where([['id_order', $order->id_order], ['status', false]])->count();
+
+                $count += $proposals != 0;
+            }
+        }
+        else {
+            $count = DB::table('orders')->where([['id_worker', Auth::id()], ['checked', false]])->count();
+        }
+
+        return $count;
+    }
 }

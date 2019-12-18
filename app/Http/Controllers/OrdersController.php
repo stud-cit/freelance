@@ -177,6 +177,14 @@ class OrdersController extends Controller
         $order = DB::table('orders')->where('id_order', $id)->get()->first();
         $customer = $this->getUsersInfo('id', $order->id_customer)->first();
 
+        if ($order->id_customer == Auth::id()) {
+            DB::table('proposals')->where('id_order', $id)->update(['status' => true]);
+        }
+
+        if ($order->id_worker == Auth::id()) {
+            DB::table('orders')->where('id_order', $id)->update(['checked', true]);
+        }
+
         $my_proposal = DB::table('proposals')
             ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
             ->where([['id_order', $id], ['id_worker', Auth::id()]])
@@ -306,7 +314,7 @@ class OrdersController extends Controller
             DB::table('reviews')->insert($values);
         }
 
-        DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null]);
+        DB::table('orders')->where('id_order', $req->id)->update(['status' => 'new', 'id_worker' => null, 'checked' => false]);
 
         $this->send_email($id, 'Ви більше не виконуєте замовлення "' . $worker->title . '"');
 
@@ -348,6 +356,7 @@ class OrdersController extends Controller
                 'id_worker' => Auth::id(),
                 'blocked' => false,
                 'created_at' => Carbon::now(),
+                'status' => false
             ];
 
             $check = DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::id()]])->get('id_proposal')->first();
@@ -450,6 +459,7 @@ class OrdersController extends Controller
             'files' => $req->file() != [],
             'id_customer' => Auth::id(),
             'id_worker' => null,
+            'checked' => false,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

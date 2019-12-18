@@ -246,8 +246,8 @@ class UsersController extends Controller
         $proposals = DB::table('orders')
             ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
             ->join('users_info', 'users_info.id_user', '=', 'orders.id_customer')
-            ->where([['proposals.id_worker', $id], ['status', 'new']])
-            ->orWhere([['orders.id_worker', $id], ['status', '!=', 'new']])
+            ->where([['proposals.id_worker', $id], ['orders.status', 'new']])
+            ->orWhere([['orders.id_worker', $id], ['orders.status', '!=', 'new']])
             ->get()
             ->toArray();
 
@@ -276,6 +276,25 @@ class UsersController extends Controller
             $all_dept[$one->type_name] = DB::table('departments')->where('id_type', $one->id_type)->get()->toArray();
         }
 
+        $id_change = [];
+
+        if (Auth::user()->id_role == 2) {
+            foreach ($orders as $order) {
+                $temp = DB::table('proposals')->where([['id_order', $order->id_order], ['status', false]])->count();
+
+                if ($temp) {
+                    array_push($id_change, $order->id_order);
+                }
+            }
+        }
+        else if (Auth::check() && Auth::user()->id_role == 3) {
+            $temp = DB::table('orders')->where([['id_worker', Auth::id()], ['checked', false]])->get();
+
+            foreach ($temp as $one) {
+                array_push($id_change, $one->id_order);
+            }
+        }
+
         $info = [
             'data' => $data,
             'reviews' => $reviews,
@@ -286,6 +305,7 @@ class UsersController extends Controller
             'orders' => $orders,
             'proposals' => $proposals,
             'all_dept' => $all_dept,
+            'id_change' => $id_change
         ];
 
         if ($flag && Auth::user()->id_role != 1) {
