@@ -25,7 +25,7 @@ class Orders extends Migration
             $table->foreign('id_customer')->references('id')->on('users');
             $table->bigInteger('id_worker')->unsigned()->nullable();
             $table->foreign('id_worker')->references('id')->on('users');
-            $table->boolean('changed');
+            $table->boolean('checked');
             $table->date('created_at');
             $table->date('updated_at');
         });
