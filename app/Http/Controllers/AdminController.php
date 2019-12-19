@@ -124,7 +124,7 @@ class AdminController extends Controller
         DB::table('orders')->where([['id_worker', $id], ['status', 'in progress']])->update(['id_worker' => null]);
         DB::table('proposals')
             ->join('orders', 'proposals.id_order', '=', 'orders.id_order')
-            ->where([['proposals.id_worker', $id], ['status', '!=', 'complete']])
+            ->where([['proposals.id_worker', $id], ['orders.status', '!=', 'complete']])
             ->delete();
 
         return back();
