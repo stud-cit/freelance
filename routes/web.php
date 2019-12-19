@@ -30,7 +30,8 @@ Route::post('/save_skills', 'UsersController@save_skills')->name('save_skills');
 Route::post('/change_pass', 'UsersController@change_pass')->name('change_pass');
 Route::post('/save_review/{id}', 'UsersController@save_review')->name('save_review');
 Route::get('/profile/{id}', 'UsersController@user')->name('user');
-Route::get('/my_orders', 'UsersController@user')->name('my_orders');
+Route::get('/my_orders', 'UsersController@user')->middleware('logged.in')->name('my_orders');
+Route::get('/settings', 'UsersController@settings')->middleware('logged.in')->name('settings');
 
 Route::get('/', 'HomeController@index');
 
@@ -54,5 +55,3 @@ Route::post('/check_messages', 'ChatController@check_messages');
 Route::post('/check_header', 'ChatController@check_header');
 Route::post('/send_file', 'ChatController@send_file')->name('send_file');
 Route::post('/get_file', 'ChatController@get_file')->name('get_file');
-
-Route::get('/email/mail', function () {return view('/email/mail');});

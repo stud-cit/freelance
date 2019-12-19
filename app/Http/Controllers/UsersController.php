@@ -213,7 +213,7 @@ class UsersController extends Controller
             $progress = DB::table('orders')->where([['id_customer', $id], ['status', 'in progress']])->count();
             $complete = DB::table('orders')->where([['id_customer', $id], ['status', 'complete']])->count();
         }
-        else if ($data->id_role == 3){
+        else if ($data->id_role == 3) {
             $active = DB::table('orders')
                         ->join('proposals', 'orders.id_order', '=', 'proposals.id_order')
                         ->where([['proposals.id_worker', $id], ['status', 'new'], ['blocked', false]])->count();
@@ -316,5 +316,10 @@ class UsersController extends Controller
         }
 
         return view($view, compact('info'));
+    }
+
+    public function settings()
+    {
+        return view('users.settings');
     }
 }

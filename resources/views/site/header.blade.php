@@ -38,15 +38,15 @@
                     @if(Auth::user()->id_role == 2)
                     @endif
                     <a class="dropdown-toggle pointer" id="profile_btn" data-toggle="dropdown">
-                    @if(Auth::user()->id_role == 1)
-                        Адміністратор
-                    @endif
-                    @if(Auth::user()->id_role == 2)
-                        Замовник
-                    @endif
-                    @if(Auth::user()->id_role == 3)
-                        Виконавець
-                    @endif
+                        @if(Auth::user()->id_role == 1)
+                            Адміністратор
+                        @endif
+                        @if(Auth::user()->id_role == 2)
+                            Замовник
+                        @endif
+                        @if(Auth::user()->id_role == 3)
+                            Виконавець
+                        @endif
                         &nbsp;<img src="{{Auth::user()->getAvatarPath()}}" title="title" alt="img" class="avatar square-1rem circle">
                     </a>
                     <div class="dropdown-menu bg-deep-dark text-white shadow-lg" aria-labelledby="profile_btn">
@@ -61,7 +61,7 @@
                         @if(Auth::user()->id_role == 3)
                             <a class="dropdown-item text-white" href="{{ route('my_orders') }}">Пропозиції</a>
                         @endif
-                        <a class="dropdown-item text-white" href="#">Налаштування</a>
+                        <a class="dropdown-item text-white" href="{{ route('settings') }}">Налаштування</a>
                         <a class="dropdown-item text-white" href="#" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                             Вихід
                         </a>
