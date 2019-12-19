@@ -320,6 +320,28 @@ class UsersController extends Controller
 
     public function settings()
     {
-        return view('users.settings');
+        $types = DB::table('dept_type')->get();
+        $dept = [];
+
+        foreach ($types as $one) {
+            $dept[$one->type_name] = DB::table('departments')->where('id_type', $one->id_type)->get()->toArray();
+        }
+
+        $categories = DB::table('categories')->get();
+        $skills = DB::table('user_has_skills')->where('id')->get();
+        $string = '';
+
+        foreach ($skills as $one) {
+            $string .= $one->id_category . '|';
+        }
+
+        $data = [
+            'dept' => $dept,
+            'categories' => $categories,
+            'string' => $string,
+            'types' => $types,
+        ];
+
+        return view('users.settings', compact('data'));
     }
 }

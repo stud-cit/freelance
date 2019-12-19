@@ -6,6 +6,9 @@
 
 @section('content')
 
+@php($categories = $data['categories'])
+@php($dept = $data['dept'])
+@php($types = $data['types'])
 
 
 @endsection
