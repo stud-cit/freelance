@@ -148,7 +148,9 @@ $("document").ready(function() {
         item.remove();
     });
 
-    if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0 || window.location.href.indexOf('/orders') >= 0 && $("#themes_block").length) {
+    if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0
+        || window.location.href.indexOf('/orders') >= 0 && $("#themes_block").length
+        || window.location.href.indexOf('/settings') >= 0 && $("#themes_block").length) {
         theme_badges_build();
     }
 
