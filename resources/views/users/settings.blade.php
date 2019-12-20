@@ -24,7 +24,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <form method="POST" action="{{ route('save_info') }}" class="col-10 offset-1 shadow-lg offset-1 text-white mt-4" id="save_settings" enctype="multipart/form-data">
+                <form method="POST" action="{{ Auth::user()->id_role == 2 ? route('save_settings') : route('save_skills') }}" class="col-10 offset-1 shadow-lg offset-1 text-white mt-4" id="save_settings">
                     @csrf
                     @if(Auth::user()->id_role == 1)
                     @endif
@@ -41,10 +41,10 @@
                         <div class="form-group row" id="dept-block">
                             <label for="id_dept" class="col-5 offset-1 col-form-label">Назва підрозділ:</label>
                             <select id="id_dept" class="col-5 form-control border-0 bg-light-black text-white" name="id_dept">
-                                <option value="0">Не обрано</option>
+                                <option value="0" @if($data['my_dept'] == 0) selected @endif>Не обрано</option>
                                 @foreach($dept as $key=>$item)
                                     @foreach($item as $value)
-                                        <option class="depts type-{{$value->id_type}}" value="{{ $value->id_dept }} ">{{ $value->name }}</option>
+                                        <option class="depts type-{{$value->id_type}}" value="{{ $value->id_dept }}" @if($data['my_dept'] == $value->id_dept) selected @endif>{{ $value->name }}</option>
                                     @endforeach
                                 @endforeach
                             </select>
@@ -55,7 +55,7 @@
                             <label for="name" class="col-5 offset-1 col-form-label mt-2">Навички:</label>
                             <div class="col-5 mt-2">
                                 <select id="type" class="form-control font-size-15 text-white border-0 bg-light-black">
-                                    <option value="0" disabled selected>(Виберіть тему замовлення)</option>
+                                    <option value="0" disabled selected>(Оберіть ваші навички)</option>
                                     @foreach($categories as $select)
                                         <option class="" value="{{ $select->id_category }}">{{ $select->name }}</option>
                                     @endforeach

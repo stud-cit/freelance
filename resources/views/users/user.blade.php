@@ -109,9 +109,9 @@
     </div>
     <div class="">
         <div class="d-flex flex-column align-items-center my-5">
-            @if($data->id_role == 2)
+            @if($data->id == Auth::id() && $data->id_role == 2)
                 <a href="{{ route('my_orders') }}" class="btn col-6 bg-light-black font-size-30 font-weight-bold text-white text-center mt-4">Переглянути мої замовлення</a>
-            @elseif($data->id_role == 3)
+            @elseif($data->id == Auth::id() && $data->id_role == 3)
                 <a href="{{ route('my_orders') }}" class="btn col-6 bg-light-black font-size-30 font-weight-bold text-white text-center mt-4">Переглянути мої пропозиції</a>
             @endif
             @if(count($reviews) != 0)

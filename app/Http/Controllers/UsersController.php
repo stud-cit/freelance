@@ -41,21 +41,6 @@ class UsersController extends Controller
         }
     }
 
-    public function save_contacts(Request $req)
-    {
-        $values = [
-            'phone_number' => $req->phone_number,
-            'viber' => $req->viber,
-            'skype' => $req->skype
-        ];
-
-        DB::table('users_info')->where('id_user', Auth::id())->update($values);
-
-        $req->session()->flash('alert-success', 'Контакти користувача успішно оновлено!');
-
-        return redirect('/profile');
-    }
-
     public function save_skills(Request $req)
     {
         DB::table('user_has_skills')->where('id', Auth::id())->delete();
@@ -69,7 +54,7 @@ class UsersController extends Controller
 
         $req->session()->flash('alert-success', 'Навички користувача успішно оновлено!');
 
-        return redirect('/profile');
+        return back();
     }
 
     public function password_change()
@@ -311,8 +296,11 @@ class UsersController extends Controller
         if ($flag && Auth::user()->id_role != 1) {
             $view = Auth::user()->id_role == 2 ? 'users.my_orders' : 'users.my_prop';
         }
-        else {
+        else if (!$flag){
             $view = 'users.user';
+        }
+        else {
+            return redirect('/admin');
         }
 
         return view($view, compact('info'));
@@ -320,6 +308,10 @@ class UsersController extends Controller
 
     public function settings()
     {
+        if (Auth::user()->id_role == 1) {
+            return redirect('/admin');
+        }
+
         $types = DB::table('dept_type')->get();
         $dept = [];
 
@@ -335,13 +327,26 @@ class UsersController extends Controller
             $string .= $one->id_category . '|';
         }
 
+        $my_dept = DB::table('users')->where('id', Auth::id())->get()->first();
+        $my_dept = $my_dept->id_dept;
+
         $data = [
             'dept' => $dept,
             'categories' => $categories,
             'string' => $string,
             'types' => $types,
+            'my_dept' => $my_dept,
         ];
 
         return view('users.settings', compact('data'));
+    }
+
+    public function save_settings(Request $req)
+    {
+        DB::table('users')->where('id', Auth::id())->update(['id_dept' => $req->id_dept == 0 ? null : $req->id_dept]);
+
+        $req->session()->flash('alert-success', 'Кафедру користувача успішно оновлено!');
+
+        return back();
     }
 }

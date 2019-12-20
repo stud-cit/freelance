@@ -25,13 +25,13 @@ Route::get('/workers', 'UsersController@workers')->name('workers');
 Route::get('/profile', 'UsersController@profile')->name('profile');
 Route::get('/password_change', 'UsersController@password_change')->middleware('logged.in')->name('password_change');
 Route::post('/save_info', 'UsersController@save_info')->name('save_info');
-Route::post('/save_contacts', 'UsersController@save_contacts')->name('save_contacts');
 Route::post('/save_skills', 'UsersController@save_skills')->name('save_skills');
 Route::post('/change_pass', 'UsersController@change_pass')->name('change_pass');
 Route::post('/save_review/{id}', 'UsersController@save_review')->name('save_review');
 Route::get('/profile/{id}', 'UsersController@user')->name('user');
 Route::get('/my_orders', 'UsersController@user')->middleware('logged.in')->name('my_orders');
 Route::get('/settings', 'UsersController@settings')->middleware('logged.in')->name('settings');
+Route::post('/save_settings', 'UsersController@save_settings')->name('save_settings');
 
 Route::get('/', 'HomeController@index');
 

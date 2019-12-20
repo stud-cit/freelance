@@ -61,7 +61,9 @@
                         @if(Auth::user()->id_role == 3)
                             <a class="dropdown-item text-white" href="{{ route('my_orders') }}">Пропозиції</a>
                         @endif
-                        <a class="dropdown-item text-white" href="{{ route('settings') }}">Налаштування</a>
+                        @if(Auth::user()->id_role != 1)
+                            <a class="dropdown-item text-white" href="{{ route('settings') }}">Налаштування</a>
+                        @endif
                         <a class="dropdown-item text-white" href="#" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                             Вихід
                         </a>
