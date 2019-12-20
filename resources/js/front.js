@@ -150,11 +150,12 @@ $("document").ready(function() {
 
     if (window.location.href.indexOf('/profile') >= 0 && window.location.href.indexOf('/profile/') < 0
         || window.location.href.indexOf('/orders') >= 0 && $("#themes_block").length
-        || window.location.href.indexOf('/settings') >= 0 && $("#themes_block").length) {
+        || window.location.href.indexOf('/settings') >= 0) {
         theme_badges_build();
     }
 
     function theme_badges_build() {
+        console.log("fire");
         $("#themes_block").empty();
 
         let input = $('input[name="categories"]'),

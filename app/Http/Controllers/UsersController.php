@@ -320,7 +320,7 @@ class UsersController extends Controller
         }
 
         $categories = DB::table('categories')->get();
-        $skills = DB::table('user_has_skills')->where('id')->get();
+        $skills = DB::table('user_has_skills')->where('id', Auth::id())->get();
         $string = '';
 
         foreach ($skills as $one) {

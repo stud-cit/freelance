@@ -61,7 +61,7 @@
                                     @endforeach
                                 </select>
                                 <div style="display: none">
-                                    <input type="text" name="categories">
+                                    <input type="text" name="categories" value="{{ $data['string'] }}">
                                 </div>
                                 <div class="form-group mb-2">
                                     <div class="" id="themes_block"></div>
