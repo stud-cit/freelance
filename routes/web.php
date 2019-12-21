@@ -34,6 +34,7 @@ Route::get('/settings', 'UsersController@settings')->middleware('logged.in')->na
 Route::post('/save_settings', 'UsersController@save_settings')->name('save_settings');
 
 Route::get('/', 'HomeController@index');
+Route::get('/tutorial', 'HomeController@tutorial')->name('tutorial');
 
 Route::get('/admin', 'AdminController@index')->middleware('is.admin')->name('admin');
 Route::post('/ban_user', 'AdminController@ban')->name('ban');

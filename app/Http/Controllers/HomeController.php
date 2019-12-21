@@ -10,4 +10,9 @@ class HomeController extends Controller
     {
         return redirect('/orders');
     }
+
+    public function tutorial()
+    {
+        return view('tutorial.tutorial');
+    }
 }
