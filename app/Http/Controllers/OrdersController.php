@@ -178,7 +178,7 @@ class OrdersController extends Controller
         $customer = $this->getUsersInfo('id', $order->id_customer)->first();
 
         if ($order->id_customer == Auth::id()) {
-            DB::table('proposals')->where('id_order', $id)->update(['status' => true]);
+            DB::table('proposals')->where('id_order', $id)->update(['checked' => true]);
         }
 
         if ($order->id_worker == Auth::id()) {
@@ -356,7 +356,7 @@ class OrdersController extends Controller
                 'id_worker' => Auth::id(),
                 'blocked' => false,
                 'created_at' => Carbon::now(),
-                'status' => false
+                'checked' => false
             ];
 
             $check = DB::table('proposals')->where([['id_order', $req->id], ['id_worker', Auth::id()]])->get('id_proposal')->first();
