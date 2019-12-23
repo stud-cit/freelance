@@ -170,6 +170,29 @@
                                             <button class="btn work-order bg-orange text-white" style="display: none" data-id="{{ $complete->id_order }}">Залишити відгук</button>
                                         </div>
                                     </div>
+                                    <div id="id-{{ $complete->id_order }}" class="container collapse bg-light-grey mt-4">
+                                        <form method="POST" action="{{ route('save_review', $complete->id_order) }}" class="col">
+                                            @csrf
+                                            <div class="form-group row">
+                                                <label for="rating" class="col-2">Оцінка:</label>
+                                                <div class="col-3 rating">
+                                                    <input type="range" id="rating" class="form-control reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
+                                                </div>
+                                                <div class="">
+                                                    <span id="rating_val">3</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="comment" class="col-1 col-form-label">Коментар:</label>
+                                                <div class="col offset-1">
+                                                    <textarea id="comment" class="form-control text-white border-0 bg-deep-dark reviews-comment" rows="3" name="text" required></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-green mb-2 px-0" name="leave_review">Підтвердити</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                     <hr class="border-grey pb-4">
                                 </div>
                             @endif

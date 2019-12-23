@@ -50,7 +50,7 @@
                         <span onclick="getElementById('get-files').submit();" class="pointer btn btn-outline-light">&#128190;&nbsp;Завантажити прікріплені файли</span>
                     </form>
                 </div>
-                @if($order->id_customer == Auth::id())
+                @if($order->id_customer == Auth::id() || Auth::check())
                     <div>
                         <form action="{{ route('delete_file', $order->id_order) }}" method="POST" id="delete-files">
                             @csrf
@@ -95,13 +95,13 @@
                     <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
                         @csrf
                         <input type="text" name="id_user" class="d-none" value="{{ $order->id_customer }}">
-                        @if($order->id_customer != Auth::id())
+                        @if($order->id_customer != Auth::id() || Auth::check())
                             <button class="btn bg-blue rounded-pill text-white">Зв'язатися</button>
                         @endif
                     </form>
-                    @if(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
+                    @if(Auth::check() || Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                         <button  class="btn badge-pill border-white text-white mb-2 w-100" data-toggle="collapse" data-target="#edit-order" aria-expanded="false">Змінити замовлення</button>
-                    @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
+                    @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned || Auth::check())
                         <div class="row mt-4">
                             <div class="col-xl-6 col-12">
                                 <form method="POST" action="{{ route('finish_order', $order->id_order) }}">
@@ -124,7 +124,7 @@
         </div>
         <div class="d-flex flex-row justify-content-center">
             <div class="col-12 text-center">
-                @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
+                @if(Auth::check() || Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
                     <button class="btn text-white" data-toggle="collapse" data-target="#prop" aria-expanded="true">
                         &#8595;&nbsp;{{ is_null($my_proposal) ? 'Залишити пропозицію' : 'Змінити пропозицію' }}&nbsp;&#8595;
                     </button>
@@ -135,7 +135,7 @@
     </div>
         <div class="row">
             <div class="col-12 bg-light-grey text-white my-4 shadow-lg">
-                @if(Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
+                @if(Auth::check() || Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
                     <div id="prop" class="collapse py-4">
                         <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2shadow c_rounded">
                             @csrf
@@ -180,7 +180,7 @@
 
                         </form>
                     </div>
-                @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
+                @elseif($order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned || Auth::check())
                     <div id="accepted_order" class="collapse py-4">
                         <p class="font-size-18 font-weight-bold">Залишити відгук виконавцю</p>
                         <form method="POST" action="{{ route('change_worker', $order->id_order) }}" class="col">
@@ -212,7 +212,7 @@
                         </form>
                     </div>
                 @endif
-                    @if(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
+                    @if(Auth::check() || Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                         <div class="container collapse py-4" id="edit-order">
                             <div class="d-flex flex-row">
                                 <form method="POST" action="{{ route('edit_order', $order->id_order) }}" enctype="multipart/form-data" class="col-12">
@@ -285,10 +285,10 @@
                                     <div class="min-width-70 pointer to-profile" data-id="{{ $comment->id_user }}">
                                         <img src="{{ $comment->avatar }}" class="square-54 circle avatar">
                                     </div>
-                                    <div class="" @if(Auth::id() == $order->id_customer && !Auth::user()->banned)@endif>
+                                    <div class="" @if(Auth::check() || Auth::id() == $order->id_customer && !Auth::user()->banned)@endif>
                                         <div class="font-weight-bold"><span class="to-profile pointer" data-id="{{ $comment->id_user }}">{{ $comment->name }} {{ $comment->surname }}</span></div>
                                     </div>
-                                    @if(Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
+                                    @if(Auth::check() || Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                                         <form method="POST" action="{{ route('select_worker', $order->id_order) }}" class="col select_worker">
                                             @csrf
                                             <div class="" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
