@@ -28,8 +28,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->call(function() {
+             $this->currency_check();
              $this->deadline_check();
-
              $this->update_dept();
          })->daily();
     }
@@ -85,6 +85,19 @@ class Kernel extends ConsoleKernel
                     ->whereNull('departments.name')
                     ->update(['id' => null]);
         } catch (\Exception $e) {
+        }
+    }
+
+    private function currency_check()
+    {
+        try {
+            $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
+            $response_json = file_get_contents($req_url);
+
+            $fp = fopen('currency.json', 'w');
+            fwrite($fp, $response_json);
+            fclose($fp);
+        } catch (Exception $e) {
         }
     }
 

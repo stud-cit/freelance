@@ -26,14 +26,12 @@
             <div class="col-12">
                 <form method="POST" action="{{ Auth::user()->id_role == 2 ? route('save_settings') : route('save_skills') }}" class="col-10 offset-1 shadow-lg offset-1 text-white mt-4" id="save_settings">
                     @csrf
-                    @if(Auth::user()->id_role == 1)
-                    @endif
                     @if(Auth::user()->id_role == 2)
                         <div class="form-group row">
                             <label for="dept_type" class="col-5 offset-1 col-form-label">Тип підрозділу:</label>
                             <select id="dept_type" class="col-5 form-control border-0 bg-light-black text-white" name="dept_type">
                                 <option {{old('type_dept') == 'Не обрано' ? 'selected' : ''}} value="0">Не обрано</option>
-                                @foreach($dept as $key=>$item)
+                                @foreach($dept as $key => $item)
                                     <option id="type-{{$item[0]->id_type}}" value="{{ $key }}">{{ $key }}</option>
                                 @endforeach
                             </select>
@@ -42,15 +40,14 @@
                             <label for="id_dept" class="col-5 offset-1 col-form-label">Назва підрозділ:</label>
                             <select id="id_dept" class="col-5 form-control border-0 bg-light-black text-white" name="id_dept">
                                 <option value="0" @if($data['my_dept'] == 0) selected @endif>Не обрано</option>
-                                @foreach($dept as $key=>$item)
+                                @foreach($dept as $key => $item)
                                     @foreach($item as $value)
                                         <option class="depts type-{{$value->id_type}}" value="{{ $value->id_dept }}" @if($data['my_dept'] == $value->id_dept) selected @endif>{{ $value->name }}</option>
                                     @endforeach
                                 @endforeach
                             </select>
                         </div>
-                    @endif
-                    @if(Auth::user()->id_role == 3)
+                    @elseif(Auth::user()->id_role == 3)
                         <div class="form-group row">
                             <label for="name" class="col-5 offset-1 col-form-label mt-2">Навички:</label>
                             <div class="col-5 mt-2">

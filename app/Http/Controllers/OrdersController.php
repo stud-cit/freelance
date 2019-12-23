@@ -20,18 +20,6 @@ class OrdersController extends Controller
         $fp = file_get_contents('currency.json');
         $response_object = json_decode($fp, true);
         $this->eq = $response_object['rates']['UAH'];
-
-        if (date("Y m d", filemtime('currency.json')) < date("Y m d")) {
-            try {
-                $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
-                $response_json = file_get_contents($req_url);
-
-                $fp = fopen('currency.json', 'w');
-                fwrite($fp, $response_json);
-                fclose($fp);
-            } catch (Exception $e) {
-            }
-        }
     }
 
     function cmp($a, $b)
