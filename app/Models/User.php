@@ -79,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         if (Auth::user()->id_role == 2) {
             foreach ($orders as $order) {
-                $proposals = DB::table('proposals')->where([['id_order', $order->id_order], ['status', false]])->count();
+                $proposals = DB::table('proposals')->where([['id_order', $order->id_order], ['checked', false]])->count();
 
                 $count += $proposals != 0;
             }
