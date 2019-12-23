@@ -155,19 +155,20 @@ $("document").ready(function() {
     }
 
     function theme_badges_build() {
-        console.log("fire");
-        $("#themes_block").empty();
+        if($("#themes_block").length) {
+            $("#themes_block").empty();
 
-        let input = $('input[name="categories"]'),
-            str = input.val().split("|");
+            let input = $('input[name="categories"]'),
+                str = input.val().split("|");
 
-        input.val("");
+            input.val("");
 
-        for (let i = 0; i < str.length - 1; i++) {
-            $("#type").val(str[i]).trigger("change");
+            for (let i = 0; i < str.length - 1; i++) {
+                $("#type").val(str[i]).trigger("change");
+            }
+
+            $("#type").val(0);
         }
-
-        $("#type").val(0);
     }
 
     $('.add-review').on('click', function () {
@@ -568,6 +569,7 @@ $("document").ready(function() {
 
 
     $("#dept_type").on("change", function() {
+        console.log("fire");
         let item = $(this).children("option:selected").attr("id"),
             input = $('input[name="id_dept"]');
 

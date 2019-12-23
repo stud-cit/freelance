@@ -3200,17 +3200,18 @@ $("document").ready(function () {
   }
 
   function theme_badges_build() {
-    console.log("fire");
-    $("#themes_block").empty();
-    var input = $('input[name="categories"]'),
-        str = input.val().split("|");
-    input.val("");
+    if ($("#themes_block").length) {
+      $("#themes_block").empty();
+      var input = $('input[name="categories"]'),
+          str = input.val().split("|");
+      input.val("");
 
-    for (var i = 0; i < str.length - 1; i++) {
-      $("#type").val(str[i]).trigger("change");
+      for (var i = 0; i < str.length - 1; i++) {
+        $("#type").val(str[i]).trigger("change");
+      }
+
+      $("#type").val(0);
     }
-
-    $("#type").val(0);
   }
 
   $('.add-review').on('click', function () {
@@ -3562,6 +3563,7 @@ $("document").ready(function () {
   }
 
   $("#dept_type").on("change", function () {
+    console.log("fire");
     var item = $(this).children("option:selected").attr("id"),
         input = $('input[name="id_dept"]');
     $(".depts").hide();
