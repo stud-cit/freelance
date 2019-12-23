@@ -165,11 +165,11 @@ class OrdersController extends Controller
         $order = DB::table('orders')->where('id_order', $id)->get()->first();
         $customer = $this->getUsersInfo('id', $order->id_customer)->first();
 
-        if ($order->id_customer == Auth::id()) {
+        if (Auth::check() && $order->id_customer == Auth::id()) {
             DB::table('proposals')->where('id_order', $id)->update(['checked' => true]);
         }
 
-        if ($order->id_worker == Auth::id()) {
+        if (Auth::check() && $order->id_worker == Auth::id()) {
             DB::table('orders')->where('id_order', $id)->update(['checked', true]);
         }
 
