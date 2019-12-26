@@ -27,58 +27,61 @@
     <img src="bg-tutor.png" alt="" class="tutorial-bg-image">
     <img src="logo-tutor.png" class="tutorial-logo" alt="">
     <div class="scroll-down">
-        <p>Scroll down to view tutorial</p>
+        <p>Гортайте вниз щоб прочитати керівництво</p>
         <div class="dots">
             <img src="dots.png" alt="">
             <div class="dots-bg"></div>
         </div>
 
     </div>
-    <a href="/orders" class="skip">Skip tutorial</a>
+    <a href="/orders" class="skip">Пропустити</a>
 </div>
 <div id="tutorial_main" >
     <ul class="tutorial-list">
         <li class="tutorial-item active">
             <span class="num active">1</span>
-            <h2>Register your account</h2>
+            <h2>Зареєструйтеся</h2>
             <p>
-                Description of the step Description of the step Description of the
-                step Description of the step Description of the step Description of
-                the step Description of the step Description of the step
-                Description of the step Description of the step.
+                Натисніть на кнопку <span class="badge-pill bg-orange py-1 px-4 text-white">Вхід</span> у верхньому правому кутку.
+                У відкрившомуся вікні натисніть <span class="text-primary" style="text-decoration: underline">Залишити заяву</span>.
+                Заповніть форму відповідно, обравши Вашу роль на ресурсі (Замовник для створення замовлень на виконання робіт або Виконавець для виконання наявних замовлень)
+                та натисніть  <span class="badge-pill bg-green py-1 text-white">Відправити</span>.
+                Дочекайтеся відповіді на вказану електронну пошту. Ви маєте отримати дані для входу на ресурс.
+                Використовуйте їх для входу на ресурс на сторінці входу у формі справа.
             </p>
         </li>
         <li class="tutorial-item">
             <span class="num">2</span>
-            <h2>Register your account</h2>
+            <h2>Залишайте заяви та пропозиції</h2>
             <p>
-                Description of the step Description of the step Description of the
-                step Description of the step Description of the step Description of
-                the step Description of the step Description of the step
-                Description of the step Description of the step.
+                Якщо Ви Замовник:<br>
+                Натисніть <span class="text-white text-center font-weight-bold bg-green px-0" style="display: inline-block; width:54px; height: 54px; border-radius: 50%; font-size: 25pt">&#43;</span>
+                щоб відкрити форму створення замовлення. Заповнуть форму вказавши необхідні дані, строки та вартісь за необхідністю.
+                <br>
+                Якщо Ви виконавець:<br>
+                Знайдіть замовлення, що Вас цікавить на головній сторінці.
+                Натисніть <span class="btn bg-orange text-white">Переглянути</span> та ознайомтеся детальніше.
+                Якщо ви бажаєте виконати замовлення натисніть <span class="btn text-white" style="background-color: #2D3A4D">&#8595;&nbsp;Залишити пропозицію&nbsp;&#8595;</span>
+                та заповніть форму пропозиції, за необхідністю запропонуйте свої строки та вартість та поясніть чим обумовлені зміни.
             </p>
         </li>
         <li class="tutorial-item">
             <span class="num">3</span>
-            <h2>Register your account</h2>
+            <h2>Співпрацюйте</h2>
             <p>
-                Description of the step Description of the step Description of the
-                step Description of the step Description of the step Description of
-                the step Description of the step Description of the step
-                Description of the step Description of the step.
+                Отримуйте інформацію щодо ваших замовлень або пропозиційна пошту або безпосередньо на сайті. Домовляйтеся з іншими користувачами, виконуйте та приймайте роботу.
+                Користуйтеся кнопками <span class="btn bg-primary rounded-pill text-white">Зв'язатися</span> та <span class="btn text-white" style="background-color: #2D3A4D">Чат</span>
+                для вирішення різноманітних питань.
             </p>
         </li>
         <li class="tutorial-item">
             <span class="num">4</span>
-            <h2>Register your account</h2>
+            <h2>Продовжуйте</h2>
             <p>
-                Description of the step Description of the step Description of the
-                step Description of the step Description of the step Description of
-                the step Description of the step Description of the step
-                Description of the step Description of the step.
+                Після виконання замовлення Виконавцем Замовник може завершити проєкт та написати відгук Виконавцю. Продовжуйте створювати та виконувати проєкти разом з нами.
             </p>
         </li>
-        <a href="/orders" class="skip">I got it. Visit site</a>
+        <a href="/orders" class="skip">Зрозуміло, перейти на сайт</a>
         <img src="dump-logo.svg" alt="" class="dump-logo">
     </ul>
 </div>

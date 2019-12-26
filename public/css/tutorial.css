@@ -2,6 +2,13 @@ body {
   background-color: #fff;
 }
 
+.bg-orange {
+    background-color: #F97333;
+}
+.bg-green {
+    background-color: #00B060;
+}
+
 .tutorial-layout {
   position: absolute;
   top: 0;
