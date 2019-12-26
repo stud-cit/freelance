@@ -128,7 +128,7 @@
                                         </div>
                                         @if($complete->review)
                                         <div class="d-flex justify-content-end">
-                                            <button class="btn bg-orange text-white" data-toggle="collapse" data-target="#id-{{$complete->id_proposal}}">Залишити відгук</button>
+                                            <button class="btn bg-orange text-white" data-toggle="collapse" data-target="#id-{{ $complete->id_proposal }}">Залишити відгук</button>
                                         </div>
                                         @endif
                                     </div>

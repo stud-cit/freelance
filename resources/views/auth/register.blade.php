@@ -31,14 +31,14 @@
                 <div class="form-group row">
                     <label for="id_role " class="col-form-label">Роль</label>
                     <select id="id_role" class="form-control bg-light-black text-white border-0" name="id_role">
-                        <option {{old('id_role') == 'Виконавець' ? 'selected' : ''}}>Виконавець</option>
-                        <option {{old('id_role') == 'Замовник' ? 'selected' : ''}}>Замовник</option>
+                        <option {{ old('id_role') == 'Виконавець' ? 'selected' : '' }}>Виконавець</option>
+                        <option {{ old('id_role') == 'Замовник' ? 'selected' : '' }}>Замовник</option>
                     </select>
                 </div>
                 <div class="form-group row d-none" id="dept-block">
                     <label for="id_dept" class="col-form-label">Кафедра</label>
                     <select id="id_dept" class="form-control border-0 bg-light-black text-white" name="id_dept">
-                        <option {{old('id_dept') == 'Не обрано' ? 'selected' : ''}} value="0">Не обрано</option>
+                        <option {{ old('id_dept') == 'Не обрано' ? 'selected' : '' }} value="0">Не обрано</option>
                         @foreach($data as $item)
                             <option {{ old('id_dept') == $item->id_dept ? 'selected' : '' }} value="{{ $item->id_dept}} ">{{ $item->name }}</option>
                         @endforeach
@@ -53,12 +53,10 @@
                         </span>
                     @enderror
                 </div>
-
                 <div class="form-group row">
                     <label for="comment" class="col-form-label">Додаткова інформація</label>
                     <textarea class="form-control text-white border-0 bg-light-black" name="comment" id="comment" rows="5"></textarea>
                 </div>
-
                 <div class="form-group row justify-content-center">
                     <button type="submit" class="btn bg-green text-white mb-2 mt-2 badge-pill">
                         Відправити

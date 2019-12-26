@@ -18,7 +18,7 @@
         </div>
         <div class="col-11">
             <div class="d-flex flex-row">
-                @if(!(Auth::check()) || Auth::user()->id_role !=2)
+                @if(!(Auth::check()) || Auth::user()->id_role != 2)
                     <div class="col-1"></div>
                 @elseif(Auth::user()->id_role == 2)
                     <div class="col-1 d-flex justify-content-end">
@@ -33,18 +33,11 @@
                             <ul class=" list-group">
                                 <a class="categories_tag dropdown-item selected-category" href="" data-id="0">Всі</a>
                             </ul>
-                            @foreach($dept as $key=>$item)
+                            @foreach($dept as $item)
                                 @foreach($item as $value)
                                     <a class="categories_tag dropdown-item type-{{$value->id_type}}" href=""data-id="{{ $value->id_dept }} ">{{ $value->name }}</a>
                             @endforeach
                         @endforeach
-                        <!--
-                            @foreach($dept as $tags)
-                                <ul class="list-group">
-                                    <a class="categories_tag dropdown-item" href="" data-id="{ $tags->id_dept }}">{ $tags->name }}</a>
-                                </ul>
-                            @endforeach
-                            -->
                         </div>
                     </div>
                 </div>
@@ -80,8 +73,8 @@
                         <div class="d-flex flex-row">
                             <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="time" name="time">
                             <select class="col-2 offset-1 form-control font-size-15 text-white border-0 bg-deep-dark" name="type">
-                                <option class="">дні</option>
-                                <option class="">год.</option>
+                                <option>дні</option>
+                                <option>год.</option>
                             </select>
                         </div>
                         <label for="tags" class="font-size-20 mt-2">Категорії</label>
@@ -89,7 +82,7 @@
                             <select id="type" class="form-control font-size-15 text-white border-0 bg-deep-dark">
                                 <option value="0" disabled selected>(Виберіть тему замовлення)</option>
                                 @foreach($categories as $select)
-                                    <option class="" value="{{ $select->id_category }}">{{ $select->name }}</option>
+                                    <option value="{{ $select->id_category }}">{{ $select->name }}</option>
                                 @endforeach
                             </select>
                             <div style="display: none">
@@ -97,7 +90,7 @@
                             </div>
                         </div>
                         <div class="form-group mb-2">
-                            <div class="" id="themes_block"></div>
+                            <div id="themes_block"></div>
                         </div>
                         <div class="d-flex justify-content-center mt-4">
                             <button class="btn badge-pill text-white font-size-20 bg-green">Створити замовлення</button>
@@ -110,16 +103,16 @@
             <div class="font-size-20">Пошук за категоріями:</div>
             <div class="for-filter" id="categs">
                 <button class="btn mb-1 text-white border-white categories_tag selected-category" data-id="0">
-                    <span class="">Всі</span>
+                    <span>Всі</span>
                 </button>
                 @foreach($categories as $tags)
                     <button class="btn mb-1 text-white border-white categories_tag" data-id="{{ $tags->id_category }}">
-                        <span class="">{{ $tags->name }}</span>
+                        <span>{{ $tags->name }}</span>
                     </button>
                 @endforeach
             </div>
             <div class="d-flex justify-content-end input-group{{ count($data) ? ' ' : ' d-none' }}" id="drop-filter">
-                <div class="">
+                <div>
                     <button class="btn sort-btn sort-selected text-white" id="date-btn">Датою <span class="badge badge-dark badge-pill">v</span></button>
                     <button class="btn sort-btn text-white" id="price-btn">Ціною <span class="badge badge-dark badge-pill"></span></button>
                 </div>
@@ -173,7 +166,7 @@
                                         @elseif(Auth::check() && $orders->id_customer == Auth::id())
                                             <form method="POST" action="{{ route('delete_order', $orders->id_order) }}" id="delete" class="text-center">
                                                 @csrf
-                                                <span class="pointer font-size-12 text-grey" onclick="getElementById('delete').submit()">Видалити</span>
+                                                <span class="pointer font-size-12 text-grey" id="delete_span">Видалити</span>
                                             </form>
                                         @endif
                                     </div>

@@ -36,10 +36,10 @@
                                             <img src="{{ $ban->avatar }}" class="circle avatar" style="min-width: 60px; width: 100px">
                                         </div>
                                         <div class="d-flex align-self-center font-weight-bold font-size-20 ml-2">
-                                            <span class="" data-id="{{ $ban->id_user }}">{{ $ban->name }} {{ $ban->surname }}</span>
+                                            <span data-id="{{ $ban->id_user }}">{{ $ban->name }} {{ $ban->surname }}</span>
                                         </div>
                                     </div>
-                                    <div class="" data-id="{{ $ban->id_user }}">
+                                    <div data-id="{{ $ban->id_user }}">
                                         <div class="d-flex flex-row">
                                             <div class="text-right font-size-10">Дата реєстрації: {{ $ban->created_at }}</div>
                                         </div>
@@ -84,7 +84,6 @@
                                             </div>
                                             <div class="text-grey">{{ $all->created_at }}</div>
                                             <div class="font-size-22">{{ $all->description }}</div>
-
                                                 <div class="d-flex flex-row justify-content-end">
                                                     <div>
                                                         @if($all->status == 'in progress')
@@ -144,15 +143,15 @@
                                         <label for="dept_type" class="col-form-label">Тип підрозділу</label>
                                         <select id="dept_type" class="form-control border-0 bg-deep-dark text-white" name="dept_type">
                                             <option {{old('type_dept') == 'Не обрано' ? 'selected' : ''}} value="0">Не обрано</option>
-                                            @foreach($dept as $key=>$item)
-                                                <option id="type-{{$item[0]->id_type}}" value="{{ $key }}">{{ $key }}</option>
+                                            @foreach($dept as $key => $item)
+                                                <option id="type-{{ $item[0]->id_type }}" value="{{ $key }}">{{ $key }}</option>
                                             @endforeach
                                         </select>
                                         <br>
                                         <label for="id_dept" class="col-form-label">Назва підрозділу</label>
                                         <select id="id_dept" class="form-control border-0 bg-deep-dark text-white" name="id_dept">
                                             <option value="0">Не обрано</option>
-                                            @foreach($dept as $key=>$item)
+                                            @foreach($dept as $item)
                                                 @foreach($item as $value)
                                                     <option class="depts type-{{$value->id_type}}" value="{{ $value->id_dept }} ">{{ $value->name }}</option>
                                                 @endforeach

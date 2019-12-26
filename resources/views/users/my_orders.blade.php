@@ -162,7 +162,7 @@
                                     <div class="font-size-22">{{ $complete->description }}</div>
                                     <div class="d-flex flex-row justify-content-between align-items-center">
                                         <div class="d-flex justify-content-start">
-                                            <div class="font-size-20">Виконавкць:
+                                            <div class="font-size-20">Виконавець:
                                                 <span class="to-profile pointer" data-id="{{ $complete->id_worker }}">{{ $complete->worker->name }} {{ $complete->worker->surname }}</span>
                                             </div>
                                         </div>
@@ -207,12 +207,10 @@
                     </div>
                     <hr class="border-white w-100">
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-
 
 @endsection
 

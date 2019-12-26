@@ -28,6 +28,7 @@
             </div>
         </form>
     </div>
+
 @endsection
 
 @section('footer')

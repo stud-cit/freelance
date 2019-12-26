@@ -39,7 +39,7 @@
         <div class="col-5">
             <div>Опис замовлення</div>
             <div>
-                <div class="">{{ $order->description }}</div>
+                <div>{{ $order->description }}</div>
             </div>
             @if($order->files)
                 <hr class="w-100 border-grey">
@@ -186,7 +186,7 @@
                                 <div class="col-3 rating">
                                     <input type="range" id="rating" class="form-control reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
                                 </div>
-                                <div class="">
+                                <div>
                                     <span id="rating_val">3</span>
                                 </div>
                             </div>
@@ -217,7 +217,7 @@
                                             <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
                                         </div>
                                         <div class="form-group col-6">
-                                            <label for="price" class="">Ціна</label>
+                                            <label for="price">Ціна</label>
                                             <div class="d-flex flex-row">
                                                 <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price" value="{{ explode(" " , $order->price)[0] }}">
                                                 <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="currency">
@@ -238,18 +238,18 @@
                                                 <select id="type" class="form-control text-white border-0 bg-deep-dark">
                                                     <option value="0" disabled selected>(Виберіть тему замовлення)</option>
                                                     @foreach($themes as $select)
-                                                        <option class="" value="{{ $select->id_category }}">{{ $select->name }}</option>
+                                                        <option value="{{ $select->id_category }}">{{ $select->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <div style="display: none">
                                                     <input type="text" name="categories" value="{{ $data['string'] }}">
                                                 </div>
                                                 <div class="form-group row">
-                                                    <div class="" id="themes_block"></div>
+                                                    <div id="themes_block"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group mb-2">
-                                                <div class="" id="themes_block"></div>
+                                                <div id="themes_block"></div>
                                             </div>
                                             <div class="d-flex justify-content-center mt-4">
                                                 <button class="btn badge-pill text-white bg-green">Підтвердити</button>
@@ -275,13 +275,13 @@
                                     <div class="min-width-70 pointer to-profile" data-id="{{ $comment->id_user }}">
                                         <img src="{{ $comment->avatar }}" class="square-54 circle avatar">
                                     </div>
-                                    <div class="" @if(Auth::check() && Auth::id() == $order->id_customer && !Auth::user()->banned)@endif>
+                                    <div @if(Auth::check() && Auth::id() == $order->id_customer && !Auth::user()->banned)@endif>
                                         <div class="font-weight-bold"><span class="to-profile pointer" data-id="{{ $comment->id_user }}">{{ $comment->name }} {{ $comment->surname }}</span></div>
                                     </div>
                                     @if(Auth::check() && Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                                         <form method="POST" action="{{ route('select_worker', $order->id_order) }}" class="col select_worker">
                                             @csrf
-                                            <div class="" id="w-id-{{ $comment->id_user }}" aria-expanded="false">
+                                            <div id="w-id-{{ $comment->id_user }}" aria-expanded="false">
                                                 <button type="submit" class="col-3 text-white btn rounded bg-green float-right" name="selected_worker" value="{{$comment->id_user}}">Підтвердити</button>
                                             </div>
                                         </form>

@@ -57,8 +57,8 @@ class OrdersController extends Controller
 
         foreach ($data as $one) {
             $one->description = mb_strlen($one->description) > 200 ? mb_substr($one->description, 0, 200) . '...' : $one->description;
-            $one->price = is_null($one->price) ? '' : $one->price;
-            $one->time = is_null($one->time) ? '' : $one->time;
+            $one->price = $one->price ?? '';
+            $one->time = $one->time ?? '';
 
             $one->categories = DB::table('categories_has_orders')
                 ->join('categories', 'categories.id_category', '=', 'categories_has_orders.id_category')
@@ -72,7 +72,6 @@ class OrdersController extends Controller
                 ->where('id_order', $one->id_order)
                 ->get()
                 ->first();
-
 
             if ($filter['dept'] == '0' || (!is_null($one->dept) && $filter['dept'] == $one->dept->id_dept)) {
                 if ($filter['category'] != '0' && (is_null($filter['filter']) || strpos(strtolower($one->title), strtolower($filter['filter'])) !== false)) {
