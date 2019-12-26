@@ -29,7 +29,6 @@ $("document").ready(function() {
 
     $('.tutorial-layout').bind('mousewheel', function(e){
         e.preventDefault();
-        console.log(e.originalEvent);
         if(e.originalEvent.wheelDelta /120 <= 0 && counter < 1) {
 
             $('.tutorial-bg-image').animate({
@@ -64,6 +63,19 @@ $("document").ready(function() {
     });
 
     $('.tutorial-item').on('click', function () {
+
+        let curentStep = $(this).find('.num').text();
+
+        $('.tutorial-item .num').each(function( index, value ) {
+            if(!value.classList.contains('active') && value.innerHTML < curentStep){
+                value.classList.add('active');
+            }
+        });
+        // for (let i = 0; i < curentStep; i++){
+        //     if(!$('.tutorial-item')[i].find('.num').hasClass('active')){
+        //         $('.tutorial-item')[i].find('.num').addClass('active')
+        //     }
+        // }
         $('.tutorial-item.active').removeClass('active');
         $(this).addClass('active');
         $(this).find('.num').addClass('active');
