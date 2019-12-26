@@ -2,7 +2,7 @@
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-around align-items-center mt-4 text-white text-center">
             <div>
-                <a href="/" class=""><img src="{{ asset('/SVG_Logo.svg') }}" alt="WorkDump" height="40px" id="logo"></a>
+                <a href="/"><img src="{{ asset('/SVG_Logo.svg') }}" alt="WorkDump" height="40px" id="logo"></a>
             </div>
             @if(Auth::check())
                 <div class="col-6 d-flex flex-row justify-content-around" id="routes">
@@ -47,7 +47,7 @@
                         @if(Auth::user()->id_role == 3)
                             Виконавець
                         @endif
-                        &nbsp;<img src="{{Auth::user()->getAvatarPath()}}" title="title" alt="img" class="avatar square-1rem circle">
+                        &nbsp;<img src="{{ Auth::user()->getAvatarPath() }}" title="title" alt="img" class="avatar square-1rem circle">
                     </a>
                     <div class="dropdown-menu bg-deep-dark text-white shadow-lg" aria-labelledby="profile_btn">
                         <div class="dropdown-item text-white">{{ Auth::user()->getName() }}</div>

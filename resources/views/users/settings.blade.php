@@ -27,12 +27,12 @@
                 <form method="POST" action="{{ Auth::user()->id_role == 2 ? route('save_settings') : route('save_skills') }}" class="col-10 offset-1 shadow-lg offset-1 text-white mt-4" id="save_settings">
                     @csrf
                     @if(Auth::user()->id_role == 2)
-                        <div class="form-group row">
+                        <div class="form-group row pt-4">
                             <label for="dept_type" class="col-5 offset-1 col-form-label">Тип підрозділу:</label>
                             <select id="dept_type" class="col-5 form-control border-0 bg-light-black text-white" name="dept_type">
-                                <option {{old('type_dept') == 'Не обрано' ? 'selected' : ''}} value="0">Не обрано</option>
+                                <option {{ old('type_dept') == 'Не обрано' ? 'selected' : '' }} value="0">Не обрано</option>
                                 @foreach($dept as $key => $item)
-                                    <option id="type-{{$item[0]->id_type}}" value="{{ $key }}">{{ $key }}</option>
+                                    <option id="type-{{ $item[0]->id_type }}" value="{{ $key }}">{{ $key }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -40,9 +40,9 @@
                             <label for="id_dept" class="col-5 offset-1 col-form-label">Назва підрозділ:</label>
                             <select id="id_dept" class="col-5 form-control border-0 bg-light-black text-white" name="id_dept">
                                 <option value="0" @if($data['my_dept'] == 0) selected @endif>Не обрано</option>
-                                @foreach($dept as $key => $item)
+                                @foreach($dept as $item)
                                     @foreach($item as $value)
-                                        <option class="depts type-{{$value->id_type}}" value="{{ $value->id_dept }}" @if($data['my_dept'] == $value->id_dept) selected @endif>{{ $value->name }}</option>
+                                        <option class="depts type-{{ $value->id_type }}" value="{{ $value->id_dept }}" @if($data['my_dept'] == $value->id_dept) selected @endif>{{ $value->name }}</option>
                                     @endforeach
                                 @endforeach
                             </select>
@@ -54,20 +54,20 @@
                                 <select id="type" class="form-control font-size-15 text-white border-0 bg-light-black">
                                     <option value="0" disabled selected>(Оберіть ваші навички)</option>
                                     @foreach($categories as $select)
-                                        <option class="" value="{{ $select->id_category }}">{{ $select->name }}</option>
+                                        <option value="{{ $select->id_category }}">{{ $select->name }}</option>
                                     @endforeach
                                 </select>
                                 <div style="display: none">
                                     <input type="text" name="categories" value="{{ $data['string'] }}">
                                 </div>
                                 <div class="form-group mb-2">
-                                    <div class="" id="themes_block"></div>
+                                    <div id="themes_block"></div>
                                 </div>
                             </div>
                         </div>
                     @endif
                     <div class="form-group row">
-                        <input type="submit" href="" class="btn text-white bg-green font-weight-bold mx-auto pointer" value="Підтвердити">
+                        <input type="submit" class="btn text-white bg-green font-weight-bold mx-auto pointer" value="Підтвердити">
                     </div>
                     <div class="form-group row">
                         <a href="{{ route('password_change') }}" class="btn text-white font-weight-bold mb-4 mx-auto pointer">Змінити пароль</a>

@@ -9,6 +9,7 @@
 @php($data = $data['data'])
 
 @section('content')
+
 <div class="d-none" id="my_id" data-id="{{ Auth::id() }}"></div>
 <form action="{{ route('get_file') }}" method="POST" class="d-none" id="get-file-form">
     @csrf

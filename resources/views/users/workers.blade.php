@@ -14,10 +14,10 @@
                     <img src="{{ $list->avatar }}" class="circle avatar" style="min-width: 60px; width: 100px">
                 </div>
                 <div class="d-flex align-self-center font-weight-bold font-size-20 ml-2">
-                    <span class="" data-id="{{ $list->id_user }}">{{ $list->name }} {{ $list->surname }}</span>
+                    <span data-id="{{ $list->id_user }}">{{ $list->name }} {{ $list->surname }}</span>
                 </div>
             </div>
-            <div class="" data-id="{{ $list->id_user }}">
+            <div data-id="{{ $list->id_user }}">
                 <div class="d-flex flex-row">
                     <div class="tag-list">
                         @if(!count($list->categories) && !($list->about_me))
@@ -36,7 +36,6 @@
     </div>
 @endforeach
 {{ $data->links('layouts.pagination') }}
-
 
 @endsection
 

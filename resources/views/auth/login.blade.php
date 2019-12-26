@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     <div class="container">
         <div class="row">
             <div class="col-10 offset-1 shadow-lg bg-light-grey p-4">
@@ -24,20 +25,18 @@
                         <div>
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
-                                <div class="">&nbsp;</div>
+                                <div>&nbsp;</div>
                                 <div class="d-flex flex-column">
                                     <label for="name" class="col-form-label">Електронна адреса</label>
                                     <input id="email" type="email" class="form-control bg-deep-dark text-white @error('email') is-invalid @enderror border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
-
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="">&nbsp;</div>
-
-                                <div class="">&nbsp;</div>
+                                <div>&nbsp;</div>
+                                <div>&nbsp;</div>
                                 <div class="d-flex flex-column">
                                     <label for="name" class="col-form-label">Пароль</label>
 
@@ -49,8 +48,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="">&nbsp;</div>
-
+                                <div>&nbsp;</div>
                                 <div class="row mt-4">
                                     <div class="col-lg-4 col-12 offset-1 custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input pointer" id="rememberme" name="remember">
@@ -64,14 +62,12 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="form-group row mt-5">
                                     <div class="col-lg-5 col-12">
                                         <button type="submit" class="btn text-white badge-pill w-100 bg-orange">
                                             Вхід
                                         </button>
                                     </div>
-
                                     <div class="col-lg-5 col-12">
                                     </div>
                                 </div>
@@ -82,6 +78,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('footer')

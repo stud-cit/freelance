@@ -3130,6 +3130,23 @@ $("document").ready(function () {
   $('#rating').on('input', function () {
     $('#rating_val').text($(this).val());
   });
+  $('#delete_span').on('click', function () {
+    Swal.fire({
+      title: '<span class="text-white">Видалення</span>',
+      html: "<span class='text-white'>Ви впевнені, що хочете це зробити?</span>",
+      showCancelButton: true,
+      showCloseButton: true,
+      background: '#303E51',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#303e51',
+      confirmButtonText: 'Видалити',
+      cancelButtonText: 'Скасувати'
+    }).then(function (result) {
+      if (result.value) {
+        $('#delete').submit();
+      }
+    });
+  });
   $('button[name="delete_proposal"]').on('click', function (e) {
     if ($(this).attr('type') !== 'reset') {
       e.preventDefault();
@@ -3563,9 +3580,7 @@ $("document").ready(function () {
   }
 
   $("#dept_type").on("change", function () {
-    console.log("fire");
-    var item = $(this).children("option:selected").attr("id"),
-        input = $('input[name="id_dept"]');
+    var item = $(this).children("option:selected").attr("id");
     $(".depts").hide();
     $("#dept-block ." + item).show();
   });

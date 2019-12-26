@@ -109,7 +109,7 @@ class UsersController extends Controller
 
         $req->session()->flash('alert-success', 'Відгук успішно залишено!');
 
-        return redirect('/profile');
+        return back();
     }
 
     public function save_info(Request $req)
@@ -153,7 +153,7 @@ class UsersController extends Controller
     public function user($id = null)
     {
         $flag = is_null($id);
-        $id = is_null($id) ? Auth::id() : $id;
+        $id = $id ?? Auth::id();
         $id_user = DB::table('users')->where('id', $id)->get('id')->first();
 
         if (!$id_user) {
