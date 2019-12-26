@@ -166,9 +166,11 @@
                                                 <span class="to-profile pointer" data-id="{{ $complete->id_worker }}">{{ $complete->worker->name }} {{ $complete->worker->surname }}</span>
                                             </div>
                                         </div>
+                                        @if($complete->review)
                                         <div class="d-flex justify-content-end">
-                                            <button class="btn work-order bg-orange text-white" style="display: none" data-id="{{ $complete->id_order }}">Залишити відгук</button>
+                                            <button class="btn bg-orange text-white" data-toggle="collapse" data-target="#id-{{$complete->id_order}}">Залишити відгук</button>
                                         </div>
+                                        @endif
                                     </div>
                                     <div id="id-{{ $complete->id_order }}" class="container collapse bg-light-grey mt-4">
                                         <form method="POST" action="{{ route('save_review', $complete->id_order) }}" class="col">
