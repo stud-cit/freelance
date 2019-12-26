@@ -94,12 +94,6 @@
 /***/ (function(module, exports) {
 
 $("document").ready(function () {
-  // $("#tutorial_start").on('scroll', function () {
-  //     console.log("scrolled");
-  // })
-  // $('.skip').on('click', function () {
-  //     $('.tutorial-layout').hide(1000);
-  // });
   $('.tutorial-logo').animate({
     opacity: 1,
     top: "+=530px"
@@ -144,12 +138,7 @@ $("document").ready(function () {
       if (!value.classList.contains('active') && value.innerHTML < curentStep) {
         value.classList.add('active');
       }
-    }); // for (let i = 0; i < curentStep; i++){
-    //     if(!$('.tutorial-item')[i].find('.num').hasClass('active')){
-    //         $('.tutorial-item')[i].find('.num').addClass('active')
-    //     }
-    // }
-
+    });
     $('.tutorial-item.active').removeClass('active');
     $(this).addClass('active');
     $(this).find('.num').addClass('active');
@@ -165,7 +154,7 @@ $("document").ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\OpenServer\domains\freelance\resources\js\tutorial */"./resources/js/tutorial.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\freelance\resources\js\tutorial */"./resources/js/tutorial.js");
 
 
 /***/ })
