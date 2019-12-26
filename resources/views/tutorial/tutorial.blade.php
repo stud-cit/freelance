@@ -2,7 +2,7 @@
 <html class="h-100">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>WorkDump</title>
 
@@ -23,18 +23,66 @@
 
 @yield('content')
 
-<div id="tutorial_start" class="m-auto text-center">
-    <div>WorkDump Logo</div>
-    <div class="mt-5">Scroll</div>
+<div id="tutorial_start" class=" tutorial-layout">
+    <img src="img/bg-tutor.png" alt="" class="tutorial-bg-image">
+    <img src="img/logo-tutor.png" class="tutorial-logo" alt="">
+    <div class="scroll-down">
+        <p>Scroll down to view tutorial</p>
+        <div class="dots">
+            <img src="img/dots.png" alt="">
+            <div class="dots-bg"></div>
+        </div>
+
+    </div>
+    <a href="/orders" class="skip">Skip tutorial</a>
 </div>
-<div id="tutorial_main" style="display: none">
-    <ol>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ol>
+<div id="tutorial_main" >
+    <ul class="tutorial-list">
+        <li class="tutorial-item active">
+            <span class="num active">1</span>
+            <h2>Register your account</h2>
+            <p>
+                Description of the step Description of the step Description of the
+                step Description of the step Description of the step Description of
+                the step Description of the step Description of the step
+                Description of the step Description of the step.
+            </p>
+        </li>
+        <li class="tutorial-item">
+            <span class="num">2</span>
+            <h2>Register your account</h2>
+            <p>
+                Description of the step Description of the step Description of the
+                step Description of the step Description of the step Description of
+                the step Description of the step Description of the step
+                Description of the step Description of the step.
+            </p>
+        </li>
+        <li class="tutorial-item">
+            <span class="num">3</span>
+            <h2>Register your account</h2>
+            <p>
+                Description of the step Description of the step Description of the
+                step Description of the step Description of the step Description of
+                the step Description of the step Description of the step
+                Description of the step Description of the step.
+            </p>
+        </li>
+        <li class="tutorial-item">
+            <span class="num">4</span>
+            <h2>Register your account</h2>
+            <p>
+                Description of the step Description of the step Description of the
+                step Description of the step Description of the step Description of
+                the step Description of the step Description of the step
+                Description of the step Description of the step.
+            </p>
+        </li>
+        <a href="/orders" class="skip">I got it. Visit site</a>
+        <img src="img/dump-logo.svg" alt="" class="dump-logo">
+    </ul>
 </div>
+
 
 
 <!--
@@ -46,11 +94,7 @@
 </div>
 -->
 <!--Footer_section-->
-<footer id="footer_wrapper" class="mt-auto">
-    <div class="float-right m-2">
-        Skip tutorial
-    </div>
-</footer>
+
 <!--Footer_section-->
 
 <!--Modal_loader-->
