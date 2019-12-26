@@ -44,9 +44,14 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        $data = DB::table('departments')->get();
+        $types = DB::table('dept_type')->get();
+        $dept = [];
 
-        return view("auth.register", compact('data'));
+        foreach ($types as $one) {
+            $dept[$one->type_name] = DB::table('departments')->where('id_type', $one->id_type)->get()->toArray();
+        }
+
+        return view("auth.register", compact('dept'));
     }
 
     /**
