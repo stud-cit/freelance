@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     <div class="text-white" id="password_change">
         <p class="col font-size-18 text-center">Зміна паролю</p>
         <form method="POST" action="{{ route('change_pass') }}" class="col-6 offset-3 shadow-lg pass_change">
@@ -15,9 +16,9 @@
                     <div class="col-6 mt-2">
                         <input type="password" id="old_password" class="form-control bg-light-black text-white @error('old_password') is-invalid @enderror border-0" name="old_password" required placeholder="********">
                         @error('old_password')
-                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -26,9 +27,9 @@
                     <div class="col-6 mt-2">
                         <input type="password" id="new_password" class="form-control bg-light-black text-white @error('new_password') is-invalid @enderror border-0" name="new_password" required placeholder="********">
                         @error('new_password')
-                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -44,6 +45,7 @@
             </div>
         </form>
     </div>
+
 @endsection
 
 @section('footer')

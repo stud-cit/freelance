@@ -107,7 +107,7 @@
             </div>
         </div>
     </div>
-    <div class="">
+    <div>
         <div class="d-flex flex-column align-items-center my-5">
             @if($data->id == Auth::id() && $data->id_role == 2)
                 <a href="{{ route('my_orders') }}" class="btn col-6 bg-light-black font-size-30 font-weight-bold text-white text-center mt-4">Переглянути мої замовлення</a>

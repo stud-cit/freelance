@@ -49,8 +49,8 @@ class AdminController extends Controller
             ->toArray();
 
         foreach ($orders as $one) {
-            $one->price = is_null($one->price) ? '' : $one->price;
-            $one->time = is_null($one->time) ? '' : $one->time;
+            $one->price = $one->price ?? '';
+            $one->time = $one->time ?? '';
         }
 
         $users = $this->getUsersInfo();
