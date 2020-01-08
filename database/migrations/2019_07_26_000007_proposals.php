@@ -15,7 +15,7 @@ class Proposals extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->bigIncrements('id_proposal');
-            $table->text('text');
+            $table->text('text')->nullable();
             $table->string('price', 20)->nullable();
             $table->string('time', 20)->nullable();
             $table->bigInteger('id_order')->unsigned();

@@ -196,10 +196,18 @@ class OrdersController extends Controller
             }
         }
 
-        $proposals = DB::table('proposals')
-            ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
-            ->where([['id_order', $id], ['blocked', false]])
-            ->paginate(5);
+        if (Auth::check() && Auth::user()->id_role == 2) {
+            $proposals = DB::table('proposals')
+                ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
+                ->where([['id_order', $id], ['blocked', false]])
+                ->paginate(5);
+        }
+        else {
+            $proposals = DB::table('proposals')
+                ->join('users_info', 'proposals.id_worker', '=', 'users_info.id_user')
+                ->where([['id_order', $id], ['blocked', false], ['id_worker', Auth::id()]])
+                ->paginate(5);
+        }
 
         foreach ($proposals as $one) {
             if (Storage::disk('public')->has($one->id_user . '.png')) {

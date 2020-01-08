@@ -9,13 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use App\Models\User;
 
 class UsersController extends Controller
 {
     public function workers()
     {
-        $data = $this->getUsersInfo('id_role', 3, 10);
+        $data = $this->getUsersInfo('id_role', $_SERVER['REQUEST_URI'] == '/customers' ? 2 : 3, 10);
 
         foreach ($data as $worker) {
             $created_at = explode(' ', $worker->created_at);

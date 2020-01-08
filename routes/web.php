@@ -20,6 +20,7 @@ Route::post('/get_files/{id}', 'OrdersController@get_files')->name('get_files');
 Route::post('/delete_file/{id}', 'OrdersController@delete_file')->name('delete_file');
 
 Route::get('/workers', 'UsersController@workers')->name('workers');
+Route::get('/customers', 'UsersController@workers')->name('workers');
 
 Route::get('/profile', 'UsersController@profile')->name('profile');
 Route::get('/password_change', 'UsersController@password_change')->middleware('logged.in')->name('password_change');
