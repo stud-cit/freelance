@@ -8,7 +8,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return redirect('/orders');
+        if ($_COOKIE == []) {
+            return redirect('/tutorial');
+        }
+        else {
+            return redirect('/orders');
+        }
     }
 
     public function tutorial()
