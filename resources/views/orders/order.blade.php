@@ -142,7 +142,7 @@
                             <div class="row">
                                 <div class="col-5 offset-1 form-group">
                                     <label for="comment" class="">Опис пропозиції:</label>
-                                    <textarea id="comment" class="form-control text-white border-0 bg-deep-dark" rows="6" name="text" required>{{ !is_null($my_proposal) ? $my_proposal->text : '' }}</textarea>
+                                    <textarea id="comment" class="form-control text-white border-0 bg-deep-dark" rows="6" name="text">{{ !is_null($my_proposal) ? $my_proposal->text : '' }}</textarea>
                                 </div>
                                 <div class="col-5 form-group">
                                     <label for="price">Ціна:</label>
