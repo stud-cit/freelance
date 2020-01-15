@@ -113,6 +113,9 @@
                                         <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $active->price }}</div>
                                     </div>
                                     <div class="text-grey">{{ $active->created_at }}</div>
+                                    <div class="font-size-20">Замовник:
+                                        <span class="to-profile pointer" data-id="{{ $active->id_worker }}">{{ $active->worker->name }} {{ $active->worker->surname }}</span>
+                                    </div>
                                     <div class="font-size-22">{{ $active->description }}</div>
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="d-flex justify-content-start align-items-center">

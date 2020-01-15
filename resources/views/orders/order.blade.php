@@ -268,7 +268,11 @@
             <div class="col-12">
                 <div class="proposals text-white">
                     @if(count($proposals) != 0)
+                        @if(Auth::user()->id_role == 2 && count($proposals) == 0)
                         <div class="font-weight-bold font-size-18 mt-4">Пропозиції виконавців</div>
+                        @else
+                        <div class="font-weight-bold font-size-18 mt-4">Моя пропозиція</div>
+                        @endif
                         @foreach($proposals as $comment)
                             <div class="d-flex flex-column mb-3 mt-2 shadow-lg p-2">
                                 <div class="d-flex flex-row align-items-center">
@@ -300,7 +304,7 @@
                                 </div>
                             </div>
                         @endforeach
-                    @elseif(count($proposals) == 0)
+                    @elseif(Auth::user()->id_role == 2 && count($proposals) == 0)
                         <div class="font-weight-bold font-size-18 my-4 text-center">Немає залишених пропозицій</div>
                     @endif
                 </div>

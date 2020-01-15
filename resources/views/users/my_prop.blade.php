@@ -43,7 +43,14 @@
                                     <div class="text-grey">{{ $all->created_at }}</div>
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="d-flex justify-content-start align-items-center">
-                                            <div class="font-size-22">{{ $all->description }}</div>
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex justify-content-start">
+                                                    <div class="font-size-20">Замовник:
+                                                        <span class="to-profile pointer" data-id="{{ $all->id_customer }}">{{ $all->name }} {{ $all->surname }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="font-size-22">{{ $all->description }}</div>
+                                            </div>
                                         </div>
                                         <div class="d-flex flex-column justify-content-end">
                                             <button class="btn work-order bg-orange text-white" data-id="{{ $all->id_order }}">Переглянути</button>
@@ -85,7 +92,14 @@
                                     <div class="text-grey">{{ $active->created_at }}</div>
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="d-flex justify-content-start align-items-center">
-                                            <div class="font-size-22">{{ $active->description }}</div>
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex justify-content-start">
+                                                    <div class="font-size-20">Замовник:
+                                                        <span class="to-profile pointer" data-id="{{ $active->id_customer }}">{{ $active->name }} {{ $active->surname }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="font-size-22">{{ $active->description }}</div>
+                                            </div>
                                         </div>
                                         <div class="d-flex flex-column justify-content-end">
                                             <button class="btn work-order bg-orange text-white" data-id="{{ $active->id_order }}">Переглянути</button>
@@ -123,7 +137,7 @@
                                     <div class="d-flex flex-row justify-content-between align-items-center">
                                         <div class="d-flex justify-content-start">
                                             <div class="font-size-20">Замовник:
-                                                <span class="to-profile pointer" data-id=""></span>
+                                                <span class="to-profile pointer" data-id="{{ $complete->id_customer }}">{{ $complete->name }} {{ $complete->surname }}</span>
                                             </div>
                                         </div>
                                         @if($complete->review)
