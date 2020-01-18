@@ -12,19 +12,14 @@ class CategoriesTableSeed extends Seeder
     public function run()
     {
         $values = [
-            ['name' => 'C#'],
-            ['name' => 'C/C++'],
-            ['name' => 'Flash/Flex'],
-            ['name' => 'Java'],
-            ['name' => 'Javascript'],
-            ['name' => '.NET'],
-            ['name' => 'Node.js'],
-            ['name' => 'PHP'],
-            ['name' => 'Python'],
-            ['name' => 'Ruby'],
-            ['name' => 'Swift'],
-            ['name' => 'Бази данних'],
-            ['name' => 'Тестування і QA'],
+            ['name' => 'Розробка ПЗ'],
+            ['name' => 'Дизайн'],
+            ['name' => 'Контент-менеджмент'],
+            ['name' => 'Адміністрування ресурсів'],
+            ['name' => 'Підтримка користувачів'],
+            ['name' => 'Тестування та QA'],
+            ['name' => 'Аналітика'],
+            ['name' => 'інше'],
         ];
 
         DB::table('categories')->insert($values);

@@ -115,7 +115,7 @@ class OrdersController extends Controller
 
         $data = $this->get_orders($values);
 
-        $categories = DB::table('categories')->orderBy('name')->get()->toArray();
+        $categories = DB::table('categories')->orderBy('id_category')->get()->toArray();
 
         $types = DB::table('dept_type')->get();
         $dept = [];
