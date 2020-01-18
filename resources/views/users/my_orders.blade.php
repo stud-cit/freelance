@@ -56,9 +56,9 @@
                                         <div class="d-flex justify-content-start align-items-center">
                                             <div class="tag-list">
                                                 @foreach($all->categories as $tags)
-                                                    <button class="btn border-grey">
+                                                    <span class="btn border-grey">
                                                         <span class="text-grey">{{ $tags->name }}</span>
-                                                    </button>
+                                                    </span>
                                                 @endforeach
                                             </div>
                                             @if(!is_null($all->dept))
@@ -121,9 +121,9 @@
                                         <div class="d-flex justify-content-start align-items-center">
                                             <div class="tag-list">
                                                 @foreach($active->categories as $tags)
-                                                    <button class="btn border-grey">
+                                                    <span class="btn border-grey">
                                                         <span class="text-grey">{{ $tags->name }}</span>
-                                                    </button>
+                                                    </span>
                                                 @endforeach
                                             </div>
                                             @if(!is_null($active->dept))

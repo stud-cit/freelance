@@ -31,9 +31,9 @@
                         <div class="d-flex justify-content-start align-items-center">
                             <div class="tag-list">
                                 @foreach($orders->categories as $tags)
-                                    <button class="btn border-grey">
+                                    <span class="btn border-grey">
                                         <span class="text-grey">{{ $tags->name }}</span>
-                                    </button>
+                                    </span>
                                 @endforeach
                             </div>
                             @if(!is_null($orders->dept))

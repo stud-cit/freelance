@@ -32,7 +32,7 @@
                             <select id="dept_type" class="col-5 form-control border-0 bg-light-black text-white" name="dept_type">
                                 <option {{ old('type_dept') == 'Не обрано' ? 'selected' : '' }} value="0">Не обрано</option>
                                 @foreach($dept as $key => $item)
-                                    <option id="type-{{ $item[0]->id_type }}" value="{{ $key }}">{{ $key }}</option>
+                                    <option id="type-{{ $item[0]->id_type }}" value="{{ $key }}" @if($data['my_dept'] == $item[0]->id_dept) selected @endif>{{ $key }}</option>
                                 @endforeach
                             </select>
                         </div>

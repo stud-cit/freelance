@@ -67,9 +67,9 @@
                 <div class="d-flex flex-row">
                     <div>
                         @foreach($categories as $tags)
-                            <button class="btn text-white border-white" data-id="{{ $tags->id_category }}">
+                            <span class="btn text-white border-white" data-id="{{ $tags->id_category }}">
                                 <span>{{ $tags->name }}</span>
-                            </button>
+                            </span>
                         @endforeach
                     </div>
                 </div>
