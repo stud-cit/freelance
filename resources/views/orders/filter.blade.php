@@ -1,6 +1,6 @@
-@php($count = $data['count'])
-@php($page = $data['page'])
-@php($data = $data['array'])
+@php($count = $info['count'])
+@php($page = $info['page'] ?? 1)
+@php($data = $info['array'] ?? $info['data'])
 
 @if($data != [])
     <div class="container-fluid" id="orders-list">
@@ -41,9 +41,7 @@
                             @endif
                         </div>
                         <div class="d-flex flex-column justify-content-end">
-                            @if(Auth::check() && !Auth::user()->banned)
-                                <button class="btn work-order bg-orange" data-id="{{ $orders->id_order }}">Переглянути</button>
-                            @endif
+                            <button class="btn work-order bg-orange text-white" data-id="{{ $orders->id_order }}">Переглянути</button>
                             <form method="POST" action="{{ route('new_contact') }}" id="form-id" class=" text-center">
                                 @csrf
                                 <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">

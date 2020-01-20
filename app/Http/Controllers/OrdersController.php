@@ -130,7 +130,7 @@ class OrdersController extends Controller
             'data' => $data,
             'categories' => $categories,
             'count' => $count,
-            'dept' => $dept,
+            'dept' => $dept
         ];
 
         return view('orders.index', compact('info'));
@@ -150,13 +150,13 @@ class OrdersController extends Controller
         $array = $this->get_orders($values);
         $page = $this->filtered > ($req->page - 1) * 10 ? $req->page : $this->filtered % 10 + 1;
 
-        $data = [
+        $info = [
             'array' => $array,
             'count' => $this->filtered,
             'page' => $page
         ];
 
-        return view('orders.filter', compact('data'));
+        return view('orders.filter', compact('info'));
     }
 
     public function order($id)
