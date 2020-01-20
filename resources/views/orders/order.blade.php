@@ -37,7 +37,7 @@
     <div class="container text-white">
     <div class="row">
         <div class="col-5">
-            <div>Опис замовлення</div>
+            <div class="font-weight-bold font-size-20">Опис замовлення</div>
             <div>
                 <div>{{ $order->description }}</div>
             </div>
@@ -131,135 +131,67 @@
                 @endif
             </div>
         </div>
-
     </div>
         <div class="row">
             <div class="col-12 bg-light-grey text-white my-4 shadow-lg">
-                @if(Auth::check() && Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
-                    <div id="prop" class="collapse container shadow-box py-4">
-                        <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2shadow c_rounded">
+                @if(Auth::check() && Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
+                <div class="container collapse py-4" id="edit-order">
+                    <div class="d-flex flex-row">
+                        <form method="POST" action="{{ route('edit_order', $order->id_order) }}" enctype="multipart/form-data" class="col-12">
                             @csrf
-                            <div class="row">
-                                <div class="col-5 offset-1 form-group">
-                                    <label for="comment" class="">Опис пропозиції:</label>
-                                    <textarea id="comment" class="form-control text-white border-0 bg-deep-dark" rows="6" name="text">{{ !is_null($my_proposal) ? $my_proposal->text : '' }}</textarea>
+                            <div class="d-flex flex-row justify-content-around">
+                                <div class="form-group col-6">
+                                    <label for="title">Назва</label>
+                                    <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title" value="{{ $order->title }}" required>
+                                    <label for="description" class="mt-2">Інформація</label>
+                                    <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required>{{ $order->description }}</textarea>
+                                    <div>Нові файли</div>
+                                    <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
                                 </div>
-                                <div class="col-5 form-group">
-                                    <label for="price">Ціна:</label>
+                                <div class="form-group col-6">
+                                    <label for="price">Ціна</label>
                                     <div class="d-flex flex-row">
-                                        <input type="number" id="price" class="col-9 form-control text-white border-0 bg-deep-dark" min="0" name="price" value="{{ !is_null($my_proposal) ? $my_proposal->price : '' }}">
+                                        <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price" value="{{ explode(" " , $order->price)[0] }}">
                                         <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="currency">
-                                            <option {{ !is_null($my_proposal) ? ($my_proposal->currency == 'грн.' ? 'selected' : '') : '' }}>грн.</option>
-                                            <option {{ !is_null($my_proposal) ? ($my_proposal->currency == '$' ? 'selected' : '') : '' }}>$</option>
+                                            <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "грн." ? "selected" : ""}}>грн.</option>
+                                            <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "$" ? "selected" : ""}}>$</option>
                                         </select>
                                     </div>
-                                    <label for="time" class="mt-2">Час:</label>
+                                    <label for="time" class="mt-2">Час</label>
                                     <div class="d-flex flex-row">
-                                        <input type="number" id="time" class="col-9 form-control text-white border-0 bg-deep-dark" min="0" name="time" value="{{ !is_null($my_proposal) ? $my_proposal->time : '' }}">
+                                        <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="time" name="time" value="{{ explode(" ", $order->time)[0] }}">
                                         <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="type">
-                                            <option {{ !is_null($my_proposal) ? ($my_proposal->type != 'год.' ? 'selected' : '') : '' }}>дні</option>
-                                            <option {{ !is_null($my_proposal) ? ($my_proposal->type == 'год.' ? 'selected' : '') : '' }}>год.</option>
+                                            <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "дні" ? "selected" : ""}}>дні</option>
+                                            <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "год." ? "selected" : ""}}>год.</option>
                                         </select>
                                     </div>
-                                    <div class="d-flex justify-content-center mt-2">
-                                        <button type="submit" class="col-5 text-white btn badge-pill bg-green mb-2 px-0" name="form_proposals">Підтвердити</button>
-                                        <button {{ is_null($my_proposal) ? 'type=reset' : '' }} class="col-5 btn badge-pill text-white mb-2 px-0" name="delete_proposal">{{is_null($my_proposal) ? 'Скинути' : 'Видалити'}}</button>
+                                    <label for="tags" class="mt-2">Категорії</label>
+                                    <div>
+                                        <select id="type" class="form-control text-white border-0 bg-deep-dark">
+                                            <option value="0" disabled selected>(Виберіть тему замовлення)</option>
+                                            @foreach($themes as $select)
+                                                <option value="{{ $select->id_category }}">{{ $select->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div style="display: none">
+                                            <input type="text" name="categories" value="{{ $data['string'] }}">
+                                        </div>
+                                        <div class="form-group row">
+                                            <div id="themes_block"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <div id="themes_block"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-center mt-4">
+                                        <button class="btn badge-pill text-white bg-green">Підтвердити</button>
                                     </div>
                                 </div>
                             </div>
-
                         </form>
                     </div>
-                @elseif(Auth::check() && $order->status == 'in progress' && Auth::id() == $order->id_customer && !Auth::user()->banned)
-                    <div id="accepted_order" class="collapse py-4">
-                        <p class="font-size-18 font-weight-bold">Залишити відгук виконавцю</p>
-                        <form method="POST" action="{{ route('change_worker', $order->id_order) }}" class="col">
-                            @csrf
-                            <div class="form-group row">
-                                <label for="disable-comment" class="col-2 mt-3">Без відгуку:</label>
-                                <div class="col-3 mt-3">
-                                    <input type="checkbox" id="disable-comment" class="form-check-input disable-comment">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="rating" class="col-2">Оцінка:</label>
-                                <div class="col-3 rating">
-                                    <input type="range" id="rating" class="form-control reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
-                                </div>
-                                <div>
-                                    <span id="rating_val">3</span>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="comment" class="col-1 col-form-label">Коментар:</label>
-                                <div class="col offset-1">
-                                    <textarea id="comment" class="form-control text-white border-0 bg-deep-dark reviews-comment" rows="3" name="text" required></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-green mb-2 px-0" name="leave_review">Підтвердити</button>
-                            </div>
-                        </form>
-                    </div>
+                </div>
                 @endif
-                    @if(Auth::check() && Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
-                        <div class="container collapse py-4" id="edit-order">
-                            <div class="d-flex flex-row">
-                                <form method="POST" action="{{ route('edit_order', $order->id_order) }}" enctype="multipart/form-data" class="col-12">
-                                    @csrf
-                                    <div class="d-flex flex-row justify-content-around">
-                                        <div class="form-group col-6">
-                                            <label for="title">Назва</label>
-                                            <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title" value="{{ $order->title }}" required>
-                                            <label for="description" class="mt-2">Інформація</label>
-                                            <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required>{{ $order->description }}</textarea>
-                                            <div>Нові файли</div>
-                                            <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="price">Ціна</label>
-                                            <div class="d-flex flex-row">
-                                                <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="price" name="price" value="{{ explode(" " , $order->price)[0] }}">
-                                                <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="currency">
-                                                    <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "грн." ? "selected" : ""}}>грн.</option>
-                                                    <option {{ !is_null($order->price) && explode(" ", $order->price)[1] == "$" ? "selected" : ""}}>$</option>
-                                                </select>
-                                            </div>
-                                            <label for="time" class="mt-2">Час</label>
-                                            <div class="d-flex flex-row">
-                                                <input type="number" class="col-9 form-control text-white border-0 bg-deep-dark" id="time" name="time" value="{{ explode(" ", $order->time)[0] }}">
-                                                <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="type">
-                                                    <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "дні" ? "selected" : ""}}>дні</option>
-                                                    <option {{ !is_null($order->time) && explode(" ", $order->time)[1] == "год." ? "selected" : ""}}>год.</option>
-                                                </select>
-                                            </div>
-                                            <label for="tags" class="mt-2">Категорії</label>
-                                            <div>
-                                                <select id="type" class="form-control text-white border-0 bg-deep-dark">
-                                                    <option value="0" disabled selected>(Виберіть тему замовлення)</option>
-                                                    @foreach($themes as $select)
-                                                        <option value="{{ $select->id_category }}">{{ $select->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div style="display: none">
-                                                    <input type="text" name="categories" value="{{ $data['string'] }}">
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div id="themes_block"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mb-2">
-                                                <div id="themes_block"></div>
-                                            </div>
-                                            <div class="d-flex justify-content-center mt-4">
-                                                <button class="btn badge-pill text-white bg-green">Підтвердити</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    @endif
             </div>
         </div>
 
