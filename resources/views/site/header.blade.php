@@ -11,7 +11,7 @@
                     </div>
                     @if(Auth::user()->id_role == 1)
                     <div>
-                        <a href="{{ route('admin') }}" class="text-white">Панель адміна</a>
+                        <a href="{{ route('admin') }}" class="text-white">Панель адміністратора</a>
                     </div>
                     @endif
                     @if(Auth::user()->id_role == 2)
