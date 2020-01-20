@@ -134,6 +134,42 @@
     </div>
         <div class="row">
             <div class="col-12 bg-light-grey text-white my-4 shadow-lg">
+                @if(Auth::check() && Auth::user()->isWorker() && $order->status == 'new' && (is_null($my_proposal) || !$my_proposal->blocked) && !Auth::user()->banned)
+                <div id="prop" class="collapse container shadow-box py-4">
+                    <form method="POST" action="{{ route('add_proposal', $order->id_order) }}" class="col mt-2shadow c_rounded">
+                        @csrf
+                        <div class="row">
+                            <div class="col-5 offset-1 form-group">
+                                <label for="comment" class="">Опис пропозиції:</label>
+                                <textarea id="comment" class="form-control text-white border-0 bg-deep-dark" rows="6" name="text">{{ !is_null($my_proposal) ? $my_proposal->text : '' }}</textarea>
+                            </div>
+                            <div class="col-5 form-group">
+                                <label for="price">Ціна:</label>
+                                <div class="d-flex flex-row">
+                                    <input type="number" id="price" class="col-9 form-control text-white border-0 bg-deep-dark" min="0" name="price" value="{{ !is_null($my_proposal) ? $my_proposal->price : '' }}">
+                                    <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="currency">
+                                        <option {{ !is_null($my_proposal) ? ($my_proposal->currency == 'грн.' ? 'selected' : '') : '' }}>грн.</option>
+                                        <option {{ !is_null($my_proposal) ? ($my_proposal->currency == '$' ? 'selected' : '') : '' }}>$</option>
+                                    </select>
+                                </div>
+                                <label for="time" class="mt-2">Час:</label>
+                                <div class="d-flex flex-row">
+                                    <input type="number" id="time" class="col-9 form-control text-white border-0 bg-deep-dark" min="0" name="time" value="{{ !is_null($my_proposal) ? $my_proposal->time : '' }}">
+                                    <select class="col-2 offset-1 form-control text-white border-0 bg-deep-dark" name="type">
+                                        <option {{ !is_null($my_proposal) ? ($my_proposal->type != 'год.' ? 'selected' : '') : '' }}>дні</option>
+                                        <option {{ !is_null($my_proposal) ? ($my_proposal->type == 'год.' ? 'selected' : '') : '' }}>год.</option>
+                                    </select>
+                                </div>
+                                <div class="d-flex justify-content-center mt-2">
+                                    <button type="submit" class="col-5 text-white btn badge-pill bg-green mb-2 px-0" name="form_proposals">Підтвердити</button>
+                                    <button {{ is_null($my_proposal) ? 'type=reset' : '' }} class="col-5 btn badge-pill text-white mb-2 px-0" name="delete_proposal">{{is_null($my_proposal) ? 'Скинути' : 'Видалити'}}</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                @endif
                 @if(Auth::check() && Auth::id() == $order->id_customer && $order->status == 'new' && !Auth::user()->banned)
                 <div class="container collapse py-4" id="edit-order">
                     <div class="d-flex flex-row">
