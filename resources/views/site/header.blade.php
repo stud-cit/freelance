@@ -10,9 +10,9 @@
                         <a href="{{ route('orders') }}" class="text-white">Проекти</a>
                     </div>
                     @if(Auth::user()->id_role == 1)
-                    <div>
-                        <a href="{{ route('admin') }}" class="text-white">Панель адміністратора</a>
-                    </div>
+                        <div>
+                            <a href="{{ route('admin') }}" class="text-white">Панель адміністратора</a>
+                        </div>
                     @endif
                     @if(Auth::user()->id_role == 2)
                         <div>
@@ -74,9 +74,8 @@
 
                 </div>
             @else
-                @if(strpos(url()->current(), 'orders') === false && !Auth::check())
+                @if(strpos(url()->current(), 'orders') === false || strpos(url()->current(), 'orders/') !== false)
                     <div>
-{{--                            <a href="{{ route('register') }}" class="text-white">Реєстрація</a>--}}
                         <a href="{{ route('orders') }}" class="text-white">Проекти</a>
                     </div>
                 @else

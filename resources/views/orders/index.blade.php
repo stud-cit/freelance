@@ -31,13 +31,13 @@
                         <button class="btn btn-outline-secondary bg-dark-green text-white dropdown-toggle font-size-25" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px">Кафедри</button>
                         <div class="dropdown-menu try" id="depts">
                             <ul class=" list-group">
-                                <a class="categories_tag dropdown-item selected-category" href="" data-id="0">Всі</a>
+                                <a class="categories_tag dropdown-item selected-category bg-white" href="" data-id="0">Всі</a>
                             </ul>
                             @foreach($dept as $item)
                                 @foreach($item as $value)
-                                    <a class="categories_tag dropdown-item type-{{$value->id_type}}" href=""data-id="{{ $value->id_dept }} ">{{ $value->name }}</a>
+                                    <a class="categories_tag dropdown-item bg-white type-{{$value->id_type}}" href=""data-id="{{ $value->id_dept }} ">{{ $value->name }}</a>
+                                @endforeach
                             @endforeach
-                        @endforeach
                         </div>
                     </div>
                 </div>

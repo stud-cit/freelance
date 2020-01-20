@@ -236,7 +236,7 @@
                                 </div>
                             </div>
                         @endforeach
-                    @elseif(Auth::user()->id_role == 2 && count($proposals) == 0)
+                    @elseif(Auth::check() && Auth::user()->id_role == 2 && count($proposals) == 0)
                         <div class="font-weight-bold font-size-18 my-4 text-center">Немає залишених пропозицій</div>
                     @endif
                 </div>

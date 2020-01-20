@@ -262,7 +262,7 @@ class UsersController extends Controller
 
         $id_change = [];
 
-        if (Auth::user()->id_role == 2) {
+        if (Auth::check() && Auth::user()->id_role == 2) {
             foreach ($orders as $order) {
                 $temp = DB::table('proposals')->where([['id_order', $order->id_order], ['checked', false]])->count();
 
