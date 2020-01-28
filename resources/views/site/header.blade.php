@@ -27,7 +27,7 @@
                             <a href="{{ route('my_orders') }}" class="text-white">Мої пропозиції&nbsp;<span class="badge badge-pill bg-orange @if(Auth::user()->new_messages() == 0 )d-none @endif">{{ Auth::user()->order_change() }}</span></a>
                         </div>
                         <div>
-                            <a href="{{ route('workers') }}" class="text-white">Замовники</a>
+                            <a href="{{ route('customers') }}" class="text-white">Замовники</a>
                         </div>
                     @endif
                     <div>

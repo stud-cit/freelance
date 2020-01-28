@@ -21,7 +21,7 @@ Route::post('/delete_file/{id}', 'OrdersController@delete_file')->name('delete_f
 Route::post('/delete_order', 'OrdersController@delete_order')->name('delete_order');
 
 Route::get('/workers', 'UsersController@workers')->name('workers');
-Route::get('/customers', 'UsersController@workers')->name('workers');
+Route::get('/customers', 'UsersController@workers')->name('customers');
 
 Route::get('/profile', 'UsersController@profile')->name('profile');
 Route::get('/password_change', 'UsersController@password_change')->middleware('logged.in')->name('password_change');
