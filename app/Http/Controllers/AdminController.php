@@ -86,7 +86,7 @@ class AdminController extends Controller
             if (!is_null($one->id_dept)) {
                 $depts = DB::table('departments')->where('id_dept', $one->id_dept)->get()->first();
 
-                $one->dept = $depts;
+                $one->dept = $depts->name;
             }
             else {
                 $one->dept = '';

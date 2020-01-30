@@ -231,7 +231,9 @@
                                             </div>
                                             <div class="d-flex flex-row justify-content-between align-items-center">
                                                 <div>{{ $reg->email }}</div>
-                                                <div>Кафедра: {{ $reg->dept }}</div>
+												@if($req->dept != '')
+													<div>Кафедра: {{ $reg->dept }}</div>
+												@endif
                                             </div>
                                             @if(!is_null($reg->comment))
                                                 <div class="mt-2">Коментар:</div>
