@@ -83,7 +83,7 @@ class AdminController extends Controller
         $app = DB::table('applications')->get();
 
         foreach ($app as $one) {
-            if (!is_null($one->id_dept)) {
+            if ($one->id_dept != 0) {
                 $depts = DB::table('departments')->where('id_dept', $one->id_dept)->get()->first();
 
                 $one->dept = $depts->name;
