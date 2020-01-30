@@ -255,7 +255,7 @@ class AdminController extends Controller
         $check = DB::table('users')->where('email', $req->email)->count();
 
         if (!$check) {
-            DB::table('applications')->insert($req->except('_token'));
+            DB::table('applications')->insert($req->except(['_token', 'dept_type']));
 
             $req->session()->flash('alert-success', 'Вашу заяву буде розглянуто у ближайший час!');
 
