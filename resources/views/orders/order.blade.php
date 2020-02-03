@@ -17,10 +17,10 @@
 <div class="container-fluid w-100 bg-orange">
     <div class="container">
         <div class="row d-flex align-items-center">
-            <div class="col-1">
+            <div class="col-md-1 col-2">
                 <a href= "{{ route('orders') }}" class="btn font-weight-bold text-white font-size-18"><img src="{{ asset("/left_arrow.svg") }}" alt="Назад" height="29px" class="align-self-center"></a>
             </div>
-            <div class="col-8 border-right border-grey">
+            <div class="col-md-8 col-6 border-right border-grey">
                 <div class="font-weight-bold text-white font-size-18">{{ $order->title }}</div>
             </div>
             <div class="col-3">
@@ -36,7 +36,7 @@
 <div class="container-fluid mt-4">
     <div class="container text-white">
     <div class="row">
-        <div class="col-5">
+        <div class="col-md-5 col-12">
             <div class="font-weight-bold font-size-20">Опис замовлення</div>
             <div>
                 <div>{{ $order->description }}</div>
@@ -60,8 +60,8 @@
                 @endif
             @endif
         </div>
-        <div class="col-1"><div class="border-right border-grey h-100">&nbsp;</div></div>
-        <div class="col-5">
+        <div class="col-md-1 d-md-flex d-none"><div class="border-right border-grey h-100">&nbsp;</div></div>
+        <div class="col-md-5 col-12">
             <div class="d-flex flex-column align-items-center">
                 <div>Категорії</div>
                 <div class="d-flex flex-row">
@@ -117,6 +117,8 @@
                                 </button>
                             </div>
                         </div>
+                    @elseif(!Auth::check())
+                        <a href="{{ route('register') }}" class="btn badge-pill bg-orange text-white">Зареєструватися</a>
                     @endif
                 </div>
             </div>
