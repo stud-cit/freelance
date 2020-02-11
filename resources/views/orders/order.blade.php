@@ -238,7 +238,7 @@
             <div class="col-12">
                 <div class="proposals text-white">
                     @if(count($proposals) != 0)
-                        @if(Auth::user()->id_role == 2 && count($proposals) == 0)
+                        @if(Auth::user()->id_role == 2)
                         <div class="font-weight-bold font-size-18 mt-4">Пропозиції виконавців</div>
                         @else
                         <div class="font-weight-bold font-size-18 mt-4">Моя пропозиція</div>

@@ -17,12 +17,10 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="true">Залишені пропозиції</a>
-                    <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проєкти</a>
-                    <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проєкти</a>
-                </div>
+            <nav class="nav nav-tabs flex-column flex-sm-row text-center" id="nav-tab">
+                <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="true">Залишені пропозиції</a>
+                <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проєкти</a>
+                <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проєкти</a>
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="container mt-4 tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
@@ -36,30 +34,33 @@
                                         <div class="d-flex justify-content-start">
                                             <div class="d-flex flex-row">
                                                 <div class="font-weight-bold order-title font-size-30">{{ $all->title }}</div>
+                                                <div class="align-self-center ml-4">
+                                                    @if($all->files)
+                                                        <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit">
+                                                    @endif
+                                                </div>
+                                                <div class="align-self-center ml-1">
+                                                    @if($all->time)
+                                                        <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar">
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $all->price }}</div>
                                     </div>
                                     <div class="text-grey">{{ $all->created_at }}</div>
+                                    <div class="font-size-20">Замовник:
+                                        <span class="to-profile pointer" data-id="{{ $all->id_customer }}">{{ $all->name }} {{ $all->surname }}</span>
+                                    </div>
+                                    <div class="font-size-22">{{ $all->description }}</div>
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="d-flex justify-content-start align-items-center">
-                                            <div class="d-flex flex-column">
-                                                <div class="d-flex justify-content-start">
-                                                    <div class="font-size-20">Замовник:
-                                                        <span class="to-profile pointer" data-id="{{ $all->id_customer }}">{{ $all->name }} {{ $all->surname }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="font-size-22">{{ $all->description }}</div>
+                                            <div class="tag-list">
+
                                             </div>
                                         </div>
                                         <div class="d-flex flex-column justify-content-end">
                                             <button class="btn work-order bg-orange text-white" data-id="{{ $all->id_order }}">Переглянути</button>
-                                            @if($all->id_worker == Auth::id())
-                                                <form method="POST" action="{{ route('delete_order', $all->id_order) }}" id="delete" class="text-center">
-                                                    @csrf
-                                                    <span class="pointer font-size-12 text-grey" onclick="getElementById('delete').submit()">Видалити</span>
-                                                </form>
-                                            @endif
                                         </div>
                                     </div>
                                     <hr class="border-grey pb-4">
@@ -85,20 +86,29 @@
                                         <div class="d-flex justify-content-start">
                                             <div class="d-flex flex-row">
                                                 <div class="font-weight-bold order-title font-size-30">{{ $active->title }}</div>
+                                                <div class="align-self-center ml-4">
+                                                    @if($active->files)
+                                                        <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit">
+                                                    @endif
+                                                </div>
+                                                <div class="align-self-center ml-1">
+                                                    @if($active->time)
+                                                        <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar">
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $active->price }}</div>
                                     </div>
                                     <div class="text-grey">{{ $active->created_at }}</div>
+                                    <div class="font-size-20">Замовник:
+                                        <span class="to-profile pointer" data-id="{{ $active->id_customer }}">{{ $active->name }} {{ $active->surname }}</span>
+                                    </div>
+                                    <div class="font-size-22">{{ $active->description }}</div>
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="d-flex justify-content-start align-items-center">
-                                            <div class="d-flex flex-column">
-                                                <div class="d-flex justify-content-start">
-                                                    <div class="font-size-20">Замовник:
-                                                        <span class="to-profile pointer" data-id="{{ $active->id_customer }}">{{ $active->name }} {{ $active->surname }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="font-size-22">{{ $active->description }}</div>
+                                            <div class="tag-list">
+
                                             </div>
                                         </div>
                                         <div class="d-flex flex-column justify-content-end">
@@ -133,13 +143,11 @@
                                         <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $complete->price }}</div>
                                     </div>
                                     <div class="text-grey">{{ $complete->created_at }}</div>
+                                    <div class="font-size-20">Замовник:
+                                        <span class="to-profile pointer" data-id="{{ $complete->id_customer }}">{{ $complete->name }} {{ $complete->surname }}</span>
+                                    </div>
                                     <div class="font-size-22">{{ $complete->description }}</div>
                                     <div class="d-flex flex-row justify-content-between align-items-center">
-                                        <div class="d-flex justify-content-start">
-                                            <div class="font-size-20">Замовник:
-                                                <span class="to-profile pointer" data-id="{{ $complete->id_customer }}">{{ $complete->name }} {{ $complete->surname }}</span>
-                                            </div>
-                                        </div>
                                         @if($complete->review)
                                         <div class="d-flex justify-content-end">
                                             <button class="btn bg-orange text-white" data-toggle="collapse" data-target="#id-{{ $complete->id_proposal }}">Залишити відгук</button>

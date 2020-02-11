@@ -17,12 +17,10 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="true">Відкриті проєкти</a>
-                    <a class="nav-item nav-link" id="nav-progress-tab" data-toggle="tab" href="#nav-progress" role="tab" aria-controls="nav-progress" aria-selected="false">Проєкти у процесі</a>
-                    <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проєкти</a>
-                </div>
+            <nav class="nav nav-tabs flex-column flex-sm-row text-center" id="nav-tab">
+                <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="true">Відкриті проєкти</a>
+                <a class="nav-item nav-link" id="nav-progress-tab" data-toggle="tab" href="#nav-progress" role="tab" aria-controls="nav-progress" aria-selected="false">Проєкти у процесі</a>
+                <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проєкти</a>
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="container mt-4 tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
@@ -61,9 +59,6 @@
                                                     </span>
                                                 @endforeach
                                             </div>
-                                            @if(!is_null($all->dept))
-                                                <div class="text-left float-left text-grey font-size-20 ml-2">{{ $all->dept->name }}</div>
-                                            @endif
                                         </div>
                                         <div class="d-flex flex-column justify-content-end">
                                             <button class="btn work-order bg-orange text-white" data-id="{{ $all->id_order }}">Переглянути</button>
@@ -113,7 +108,7 @@
                                         <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $active->price }}</div>
                                     </div>
                                     <div class="text-grey">{{ $active->created_at }}</div>
-                                    <div class="font-size-20">Замовник:
+                                    <div class="font-size-20">Виконавець:
                                         <span class="to-profile pointer" data-id="{{ $active->id_worker }}">{{ $active->worker->name }} {{ $active->worker->surname }}</span>
                                     </div>
                                     <div class="font-size-22">{{ $active->description }}</div>
@@ -126,9 +121,6 @@
                                                     </span>
                                                 @endforeach
                                             </div>
-                                            @if(!is_null($active->dept))
-                                                <div class="text-left float-left text-grey font-size-20 ml-2">{{ $active->dept->name }}</div>
-                                            @endif
                                         </div>
                                         <div class="d-flex flex-row justify-content-end">
                                             <button class="btn work-order bg-orange text-white" data-id="{{ $active->id_order }}">Переглянути</button>
