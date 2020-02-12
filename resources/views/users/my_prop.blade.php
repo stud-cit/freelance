@@ -17,7 +17,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <nav class="nav nav-tabs flex-column flex-sm-row text-center" id="nav-tab">
+            <nav class="nav nav-tabs flex-column flex-md-row text-center" id="nav-tab">
                 <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="true">Залишені пропозиції</a>
                 <a class="nav-item nav-link" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="false">Активні проєкти</a>
                 <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проєкти</a>
@@ -56,7 +56,11 @@
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="d-flex justify-content-start align-items-center">
                                             <div class="tag-list">
-
+                                                @foreach($all->categories as $tags)
+                                                    <span class="btn border-grey">
+                                                        <span class="text-grey">{{ $tags->name }}</span>
+                                                    </span>
+                                                @endforeach
                                             </div>
                                         </div>
                                         <div class="d-flex flex-column justify-content-end">

@@ -17,7 +17,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <nav class="nav nav-tabs flex-column flex-sm-row text-center" id="nav-tab">
+            <nav class="nav nav-tabs flex-column flex-md-row text-center" id="nav-tab">
                 <a class="nav-item nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="true">Відкриті проєкти</a>
                 <a class="nav-item nav-link" id="nav-progress-tab" data-toggle="tab" href="#nav-progress" role="tab" aria-controls="nav-progress" aria-selected="false">Проєкти у процесі</a>
                 <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Завершені проєкти</a>

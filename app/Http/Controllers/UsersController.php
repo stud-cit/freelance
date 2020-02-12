@@ -302,6 +302,12 @@ class UsersController extends Controller
             return redirect('/admin');
         }
 
+        foreach ($proposals as $one) {
+            $one->categories = DB::table('categories_has_orders')
+                ->join('categories', 'categories_has_orders.id_category', '=', 'categories.id_category')   ->where('categories_has_orders.id_order', $one->id_order)
+                ->get();
+        }
+
         return view($view, compact('info'));
     }
 

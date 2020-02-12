@@ -169,7 +169,7 @@ class OrdersController extends Controller
         }
 
         if (Auth::check() && $order->id_worker == Auth::id()) {
-            DB::table('orders')->where('id_order', $id)->update(['checked', true]);
+            DB::table('orders')->where('id_order', $id)->update(['checked' => true]);
         }
 
         $my_proposal = DB::table('proposals')
