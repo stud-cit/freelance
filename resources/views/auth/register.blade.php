@@ -7,7 +7,7 @@
 @section('content')
     <div class="text-white" id="password_change">
         <p class="col font-size-18 text-center">Заявка на реєстрацію</p>
-        <form method="POST" action="{{ route('send_application') }}" class="col-6 offset-3 shadow-lg pass_change">
+        <form method="POST" action="{{ route('send_application') }}" class="col-md-6 offset-md-3 col-10 offset-1 shadow-lg pass_change">
             @csrf
             <div class="col-12">
                 <div class="form-group row">

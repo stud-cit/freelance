@@ -8,9 +8,9 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-10 offset-1 shadow-lg bg-light-grey p-4">
+            <div class="col-10 offset-1 shadow-lg bg-light-grey p-4 mb-4">
                 <div class="row">
-                    <div class="col-5 d-flex border-right border-grey">
+                    <div class="col-md-5 d-md-flex border-right border-grey d-none">
                         <div class="d-flex flex-column flex-shrink-1 align-self-center mx-auto text-white col-8">
                             <p>Як зареєструватися?</p>
                             <p>1. <a href="{{ route('register') }}">Залиште заяву</a></p>
@@ -18,9 +18,9 @@
                             <p>3. Використати дану форму для авторизації</p>
                         </div>
                     </div>
-                    <div class="col-6 text-white offset-1">
+                    <div class="col-md-6 col-12 text-white offset-md-1">
                         <div class="row">
-                            <div class="col-12 font-weight-bold font-size-50">Авторизація</div>
+                            <div class="col-12 font-weight-bold font-size-35">Авторизація</div>
                         </div>
                         <div>
                             <form method="POST" action="{{ route('login') }}">
@@ -63,16 +63,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mt-5">
-                                    <div class="col-lg-5 col-12">
-                                        <button type="submit" class="btn text-white badge-pill w-100 bg-orange">
+                                        <button type="submit" class="col-lg-5 col-12 btn text-white badge-pill bg-orange">
                                             Вхід
                                         </button>
-                                    </div>
-                                    <div class="col-lg-5 col-12">
-                                    </div>
+                                        <button type="submit" class="col-lg-5 offset-lg-1 col-12 btn text-white badge-pill border-white mt-lg-0 mt-2">
+                                            <img src="{{ asset('/logotip_cabinet.svg') }}" alt="cabinet.sumdu.edu.ua" height="22px" style="margin-top: -8px">
+                                            Вхід Ч/З кабінет
+                                        </button>
                                 </div>
                             </form>
                         </div>
+                    </div>
+                    <div class="col-12 d-md-none d-flex justify-content-center">
+                        <a href="{{ route('register') }}">Заява на реєстрацію</a>
                     </div>
                 </div>
             </div>
