@@ -122,7 +122,7 @@
                                                 @endforeach
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-row justify-content-end">
+                                        <div class="d-flex flex-column justify-content-end">
                                             <button class="btn work-order bg-orange text-white" data-id="{{ $active->id_order }}">Переглянути</button>
                                         </div>
                                     </div>
@@ -171,8 +171,8 @@
                                         <form method="POST" action="{{ route('save_review', $complete->id_order) }}" class="col">
                                             @csrf
                                             <div class="form-group row">
-                                                <label for="rating" class="col-2">Оцінка:</label>
-                                                <div class="col-3 rating">
+                                                <label for="rating" class="col-md-2 col-12">Оцінка:</label>
+                                                <div class="col-md-3 col-10 rating">
                                                     <input type="range" id="rating" class="form-control reviews-rating" name="rating" min="1" max="5" step="0.5" value="3">
                                                 </div>
                                                 <div class="">
@@ -180,13 +180,13 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="comment" class="col-1 col-form-label">Коментар:</label>
-                                                <div class="col offset-1">
+                                                <label for="comment" class="col-md-1 col-1 col-form-label">Коментар:</label>
+                                                <div class="col-md col-12 offset-md-1">
                                                     <textarea id="comment" class="form-control text-white border-0 bg-deep-dark reviews-comment" rows="3" name="text" required></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <button type="submit" class="col-3 offset-8 text-white btn badge-pill bg-green mb-2 px-0" name="leave_review">Підтвердити</button>
+                                                <button type="submit" class="col-md-3 col-10 offset-md-8 offset-1 text-white btn badge-pill bg-green mb-2 px-0" name="leave_review">Підтвердити</button>
                                             </div>
                                         </form>
                                     </div>
