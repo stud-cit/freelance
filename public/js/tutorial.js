@@ -132,17 +132,59 @@ $("document").ready(function () {
       counter = 1;
     }
   });
-  $('.tutorial-item').on('click', function () {
-    var curentStep = $(this).find('.num').text();
-    $('.tutorial-item .num').each(function (index, value) {
-      if (!value.classList.contains('active') && value.innerHTML < curentStep) {
-        value.classList.add('active');
+  var counter2 = 0;
+  $('#tutorial_main').bind('mousewheel', function (e) {
+    e.preventDefault();
+
+    if (counter2 != 1) {
+      counter2 = 1;
+
+      if (e.originalEvent.wheelDelta / 120 <= 0) {
+        var curentEl = $('.tutorial-item.active');
+        var nextEl = curentEl.next();
+
+        if (nextEl && nextEl.hasClass('tutorial-item')) {
+          curentEl.removeClass('active');
+          nextEl.addClass('active');
+          nextEl.find('.num').addClass('active');
+          console.log(curentEl.height());
+          $('#tutorial_main').scrollTop(nextEl.position().top);
+        }
+
+        setTimeout(function () {
+          counter2 = 0;
+        }, 500);
+      } else {
+        var _curentEl = $('.tutorial-item.active');
+
+        var prevEl = _curentEl.prev();
+
+        if (prevEl && prevEl.hasClass('tutorial-item')) {
+          _curentEl.removeClass('active');
+
+          prevEl.addClass('active');
+          prevEl.find('.num').addClass('active');
+          $('#tutorial_main').scrollTop(prevEl.position().top);
+        }
+
+        setTimeout(function () {
+          counter2 = 0;
+        }, 500);
       }
-    });
-    $('.tutorial-item.active').removeClass('active');
-    $(this).addClass('active');
-    $(this).find('.num').addClass('active');
-  });
+    }
+  }); // $('.tutorial-item').on('click', function () {
+  //     let curentStep = $(this).find('.num').text();
+  //
+  //     $('.tutorial-item .num').each(function( index, value ) {
+  //         if(!value.classList.contains('active') && value.innerHTML < curentStep){
+  //             value.classList.add('active');
+  //         }
+  //     });
+  //
+  //     $('.tutorial-item.active').removeClass('active');
+  //     $(this).addClass('active');
+  //     $(this).find('.num').addClass('active');
+  // })
 });
 
 /***/ }),
@@ -154,7 +196,7 @@ $("document").ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\freelance\resources\js\tutorial */"./resources/js/tutorial.js");
+module.exports = __webpack_require__(/*! C:\OpenServer\domains\freelance\resources\js\tutorial */"./resources/js/tutorial.js");
 
 
 /***/ })
