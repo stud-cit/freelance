@@ -99,7 +99,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-10 offset-1 text-white" id="orders-block">
+        <div class="col-md-10 col-12 offset-md-1 text-white" id="orders-block">
             <div class="font-size-20">Пошук за категоріями:</div>
             <div class="for-filter" id="categs">
                 <button class="btn mb-1 text-white border-white categories_tag selected-category" data-id="0">
