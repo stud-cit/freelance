@@ -132,6 +132,51 @@ $("document").ready(function () {
       counter = 1;
     }
   });
+  var counter2 = 0;
+  $('#tutorial_main').bind('mousewheel', function (e) {
+    e.preventDefault();
+
+    if (counter2 != 1) {
+      counter2 = 1;
+
+      if (e.originalEvent.wheelDelta / 120 <= 0) {
+        var curentEl = $('.tutorial-item.active');
+        var nextEl = curentEl.next();
+
+        if (nextEl && nextEl.hasClass('tutorial-item')) {
+          curentEl.removeClass('active');
+          nextEl.addClass('active');
+          nextEl.find('.num').addClass('active');
+          console.log(curentEl.height());
+          $('#tutorial_main').animate({
+            scrollTop: nextEl.position().top
+          }, 500);
+        }
+
+        setTimeout(function () {
+          counter2 = 0;
+        }, 600);
+      } else {
+        var _curentEl = $('.tutorial-item.active');
+
+        var prevEl = _curentEl.prev();
+
+        if (prevEl && prevEl.hasClass('tutorial-item')) {
+          _curentEl.removeClass('active');
+
+          prevEl.addClass('active');
+          prevEl.find('.num').addClass('active');
+          $('#tutorial_main').animate({
+            scrollTop: prevEl.position().top
+          }, 500);
+        }
+
+        setTimeout(function () {
+          counter2 = 0;
+        }, 600);
+      }
+    }
+  });
   $('.tutorial-item').on('click', function () {
     var curentStep = $(this).find('.num').text();
     $('.tutorial-item .num').each(function (index, value) {
@@ -142,6 +187,9 @@ $("document").ready(function () {
     $('.tutorial-item.active').removeClass('active');
     $(this).addClass('active');
     $(this).find('.num').addClass('active');
+    $('#tutorial_main').animate({
+      scrollTop: $(this).position().top
+    }, 500);
   });
 });
 
@@ -154,7 +202,7 @@ $("document").ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\freelance\resources\js\tutorial */"./resources/js/tutorial.js");
+module.exports = __webpack_require__(/*! C:\OpenServer\domains\freelance\resources\js\tutorial */"./resources/js/tutorial.js");
 
 
 /***/ })

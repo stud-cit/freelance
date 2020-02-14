@@ -47,6 +47,7 @@ body
 
 #tutorial_main
    display: none
+   overflow: hidden
    .tutorial-list
       margin: 30px 130px
       margin-bottom: 60px
@@ -62,7 +63,7 @@ body
          list-style: none
          box-sizing: content-box
          cursor: pointer
-         transition: all 0.5s ease-in
+
          .num
             position: absolute
             top: 0
@@ -82,12 +83,15 @@ body
             font-size: 50px
             font-weight: bold
             opacity: 0.1
+            transition: all 0.3s ease-in
          p
             font-size: 22px
             //opacity: 0.8
             opacity: 0.1
+            transition: all 0.3s ease-in
       .tutorial-item.active
          opacity: 1
+
          h2
             opacity: 1
          p

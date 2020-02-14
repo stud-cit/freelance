@@ -46,6 +46,49 @@ $("document").ready(function() {
         }
     });
 
+    let counter2 = 0;
+
+    $('#tutorial_main').bind('mousewheel', function (e) {
+        e.preventDefault();
+        if(counter2 !=1) {
+            counter2 = 1;
+
+            if (e.originalEvent.wheelDelta / 120 <= 0) {
+                let curentEl = $('.tutorial-item.active');
+                let nextEl = curentEl.next();
+
+                if (nextEl && nextEl.hasClass('tutorial-item')) {
+                    curentEl.removeClass('active');
+                    nextEl.addClass('active');
+                    nextEl.find('.num').addClass('active');
+                    console.log(curentEl.height());
+                    $('#tutorial_main').animate({scrollTop: nextEl.position().top},500);
+                }
+                setTimeout(() => {
+                    counter2 = 0;
+
+                }, 600);
+
+
+            }
+            else {
+                let curentEl = $('.tutorial-item.active');
+                let prevEl = curentEl.prev();
+
+                if (prevEl && prevEl.hasClass('tutorial-item')) {
+                    curentEl.removeClass('active');
+                    prevEl.addClass('active');
+                    prevEl.find('.num').addClass('active');
+                    $('#tutorial_main').animate({scrollTop: prevEl.position().top},500);
+                }
+                setTimeout(() => {
+                    counter2 = 0;
+
+                }, 600);
+            }
+        }
+    });
+
     $('.tutorial-item').on('click', function () {
         let curentStep = $(this).find('.num').text();
 
@@ -58,5 +101,6 @@ $("document").ready(function() {
         $('.tutorial-item.active').removeClass('active');
         $(this).addClass('active');
         $(this).find('.num').addClass('active');
+        $('#tutorial_main').animate({scrollTop: $(this).position().top},500);
     })
 });
