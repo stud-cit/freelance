@@ -148,12 +148,14 @@ $("document").ready(function () {
           nextEl.addClass('active');
           nextEl.find('.num').addClass('active');
           console.log(curentEl.height());
-          $('#tutorial_main').scrollTop(nextEl.position().top);
+          $('#tutorial_main').animate({
+            scrollTop: nextEl.position().top
+          }, 500);
         }
 
         setTimeout(function () {
           counter2 = 0;
-        }, 500);
+        }, 600);
       } else {
         var _curentEl = $('.tutorial-item.active');
 
@@ -164,27 +166,31 @@ $("document").ready(function () {
 
           prevEl.addClass('active');
           prevEl.find('.num').addClass('active');
-          $('#tutorial_main').scrollTop(prevEl.position().top);
+          $('#tutorial_main').animate({
+            scrollTop: prevEl.position().top
+          }, 500);
         }
 
         setTimeout(function () {
           counter2 = 0;
-        }, 500);
+        }, 600);
       }
     }
-  }); // $('.tutorial-item').on('click', function () {
-  //     let curentStep = $(this).find('.num').text();
-  //
-  //     $('.tutorial-item .num').each(function( index, value ) {
-  //         if(!value.classList.contains('active') && value.innerHTML < curentStep){
-  //             value.classList.add('active');
-  //         }
-  //     });
-  //
-  //     $('.tutorial-item.active').removeClass('active');
-  //     $(this).addClass('active');
-  //     $(this).find('.num').addClass('active');
-  // })
+  });
+  $('.tutorial-item').on('click', function () {
+    var curentStep = $(this).find('.num').text();
+    $('.tutorial-item .num').each(function (index, value) {
+      if (!value.classList.contains('active') && value.innerHTML < curentStep) {
+        value.classList.add('active');
+      }
+    });
+    $('.tutorial-item.active').removeClass('active');
+    $(this).addClass('active');
+    $(this).find('.num').addClass('active');
+    $('#tutorial_main').animate({
+      scrollTop: $(this).position().top
+    }, 500);
+  });
 });
 
 /***/ }),
