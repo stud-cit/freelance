@@ -213,6 +213,17 @@ $("document").ready(function() {
         ajax_filter(parseInt($('.pagination-selected').text()));
     });
 
+    $(".adaptive-cats").on('click', function(){
+        console.log("start");
+        var cat_id = $(this).attr("data-id").trim();
+        console.log("id: "+cat_id);
+        console.log("button.categories_tag[data-id='"+cat_id+"']");
+        var elem = $("button.categories_tag[data-id='"+cat_id+"']");
+        console.log("elem: "+elem);
+        elem.trigger("click");
+        console.log("end");
+    });
+
     let time;
 
     $('#filter').on('keyup', function () {
@@ -226,6 +237,10 @@ $("document").ready(function() {
                 ajax_filter(parseInt($('.pagination-selected').text()));
             }, 1000);
         }
+    });
+
+    $("#search_start").on('click', function () {
+        ajax_filter(parseInt($(".pagination-selected").text()));
     });
 
     function ajax_filter(page) {

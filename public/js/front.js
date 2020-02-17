@@ -3248,6 +3248,16 @@ $("document").ready(function () {
     $(this).addClass('selected-category');
     ajax_filter(parseInt($('.pagination-selected').text()));
   });
+  $(".adaptive-cats").on('click', function () {
+    console.log("start");
+    var cat_id = $(this).attr("data-id").trim();
+    console.log("id: " + cat_id);
+    console.log("button.categories_tag[data-id='" + cat_id + "']");
+    var elem = $("button.categories_tag[data-id='" + cat_id + "']");
+    console.log("elem: " + elem);
+    elem.trigger("click");
+    console.log("end");
+  });
   var time;
   $('#filter').on('keyup', function () {
     clearTimeout(time);
@@ -3259,6 +3269,9 @@ $("document").ready(function () {
         ajax_filter(parseInt($('.pagination-selected').text()));
       }, 1000);
     }
+  });
+  $("#search_start").on('click', function () {
+    ajax_filter(parseInt($(".pagination-selected").text()));
   });
 
   function ajax_filter(page) {
@@ -3595,7 +3608,7 @@ $("document").ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\OpenServer\domains\freelance\resources\js\front.js */"./resources/js/front.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\freelance\resources\js\front.js */"./resources/js/front.js");
 
 
 /***/ })

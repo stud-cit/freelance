@@ -52,7 +52,7 @@
                             <form method="POST" action="{{ route('new_contact') }}" id="form-id" class="text-center">
                                 @csrf
                                 <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
-                                <span class="pointer font-size-12 text-grey d-md-flex d-none" onclick="getElementById('form-id').submit();">Зв'язатися</span>
+                                <span class="pointer font-size-12 text-grey d-md-block d-none" onclick="getElementById('form-id').submit();">Зв'язатися</span>
                             </form>
                         @endif
                     </div>

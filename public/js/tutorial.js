@@ -202,7 +202,7 @@ $("document").ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\OpenServer\domains\freelance\resources\js\tutorial */"./resources/js/tutorial.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\freelance\resources\js\tutorial */"./resources/js/tutorial.js");
 
 
 /***/ })
