@@ -18,7 +18,7 @@
             @endif
         @endforeach
     </div>
-    <div class="container-fluid bg-orange text-white text-center font-weight-bold font-size-40">
+    <div class="container-fluid bg-orange text-white text-center font-weight-bold font-size-30">
         Налаштування
     </div>
     <div class="container">
@@ -28,8 +28,8 @@
                     @csrf
                     @if(Auth::user()->id_role == 2)
                         <div class="form-group row pt-4">
-                            <label for="dept_type" class="col-5 offset-1 col-form-label">Тип підрозділу:</label>
-                            <select id="dept_type" class="col-5 form-control border-0 bg-light-black text-white" name="dept_type">
+                            <label for="dept_type" class="col-md-5 col-12 offset-md-1 col-form-label">Тип підрозділу:</label>
+                            <select id="dept_type" class="col-md-5 col-12 form-control border-0 bg-light-black text-white" name="dept_type">
                                 <option {{ old('type_dept') == 'Не обрано' ? 'selected' : '' }} value="0">Не обрано</option>
                                 @foreach($dept as $key => $item)
                                     <option id="type-{{ $item[0]->id_type }}" value="{{ $key }}" @if($data['my_dept'] == $item[0]->id_dept) selected @endif>{{ $key }}</option>
@@ -37,8 +37,8 @@
                             </select>
                         </div>
                         <div class="form-group row" id="dept-block">
-                            <label for="id_dept" class="col-5 offset-1 col-form-label">Назва підрозділ:</label>
-                            <select id="id_dept" class="col-5 form-control border-0 bg-light-black text-white" name="id_dept">
+                            <label for="id_dept" class="col-md-5 col-12 offset-md-1 col-form-label">Назва підрозділ:</label>
+                            <select id="id_dept" class="col-md-5 col-12 form-control border-0 bg-light-black text-white" name="id_dept">
                                 <option value="0" @if($data['my_dept'] == 0) selected @endif>Не обрано</option>
                                 @foreach($dept as $item)
                                     @foreach($item as $value)
@@ -49,8 +49,8 @@
                         </div>
                     @elseif(Auth::user()->id_role == 3)
                         <div class="form-group row">
-                            <label for="name" class="col-5 offset-1 col-form-label mt-2">Навички:</label>
-                            <div class="col-5 mt-2">
+                            <label for="name" class="col-md-5 offset-md-1 col-form-label mt-2">Навички:</label>
+                            <div class="col-md-5 col-12 mt-2">
                                 <select id="type" class="form-control font-size-15 text-white border-0 bg-light-black">
                                     <option value="0" disabled selected>(Оберіть ваші навички)</option>
                                     @foreach($categories as $select)

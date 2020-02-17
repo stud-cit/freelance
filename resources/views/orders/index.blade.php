@@ -16,29 +16,22 @@
         <div class="col-10 offset-1 text-white">
             <div class="font-weight-bold font-size-40">Пошук по проектам</div>
         </div>
-        <div class="col-11">
+        <div class="col-md-11 col-12">
             <div class="d-flex flex-row">
                 @if(!(Auth::check()) || Auth::user()->id_role != 2)
-                    <div class="col-1"></div>
+                    <div class="d-md-flex d-none col-1"></div>
                 @elseif(Auth::user()->id_role == 2)
-                    <div class="col-1 d-flex justify-content-end">
+                    <div class="d-md-flex d-none col-1 justify-content-end">
                         <button class="btn circle text-white text-center font-weight-bold font-size-25 bg-green square-54 px-0 @if(Auth::user()->banned) 'd-none' @endif" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true" title="Створення замовлення">&#43;</button>
                     </div>
                 @endif
-                <div class="input-group col-11 for-filter">
-                    <input type="text" class="form-control" aria-label="filter" id="filter" style="height: 54px">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary bg-dark-green text-white dropdown-toggle font-size-25" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px">Кафедри</button>
-                        <div class="dropdown-menu try" id="depts">
-                            <ul class=" list-group">
-                                <a class="categories_tag dropdown-item selected-category bg-white" href="" data-id="0">Всі</a>
-                            </ul>
-                            @foreach($dept as $item)
-                                @foreach($item as $value)
-                                    <a class="categories_tag dropdown-item bg-white type-{{$value->id_type}}" href=""data-id="{{ $value->id_dept }} ">{{ $value->name }}</a>
-                                @endforeach
-                            @endforeach
-                        </div>
+                <div class="col-md-11 col-12 for-filter">
+                    <div class="d-flex flex-row">
+                            @if(Auth::user()->id_role == 2)
+                                    <button class="d-md-none d-block col-auto flex-shrink-1 btn text-white text-center font-weight-bold font-size-22 py-0 bg-green @if(Auth::user()->banned) 'd-none' @endif" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true" title="Створення замовлення">&#43;</button>
+                            @endif
+                        <input type="text" class="form-control col-auto flex-shrink-1" aria-label="filter" id="filter">
+                        <button class="btn bg-orange col-auto text-white font-weight-bold font-size-22 flex-shrink-1 py-0" id="search_start">&#9906;</button>
                     </div>
                 </div>
             </div>
@@ -57,7 +50,7 @@
                         <input type="text" class="form-control text-white border-0 bg-deep-dark" id="title" name="title" required>
                         <label for="description" class="font-size-20 mt-2">Інформація*</label>
                         <textarea class="form-control text-white border-0 bg-deep-dark" name="description" id="description" rows="5" required></textarea>
-                        <input id="add-files" type="file" class="btn badge-pill bg-white mt-2" multiple="multiple" name="files[]">
+                        <input id="add-files" type="file" class="btn badge-pill bg-white mt-2 d-none" multiple="multiple" name="files[]">
                     </div>
                     <div class="d-flex border-left"></div>
                     <div class="form-group col-md-5 col-12">
@@ -99,17 +92,45 @@
                 </div>
             </form>
         </div>
-        <div class="col-10 offset-1 text-white" id="orders-block">
-            <div class="font-size-20">Пошук за категоріями:</div>
-            <div class="for-filter" id="categs">
-                <button class="btn mb-1 text-white border-white categories_tag selected-category" data-id="0">
-                    <span>Всі</span>
-                </button>
-                @foreach($categories as $tags)
-                    <button class="btn mb-1 text-white border-white categories_tag" data-id="{{ $tags->id_category }}">
-                        <span>{{ $tags->name }}</span>
-                    </button>
-                @endforeach
+        <div class="col-md-10 col-12 offset-md-1 text-white mt-2" id="orders-block">
+            <div class="row">
+                <div class="col-5 offset-1">
+                    <button class="btn w-100 btn-outline-secondary bg-dark-green text-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px">Кафедри</button>
+                    <div class="dropdown-menu try" id="depts">
+                        <ul class=" list-group">
+                            <a class="categories_tag dropdown-item selected-category bg-white" href="" data-id="0">Всі</a>
+                        </ul>
+                        @foreach($dept as $item)
+                            @foreach($item as $value)
+                                <a class="categories_tag dropdown-item bg-white type-{{$value->id_type}}" href="" data-id="{{ $value->id_dept }} ">{{ $value->name }}</a>
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+                <div class="d-md-block d-none col-12">
+                    <div class="font-size-20">Пошук за категоріями:</div>
+                    <div class="for-filter" id="categs">
+                        <button class="btn mb-1 text-white border-white categories_tag selected-category" data-id="0">
+                            <span>Всі</span>
+                        </button>
+                        @foreach($categories as $tags)
+                            <button class="btn mb-1 text-white border-white categories_tag" data-id="{{ $tags->id_category }}">
+                                <span>{{ $tags->name }}</span>
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="d-md-none d-block col-5">
+                    <button class="btn w-100 col-12 bg-white bg-dark-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px"># Категорії</button>
+                    <div class="dropdown-menu try" id="depts">
+                        <div class="for-filter" id="categs">
+                            <button class="adaptive-cats dropdown-item selected-category bg-white" data-id="0">Всі</button>
+                            @foreach($categories as $tags)
+                                <button class="adaptive-cats dropdown-item bg-white" data-id="{{ $tags->id_category }} ">{{ $tags->name }}</button>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="d-flex justify-content-end input-group{{ count($data) ? ' ' : ' d-none' }}" id="drop-filter">
                 <div>

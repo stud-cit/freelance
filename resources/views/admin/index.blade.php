@@ -15,14 +15,12 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link @if($errors->isEmpty())active @endif" id="nav-ban-tab" data-toggle="tab" href="#nav-ban" role="tab" aria-controls="nav-ban" aria-selected="true">Робота з користувачами</a>
-                    <a class="nav-item nav-link" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Робота з замовленнями</a>
-                    <a class="nav-item nav-link @if(!$errors->isEmpty())active @endif" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
-                    <a class="nav-item nav-link" id="nav-categ-tab" data-toggle="tab" href="#nav-categ" role="tab" aria-controls="nav-categ" aria-selected="false">Редагування категорій</a>
-                    <a class="nav-item nav-link" id="nav-applications-tab" data-toggle="tab" href="#nav-applications" role="tab" aria-controls="nav-applications" aria-selected="false">Заявки на реєстрацію</a>
-                </div>
+            <nav class="nav nav-tabs flex-column flex-md-row text-center" id="nav-tab">
+                <a class="nav-item nav-link @if($errors->isEmpty())active @endif" id="nav-ban-tab" data-toggle="tab" href="#nav-ban" role="tab" aria-controls="nav-ban" aria-selected="true">Робота з користувачами</a>
+                <a class="nav-item nav-link" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Робота з замовленнями</a>
+                <a class="nav-item nav-link @if(!$errors->isEmpty())active @endif" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false">Реєстрація користувачів</a>
+                <a class="nav-item nav-link" id="nav-categ-tab" data-toggle="tab" href="#nav-categ" role="tab" aria-controls="nav-categ" aria-selected="false">Редагування категорій</a>
+                <a class="nav-item nav-link" id="nav-applications-tab" data-toggle="tab" href="#nav-applications" role="tab" aria-controls="nav-applications" aria-selected="false">Заявки на реєстрацію</a>
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade @if($errors->isEmpty())show active @endif" id="nav-ban" role="tabpanel" aria-labelledby="nav-ban-tab">
@@ -30,8 +28,8 @@
                         <form action="{{ $ban->banned ? route('unban') : route('ban') }}" method="POST" class="my-2">
                             @csrf
                             <div class="container shadow-box text-white mb-2">
-                                <div class="d-flex flex-row justify-content-between align-items-end pointer to-profile" data-id="{{ $ban->id_user }}">
-                                    <div class="d-flex flex-row">
+                                <div class="d-flex row justify-content-between align-items-end pointer to-profile" data-id="{{ $ban->id_user }}">
+                                    <div class="d-flex flex-row col-md col-12">
                                         <div class="min-width-60 my-2">
                                             <img src="{{ $ban->avatar }}" class="circle avatar" style="min-width: 60px; width: 100px">
                                         </div>
@@ -39,11 +37,11 @@
                                             <span data-id="{{ $ban->id_user }}">{{ $ban->name }} {{ $ban->surname }}</span>
                                         </div>
                                     </div>
-                                    <div data-id="{{ $ban->id_user }}">
+                                    <div class="col-md col-12" data-id="{{ $ban->id_user }}">
                                         <div class="d-flex flex-row">
                                             <div class="text-right font-size-10">Дата реєстрації: {{ $ban->created_at }}</div>
                                         </div>
-                                        <div>
+                                        <div class="text-center">
                                             @if(!$ban->banned)
                                                 <button type="submit" class="btn btn-danger my-2" name="ban" value="{{ $ban->id_user }}">Заблокувати</button>
                                             @else
@@ -64,26 +62,24 @@
                                 <div class="container-fluid text-white" id="orders-list">
                                     <div class="mt-2 mb-4">
                                         <div class="container-fluid shadow-box mb-4 orders">
-                                            <div class="d-flex flex-row justify-content-between align-items-center">
-                                                <div class="d-flex justify-content-start">
-                                                    <div class="d-flex flex-row">
-                                                        <div class="font-weight-bold order-title font-size-30">{{ $all->title }}</div>
-                                                        <div class="align-self-center ml-4">
-                                                            @if($all->files)
-                                                                <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit" title="Є прікріплені файли">
-                                                            @endif
-                                                        </div>
-                                                        <div class="align-self-center ml-1">
-                                                            @if($all->time)
-                                                                <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar" title="Час виконання займає {{ $all->time }}">
-                                                            @endif
-                                                        </div>
+                                            <div class="d-flex row justify-content-between align-items-center">
+                                                <div class="font-weight-bold order-title font-size-25 col-md col-12">{{ $all->title }}</div>
+                                                <div class="row col-md-2 col">
+                                                    <div class="align-self-center ml-4">
+                                                        @if($all->files)
+                                                            <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit" title="Є прікріплені файли">
+                                                        @endif
+                                                    </div>
+                                                    <div class="align-self-center ml-1">
+                                                        @if($all->time)
+                                                            <img src="{{ asset('/calendar.svg') }}" alt="calendar" width="20px" id="calendar" title="Час виконання займає {{ $all->time }}">
+                                                        @endif
                                                     </div>
                                                 </div>
-                                                <div class="text-center font-weight-bold font-size-30 nowrap justify-content-end">{{ $all->price }}</div>
+                                                <div class="text-center font-weight-bold font-size-25 col-md-2 col">{{ $all->price }}</div>
                                             </div>
-                                            <div class="text-grey">{{ $all->created_at }}</div>
-                                            <div class="font-size-22">{{ $all->description }}</div>
+                                            <div class="text-grey d-md-block d-none">{{ $all->created_at }}</div>
+                                            <div class="font-size-20 d-md-block d-none">{{ $all->description }}</div>
                                                 <div class="d-flex flex-row justify-content-end">
                                                     <div>
                                                         @if($all->status == 'in progress')
@@ -114,7 +110,7 @@
                 </div>
                 <div class="tab-pane fade @if(!$errors->isEmpty())show active @endif" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
                     <div class="container">
-                        <form method="POST" action="{{ route('new_user') }}" class="col-7 mt-3 text-white">
+                        <form method="POST" action="{{ route('new_user') }}" class="col-md-7 col-12 mt-3 text-white">
                             @csrf
                             <ul class="list-group ">
                                 <li class="list-group-item d-flex flex-row bg-light-grey">
@@ -204,17 +200,17 @@
                             @csrf
                             <div class="toggle-box">
                                 <div class="form-row input-group">
-                                    <input type="text" class="form-control col-10" disabled>
-                                    <input type="button" class="btn-outline-primary form-control col-1 toggle-plus bg-deep-dark text-white" value="+">
+                                    <input type="text" class="form-control col-md-10 col-10" disabled>
+                                    <input type="button" class="btn-outline-primary form-control col-md-1 col-2 toggle-plus bg-deep-dark text-white" value="+">
                                 </div>
                                 @foreach($categ as $one)
                                     <div class="form-row input-group">
-                                        <input type="text" class="form-control col-10 bg-deep-dark text-white" name="categ-{{ $one->id_category }}" value="{{ $one->name }}">
-                                        <input type='button' class='btn-outline-danger form-control col-1 toggle-minus bg-deep-dark text-white' value='-'>
+                                        <input type="text" class="form-control col-md-10 col-10 bg-deep-dark text-white" name="categ-{{ $one->id_category }}" value="{{ $one->name }}">
+                                        <input type='button' class='btn-outline-danger form-control col-md-1 col-2 toggle-minus bg-deep-dark text-white' value='-'>
                                     </div>
                                 @endforeach
                             </div>
-                            <button type="submit" class="btn bg-orange badge-pill text-white float-right">Підтвердити</button>
+                            <button type="submit" class="btn bg-orange badge-pill text-white float-right mt-2">Підтвердити</button>
                         </form>
                     </div>
                 </div>
