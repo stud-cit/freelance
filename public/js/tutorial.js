@@ -132,65 +132,69 @@ $("document").ready(function () {
       counter = 1;
     }
   });
-  var counter2 = 0;
-  $('#tutorial_main').bind('mousewheel', function (e) {
-    e.preventDefault();
 
-    if (counter2 != 1) {
-      counter2 = 1;
+  if ($(window).width() > 991) {
+    console.log(1);
+    var counter2 = 0;
+    $('#tutorial_main').bind('mousewheel', function (e) {
+      e.preventDefault();
 
-      if (e.originalEvent.wheelDelta / 120 <= 0) {
-        var curentEl = $('.tutorial-item.active');
-        var nextEl = curentEl.next();
+      if (counter2 != 1) {
+        counter2 = 1;
 
-        if (nextEl && nextEl.hasClass('tutorial-item')) {
-          curentEl.removeClass('active');
-          nextEl.addClass('active');
-          nextEl.find('.num').addClass('active');
-          console.log(curentEl.height());
-          $('#tutorial_main').animate({
-            scrollTop: nextEl.position().top
-          }, 500);
+        if (e.originalEvent.wheelDelta / 120 <= 0) {
+          var curentEl = $('.tutorial-item.active');
+          var nextEl = curentEl.next();
+
+          if (nextEl && nextEl.hasClass('tutorial-item')) {
+            curentEl.removeClass('active');
+            nextEl.addClass('active');
+            nextEl.find('.num').addClass('active');
+            console.log(curentEl.height());
+            $('#tutorial_main').animate({
+              scrollTop: nextEl.position().top
+            }, 500);
+          }
+
+          setTimeout(function () {
+            counter2 = 0;
+          }, 600);
+        } else {
+          var _curentEl = $('.tutorial-item.active');
+
+          var prevEl = _curentEl.prev();
+
+          if (prevEl && prevEl.hasClass('tutorial-item')) {
+            _curentEl.removeClass('active');
+
+            prevEl.addClass('active');
+            prevEl.find('.num').addClass('active');
+            $('#tutorial_main').animate({
+              scrollTop: prevEl.position().top
+            }, 500);
+          }
+
+          setTimeout(function () {
+            counter2 = 0;
+          }, 600);
         }
-
-        setTimeout(function () {
-          counter2 = 0;
-        }, 600);
-      } else {
-        var _curentEl = $('.tutorial-item.active');
-
-        var prevEl = _curentEl.prev();
-
-        if (prevEl && prevEl.hasClass('tutorial-item')) {
-          _curentEl.removeClass('active');
-
-          prevEl.addClass('active');
-          prevEl.find('.num').addClass('active');
-          $('#tutorial_main').animate({
-            scrollTop: prevEl.position().top
-          }, 500);
-        }
-
-        setTimeout(function () {
-          counter2 = 0;
-        }, 600);
-      }
-    }
-  });
-  $('.tutorial-item').on('click', function () {
-    var curentStep = $(this).find('.num').text();
-    $('.tutorial-item .num').each(function (index, value) {
-      if (!value.classList.contains('active') && value.innerHTML < curentStep) {
-        value.classList.add('active');
       }
     });
-    $('.tutorial-item.active').removeClass('active');
-    $(this).addClass('active');
-    $(this).find('.num').addClass('active');
-    $('#tutorial_main').animate({
-      scrollTop: $(this).position().top
-    }, 500);
-  });
+    $('.tutorial-item').on('click', function () {
+      var curentStep = $(this).find('.num').text();
+      $('.tutorial-item .num').each(function (index, value) {
+        if (!value.classList.contains('active') && value.innerHTML < curentStep) {
+          value.classList.add('active');
+        }
+      });
+      $('.tutorial-item.active').removeClass('active');
+      $(this).addClass('active');
+      $(this).find('.num').addClass('active');
+      $('#tutorial_main').animate({
+        scrollTop: $(this).position().top
+      }, 500);
+    });
+  }
 });
 
 /***/ }),

@@ -169,3 +169,195 @@ body {
   }
 }
 
+@media (max-width: 991px) {
+  .tutorial-layout .tutorial-bg-image {
+    display: none;
+  }
+
+  .tutorial-layout .tutorial-logo {
+    max-width: 90%;
+  }
+
+  .tutorial-layout .scroll-down p {
+    text-align: center;
+  }
+
+  #tutorial_main {
+    display: none;
+    overflow: scroll;
+  }
+
+  #tutorial_main .tutorial-list {
+    margin: 30px;
+    margin-bottom: 60px;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item {
+    position: relative;
+    padding: 60px 10px 20px 30px;
+    width: auto;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item .num {
+    position: absolute;
+    top: 0;
+    left: -28px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #F97333;
+    font-size: 32px;
+    text-align: center;
+    color: #fff;
+    transition: all 0.5s ease-in;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item h2 {
+    font-size: 40px;
+    opacity: 1;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item p {
+    font-size: 20px;
+    opacity: 1;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item:last-of-type {
+    padding-bottom: 60px;
+  }
+
+  #tutorial_main .tutorial-list .dump-logo {
+    position: absolute;
+    bottom: -52px;
+    right: 0;
+  }
+
+  #tutorial_main .tutorial-list .skip {
+    position: absolute;
+    right: 150px;
+    bottom: 5px;
+    color: #707070;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  #tutorial_main .tutorial-list .skip:active,
+  #tutorial_main .tutorial-list .skip:hover {
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 575px) {
+  .tutorial-layout .tutorial-bg-image {
+    display: none;
+  }
+
+  .tutorial-layout .tutorial-logo {
+    top: -800px;
+    max-width: 90%;
+  }
+
+  .tutorial-layout .scroll-down {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    opacity: 0;
+    transform: translateX(-50%);
+    width: 80%;
+  }
+
+  .tutorial-layout .scroll-down p {
+    color: #0e0e0e;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .tutorial-layout .scroll-down .dots {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    max-height: 56px;
+  }
+
+  .tutorial-layout .scroll-down .dots img {
+    -webkit-animation: scroll 2s infinite linear;
+            animation: scroll 2s infinite linear;
+  }
+
+  .tutorial-layout .skip {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    color: #0e0e0e;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  #tutorial_main {
+    display: none;
+    overflow: scroll;
+  }
+
+  #tutorial_main .tutorial-list {
+    margin: 30px;
+    margin-bottom: 50px;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item {
+    position: relative;
+    padding: 50px 10px 20px 20px;
+    width: auto;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item .num {
+    position: absolute;
+    top: 0;
+    left: -25px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #F97333;
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+    transition: all 0.5s ease-in;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item h2 {
+    font-size: 32px;
+    opacity: 1;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item p {
+    font-size: 16px;
+    opacity: 1;
+  }
+
+  #tutorial_main .tutorial-list .tutorial-item:last-of-type {
+    padding-bottom: 60px;
+  }
+
+  #tutorial_main .tutorial-list .dump-logo {
+    position: absolute;
+    bottom: -40px;
+    max-width: 80px;
+    right: -1px;
+  }
+
+  #tutorial_main .tutorial-list .skip {
+    position: absolute;
+    right: 100px;
+    bottom: 5px;
+    color: #707070;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  #tutorial_main .tutorial-list .skip:active,
+  #tutorial_main .tutorial-list .skip:hover {
+    text-decoration: none;
+  }
+}
+
