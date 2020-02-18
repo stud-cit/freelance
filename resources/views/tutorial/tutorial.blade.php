@@ -27,10 +27,18 @@
     <img src="bg-tutor.png" alt="" class="tutorial-bg-image">
     <img src="logo-tutor.png" class="tutorial-logo" alt="">
     <div class="scroll-down">
-        <p>Гортайте вниз щоб прочитати керівництво</p>
-        <div class="dots">
-            <img src="dots.png" alt="">
-            <div class="dots-bg"></div>
+        <div class="d-md-none text-primary scroll-mobile ">
+            <p>Прочитати керівництво</p>
+            {{--<div class="text-center">	&#11167;</div>--}}
+            {{--<div class="text-center">	&#11167;</div>--}}
+            {{--<div class="text-center">	&#11167;</div>--}}
+        </div>
+        <div class="d-none d-md-block ">
+            <p>Гортайте вниз щоб прочитати керівництво</p>
+            <div class="dots">
+                <img src="dots.png" alt="">
+                <div class="dots-bg"></div>
+            </div>
         </div>
 
     </div>

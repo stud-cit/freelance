@@ -17,34 +17,66 @@ $("document").ready(function() {
     });
 
     let counter = 0;
+    if($(window).width() > 991) {
 
-    $('.tutorial-layout').bind('mousewheel', function(e) {
-        e.preventDefault();
 
-        if (e.originalEvent.wheelDelta / 120 <= 0 && counter < 1) {
-            $('.tutorial-bg-image').animate({
-                opacity: 0
-            }, 1500);
+        $('.tutorial-layout').bind('mousewheel', function (e) {
+            e.preventDefault();
 
-            $('.tutorial-logo').animate({
-                top: "-150%",
-            }, 1500, function () {
-            });
+            if (e.originalEvent.wheelDelta / 120 <= 0 && counter < 1) {
+                $('.tutorial-bg-image').animate({
+                    opacity: 0
+                }, 1500);
 
-            $('.dots').animate({
-                'max-height': '500px'
-            }, 500, function (){
-                $('.scroll-down').animate({
-                    top: "-=40vh",
-                }, 1500, function(){
-                    $('.tutorial-layout').hide();
-                    $('#tutorial_main').show(1000);
+                $('.tutorial-logo').animate({
+                    top: "-150%",
+                }, 1500, function () {
                 });
-            });
 
-            counter = 1;
-        }
-    });
+                $('.dots').animate({
+                    'max-height': '500px'
+                }, 500, function () {
+                    $('.scroll-down').animate({
+                        top: "-=40vh",
+                    }, 1500, function () {
+                        $('.tutorial-layout').hide();
+                        $('#tutorial_main').show(1000);
+                    });
+                });
+
+                counter = 1;
+            }
+        });
+    }
+    else{
+        $('.scroll-mobile').on('click', function (e) {
+            e.preventDefault();
+
+
+                $('.tutorial-bg-image').animate({
+                    opacity: 0
+                }, 1500);
+
+                $('.tutorial-logo').animate({
+                    top: "-150%",
+                }, 1500, function () {
+                });
+
+                $('.dots').animate({
+                    'max-height': '500px'
+                }, 500, function () {
+                    $('.scroll-down').animate({
+                        top: "-=40vh",
+                    }, 1500, function () {
+                        $('.tutorial-layout').hide();
+                        $('#tutorial_main').show(1000);
+                    });
+                });
+
+                counter = 1;
+
+        });
+    }
     if($(window).width() > 991) {
         console.log(1);
         let counter2 = 0;
