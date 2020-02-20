@@ -3608,7 +3608,7 @@ $("document").ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\OpenServer\domains\freelance\resources\js\front.js */"./resources/js/front.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\freelance\resources\js\front.js */"./resources/js/front.js");
 
 
 /***/ })

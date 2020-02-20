@@ -143,23 +143,23 @@
                         <div class="row">
                             <div class="col-md-5 col-12 offset-md-1 form-group">
                                 <label for="comment" class="">Опис пропозиції:</label>
-                                <textarea id="comment" class="form-control text-white border-0 bg-deep-dark" rows="6" name="text">{{ !is_null($my_proposal) ? $my_proposal->text : '' }}</textarea>
+                                <textarea id="comment" class="form-control text-white border-0 bg-deep-dark" rows="6" name="text">{{ !is_null($my_proposal) ? $my_proposal->text : 'Згоден' }}</textarea>
                             </div>
-                            <div class="col-md-5 form-group">
+                            <div class="col-md-5 col-12 form-group">
                                 <label for="price">Ціна:</label>
                                 <div class="d-flex flex-row">
-                                    <input type="number" id="price" class="col-md-9 col-8 form-control text-white border-0 bg-deep-dark" min="0" name="price" value="{{ !is_null($my_proposal) ? $my_proposal->price : '' }}">
+                                    <input type="number" id="price" class="col-md-9 col-8 form-control text-white border-0 bg-deep-dark" min="0" name="price" value="{{ !is_null($my_proposal) ? $my_proposal->price : (!is_null($order->price) ? explode(' ', $order->price)[0] : '') }}">
                                     <select class="col-md-2 offset-md-1 col-3 offset-1 form-control text-white border-0 bg-deep-dark" name="currency">
-                                        <option {{ !is_null($my_proposal) ? ($my_proposal->currency == 'грн.' ? 'selected' : '') : '' }}>грн.</option>
-                                        <option {{ !is_null($my_proposal) ? ($my_proposal->currency == '$' ? 'selected' : '') : '' }}>$</option>
+                                        <option {{ !is_null($my_proposal) ? ($my_proposal->currency == 'грн.' ? 'selected' : '') : (!is_null($order->price) && explode(' ', $order->price)[1] =='грн.' ? 'selected' : '') }}>грн.</option>
+                                        <option {{ !is_null($my_proposal) ? ($my_proposal->currency == '$' ? 'selected' : '') : (!is_null($order->price) && explode(' ', $order->price)[1] =='$' ? 'selected' : '') }}>$</option>
                                     </select>
                                 </div>
                                 <label for="time" class="mt-2">Час:</label>
                                 <div class="d-flex flex-row">
-                                    <input type="number" id="time" class="col-md-9 col-8 form-control text-white border-0 bg-deep-dark" min="0" name="time" value="{{ !is_null($my_proposal) ? $my_proposal->time : '' }}">
+                                    <input type="number" id="time" class="col-md-9 col-8 form-control text-white border-0 bg-deep-dark" min="0" name="time" value="{{ !is_null($my_proposal) ? $my_proposal->time : (!is_null($order->time) ? explode(' ', $order->time)[0] : '') }}">
                                     <select class="col-md-2 offset-md-1 col-3 offset-1 form-control text-white border-0 bg-deep-dark" name="type">
-                                        <option {{ !is_null($my_proposal) ? ($my_proposal->type != 'год.' ? 'selected' : '') : '' }}>дні</option>
-                                        <option {{ !is_null($my_proposal) ? ($my_proposal->type == 'год.' ? 'selected' : '') : '' }}>год.</option>
+                                        <option {{ !is_null($my_proposal) ? ($my_proposal->type != 'год.' ? 'selected' : '') : (!is_null($order->time) && explode(' ', $order->time)[1] !='год.' ? 'selected' : '') }}>дні</option>
+                                        <option {{ !is_null($my_proposal) ? ($my_proposal->type == 'год.' ? 'selected' : '') : (!is_null($order->time) && explode(' ', $order->time)[1] =='год.' ? 'selected' : '') }}>год.</option>
                                     </select>
                                 </div>
                                 <div class="d-flex row justify-content-center mt-4">

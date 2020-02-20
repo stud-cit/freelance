@@ -255,3 +255,21 @@ textarea.bg-deep-dark:disabled {
     color: #F97333;
 }
 
+#anchor {
+    z-index: 1030;
+    text-decoration: none;
+}
+@media (min-width: 768px) {
+    #anchor {
+        bottom: 88px;
+        right: 15px;
+    }
+}
+@media (max-width: 767px) {
+    #anchor {
+        left: 50%;
+        right: 50%;
+        transform: translate(-50%);
+        top: 15px;
+    }
+}

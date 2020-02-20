@@ -1,5 +1,5 @@
 @section('header')
-    <div class="container-fluid mb-5">
+    <div class="container-fluid fixed-top bg-deep-dark pb-2">
         <div class="d-flex flex-row justify-content-around align-items-center mt-4 text-white text-center">
             <div>
                 <a href="/"><img src="{{ asset('/SVG_Logo.svg') }}" alt="WorkDump" height="40px" id="logo"></a>
@@ -24,14 +24,14 @@
                     @endif
                     @if(Auth::user()->id_role == 3)
                         <div>
-                            <a href="{{ route('my_orders') }}" class="text-white">Мої пропозиції&nbsp;<span class="badge badge-pill bg-orange @if(Auth::user()->new_messages() == 0 )d-none @endif">{{ Auth::user()->order_change() }}</span></a>
+                            <a href="{{ route('my_orders') }}" class="text-white">Мої пропозиції<span class="badge badge-pill bg-orange @if(Auth::user()->new_messages() == 0 )d-none @endif">&nbsp;{{ Auth::user()->order_change() }}</span></a>
                         </div>
                         <div>
                             <a href="{{ route('customers') }}" class="text-white">Замовники</a>
                         </div>
                     @endif
                     <div>
-                        <a href="{{ route('to_chat') }}" class="text-white">Чат&nbsp;<span class="header-count badge badge-pill bg-orange @if(Auth::user()->new_messages() == 0 )d-none @endif">{{ Auth::user()->new_messages() }}</span></a>
+                        <a href="{{ route('to_chat') }}" class="text-white">Чат<span class="header-count badge badge-pill bg-orange @if(Auth::user()->new_messages() == 0 )d-none @endif">&nbsp;{{ Auth::user()->new_messages() }}</span></a>
                     </div>
                     <div>
                         <a href="{{ route('user', Auth::id()) }}" class="text-white">Профіль</a>
@@ -70,15 +70,12 @@
                         <a class="dropdown-item text-white" href="#" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
                             Вихід
                         </a>
-                        <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
                     </div>
                 </div>
                 <div class="d-md-none d-flex">
                     <a class="bg-white text-dark font-size-25 badge-pill btn py-0 px-4" data-toggle="collapse" href="#mobile-bar">&#8801; &#8227;</a>
                 </div>
-                <div class="position-fixed d-md-none bg-white text-dark collapse" id="mobile-bar" style="z-index: 100; top: 0; right: 0; bottom: 0; left: 0;">
+                <div class="position-fixed d-md-none bg-white text-dark collapse" id="mobile-bar" style="z-index: 1031; top: 0; right: 0; bottom: 0; left: 0;">
                     <div class="container-fluid mt-4 justify-content-around">
                         <a class="text-dark font-size-25 btn py-0 px-3 offset-6" data-toggle="collapse" href="#mobile-bar">X</a>
                     </div>
@@ -142,7 +139,7 @@
                 </div>
             @else
                 @if(strpos(url()->current(), 'orders') === false || strpos(url()->current(), 'orders/') !== false)
-                    <div>
+                    <div class="d-md-block d-none">
                         <a href="{{ route('orders') }}" class="text-white">Проекти</a>
                     </div>
                 @else

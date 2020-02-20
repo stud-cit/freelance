@@ -27,7 +27,7 @@
                 @endif
                 <div class="col-md-11 col-12 for-filter">
                     <div class="d-flex flex-row">
-                            @if(Auth::user()->id_role == 2)
+                            @if(Auth::check() && Auth::user()->id_role == 2)
                                     <button class="d-md-none d-block col-auto flex-shrink-1 btn text-white text-center font-weight-bold font-size-22 py-0 bg-green @if(Auth::user()->banned) 'd-none' @endif" id="new_order-toggle" data-toggle="collapse" data-target="#new-order" aria-expanded="true" title="Створення замовлення">&#43;</button>
                             @endif
                         <input type="text" class="form-control col-auto flex-shrink-1" aria-label="filter" id="filter">
@@ -94,7 +94,7 @@
         </div>
         <div class="col-md-10 col-12 offset-md-1 text-white mt-2" id="orders-block">
             <div class="row">
-                <div class="col-5 offset-1">
+                <div class="d-none col-5 offset-1">
                     <button class="btn w-100 btn-outline-secondary bg-dark-green text-white dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px">Кафедри</button>
                     <div class="dropdown-menu try" id="depts">
                         <ul class=" list-group">
@@ -120,7 +120,7 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="d-md-none d-block col-5">
+                <div class="d-md-none d-block col-5 mx-auto">
                     <button class="btn w-100 col-12 bg-white bg-dark-green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px"># Категорії</button>
                     <div class="dropdown-menu try" id="depts">
                         <div class="for-filter" id="categs">

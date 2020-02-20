@@ -16,8 +16,10 @@
                     </div>
 -->
                 <div class="row">
-                    <div class="col-md-6 col-8 font-weight-bold order-title font-size-20 order-md-1 order-4">{{ $orders->title }}</div>
-                    <div class="col-md-2 col-4 justify-content-end d-flex align-items-center order-md-2 order-5">
+                    <hr class="col-11 border-white order-3 d-flex d-md-none">
+                    <hr class="col-11 border-white order-8 d-flex d-md-none">
+                    <div class="col-md-6 col-lg-9 col-8 font-weight-bold order-title font-size-20 order-md-1 order-4">{{ $orders->title }}</div>
+                    <div class="col-md-2 col-lg-1 col-4 justify-content-end d-flex align-items-center order-md-2 order-5">
                         <div class="">
                             @if($orders->files)
                                 <img src="{{ asset('/edit.svg') }}" alt="edit" width="20px" id="edit">
@@ -29,11 +31,11 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-md-4 col-4 text-center font-weight-bold font-size-20 nowrap justify-content-end order-md-3 order-2">{{ $orders->price }}</div>
-                    <div class="col-md-12 col-4 text-md-left text-right text-grey order-md-5 order-7">{{ $orders->created_at }}</div>
-                    <div class="col-md-12 col-7 order-md-6 order-6">{{ $orders->description }}</div>
+                    <div class="col-md-4 col-lg-2 col-4 font-weight-bold font-size-20 nowrap text-right order-md-3 order-2"><span>{{ $orders->price }}</span></div>
+                    <div class="col-md-12 col-6 text-md-left text-right text-grey align-self-end order-md-5 order-7">{{ $orders->created_at }}</div>
+                    <div class="col-md-12 order-md-6 d-md-block d-none">{{ $orders->description }}</div>
                     @if(!is_null($orders->dept))
-                        <div class="col-md-12 col-4 text-grey order-md-8 order-9">{{ $orders->dept->name }}</div>
+                        <div class="col-md-12 col-6 text-grey order-md-8 order-6">{{ $orders->dept->name }}</div>
                     @endif
                     <div class="col-md-8 col-8 tag-list order-md-9 order-1">
                         @foreach($orders->categories as $tags)
@@ -42,19 +44,21 @@
                                     </span>
                         @endforeach
                     </div>
-                    <div class="col-md-4 col-4 d-md-none d-block text-center order-10">
+                    <div class="col-5 d-md-none d-block text-center order-10">
                         <button class="btn bg-primary text-white" onclick="getElementById('form-id').submit();">Зв'язатися</button>
                     </div>
 
-                    <div class="col-md-4 col-4 text-center order-md-10 order-11">
-                        <button class="btn work-order bg-orange text-white" data-id="{{ $orders->id_order }}">Переглянути</button>
-                        @if(Auth::check() && ($orders->id_customer != Auth::id()))
-                            <form method="POST" action="{{ route('new_contact') }}" id="form-id" class="text-center">
-                                @csrf
-                                <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
-                                <span class="pointer font-size-12 text-grey d-md-block d-none" onclick="getElementById('form-id').submit();">Зв'язатися</span>
-                            </form>
-                        @endif
+                    <div class="col-md-4 col-lg-3 offset-lg-1 col-5 text-right order-md-10 order-11">
+                        <div class="d-md-flex flex-column flex-grow-0 text-center">
+                            <button class="btn work-order bg-orange text-white" data-id="{{ $orders->id_order }}">Переглянути</button>
+                            @if(Auth::check() && ($orders->id_customer != Auth::id()))
+                                <form method="POST" action="{{ route('new_contact') }}" id="form-id" class="text-center">
+                                    @csrf
+                                    <input type="text" name="id_user" class="d-none" value="{{ $orders->id_customer }}">
+                                    <span class="pointer font-size-12 text-grey d-md-block d-none" onclick="getElementById('form-id').submit();">Зв'язатися</span>
+                                </form>
+                            @endif
+                        </div>
                     </div>
                     <!--
                     <div class="d-flex justify-content-start align-items-center">
