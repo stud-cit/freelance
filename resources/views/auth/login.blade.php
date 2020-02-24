@@ -66,10 +66,10 @@
                                         <button type="submit" class="col-lg-5 col-12 btn text-white badge-pill bg-orange">
                                             Вхід
                                         </button>
-                                        <button type="submit" class="col-lg-5 offset-lg-1 col-12 btn text-white badge-pill border-white mt-lg-0 mt-2">
+                                        <a href="{{ route("cabinet-login") }}" class="col-lg-5 offset-lg-1 col-12 btn text-white badge-pill border-white mt-lg-0 mt-2">
                                             <img src="{{ asset('/logotip_cabinet.svg') }}" alt="cabinet.sumdu.edu.ua" height="22px" style="margin-top: -8px">
                                             Вхід Ч/З кабінет
-                                        </button>
+                                        </a>
                                 </div>
                             </form>
                         </div>
