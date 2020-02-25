@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
             'banned' => false,
             'password' => bcrypt('admin'),
             'id_dept' => null,
+            'guid' => ''
         ];
 
        	User::create($values);

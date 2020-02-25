@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->bigInteger('id_dept')->nullable();
             $table->string('password');
+            $table->string('guid')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

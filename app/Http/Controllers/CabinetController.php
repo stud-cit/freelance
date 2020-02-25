@@ -13,9 +13,9 @@ class CabinetController extends Controller
 
     protected $cabinet_api = "https://cabinet.sumdu.edu.ua/api/";
     protected $cabinet_service = "https://cabinet.sumdu.edu.ua/index/service/";
-    protected $cabinet_service_token = "2Vm2JuEq";
+    protected $cabinet_service_token = "dFTDj0oK";
 
-    protected $token = "ne2MwAa87M48i6hP1hGZKzTETPH5nQha01ZE0ISEg5FSlgOWTH3b";
+    protected $token = "1P2MqSPPzD3FHMJn61uFqhuiiuxhEHshvXF44rhHuX2gGnd0fEb5";
     protected $user_token;
 
     // Получаем параметры GET запроса
@@ -27,7 +27,6 @@ class CabinetController extends Controller
         $req = json_decode(file_get_contents($this->cabinet_api . "getPerson/?key=" . $this->token), true);
         $this->key = !empty($req['key']) ? $req['key'] : "";
         $this->mode = !empty($req['mode']) ? $req['mode'] : 0;
-        $this->user_token = !empty($req['token']) ? $req['token'] : "";
         echo '<p>key: '.$this->key.'.</p>';
         echo '<p>mode: '.$this->mode.'.</p>';
         if (!empty($key)) {
@@ -58,6 +57,9 @@ class CabinetController extends Controller
 
 
         $person = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $this->token));
+        //$this->user_token = $person->result->token;
+        //echo '<p>'.$person->result.'</p>';
+        echo '<p>token: '.$person->result->token.'</p>';
         echo '<p>guid: '.$person->result->guid.'</p>';
 
         // Если ключ не передается, но он сохранен в сессии, берем из сессии. Ключ храним
@@ -73,7 +75,6 @@ class CabinetController extends Controller
             // Отправляем GET запрос на кабинет
 
             //$person = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $key . '&token=' . $this->cabinet_service_token), true);
-            $person = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $this->user_token), true);
 
             echo '<p>person: '.implode($person).'</p>';
 
