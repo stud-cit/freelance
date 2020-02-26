@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
-    private function create_user($info)
+    public function create_user($info)
     {
         $id_role = DB::table('roles')->where('role_name', $info['id_role'])->get('id_role')->first();
 

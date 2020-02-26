@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
+use Illuminate\Support\Facades\Session;
 
 class OrdersController extends Controller
 {
@@ -104,6 +105,7 @@ class OrdersController extends Controller
 
     public function index()
     {
+        dd(Session::all());
         $values = [
             'what' => 'id_order',
             'how' => 'desc',

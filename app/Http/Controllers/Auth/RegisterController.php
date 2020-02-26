@@ -77,7 +77,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    public static function create(array $data)
     {
         $id_role = DB::table('roles')->where('role_name', $data['id_role'])->get('id_role')->first();
 
@@ -85,7 +85,8 @@ class RegisterController extends Controller
             'id_role' => $id_role->id_role,
             'email' => $data['email'],
             'banned' => false,
-            'password' => Hash::make($data['password']),
+            'password' => array_key_exists('password', $data) ? Hash::make($data['password']) : '',
+            'guid' => !empty($data['guid']) ? $data['guid'] : ''
         ]);
 
         Storage::disk('public')->copy('0.png', $user['id'] . '.png');
@@ -94,14 +95,9 @@ class RegisterController extends Controller
             'id_user' => $user['id'],
             'name' => $data['name'],
             'surname' => $data['surname'],
-            'patronymic' => null,
             'birthday_date' => null,
             'phone_number' => null,
-            'viber' => null,
-            'skype' => null,
-            'about_me' => null,
-            'country' => null,
-            'city' => null
+            'about_me' => null
         ];
 
         DB::table('users_info')->insert($values);
