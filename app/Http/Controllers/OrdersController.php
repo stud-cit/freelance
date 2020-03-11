@@ -105,7 +105,12 @@ class OrdersController extends Controller
 
     public function index()
     {
+        dd(Session::all(), cookie());/*
+        if (!Auth::check() && !is_null(cookie('id')))
+            Auth::loginUsingId(cookie('id'), true);
         dd(Session::all());
+        dd(Auth::check());
+        dd(Auth::User());*/
         $values = [
             'what' => 'id_order',
             'how' => 'desc',

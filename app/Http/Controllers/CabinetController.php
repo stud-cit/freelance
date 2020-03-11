@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+//use Illuminate\Contracts\Auth\Authenticatable;
 
 class CabinetController extends Controller
 {
@@ -21,14 +23,14 @@ class CabinetController extends Controller
     protected $cabinet_service = "https://cabinet.sumdu.edu.ua/index/service/";
     protected $cabinet_service_token = "dFTDj0oK";
 
-    protected $token = "F4dZ5wOeGKb02GAZbEIQwFSaS1DMZJEHobQaoiRaTMF5vVFLCi07";
+    protected $token = "KATg7s5l0Gl6IVho0ml1FjsGs8vLA2mi701G7C5GBLTZlJwLQi9d";
     protected $user_token;
 
     // Получаем параметры GET запроса
     protected $key;
     protected $mode;
 
-    public function cabinetRequest() {
+    public function cabinetRequest(Request $req) {
         echo '<p>'.$this->cabinet_api . "getPerson/?key=" . $this->token.'</p>';
         $req = json_decode(file_get_contents($this->cabinet_api . "getPerson/?key=" . $this->token), true);
         $this->key = !empty($req['key']) ? $req['key'] : "";
@@ -58,7 +60,7 @@ class CabinetController extends Controller
     // В зависимости от режима (mode) возвращаем или иконку, или описание, или специальный заголовок
     public function cabinetLogin()
     {
-        $this->cabinetRequest();
+        //$this->cabinetRequest();
         //session_start();
 
 
@@ -104,14 +106,17 @@ class CabinetController extends Controller
                 echo "<p>fire: |" . $uid . "|</p>";
                 echo "<p>auth-status: " . Auth::check() . "</p>";
             Session::regenerate();
-            Auth::loginUsingId($uid);
+            Auth::loginUsingId($uid, true);
             Session::save();
+
                 echo "<p>auth-status: " . Auth::check() . "</p>";
                 echo "<p>user: " . Auth::User() . "</p>";
                 echo "<a href='orders'>next</a>";
+                //echo "<form method='post' action='cabinet-index'><input type='submit'>next</input></form>";
                 //dd(Session::all());
-            if(Auth::check()) return Redirect::intended('orders');
-            else "<script>alert('error')</script>";
+                dd(Session::all(), cookie());
+            if(Auth::check()) /*return Redirect::intended('orders')->withCookie();*/ return redirect('orders')->withCookie(cookie('#queued'));
+            else "<script>alert('Помилка')</script>";
         }
         else {
             //throw an error
