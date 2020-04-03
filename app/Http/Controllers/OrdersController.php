@@ -6,15 +6,30 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Cookie\CookieJar;
 
 class OrdersController extends Controller
 {
     private $eq, $filtered;
+
+    protected $user, $session, $uid;
+
+    public function __construct(){
+        $this->user = Auth::User();
+        $this->session = Session::all();
+        $this->uid = cookie('uid');
+        //dd(session('uid'));
+        //echo "construct";
+        //dd(Auth::user(), Session::all());
+        //dd($this->user);
+        //dd($this->session);
+    }
 
     function get_currency()
     {
@@ -105,7 +120,17 @@ class OrdersController extends Controller
 
     public function index()
     {
-        dd(Session::all(), cookie());/*
+        //dd($this->uid);
+        //Auth::loginUsingId('2', true);
+        dd(Session::all(), cookie(), Cookie::get(), $this->uid);
+        //Auth::loginUsingId($this->uid, true);
+        //dd(session('user'));
+        //$test = new CabinetController();
+        //$test->cabinetLogin();
+        //dd($this->user, $this->session);
+        //dd($this->user);
+        //dd($this->session);
+        /*
         if (!Auth::check() && !is_null(cookie('id')))
             Auth::loginUsingId(cookie('id'), true);
         dd(Session::all());

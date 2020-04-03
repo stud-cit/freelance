@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/cabinet-login', 'CabinetController@cabinetLogin')->name('cabinet-login');
+Route::post('/cabinet-login', 'CabinetController@cabinetLogin')->middleware('guest')->name('cabinet-login');
 Route::get('/?key={key}?mode={mode}', 'CabinetController@cabinetRequest');
 
 Route::get('/orders', 'OrdersController@index')->name('orders');

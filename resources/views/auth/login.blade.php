@@ -66,7 +66,7 @@
                                         <button type="submit" class="col-lg-5 col-12 btn text-white badge-pill bg-orange">
                                             Вхід
                                         </button>
-                                        <a href="{{ route("cabinet-login") }}" class="col-lg-5 offset-lg-1 col-12 btn text-white badge-pill border-white mt-lg-0 mt-2">
+                                        <a href="" class="col-lg-5 offset-lg-1 col-12 btn text-white badge-pill border-white mt-lg-0 mt-2" onclick="event.preventDefault();$('#cabinet-login').submit();">
                                             <img src="{{ asset('/logotip_cabinet.svg') }}" alt="cabinet.sumdu.edu.ua" height="22px" style="margin-top: -8px">
                                             Вхід Ч/З кабінет
                                         </a>
@@ -77,9 +77,21 @@
                     <div class="col-12 d-md-none d-flex justify-content-center">
                         <a href="{{ route('register') }}">Заява на реєстрацію</a>
                     </div>
+
+                    <form action="{{ route('cabinet-login') }}" method="POST" class="d-none" id="cabinet-login">
+                        @csrf
+                        <button type="submit">
+
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="flash-message fixed-bottom text-center">
+            @if($errors->any())
+                <p class="alert alert-danger alert-dismissible"> {{ $errors->first() }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
     </div>
 
 @endsection
