@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 
-//use Illuminate\Contracts\Auth\Authenticatable;
 
 class CabinetController extends Controller
 {
@@ -29,20 +28,16 @@ class CabinetController extends Controller
     protected $cabinet_service = "https://cabinet.sumdu.edu.ua/index/service/";
     protected $cabinet_service_token = "dFTDj0oK";
 
-    protected $token = "p6nnko2ECcqCjDcGyydUS9Xc9lv6idYcLGUf9GSLtbJh7cfTJV6f";
-    protected $user_token;
+    protected $token = "Ztf8SiCvMY5bnjmkrr3u1bP8bx9oB3S8EUumbU1EvDnooeBds1d7";
 
     // Получаем параметры GET запроса
     protected $key;
     protected $mode;
 
     public function cabinetRequest(Request $req) {
-        //echo '<p>'.$this->cabinet_api . "getPerson/?key=" . $this->token.'</p>';
         $req = json_decode(file_get_contents($this->cabinet_api . "getPerson/?key=" . $this->token), true);
         $this->key = !empty($req['key']) ? $req['key'] : "";
         $this->mode = !empty($req['mode']) ? $req['mode'] : 0;
-        //echo '<p>key: '.$this->key.'.</p>';
-        //echo '<p>mode: '.$this->mode.'.</p>';
         if (!empty($key)) {
             switch ($this->mode) {
                 case 0:
@@ -63,40 +58,25 @@ class CabinetController extends Controller
     }
 
 
-    // В зависимости от режима (mode) возвращаем или иконку, или описание, или специальный заголовок
-
     /**
      * @param Request $req
      * @return $this
      */
     public function cabinetLogin(Request $req)
     {
-        //$this->cabinetRequest();
-        //session_start();
-        //dd($req);
-
-        $response = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $this->token));
-        //$this->user_token = $person->result->token;
-        //echo '<p>'.$person->result.'</p>';
+        $auth_key = $req->input('key');
+        $response = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $auth_key));
+        //$response = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $this->token));
         if ($response->status == 'OK') {
             $person = $response->result;
+            $fresh = false;
             //echo '<p>token: '.$person->token.'</p>';
             //echo '<p>guid: '.$person->guid.'</p>';
             if (!User::where('guid', $person->guid)->exists()) {
                 if (User::where('email', $person->email)->exists()) {
                     DB::table('users')->where('email', $person->email)->insert('guid', $person->guid);
                 }
-                else {/*
-                    echo "<script>Swal.fire({
-                          title: 'Are you sure?',
-                          text: \"You won't be able to revert this!\",
-                          icon: 'warning',
-                          showCancelButton: true,
-                          confirmButtonColor: '#3085d6',
-                          cancelButtonColor: '#d33',
-                          confirmButtonText: 'Yes, delete it!'
-                        })
-                        })</script>";*/
+                else {
                     $data = [
                         'id_role' => 'Замовник',
                         'email' => $person->email,
@@ -106,145 +86,47 @@ class CabinetController extends Controller
                     ];
                     $new = new RegisterController();
                     $new::create($data);
+                    $fresh = true;
                 }
             }
-            //$user = User::find(User::where('email', $person->email)->get('id')->first()->id);
-            //$user = User::where('email', $person->email)->first();
-            //Auth::login($user);
-            //Session::put($uid);
             $user = User::where('email', $person->email);
             $uid = $user->get('id')->first()->id;
-            //echo "<p>fire: |" . $uid . "|</p>";
-            //echo "<p>auth-status: " . Auth::check() . "</p>";
-            //Session::regenerateToken();
-            //Session::regenerate();
-            //Auth::loginUsingId($uid, true);
-            //Auth::login(Auth::user(), true);
             $temp_user = User::where('email', '=', $person->email)->firstOrFail();
             //$user = DB::table('users')->where('email', $person->email)->get()->first();
             Auth::loginUsingId($uid, true);
             //Auth::attempt(['email' => $person->email, 'password' => $pass]);
-            //dd($temp_user, Auth::user());
-            //Session::put('password_hash', Hash::make("hola_amigo"));
-            //Session::put("uid", $uid);
-            //Session::start();
-            //Session::save();
-            //session()->reflash();
-            //$cookies = Cookie::get('laravel_session');
-            //$cookies = cookie()->forever('uid', $uid);
-            //dd($cookies);
-            //echo "<p>auth-status: " . Auth::check() . "</p>";
-            //echo "<p>user: " . Auth::User() . "</p>";
-            //echo "<a href='orders'>next</a>";
-            //echo "<form method='post' action='cabinet-index'><input type='submit'>next</input></form>";
-            //dd(Session::all());
-            //dd(Session::all(), cookie(), $cookies, $req);
-            if(Auth::check()) /*return Redirect::intended('orders')->withCookie();*/
-                //return redirect('orders')->withCookie($cookies);
-                //return Redirect('orders')->with(['uid', $uid]);
-                return Redirect('orders');
+            if(Auth::check())
+                if($fresh)
+                {
+                    return view('auth.role');
+                }
+                else
+                {
+                    return Redirect('orders');
                 /*$log = new RedirectIfAuthenticated();
                 if (!empty($log)) {
                     $new_req = new Request();
                     $log->handle($new_req);
                 }*/
+                }
             else {
                 return back()->withErrors("Помилка входу. Спробуйте пізніше");
             }
         }
         else {
             //throw an error
+            return redirect('https://cabinet.sumdu.edu.ua/?goto=http://workdump-test.sumdu.edu.ua/cabinet-login');
             return back()->withErrors("Помилка входу. Спробуйте пізніше");
         }
 
-        // Если ключ не передается, но он сохранен в сессии, берем из сессии. Ключ храним
-        // в сессии для запроса на подтверждение, что пользователь все еще авторизован в кабинете.
-
-        /*
-                if (empty($this->key) && !empty($_SESSION['key'])) {
-                    $this->key = $_SESSION['key'];
-                    echo '<p>session key: '.$this->key.'</p>';
-                }
-                if (!empty($this->key)) {
-
-                    // Отправляем GET запрос на кабинет
-
-                    //$person = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $key . '&token=' . $this->cabinet_service_token), true);
-
-                    echo '<p>person: '.implode($person).'</p>';
-
-                    // Если все ОК, пользователь авторизован в кабинете, получаем объект person (JSON)
-                    // и запоминаем его и ключ в сессии. После этого пользователь авторизован и в сервисе.
-
-                    if ($person['status'] == 'OK') {
-                        $_SESSION['key'] = $this->key;
-                        $_SESSION['person'] = $person;
-                    }
-
-                    // Иначе либо некорректный ключ (error), либо пользователь вышел из кабинета
-
-                    else {
-                        echo '<pre>' . print_r($person, true) . '</pre>';
-                        unset($_SESSION['key']);
-                        unset($_SESSION['person']);
-                    }
-                }*/
-
-
-
-        //////
-        /*
-        if (isset($_SESSION['person'])) {
-
-            // Пользователь авторизован
-
-            echo '<h3>Ви увійшли до тестового сервісу</h3>';
-            echo '<pre>' . print_r($_SESSION['person'], true) . '</pre>';
-            echo '<a href="https://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'] . '?logout">Вийти</a>';
-        }
-        else {
-
-            // Пользователь не авторизован. Показываем ему кнопку "Войти через кабинет"
-
-            echo '<a href="' . $this->cabinet_service . $this->cabinet_service_token . '">Увійти</a>';
-        }
-        */
-        /////
-
     }
 
-/*
+
     public function cabinetLogout(){
 
-        // Это реализация команды ВЫХОД, через отправку параметра logout
-
         if (isset($_REQUEST['logout']) && isset($_SESSION['person'])) {
-
-            // Отправляем GET запрос на кабинет
-
             $result = json_decode(file_get_contents($this->cabinet_api . 'logout?key=' . $this->key), true);
-            echo '<pre>' . print_r($result, true) . '</pre>';
-            unset($_SESSION['key']);
-            unset($_SESSION['person']);
         }
     }
-*/
 
-    // Здесь должен быть код самого сервиса, его логика.
-
-    /*
-    if (isset($_SESSION['person'])) {
-
-    // Пользователь авторизован
-
-    echo '<h3>Ви увійшли до тестового сервісу</h3>';
-    echo '<pre>' . print_r($_SESSION['person'], true) . '</pre>';
-    echo '<a href="https://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'] . '?logout">Вийти</a>';
-    }
-    else {
-
-    // Пользователь не авторизован. Показываем ему кнопку "Войти через кабинет"
-
-    echo '<a href="' . $cabinet_service . $cabinet_service_token . '">Увійти</a>';
-    }*/
 }

@@ -8,6 +8,9 @@ Auth::routes();
 Route::post('/cabinet-login', 'CabinetController@cabinetLogin')->middleware('guest')->name('cabinet-login');
 Route::get('/?key={key}?mode={mode}', 'CabinetController@cabinetRequest');
 
+//Route::get('/role_select', function (){return view('auth.role');})->name('role-select');
+Route::post('/role-selected', 'UsersController@roleSelect')->name('role-selected');
+
 Route::get('/orders', 'OrdersController@index')->name('orders');
 Route::post('/save_order', 'OrdersController@save_order')->name('save_order');
 Route::post('/filter', 'OrdersController@filter');

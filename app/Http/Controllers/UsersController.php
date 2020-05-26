@@ -354,4 +354,17 @@ class UsersController extends Controller
 
         return back();
     }
+
+    public function roleSelect(Request $req)
+    {
+        if($req['id_role'] == 'Виконавець')
+        {
+            DB::table('users')->where('id', Auth::id())->update(['id_role' => '3']);
+        }
+        else
+        {
+            DB::table('users')->where('id', Auth::id())->update(['id_role' => '2']);
+        }
+        return Redirect('orders');
+    }
 }
