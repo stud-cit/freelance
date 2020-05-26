@@ -122,7 +122,7 @@ class OrdersController extends Controller
     {
         //dd($this->uid);
         //Auth::loginUsingId('2', true);
-        dd(Session::all(), cookie(), Cookie::get(), $this->uid);
+        //dd(Session::all(), cookie(), Cookie::get(), $this->uid);
         //Auth::loginUsingId($this->uid, true);
         //dd(session('user'));
         //$test = new CabinetController();

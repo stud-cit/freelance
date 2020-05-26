@@ -29,7 +29,7 @@ class CabinetController extends Controller
     protected $cabinet_service = "https://cabinet.sumdu.edu.ua/index/service/";
     protected $cabinet_service_token = "dFTDj0oK";
 
-    protected $token = "hqcgH5XkmN0phgVx5rs4jBu6uxy0lcrNX546X9W6e0rKwUYIhR10";
+    protected $token = "p6nnko2ECcqCjDcGyydUS9Xc9lv6idYcLGUf9GSLtbJh7cfTJV6f";
     protected $user_token;
 
     // Получаем параметры GET запроса
@@ -37,12 +37,12 @@ class CabinetController extends Controller
     protected $mode;
 
     public function cabinetRequest(Request $req) {
-        echo '<p>'.$this->cabinet_api . "getPerson/?key=" . $this->token.'</p>';
+        //echo '<p>'.$this->cabinet_api . "getPerson/?key=" . $this->token.'</p>';
         $req = json_decode(file_get_contents($this->cabinet_api . "getPerson/?key=" . $this->token), true);
         $this->key = !empty($req['key']) ? $req['key'] : "";
         $this->mode = !empty($req['mode']) ? $req['mode'] : 0;
-        echo '<p>key: '.$this->key.'.</p>';
-        echo '<p>mode: '.$this->mode.'.</p>';
+        //echo '<p>key: '.$this->key.'.</p>';
+        //echo '<p>mode: '.$this->mode.'.</p>';
         if (!empty($key)) {
             switch ($this->mode) {
                 case 0:
@@ -80,8 +80,8 @@ class CabinetController extends Controller
         //echo '<p>'.$person->result.'</p>';
         if ($response->status == 'OK') {
             $person = $response->result;
-            echo '<p>token: '.$person->token.'</p>';
-            echo '<p>guid: '.$person->guid.'</p>';
+            //echo '<p>token: '.$person->token.'</p>';
+            //echo '<p>guid: '.$person->guid.'</p>';
             if (!User::where('guid', $person->guid)->exists()) {
                 if (User::where('email', $person->email)->exists()) {
                     DB::table('users')->where('email', $person->email)->insert('guid', $person->guid);
@@ -117,28 +117,28 @@ class CabinetController extends Controller
             //echo "<p>fire: |" . $uid . "|</p>";
             //echo "<p>auth-status: " . Auth::check() . "</p>";
             //Session::regenerateToken();
-            Session::regenerate();
+            //Session::regenerate();
             //Auth::loginUsingId($uid, true);
             //Auth::login(Auth::user(), true);
             $temp_user = User::where('email', '=', $person->email)->firstOrFail();
             //$user = DB::table('users')->where('email', $person->email)->get()->first();
-            Auth::login($temp_user);
+            Auth::loginUsingId($uid, true);
             //Auth::attempt(['email' => $person->email, 'password' => $pass]);
             //dd($temp_user, Auth::user());
             //Session::put('password_hash', Hash::make("hola_amigo"));
-            Session::put("uid", $uid);
+            //Session::put("uid", $uid);
             //Session::start();
             //Session::save();
             //session()->reflash();
             //$cookies = Cookie::get('laravel_session');
-            $cookies = cookie()->forever('uid', $uid);
+            //$cookies = cookie()->forever('uid', $uid);
             //dd($cookies);
             //echo "<p>auth-status: " . Auth::check() . "</p>";
             //echo "<p>user: " . Auth::User() . "</p>";
-            echo "<a href='orders'>next</a>";
+            //echo "<a href='orders'>next</a>";
             //echo "<form method='post' action='cabinet-index'><input type='submit'>next</input></form>";
             //dd(Session::all());
-            dd(Session::all(), cookie(), $cookies, $req);
+            //dd(Session::all(), cookie(), $cookies, $req);
             if(Auth::check()) /*return Redirect::intended('orders')->withCookie();*/
                 //return redirect('orders')->withCookie($cookies);
                 //return Redirect('orders')->with(['uid', $uid]);
