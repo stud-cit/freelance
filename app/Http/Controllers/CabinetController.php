@@ -11,17 +11,19 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 
 class CabinetController extends Controller
 {
     //
     protected $info = "Інформаційний сервіс \"WorkDump\" для розміщення онлайн-об'яв на виконання робіт";	// Service description
-    protected $icon = "workdump-cabinet.png";		// Service icon (48x48)
+    protected $icon = "/workdump-cabinet.png";		// Service icon (48x48)
     protected $mask = 13;			// Service modes 3,2,0 (1101 bits)
 
     protected $cabinet_api = "https://cabinet.sumdu.edu.ua/api/";
@@ -43,7 +45,7 @@ class CabinetController extends Controller
                 case 0:
                     break;
                 case 2:
-                    return response($this->icon, 200)->header('Content-Type', 'image/png');
+                    return response(File::get(public_path($this->icon)), 200)->header('Content-Type', 'image/png');
                 case 3:
                     return response($this->info, 200)->header('Content-Type', 'text/plain');
                 case 100:
@@ -86,10 +88,7 @@ class CabinetController extends Controller
             }
             $user = User::where('email', $person->email);
             $uid = $user->get('id')->first()->id;
-            $temp_user = User::where('email', '=', $person->email)->firstOrFail();
-            //$user = DB::table('users')->where('email', $person->email)->get()->first();
             Auth::loginUsingId($uid, true);
-            //Auth::attempt(['email' => $person->email, 'password' => $pass]);
             if(Auth::check())
                 if($fresh)
                 {
@@ -98,11 +97,6 @@ class CabinetController extends Controller
                 else
                 {
                     return Redirect('orders');
-                /*$log = new RedirectIfAuthenticated();
-                if (!empty($log)) {
-                    $new_req = new Request();
-                    $log->handle($new_req);
-                }*/
                 }
             else {
                 return back()->withErrors("Помилка входу. Спробуйте пізніше");

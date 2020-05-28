@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function index(Request $req)
     {
-        if(!empty($req['key']) && !empty($req['mode'])) {
+        if(!empty($req['key'])) {
             $cab = new CabinetController();
             return $cab->cabinetRequest($req);
         }
