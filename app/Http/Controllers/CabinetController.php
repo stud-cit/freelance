@@ -8,7 +8,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
@@ -35,26 +35,24 @@ class CabinetController extends Controller
     protected $mode;
 
     public function cabinetRequest(Request $req) {
-        $req = json_decode(file_get_contents($this->cabinet_api . "getPerson/?key=" . $this->token), true);
         $this->key = !empty($req['key']) ? $req['key'] : "";
         $this->mode = !empty($req['mode']) ? $req['mode'] : 0;
-        if (!empty($key)) {
+        $this->token = $this->key;
+        if (!empty($this->key)) {
             switch ($this->mode) {
                 case 0:
                     break;
                 case 2:
-                    header('Content-Type: image/png');
-                    readfile($this->icon);
-                    exit;
+                    return response($this->icon, 200)->header('Content-Type', 'image/png');
                 case 3:
-                    echo $this->info;
-                    exit;
-                case 100;
-                    header('X-Cabinet-Support: ' . $this->mask);
+                    return response($this->info, 200)->header('Content-Type', 'text/plain');
+                case 100:
+                    return response('', 200)->header('X-Cabinet-Support', $this->mask);
                 default:
                     exit;
             }
         }
+        //return response();
     }
 
 
@@ -65,13 +63,10 @@ class CabinetController extends Controller
     public function cabinetLogin(Request $req)
     {
         $auth_key = $req->input('key');
-        $response = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $auth_key));
-        //$response = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $this->token));
+        $response = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $this->token));
         if ($response->status == 'OK') {
             $person = $response->result;
             $fresh = false;
-            //echo '<p>token: '.$person->token.'</p>';
-            //echo '<p>guid: '.$person->guid.'</p>';
             if (!User::where('guid', $person->guid)->exists()) {
                 if (User::where('email', $person->email)->exists()) {
                     DB::table('users')->where('email', $person->email)->insert('guid', $person->guid);
@@ -115,7 +110,8 @@ class CabinetController extends Controller
         }
         else {
             //throw an error
-            return redirect('https://cabinet.sumdu.edu.ua/?goto=http://workdump-test.sumdu.edu.ua/cabinet-login');
+            //return Redirect::away('https://cabinet.sumdu.edu.ua/?goto=http://workdump-test.sumdu.edu.ua/cabinet-login');
+            return Redirect::away($this->cabinet_service . $this->cabinet_service_token);
             return back()->withErrors("Помилка входу. Спробуйте пізніше");
         }
 

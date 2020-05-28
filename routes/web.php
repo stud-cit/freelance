@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::post('/cabinet-login', 'CabinetController@cabinetLogin')->middleware('guest')->name('cabinet-login');
-Route::get('/?key={key}?mode={mode}', 'CabinetController@cabinetRequest');
+Route::get('/cabinet-request', 'CabinetController@cabinetRequest')->name('cabinet-request');
 
 //Route::get('/role_select', function (){return view('auth.role');})->name('role-select');
 Route::post('/role-selected', 'UsersController@roleSelect')->name('role-selected');

@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
+        if(!empty($req['key']) && !empty($req['mode'])) {
+            $cab = new CabinetController();
+            return $cab->cabinetRequest($req);
+        }
         if ($_COOKIE == []) {
             return redirect('/tutorial');
         }
