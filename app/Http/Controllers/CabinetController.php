@@ -29,7 +29,7 @@ class CabinetController extends Controller
 
     protected $cabinet_api = "https://cabinet.sumdu.edu.ua/api/";
     protected $cabinet_service = "https://cabinet.sumdu.edu.ua/index/service/";
-    protected $cabinet_service_token = "dFTDj0oK";
+    protected $cabinet_service_token = "MusKavQn";
 
     protected $token = "Ztf8SiCvMY5bnjmkrr3u1bP8bx9oB3S8EUumbU1EvDnooeBds1d7";
 
@@ -110,7 +110,8 @@ class CabinetController extends Controller
         }
         else {
             //throw an error
-            return Redirect::away('https://cabinet.sumdu.edu.ua/?goto=http://workdump-test.sumdu.edu.ua/cabinet-login');
+            return Redirect::away($this->cabinet_service . $this->cabinet_service_token);
+            //return Redirect::away('https://cabinet.sumdu.edu.ua/?goto=http://workdump-test.sumdu.edu.ua/cabinet-login');
             //return Redirect::away('https://cabinet.sumdu.edu.ua/?goto=http://workdump-test.sumdu.edu.ua/cabinet-login');
             //return Redirect::away($this->cabinet_service . $this->cabinet_service_token);
             return back()->withErrors("Помилка входу. Спробуйте пізніше");
