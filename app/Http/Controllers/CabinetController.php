@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Closure;
+use Illuminate\Cookie\CookieJar;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,7 @@ class CabinetController extends Controller
     public function cabinetRequest(Request $req) {
         $this->key = !empty($req['key']) ? $req['key'] : "";
         $this->mode = !empty($req['mode']) ? $req['mode'] : 0;
+        session(['key' => $this->key]);
         $this->token = $this->key;
         if (!empty($this->key)) {
             switch ($this->mode) {
@@ -64,9 +66,13 @@ class CabinetController extends Controller
      */
     public function cabinetLogin(Request $req)
     {
-        $auth_key = $req->input('key');
-        $response = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $this->token));
-        if ($response->status == 'OK') {
+        //$auth_key = $req->input('key');
+        $this->key = session('key');
+        $response = json_decode(file_get_contents($this->cabinet_api . 'getPerson?key=' . $this->key));
+        //dd($response, $this->key, Cookie::get(), $this->token);
+        //dd(Session::all(), $this->key);
+        //if ($response->status == 'OK') {
+        if($this->key) {
             $person = $response->result;
             $fresh = false;
             if (!User::where('guid', $person->guid)->exists()) {
@@ -104,8 +110,9 @@ class CabinetController extends Controller
         }
         else {
             //throw an error
+            return Redirect::away('https://cabinet.sumdu.edu.ua/?goto=http://workdump-test.sumdu.edu.ua/cabinet-login');
             //return Redirect::away('https://cabinet.sumdu.edu.ua/?goto=http://workdump-test.sumdu.edu.ua/cabinet-login');
-            return Redirect::away($this->cabinet_service . $this->cabinet_service_token);
+            //return Redirect::away($this->cabinet_service . $this->cabinet_service_token);
             return back()->withErrors("Помилка входу. Спробуйте пізніше");
         }
 
